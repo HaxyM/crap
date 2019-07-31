@@ -1,7 +1,7 @@
 #ifndef CRAP_UTILITY_VALUELISTFORTYPE
 #define CRAP_UTILITY_VALUELISTFORTYPE
 
-#include "valuelisy.h"
+#include "valuelist.h"
 
 namespace crap
 {
