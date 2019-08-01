@@ -1,7 +1,7 @@
 #ifndef CRAP_ALGORITHM_UNIQUE
 #define CRAP_ALGORITHM_UNIQUE
 
-#include "../utility/valuelist.h"
+#include "../utility/valuelistfortype.h"
 
 namespace crap
 {
@@ -9,12 +9,12 @@ namespace crap
  
  template <class Type, template <Type, Type> class Operator> struct uniqueValue<Type, Operator>
  {
-  using type = valueList<Type>;
+  template <template <Type...> class Container = valueListForType <Type> :: template type> using type = Container<>;
  };
 
  template <class Type, template <Type, Type> class Operator, Type Value> struct uniqueValue<Type, Operator, Value>
  {
-  using type = valueList<Type, Value>;
+  template <template <Type...> class Container = valueListForType <Type> :: template type> using type = Container<Value>;
  };
 
  template <class Type, template <Type, Type> class Operator, Type ... Values> struct uniqueValue
@@ -23,15 +23,22 @@ namespace crap
   using values = valueList<Type, Values...>;
   template <Type ... SubValues> using This = uniqueValue<Type, Operator, SubValues...>;
   constexpr const static std :: size_t half = (values :: size) / 2u;
-  using lower = typename values :: template till <half, This> :: type;
-  using upper = typename values :: template since <half, This> :: type;
+  using lower = typename values :: template till <half, This> :: template type<>;
+  using upper = typename values :: template since <half, This> :: template type<>;
   constexpr const static Type lowerLast = lower :: template at<lower :: size - 1u>;
   constexpr const static Type upperFirst = upper :: template at<0u>;
   constexpr const static bool shouldSkipUpperFirst = Operator <lowerLast, upperFirst> :: value;
   using upperToMerge = typename upper :: template since<shouldSkipUpperFirst ? 1u : 0u>; //Upper with or without first value
-  template <Type ... LowerValues, Type ... UpperValues> static valueList<Type, LowerValues..., UpperValues...> merge(valueList<Type, LowerValues...>, valueList<Type, UpperValues...>);
+  template <template <Type...> class Container> struct merger;
   public:
-  using type = decltype(merge(lower{}, upperToMerge{}));
+  template <template <Type...> class Container = valueListForType <Type> :: template type>
+  using type = decltype(merger <Container> :: merge(lower{}, upperToMerge{}));
+ };
+
+ template <class Type, template <Type, Type> class Operator, Type ... Values>
+ template <template <Type...> class Container> struct uniqueValue <Type, Operator, Values...> :: merger
+ {
+  template <Type ... LowerValues, Type ... UpperValues> static Container<LowerValues..., UpperValues...> merge(valueList<Type, LowerValues...>, valueList<Type, UpperValues...>);
  };
 }
 #endif
