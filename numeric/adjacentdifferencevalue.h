@@ -9,7 +9,7 @@ namespace crap
 
  template <class Type, template <Type, Type> class Operator> struct adjacentDifferenceValue<Type, Operator>
  {
-  using type = valueList<Type>;
+  template <template <Type...> class Container = valueListForType <Type> :: template type> using type = Container<>;
  };
 
  template <class Type, template <Type, Type> class Operator, Type ... Values> struct adjacentDifferenceValue
