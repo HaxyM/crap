@@ -32,9 +32,6 @@ namespace crap
   using lowerFailed = typename lower :: template type <> :: template since<lower :: value>;
   using upperFailed = typename upper :: template type <> :: template since<upper :: value>;
   template <template <Type...> class Container> struct merger;
-  template <Type ... LowerPassed, Type ... UpperPassed, Type ... LowerFailed, Type ... UpperFailed>
-  static valueList<Type, LowerPassed..., UpperPassed..., LowerFailed..., UpperFailed...>
-  merge(valueList<Type, LowerPassed...>, valueList<Type, UpperPassed...>, valueList<Type, LowerFailed...>, valueList<Type, UpperFailed...>);
   public:
   template <template <Type...> class Container = valueListForType <Type> :: template type>
   using type = decltype(merger <Container> :: merge(lowerPassed{}, upperPassed{}, lowerFailed{}, upperFailed{}));
