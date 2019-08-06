@@ -87,8 +87,6 @@ constexpr const std :: size_t crap :: mismatchValue <Type, Operator, Values1...>
 template <class Type, template <Type, Type> class Operator, Type ... Values1> template <Type ... Values2>
 constexpr const std :: size_t crap :: mismatchValue <Type, Operator, Values1...> :: template with <Values2...> :: getValue(Type)
 {
- /*using values1 = crap :: valueList<Type, Values1...>;
- using values2 = crap :: valueList<Type, Values2...>;*/
  return ((Operator <values1 :: template at<0u>, values2 :: template at<0u> > :: value) ? 1u : 0u);
 }
 
