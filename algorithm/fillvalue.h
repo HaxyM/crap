@@ -1,5 +1,5 @@
-#ifndef CRAP_ALGORITHM_FILL
-#define CRAP_ALGORITHM_FILL
+#ifndef CRAP_ALGORITHM_FILLVALUE
+#define CRAP_ALGORITHM_FILLVALUE
 
 #include <utility>
 
