@@ -1,5 +1,5 @@
-#ifndef CRAP_ALGORITHM_UNIQUE
-#define CRAP_ALGORITHM_UNIQUE
+#ifndef CRAP_ALGORITHM_UNIQUEVALUE
+#define CRAP_ALGORITHM_UNIQUEVALUE
 
 #include "../utility/valuelistfortype.h"
 
