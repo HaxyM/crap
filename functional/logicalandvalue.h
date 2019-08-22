@@ -1,6 +1,8 @@
 #ifndef CRAP_FUNCTIONAL_LOGICALANDVALUE
 #define CRAP_FUNCTIONAL_LOGICALANDVALUE
 
+#include "../utility/language.h"
+
 namespace crap
 {
  template <class Type, Type...> struct logicalAndValue;
@@ -22,7 +24,11 @@ namespace crap
 
  template <class Type, Type ... Values> struct logicalAndValue
  {
+  #if CPP17
+  constexpr const static auto value = (Values && ...);
+  #else
   static_assert(sizeof...(Values) <= 2u, "Folding expressions are not supported.");
+  #endif
  };
 }
 #endif
