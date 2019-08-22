@@ -3,6 +3,11 @@
 
 #include "../utility/language.h"
 
+#if CPP17
+#else
+#include "../numeric/reducevalue.h"
+#endif
+
 namespace crap
 {
  template <class Type, Type...> struct logicalAndValue;
@@ -27,7 +32,10 @@ namespace crap
   #if CPP17
   constexpr const static auto value = (Values && ...);
   #else
-  static_assert(sizeof...(Values) <= 2u, "Folding expressions are not supported.");
+  private:
+  template <Type ... SubValues> using This = logicalAndValue<Type, SubValues...>;
+  public:
+  constexpr const static auto value = reduceValue <Type, This, Values...> :: value;
   #endif
  };
 }
