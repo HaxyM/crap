@@ -13,7 +13,7 @@ namespace crap
  {
   template <Type Value> using LogicalNot = logicalNotValue<Type, Value>;
   template <Type ... Values> using LogicalOr = logicalOrValue<Type, Values...>;
-  template <Type ... Values> using LogicalAnd = logicalAndValues<Type, Values...>;
+  template <Type ... Values> using LogicalAnd = logicalAndValue<Type, Values...>;
   template <Type Value1, Type Value2> using LogicalOr2 = logicalOrValue<Type, Value1, Value2>;
   template <Type Value1, Type Value2> using LogicalAnd2 = logicalAndValue<Type, Value1, Value2>;
   #if CPP14
