@@ -1,7 +1,7 @@
 #ifndef CRAP_ALGORITHM_ALLOFVALUE
 #define CRAP_ALGORITHM_ALLOFVALUE
 
-#include "../functional/logicaloperatorsfortype.h"
+#include "../functional/logicalandvalue.h"
 
 #include <type_traits>
 
@@ -11,9 +11,8 @@ namespace crap
  {
   private:
   using resultType = std :: common_type_t<decltype(Operator <Values> :: value)...>;
-  using reductor = logicalOperatorsForType<resultType>;
   public:
-  constexpr const static auto value = reductor :: template LogicalAnd <static_cast<resultType>(Operator <Values> :: value)...> :: value;
+  constexpr const static auto value = logicalAndValue <resultType, static_cast<resultType>(Operator <Values> :: value)...> :: value;
  };
 }
 #endif
