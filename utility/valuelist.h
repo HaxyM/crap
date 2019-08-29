@@ -8,19 +8,27 @@ namespace crap
  template <class Type, Type ... Values> struct valueList
  {
   private:
-  constexpr const static Type values[] = {Values...};
-  template <std :: size_t N> struct At;
-  template <std :: size_t N, template <Type...> class Container> struct Till;
-  template <std :: size_t N, template <Type...> class Container> struct Since;
-  template <std :: size_t N> friend struct valueList <Type, Values...> :: At;
-  template <std :: size_t N, template <Type...> class Container> friend struct valueList <Type, Values...> :: Till;
-  template <std :: size_t N, template <Type...> class Container> friend struct valueList <Type, Values...> :: Since;
+  constexpr const static Type values[sizeof...(Values)] = {Values...};
   template <Type ... SubValues> using This = valueList<Type, SubValues...>;
+  template <template <std :: size_t> class Gen, std :: size_t ... Indices>
+struct Generator;
   public:
   constexpr const static std :: size_t size = sizeof...(Values);
+  template <std :: size_t N> struct At;
+  template <std :: size_t N> struct Till;
+  template <std :: size_t N> struct Since;
+  template <std :: size_t N> friend struct valueList <Type, Values...> :: At;
+  template <std :: size_t N> friend struct valueList <Type, Values...> :: Till;
+  template <std :: size_t N> friend struct valueList <Type, Values...> :: Since;
   template <std :: size_t N> constexpr const static Type at = At <N> :: value;
-  template <std :: size_t N, template <Type...> class Container = This> using till = typename Till <N, Container> :: type;
-  template <std :: size_t N, template <Type...> class Container = This> using since = typename Since <N, Container> :: type;
+  template <std :: size_t N, template <Type...> class Container = This> using till = typename Till <N> :: template type<Container>;
+  template <std :: size_t N, template <Type...> class Container = This> using since = typename Since <N> :: template type<Container>;
+ };
+
+ template <class Type, Type ... Values> template <template <std :: size_t> class Gen, std :: size_t ... Indices>
+ struct valueList <Type, Values...> :: Generator
+ {
+  template <template <Type...> class Container> using type = Container<(Gen <Indices> :: value)...>;
  };
 
  template <class Type, Type ... Values> template <std :: size_t N> struct valueList <Type, Values...> :: At
@@ -28,27 +36,33 @@ namespace crap
   private:
   static_assert(N < valueList <Type, Values...> :: size, "Index out of range.");
   public:
-  constexpr const static Type value = valueList <Type, Values...> :: values[N];
+  constexpr const static auto value = valueList <Type, Values...> :: values[N];
  };
 
- template <class Type, Type ... Values> template <std :: size_t N, template <Type...> class Container> struct valueList <Type, Values...> :: Till
+ template <class Type, Type ... Values> template <std :: size_t N> struct valueList <Type, Values...> :: Till
  {
   private:
   static_assert(N <= valueList <Type, Values...> :: size, "Index out of range.");
-  template <std :: size_t Index> constexpr const static Type valueAt = valueList <Type, Values...> :: values[Index];
-  template <std :: size_t ... Indices> static Container<valueAt<Indices>...> generate(std :: index_sequence<Indices...>);
+  template <std :: size_t Index> using valueAt = std :: integral_constant<Type, valueList <Type, Values...> :: values[Index]>;
+  template <Type ... SubValues> using This = typename valueList <Type, Values...> :: template This<SubValues...>;
+  template <std :: size_t ... Indices> static typename valueList <Type, Values...> :: template Generator<valueAt, Indices...>
+  generate(std :: index_sequence<Indices...>);
+  using generator = decltype(generate(std :: make_index_sequence<N>{}));
   public:
-  using type = decltype(generate(std :: make_index_sequence<N>{}));
+  template <template <Type... > class Container = This> using type = typename generator :: template type<Container>;
  };
 
- template <class Type, Type ... Values> template <std :: size_t N, template <Type...> class Container> struct valueList <Type, Values...> :: Since
+ template <class Type, Type ... Values> template <std :: size_t N> struct valueList <Type, Values...> :: Since
  {
   private:
   static_assert(N <= valueList <Type, Values...> :: size, "Index out of range.");
-  template <std :: size_t Index> constexpr const static Type valueAt = valueList <Type, Values...> :: values[N + Index];
-  template <std :: size_t ... Indices> static Container<valueAt<Indices>...> generate(std :: index_sequence<Indices...>);
+  template <std :: size_t Index> using valueAt = std :: integral_constant<Type, valueList <Type, Values...> :: values[N + Index]>;
+  template <Type ... SubValues> using This = typename valueList <Type, Values...> :: template This<SubValues...>;
+  template <std :: size_t ... Indices> static typename valueList <Type, Values...> :: template Generator<valueAt, Indices...>
+  generate(std :: index_sequence<Indices...>);
+  using generator = decltype(generate(std :: make_index_sequence<valueList <Type, Values...> :: size - N>{}));
   public:
-  using type = decltype(generate(std :: make_index_sequence<valueList <Type, Values...> :: size - N>{}));
+  template <template <Type...> class Container = This> using type = typename generator :: template type<Container>;
  };
 }
 #endif
