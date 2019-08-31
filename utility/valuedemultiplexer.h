@@ -11,7 +11,7 @@ namespace crap
   using type = Source<ContainerIfTrue>;
  };
 
- template <class Type, bool template <template <Type...> class> class Source, template <Type...> class, template <Type...> class ContainerIfFalse>
+ template <class Type, bool, template <template <Type...> class> class Source, template <Type...> class, template <Type...> class ContainerIfFalse>
 	 struct valueDemultiplexer
  {
   using type = Source<ContainerIfFalse>;
