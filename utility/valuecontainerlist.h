@@ -23,9 +23,9 @@ namespace crap
   template <std :: size_t N> friend struct valueContainerList <Type, StoredContainers...> :: Since;
   constexpr const static std :: size_t size = sizeof...(StoredContainers);
   template <std :: size_t N, template <template <Type...> class...> class Container = This>
-  using till = typename Till <N> :: template type<Container>;
+	  using till = typename Till <N> :: template type<Container>;
   template <std :: size_t N, template <template <Type...> class...> class Container = This>
-  using since = typename Since <N> :: template type<Container>;
+	  using since = typename Since <N> :: template type<Container>;
  };
  
  template <class Type, template <Type...> class ... StoredContainers>
@@ -35,74 +35,74 @@ namespace crap
  };
  
  template <class Type, template <Type...> class ... StoredContainers> template <template <Type...> class Container>
- struct valueContainerList <Type, StoredContainers...> :: identity
+	 struct valueContainerList <Type, StoredContainers...> :: identity
  {
   template <Type ... Values> using type = Container<Values...>;
  };
  
  template <class Type, template <Type...> class ... StoredContainers> template <template <Type...> class ... SubContainers>
- struct valueContainerList <Type, StoredContainers...> :: Generator
+	 struct valueContainerList <Type, StoredContainers...> :: Generator
  {
   template <template <template <Type...> class...> class Container> using type = Container<SubContainers...>;
  };
  
  template <class Type, template <Type...> class ... StoredContainers> template <std :: size_t ... Indices>
- struct valueContainerList <Type, StoredContainers...> :: Impl
+	 struct valueContainerList <Type, StoredContainers...> :: Impl
  {
   using ignore = valueContainerList <Type, StoredContainers...> :: ignore;
   template <template <Type...> class SubContainer>
  	 using identity = typename valueContainerList <Type, StoredContainers...> :: template identity<SubContainer>;
   template <template <Type...> class NthContainer> static identity<NthContainer>
-  generateAt(decltype(ignore{Indices})..., identity<NthContainer>,...);
+	  generateAt(decltype(ignore{Indices})..., identity<NthContainer>,...);
   template <template <Type...> class ... SubContainers> static
-  typename valueContainerList <Type, StoredContainers...> :: template Generator<SubContainers...>
-  generateSince(decltype(ignore{Indices})..., identity<SubContainers>...);
+	  typename valueContainerList <Type, StoredContainers...> :: template Generator<SubContainers...>
+	  generateSince(decltype(ignore{Indices})..., identity<SubContainers>...);
  };
  
  template <class Type, template <Type...> class ... StoredContainers> template <std :: size_t N>
- struct valueContainerList <Type, StoredContainers...> :: At
+	 struct valueContainerList <Type, StoredContainers...> :: At
  {
   private:
   static_assert(N < valueContainerList <Type, StoredContainers...> :: size, "Index out of range.");
   template <std :: size_t ... Indices> static
-  typename valueContainerList <Type, StoredContainers...> :: template Impl<Indices...>
-  generate(std :: index_sequence <Indices...>);
+	  typename valueContainerList <Type, StoredContainers...> :: template Impl<Indices...>
+	  generate(std :: index_sequence <Indices...>);
   using impl = decltype(generate(std :: make_index_sequence<N>{}));
   public:
   template <Type ... Values>
-  using type = typename decltype(impl :: generateAt(typename impl :: template identity<StoredContainers>{}...)) :: template type<Values...>;
+	  using type = typename decltype(impl :: generateAt(typename impl :: template identity<StoredContainers>{}...)) :: template type<Values...>;
  };
  
  template <class Type, template <Type...> class ... StoredContainers> template <std :: size_t N>
- struct valueContainerList <Type, StoredContainers...> :: Till
+	 struct valueContainerList <Type, StoredContainers...> :: Till
  {
   private:
   template <template <Type...> class ... SubContainers>
-  using This = typename valueContainerList <Type, StoredContainers...> :: template This<SubContainers...>;
+	  using This = typename valueContainerList <Type, StoredContainers...> :: template This<SubContainers...>;
   template <std :: size_t Index> using containerAt = typename valueContainerList <Type, StoredContainers...> :: template At<Index>;
   template <std :: size_t ... Indices> static
-  typename valueContainerList <Type, StoredContainers...> :: template Generator<containerAt <Indices> :: template type...>
-  generate(std :: index_sequence<Indices...>);
+	  typename valueContainerList <Type, StoredContainers...> :: template Generator<containerAt <Indices> :: template type...>
+	  generate(std :: index_sequence<Indices...>);
   static_assert(N <= valueContainerList <Type, StoredContainers...> :: size, "Index out of range.");
   public:
   template <template <template <Type...> class...> class Container = This>
-  using type = typename decltype(generate(std :: make_index_sequence<N>{})) :: template type<Container>;
+	  using type = typename decltype(generate(std :: make_index_sequence<N>{})) :: template type<Container>;
  };
  
  template <class Type, template <Type...> class ... StoredContainers> template <std :: size_t N>
- struct valueContainerList <Type, StoredContainers...> :: Since
+	 struct valueContainerList <Type, StoredContainers...> :: Since
  {
   private:
   static_assert(N <= valueContainerList <Type, StoredContainers...> :: size, "Index out of range.");
   template <template <Type...> class ... SubContainers>
-  using This = typename valueContainerList <Type, StoredContainers...> :: template This<SubContainers...>;
-  template <std :: size_t ... Indices> static
-  typename valueContainerList <Type, StoredContainers...> :: template Impl<Indices...>
-  generate(std :: index_sequence<Indices...>);
+	  using This = typename valueContainerList <Type, StoredContainers...> :: template This<SubContainers...>;
+  template <std :: size_t ... Indices> static 
+	  typename valueContainerList <Type, StoredContainers...> :: template Impl<Indices...>
+	  generate(std :: index_sequence<Indices...>);
   using impl = decltype(generate(std :: make_index_sequence<N>{}));
   public:
   template <template <template <Type...> class...> class Container = This>
-  using type = typename decltype(impl :: generateSince(typename impl :: template identity<StoredContainers>{}...)) :: template type<Container>;
+	  using type = typename decltype(impl :: generateSince(typename impl :: template identity<StoredContainers>{}...)) :: template type<Container>;
  };
 }
 #endif
