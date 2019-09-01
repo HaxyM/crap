@@ -3,6 +3,8 @@
 
 #include <utility>
 
+#include "language.h"
+
 namespace crap
 {
  template <class Type, Type ... Values> struct valueList
@@ -20,11 +22,18 @@ struct Generator;
   template <std :: size_t N> friend struct valueList <Type, Values...> :: At;
   template <std :: size_t N> friend struct valueList <Type, Values...> :: Till;
   template <std :: size_t N> friend struct valueList <Type, Values...> :: Since;
+  #if CPP14
   template <std :: size_t N> constexpr const static Type at = At <N> :: value;
+  #endif
   template <std :: size_t N, template <Type...> class Container = This> using till = typename Till <N> :: template type<Container>;
   template <std :: size_t N, template <Type...> class Container = This> using since = typename Since <N> :: template type<Container>;
  };
+}
 
+#include "makeindexsequence.h"
+
+namespace crap
+{
  template <class Type, Type ... Values> template <template <std :: size_t> class Gen, std :: size_t ... Indices>
  struct valueList <Type, Values...> :: Generator
  {
@@ -46,8 +55,10 @@ struct Generator;
   template <std :: size_t Index> using valueAt = std :: integral_constant<Type, valueList <Type, Values...> :: values[Index]>;
   template <Type ... SubValues> using This = typename valueList <Type, Values...> :: template This<SubValues...>;
   template <std :: size_t ... Indices> static typename valueList <Type, Values...> :: template Generator<valueAt, Indices...>
-  generate(std :: index_sequence<Indices...>);
-  using generator = decltype(generate(std :: make_index_sequence<N>{}));
+  //generate(std :: index_sequence<Indices...>);
+  generate(indexSequence<Indices...>);
+  //using generator = decltype(generate(std :: make_index_sequence<N>{}));
+  using generator = decltype(generate(makeIndexSequence<N>{}));
   public:
   template <template <Type... > class Container = This> using type = typename generator :: template type<Container>;
  };
@@ -59,8 +70,10 @@ struct Generator;
   template <std :: size_t Index> using valueAt = std :: integral_constant<Type, valueList <Type, Values...> :: values[N + Index]>;
   template <Type ... SubValues> using This = typename valueList <Type, Values...> :: template This<SubValues...>;
   template <std :: size_t ... Indices> static typename valueList <Type, Values...> :: template Generator<valueAt, Indices...>
-  generate(std :: index_sequence<Indices...>);
-  using generator = decltype(generate(std :: make_index_sequence<valueList <Type, Values...> :: size - N>{}));
+  //generate(std :: index_sequence<Indices...>);
+  generate(indexSequence<Indices...>);
+  //using generator = decltype(generate(std :: make_index_sequence<valueList <Type, Values...> :: size - N>{}));
+  using generator = decltype(generate(makeIndexSequence<valueList <Type, Values...> :: size - N>{}));
   public:
   template <template <Type...> class Container = This> using type = typename generator :: template type<Container>;
  };
