@@ -33,7 +33,7 @@ namespace crap
   private:
   using values = valueList<Type, Values...>;
   constexpr const static std :: size_t half = (values :: size) / 2u;
-  constexpr const static auto pivot = values :: template at<half>;
+  constexpr const static auto pivot = values :: template At <half> :: value;
   template <Type Pivot, Type ... LowerValues> struct finalMerger;
   template <Type Value> using lowerOperator = Operator<pivot, Value>;
   template <Type Value> using upperOperator = Operator<Value, pivot>;
