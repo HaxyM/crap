@@ -25,8 +25,8 @@ namespace crap
   template <Type ... SubValues> using This = isSortedValue<Type, Operator, SubValues...>;
   using lower = typename values :: template till<half, This>;
   using upper = typename values :: template since<half, This>;
-  constexpr const static Type lowerLast = values :: template at<half - 1u>;
-  constexpr const static Type upperFirst = values :: template at<half>;
+  constexpr const static Type lowerLast = values :: template At <half - 1u> :: value;
+  constexpr const static Type upperFirst = values :: template At <half> :: value;
   constexpr const static bool borderSorted = !(Operator <upperFirst, lowerLast> :: value);
   public:
   constexpr const static bool value = (lower :: value) && borderSorted && (upper :: value);
