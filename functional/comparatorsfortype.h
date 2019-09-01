@@ -12,10 +12,10 @@ namespace crap
 {
  template <class Type> struct comparatorsForType
  {
-  template <Type Value1, Type Valye2> using Less = lessValue<Type, Value1, Value2>;
+  template <Type Value1, Type Value2> using Less = lessValue<Type, Value1, Value2>;
   template <Type Value1, Type Value2> using EqualTo = equalToValue<Type, Value1, Value2>;
   template <Type Value1, Type Value2> using Greater = greaterValue<Type, Value1, Value2>;
-  template <Type Value1, Type Value2> using LessEqual = lessequalValue<Type, Value1, Value2>;
+  template <Type Value1, Type Value2> using LessEqual = lessEqualValue<Type, Value1, Value2>;
   template <Type Value1, Type Value2> using NotEqualTo = notEqualToValue<Type, Value1, Value2>;
   template <Type Value1, Type Value2> using GreaterEqual = greaterEqualValue<Type, Value1, Value2>;
   template <Type Value1, Type Value2> constexpr const static auto less = lessValue <Type, Value1, Value2> :: value;
