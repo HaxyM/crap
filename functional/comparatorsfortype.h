@@ -7,6 +7,7 @@
 #include "lessequalvalue.h"
 #include "notequaltovalue.h"
 #include "greaterequalvalue.h"
+#include "../utility/language.h"
 
 namespace crap
 {
@@ -18,12 +19,14 @@ namespace crap
   template <Type Value1, Type Value2> using LessEqual = lessEqualValue<Type, Value1, Value2>;
   template <Type Value1, Type Value2> using NotEqualTo = notEqualToValue<Type, Value1, Value2>;
   template <Type Value1, Type Value2> using GreaterEqual = greaterEqualValue<Type, Value1, Value2>;
+  #if CPP14
   template <Type Value1, Type Value2> constexpr const static auto less = lessValue <Type, Value1, Value2> :: value;
   template <Type Value1, Type Value2> constexpr const static auto equalTo = equalToValue <Type, Value1, Value2> :: value;
   template <Type Value1, Type Value2> constexpr const static auto greater = greaterValue <Type, Value1, Value2> :: value;
   template <Type Value1, Type Value2> constexpr const static auto lessequal = lessEqualValue <Type, Value1, Value2> :: value;
   template <Type Value1, Type Value2> constexpr const static auto notEqualTo = notEqualToValue <Type, Value1, Value2> :: value;
   template <Type Value1, Type Value2> constexpr const static auto greaterEqual = greaterEqualValue <Type, Value1, Value2> :: value;
+  #endif
  };
 }
 #endif
