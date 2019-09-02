@@ -1,6 +1,11 @@
 #ifndef CRAP_UTILITY_MERGEFORTYPE
 #define CRAP_UTILITY_MERGEFORTYPE
 
+namespace crap
+{
+ template <class Type> struct mergeForType;
+}
+
 #include "../utility/mergevalue.h"
 
 namespace crap
