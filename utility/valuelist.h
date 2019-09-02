@@ -56,9 +56,7 @@ namespace crap
   template <std :: size_t Index> using valueAt = std :: integral_constant<Type, valueList <Type, Values...> :: values[Index]>;
   template <Type ... SubValues> using This = typename valueList <Type, Values...> :: template This<SubValues...>;
   template <std :: size_t ... Indices> static typename valueList <Type, Values...> :: template Generator<valueAt, Indices...>
-  //generate(std :: index_sequence<Indices...>);
   generate(indexSequence<Indices...>);
-  //using generator = decltype(generate(std :: make_index_sequence<N>{}));
   using generator = decltype(generate(makeIndexSequence<N>{}));
   public:
   template <template <Type... > class Container = This> using type = typename generator :: template type<Container>;
@@ -71,9 +69,7 @@ namespace crap
   template <std :: size_t Index> using valueAt = std :: integral_constant<Type, valueList <Type, Values...> :: values[N + Index]>;
   template <Type ... SubValues> using This = typename valueList <Type, Values...> :: template This<SubValues...>;
   template <std :: size_t ... Indices> static typename valueList <Type, Values...> :: template Generator<valueAt, Indices...>
-  //generate(std :: index_sequence<Indices...>);
   generate(indexSequence<Indices...>);
-  //using generator = decltype(generate(std :: make_index_sequence<valueList <Type, Values...> :: size - N>{}));
   using generator = decltype(generate(makeIndexSequence<valueList <Type, Values...> :: size - N>{}));
   public:
   template <template <Type...> class Container = This> using type = typename generator :: template type<Container>;
