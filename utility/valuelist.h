@@ -25,6 +25,7 @@ struct Generator;
   #if CPP14
   template <std :: size_t N> constexpr const static Type at = At <N> :: value;
   #endif
+  template <template <Type...> class Container = This> using copy = Container<Values...>;
   template <std :: size_t N, template <Type...> class Container = This> using till = typename Till <N> :: template type<Container>;
   template <std :: size_t N, template <Type...> class Container = This> using since = typename Since <N> :: template type<Container>;
  };
