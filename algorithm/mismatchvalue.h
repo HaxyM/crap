@@ -1,6 +1,7 @@
 #ifndef CRAP_ALGORITHM_MISMATCHVALUE
 #define CRAP_ALGORITHM_MISMATCHVALUE
 
+#include "../utility/language.h"
 #include "../utility/valuelist.h"
 
 namespace crap
@@ -10,22 +11,28 @@ namespace crap
  template <class Type, template <Type, Type> class Operator> struct mismatchValue<Type, Operator>
  {
   template <Type ... Values2> struct with;
+  #if CPP14
   template <Type ... Values2> constexpr const static std :: size_t value = with <Values2...> :: value;
   template <Type ... Values2> constexpr const static std :: size_t npos = with <Values2...> :: npos;
+  #endif
  };
 
  template <class Type, template <Type, Type> class Operator, Type Value1> struct mismatchValue<Type, Operator, Value1>
  {
   template <Type ... Values2> struct with;
+  #if CPP14
   template <Type ... Values2> constexpr const static std :: size_t value = with <Values2...> :: value;
   template <Type ... Values2> constexpr const static std :: size_t npos = with <Values2...> :: npos;
+  #endif
  };
 
  template <class Type, template <Type, Type> class Operator, Type ... Values1> struct mismatchValue
  {
   template <Type ... Values2> struct with;
+  #if CPP14
   template <Type ... Values2> constexpr const static std :: size_t value = with <Values2...> :: value;
   template <Type ... Values2> constexpr const static std :: size_t npos = with <Values2...> :: npos;
+  #endif
  };
 
  template <class Type, template <Type, Type> class Operator> template <Type ... Values2> struct mismatchValue <Type, Operator> :: with
@@ -34,7 +41,8 @@ namespace crap
   constexpr const static std :: size_t npos = sizeof...(Values2);
  };
 
- template <class Type, template <Type, Type> class Operator, Type Value1> template <Type ... Values2> struct mismatchValue <Type, Operator, Value1> :: with
+ template <class Type, template <Type, Type> class Operator, Type Value1> template <Type ... Values2>
+ struct mismatchValue <Type, Operator, Value1> :: with
  {
   private:
   constexpr const static std :: size_t getValue();
@@ -75,7 +83,7 @@ template <class Type, template <Type, Type> class Operator, Type Value1> templat
 constexpr const std :: size_t crap :: mismatchValue <Type, Operator, Value1> :: template with <Values2...> :: getValue(Type, ...)
 {
  using values = crap :: valueList<Type, Values2...>;
- return ((Operator <Value1, values :: template at<0u> > :: value) ? 1u : 0u);
+ return ((Operator <Value1, values :: template At <0u> :: value> :: value) ? 1u : 0u);
 }
 
 template <class Type, template <Type, Type> class Operator, Type ... Values1> template <Type ... Values2>
@@ -87,11 +95,12 @@ constexpr const std :: size_t crap :: mismatchValue <Type, Operator, Values1...>
 template <class Type, template <Type, Type> class Operator, Type ... Values1> template <Type ... Values2>
 constexpr const std :: size_t crap :: mismatchValue <Type, Operator, Values1...> :: template with <Values2...> :: getValue(Type)
 {
- return ((Operator <values1 :: template at<0u>, values2 :: template at<0u> > :: value) ? 1u : 0u);
+ return ((Operator <values1 :: template At <0u> :: value, values2 :: template At <0u> :: value> :: value) ? 1u : 0u);
 }
 
 template <class Type, template <Type, Type> class Operator, Type ... Values1> template <Type ... Values2>
-constexpr const std :: size_t crap :: mismatchValue <Type, Operator, Values1...> :: template with <Values2...> :: getValue(Type, Type, ...)
+constexpr const std :: size_t
+crap :: mismatchValue <Type, Operator, Values1...> :: template with <Values2...> :: getValue(Type, Type, ...)
 {
  return ((lower != half) ? lower : (half + upper));
 }
