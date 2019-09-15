@@ -53,8 +53,8 @@ namespace crap
   template <Type ... SubPattern>
 	  using This = typename searchAllValue <Type, Operator, SubPattern...> :: template within<Values...>;
   template <std :: size_t lowerIndex, std :: size_t upperIndex>
-	  using doesMatch = std :: integral_constant<std :: size_t, ((lowerIndex + half) == upperIndex) ? lowerIndex : (pattern :: size)>;
-  template <std :: size_t Index> using isIn = std :: integral_constant<bool, (Index != (pattern :: size))>;
+	  using doesMatch = std :: integral_constant<std :: size_t, ((lowerIndex + half) == upperIndex) ? lowerIndex : sizeof...(Values)>;
+  template <std :: size_t Index> using isIn = std :: integral_constant<bool, (Index != (sizeof...(Values)))>;
   using lower = typename pattern :: template till <half, This> :: template type<outerProductForType <std :: size_t, doesMatch> :: template values>;
   using upper = typename pattern :: template since <half, This> :: template type<lower :: template with>;
   public:
