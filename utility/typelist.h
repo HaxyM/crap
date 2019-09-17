@@ -3,6 +3,8 @@
 
 #include <utility>
 
+#include "makeindexsequence.h"
+
 namespace crap
 {
  template <class ... Types> struct typeList
@@ -33,8 +35,8 @@ namespace crap
   private:
   static_assert(N < (typeList <Types...> :: size), "Index out of range.");
   template <std :: size_t ... Indices> struct Implementation;
-  template <std :: size_t ... Indices> static Implementation<Indices...> generate(std :: index_sequence<Indices...>);
-  using implementation = decltype(generate(std :: make_index_sequence<N>{}));
+  template <std :: size_t ... Indices> static Implementation<Indices...> generate(indexSequence<Indices...>);
+  using implementation = decltype(generate(makeIndexSequence<N>{}));
   template <class Type> using identity = typename typeList <Types...> :: template identity<Type>;
   public:
   using type = decltype(implementation :: generate(identity<Types>{}...));
@@ -46,8 +48,8 @@ namespace crap
   private:
   static_assert(N <= (typeList <Types...> :: size), "Index out of range.");
   template <std :: size_t ... Indices> struct Implementation;
-  template <std :: size_t ... Indices> static Implementation<Indices...> generate(std :: index_sequence<Indices...>);
-  using implementation = decltype(generate(std :: make_index_sequence<N>{}));
+  template <std :: size_t ... Indices> static Implementation<Indices...> generate(indexSequence<Indices...>);
+  using implementation = decltype(generate(makeIndexSequence<N>{}));
   template <class Type> using identity = typename typeList <Types...> :: template identity<Type>;
   public:
   using type = decltype(implementation :: generate(identity<Types>{}...));
@@ -59,9 +61,9 @@ namespace crap
   private:
   static_assert(N <= (typeList <Types...> :: size), "Index out of range.");
   template <std :: size_t Index> using at = typename typeList <Types...> :: template at<Index>;
-  template <std :: size_t ... Indices> static Container<at<Indices>...> generate(std :: index_sequence<Indices...>);
+  template <std :: size_t ... Indices> static Container<at<Indices>...> generate(indexSequence<Indices...>);
   public:
-  using type = decltype(generate(std :: make_index_sequence<N>{}));
+  using type = decltype(generate(makeIndexSequence<N>{}));
  };
 
  template <class ... Types> template <std :: size_t N> template <std :: size_t ... Indices>
