@@ -1,6 +1,7 @@
 #ifndef CRAP_ALGORITHM_EQUALVALUE
 #define CRAP_ALGORITHM_EQUALVALUE
 
+#include "../utility/language.h"
 #include "../utility/valuelist.h"
 
 namespace crap
@@ -10,19 +11,25 @@ namespace crap
  template <class Type, template <Type, Type> class Operator> struct equalValue<Type, Operator>
  {
   template <Type ... Values2> struct with;
+  #if CPP14
   template <Type ... Values2> constexpr const static bool value = with <Values2...> :: value;
+  #endif
  };
 
  template <class Type, template <Type, Type> class Operator, Type Value1> struct equalValue<Type, Operator, Value1>
  {
   template <Type ... Values2> struct with;
+  #if CPP14
   template <Type ... Values2> constexpr const static bool value = with <Values2...> :: value;
+  #endif
  };
 
  template <class Type, template <Type, Type> class Operator, Type ... Values1> struct equalValue
  {
   template <Type ... Values2> struct with;
+  #if CPP14
   template <Type ... Values2> constexpr const static bool value = with <Values2...> :: value;
+  #endif
  };
 
  template <class Type, template <Type, Type> class Operator> template <Type ... Values2> struct equalValue <Type, Operator> :: with
@@ -67,7 +74,7 @@ template <class Type, template <Type, Type> class Operator, Type Value1>
 template <Type ... Values2> constexpr const bool crap :: equalValue <Type, Operator, Value1> :: template with <Values2...> :: getValue(Type)
 {
  using values = crap :: valueList<Type, Values2...>;
- return Operator <Value1, values :: template at<0u> > :: value;
+ return Operator <Value1, values :: template At <0u> :: value> :: value;
 }
 #endif
 
