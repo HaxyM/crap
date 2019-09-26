@@ -18,9 +18,9 @@ namespace crap
   template <std :: size_t N> struct At;
   template <std :: size_t N> struct Till;
   template <std :: size_t N> struct Since;
-  template <std :: size_t N> friend struct valueContainerList <Type, StoredSources...> :: At;
-  template <std :: size_t N> friend struct valueContainerList <Type, StoredSources...> :: Till;
-  template <std :: size_t N> friend struct valueContainerList <Type, StoredSources...> :: Since;
+  template <std :: size_t N> friend struct valueSourceList <Type, StoredSources...> :: At;
+  template <std :: size_t N> friend struct valueSourceList <Type, StoredSources...> :: Till;
+  template <std :: size_t N> friend struct valueSourceList <Type, StoredSources...> :: Since;
   constexpr const static std :: size_t size = sizeof...(StoredSources);
   template <std :: size_t N, template <template <template <Type...> class> class...> class SourcesContainer = This>
 	  using till = typename Till <N> :: template type<SourcesContainer>;
@@ -29,13 +29,13 @@ namespace crap
  };
  
  template <class Type, template <template <Type...> class> class ... StoredSources>
- struct valueContainerList <Type, StoredSources...> :: ignore
+ struct valueSourceList <Type, StoredSources...> :: ignore
  {
   ignore(...){}
  };
  
  template <class Type, template <template <Type...> class> class ... StoredSources> template <template <template <Type...> class> class Source>
-	 struct valueContainerList <Type, StoredSources...> :: identity
+	 struct valueSourceList <Type, StoredSources...> :: identity
  {
   template <template <Type...> class Container> using type = Source<Container>;
  };
@@ -48,7 +48,7 @@ namespace crap
  };
  
  template <class Type, template <template <Type...> class> class ... StoredSources> template <std :: size_t ... Indices>
-	 struct valueContainerList <Type, StoredSources...> :: Impl
+	 struct valueSourceList <Type, StoredSources...> :: Impl
  {
   using ignore = valueSourceList <Type, StoredSources...> :: ignore;
   template <template <template <Type...> class> class SubSource>
@@ -82,7 +82,7 @@ namespace crap
 	  using This = typename valueSourceList <Type, StoredSources...> :: template This<SubSources...>;
   template <std :: size_t Index> using sourceAt = typename valueSourceList <Type, StoredSources...> :: template At<Index>;
   template <std :: size_t ... Indices> static
-	  typename valueSourceList <Type, Stored...> :: template Generator<sourceAt <Indices> :: template type...>
+	  typename valueSourceList <Type, StoredSources...> :: template Generator<sourceAt <Indices> :: template type...>
 	  generate(std :: index_sequence<Indices...>);
   static_assert(N <= valueSourceList <Type, StoredSources...> :: size, "Index out of range.");
   public:
