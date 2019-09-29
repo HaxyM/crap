@@ -39,6 +39,7 @@ namespace crap
 	  using upperFinal = typename upperPartitioned :: template resultFalse<lowerFailed :: template with> :: template type<Container>;
   constexpr const static std :: size_t lowerSize = lowerFinal <> :: size;
   template <Type Pivot, Type ... LowerValues> struct specialMerger;
+  template <Type ... LowerValues> using specialMergerForThis = specialMerger<pivot, LowerValues...>; 
   template <Type ... SubValues> using sorter = sortValue<Type, Operator, SubValues...>;
   template <Type ... SubValues> using lowerPartialSorter = partialSortValue<Type, N, Operator, SubValues...>;
   template <Type ... SubValues> using upperPartialSorter = partialSortValue<Type, N - (lowerSize + 1u), Operator, SubValues...>;
@@ -53,14 +54,14 @@ namespace crap
  };
 
  template <class Type, std :: size_t N, template <Type, Type> class Operator, Type ... Values> template <Type Pivot, Type ... LowerValues>
-	 struct NthElementValue <Type, N, Operator, Values...> :: specialMerger
+	 struct partialSortValue <Type, N, Operator, Values...> :: specialMerger
  {
   template <Type ... UpperValues> struct with;
  };
 
  template <class Type, std :: size_t N, template <Type, Type> class Operator, Type ... Values>
 	 template <Type Pivot, Type ... LowerValues> template <Type ... UpperValues>
-	 struct NthElementValue <Type, N, Operator, Values...> :: template specialMerger <Pivot, LowerValues...> :: with
+	 struct partialSortValue <Type, N, Operator, Values...> :: template specialMerger <Pivot, LowerValues...> :: with
  {
   template <template <Type...> class Container = valueListForType <Type> :: template type> using type = Container<LowerValues..., Pivot, UpperValues...>;
  };
