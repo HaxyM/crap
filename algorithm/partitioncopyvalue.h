@@ -12,9 +12,9 @@ namespace crap
  template <class Type, template <Type> class Operator> struct partitionCopyValue<Type, Operator>
  {
   template <template <Type...> class Container = valueListForType <Type> :: template type>
-	  using resuleTrue = Container<>;
+	  using resultTrue = Container<>;
   template <template <Type...> class Container = valueListForType <Type> :: template type>
-	  using resuleFalse = Container<>;
+	  using resultFalse = Container<>;
  };
 
  template <class Type, template <Type> class Operator, Type Value>
