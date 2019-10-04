@@ -19,15 +19,18 @@ struct Generator;
   template <std :: size_t N> struct At;
   template <std :: size_t N> struct Till;
   template <std :: size_t N> struct Since;
+  template <std :: size_t Begin, std :: size_t End> struct SubRange;
   template <std :: size_t N> friend struct valueList <Type, Values...> :: At;
   template <std :: size_t N> friend struct valueList <Type, Values...> :: Till;
   template <std :: size_t N> friend struct valueList <Type, Values...> :: Since;
+  template <std :: size_t Begin, std :: size_t End> friend struct valueList <Type, Values...> :: SubRange;
   #if CPP14
   template <std :: size_t N> constexpr const static Type at = At <N> :: value;
   #endif
   template <template <Type...> class Container = This> using copy = Container<Values...>;
   template <std :: size_t N, template <Type...> class Container = This> using till = typename Till <N> :: template type<Container>;
   template <std :: size_t N, template <Type...> class Container = This> using since = typename Since <N> :: template type<Container>;
+  template <std :: size_t Begin, std :: size_t End, template <Type...> class Container = This> using subRange = typename SubRange <Begin, End> :: template type<Container>;
  };
 }
 
@@ -71,6 +74,20 @@ namespace crap
   template <std :: size_t ... Indices> static typename valueList <Type, Values...> :: template Generator<valueAt, Indices...>
   generate(indexSequence<Indices...>);
   using generator = decltype(generate(makeIndexSequence<valueList <Type, Values...> :: size - N>{}));
+  public:
+  template <template <Type...> class Container = This> using type = typename generator :: template type<Container>;
+ };
+
+ template <class Type, Type ... Values> template <std :: size_t Begin, std :: size_t End> struct valueList <Type, Values...> :: SubRange
+ {
+  private:
+  static_assert(End <= (valueList <Type, Values...> :: size), "Index out of range.");
+  static_assert(Begin <= End, "Negative range.");
+  template <std :: size_t Index> using valueAt = std :: integral_constant<Type, valueList <Type, Values...> :: values[Begin + Index]>;
+  template <Type ... SubValues> using This = typename valueList <Type, Values...> :: template This<SubValues...>;
+  template <std :: size_t ... Indices> static typename valueList <Type, Values...> :: template Generator<valueAt, Indices...>
+  generate(indexSequence<Indices...>);
+  using generator = decltype(generate(makeIndexSequence<End - Begin>{}));
   public:
   template <template <Type...> class Container = This> using type = typename generator :: template type<Container>;
  };
