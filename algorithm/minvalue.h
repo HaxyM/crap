@@ -25,8 +25,7 @@ namespace crap
   private:
   template <Type ... SubValues> using This = minValue<Type, Operator, SubValues...>;
   public:
-  constexpr const static Type value = reduce <Type, Operator, Values...> :: value;
+  constexpr const static Type value = reduce <Type, This, Values...> :: value;
  };
 }
 #endif
-
