@@ -5,13 +5,13 @@
 
 namespace crap
 {
- template <class Type, Type ... Values1> struct concatenateValues
+ template <class Type, Type ... Values1> struct concatenateValue
  {
   template <Type ... Values2> struct with;
  };
 
  template <class Type, Type ... Values1> template <Type ... Values2>
-	 struct concatenateValues <Type, Values1...> :: with
+	 struct concatenateValue <Type, Values1...> :: with
  {
   template <template <Type...> class Container = valueListForType <Type> :: template type>
 	  using type = Container<Values1..., Values2...>;
