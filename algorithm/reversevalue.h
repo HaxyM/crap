@@ -1,7 +1,7 @@
 #ifndef CRAP_ALGORITHM_REVERSEVALUE
 #define CRAP_ALGORITHM_REVERSEVALUE
 
-#include "../utility/mergevalue.h"
+#include "../utility/concatenatevalue.h"
 #include "../utility/valuelistfortype.h"
 
 namespace crap
@@ -34,7 +34,7 @@ namespace crap
   using values = valueList<Type, Values...>;
   constexpr const static auto half = (values :: size) / 2u;
   template <Type ... SubTypes> using This = reverseValue<Type, SubTypes...>;
-  template <Type ... SubTypes> using merger = mergeValue<Type, SubTypes...>;
+  template <Type ... SubTypes> using merger = concatenateValue<Type, SubTypes...>;
   using upper = typename values :: template since <half, This> :: template type<merger>;
   using lower = typename values :: template till <half, This> :: template type<upper :: template with>;
   public:
