@@ -1,7 +1,7 @@
 #ifndef CRAP_ALGORITHM_ROTATEVALUE
 #define CRAP_ALGORITHM_ROTATEVALUE
 
-#include "../utility/mergevalue.h"
+#include "../utility/concatenatevalue.h"
 #include "../utility/valuelistfortype.h"
 
 namespace crap
@@ -23,7 +23,7 @@ namespace crap
   private:
   using values = valueList<Type, Values...>;
   constexpr const static auto pivot = N % (values :: size);
-  template <Type ... SubTypes> using merger = mergeValue<Type, SubTypes...>;
+  template <Type ... SubTypes> using merger = concatenateValue<Type, SubTypes...>;
   using upper = typename values :: template since<pivot, merger>;
   using lower = typename values :: template till<pivot, upper :: template with>;
   public:
