@@ -2,7 +2,7 @@
 #define CRAP_ALGORITHM_SORTVALUE
 
 #include "partitionvalue.h"
-#include "../utility/mergevalue.h"
+#include "../utility/concatenatevalue.h"
 #include "../utility/valuelistfortype.h"
 
 namespace crap
@@ -37,7 +37,7 @@ namespace crap
   template <Type Pivot, Type ... LowerValues> struct finalMerger;
   template <Type Value> using lowerOperator = Operator<pivot, Value>;
   template <Type Value> using upperOperator = Operator<Value, pivot>;
-  template <Type ... SubValues> using merger = mergeValue<Type, SubValues...>;
+  template <Type ... SubValues> using merger = concatenateValue<Type, SubValues...>;
   template <Type ... SubValues> using This = sortValue<Type, Operator, SubValues...>;
   template <Type ... LowerValues> using finalMergerForThis = finalMerger<pivot, LowerValues...>;
   template <Type ... SubValues> using lowerPartition = partitionValue<Type, lowerOperator, SubValues...>;
