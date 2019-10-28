@@ -3,7 +3,7 @@
 
 #include "copyvalue.h"
 #include "partitionvalue.h"
-#include "../utility/mergefortype.h"
+#include "../utility/concatenatefortype.h"
 #include "../utility/valuedemultiplexer.h"
 #include "../utility/valuelistfortype.h"
 
@@ -46,8 +46,8 @@ namespace crap
   template <Type ... LowerValues> using specialMergerForThis = specialMerger<pivot, LowerValues...>; 
   using lowerPartitioned = typename values :: template till<N, lowerPartitioner>;
   using upperPartitioned = typename values :: template since<N + 1u, upperPartitioner>;
-  using lowerFailed = typename lowerPartitioned :: template type <> :: template till<lowerPartitioned :: value, mergeForType <Type> :: template values>;
-  using upperFailed = typename upperPartitioned :: template type <> :: template till<upperPartitioned :: value, mergeForType <Type> :: template values>;
+  using lowerFailed = typename lowerPartitioned :: template type <> :: template till<lowerPartitioned :: value, concatenateForType <Type> :: template values>;
+  using upperFailed = typename upperPartitioned :: template type <> :: template till<upperPartitioned :: value, concatenateForType <Type> :: template values>;
   using lowerMerged = typename lowerPartitioned :: template type <> :: template since<lowerPartitioned :: value, upperFailed :: template with>;
   using upperMerged = typename upperPartitioned :: template type <> :: template since<upperPartitioned :: value, lowerFailed :: template with>;
   constexpr const static std :: size_t lowerSize = lowerMerged :: template type <> :: size;
