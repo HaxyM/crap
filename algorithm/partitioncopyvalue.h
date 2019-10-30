@@ -1,7 +1,7 @@
 #ifndef CRAP_ALGORITHM_PARTITIONCOPYVALUE
 #define CRAP_ALGORITHM_PARTITIONCOPYVALUE
 
-#include "../utility/mergefortype.h"
+#include "../utility/concatenatefortype.h"
 #include "../utility/valuelistfortype.h"
 #include "../utility/valuemultiplexer.h"
 
@@ -43,9 +43,9 @@ namespace crap
   template <template <Type...> class Container> using upperFalse = typename values :: template since <half, This> :: template resultFalse<Container>;
   public:
   template <template <Type...> class Container = valueListForType <Type> :: template type>
-	  using resultTrue = typename upperTrue <lowerTrue <mergeForType <Type> :: template values> :: template with> :: template type<Container>;
+	  using resultTrue = typename upperTrue <lowerTrue <concatenateForType <Type> :: template values> :: template with> :: template type<Container>;
   template <template <Type...> class Container = valueListForType <Type> :: template type>
-	  using resultFalse = typename upperFalse <lowerFalse <mergeForType <Type> :: template values> :: template with> :: template type<Container>;
+	  using resultFalse = typename upperFalse <lowerFalse <concatenateForType <Type> :: template values> :: template with> :: template type<Container>;
  };
 }
 #endif
