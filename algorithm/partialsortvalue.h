@@ -5,7 +5,7 @@
 #include "partitioncopyvalue.h"
 #include "sortvalue.h"
 #include "../utility/valuedemultiplexer.h"
-#include "../utility/mergefortype.h"
+#include "../utility/concatenatefortype.h"
 #include "../utility/valuelistfortype.h"
 
 namespace crap
@@ -31,8 +31,8 @@ namespace crap
   template <Type ... SubValues> using upperPartitioner = partitionCopyValue<Type, upperCompare, SubValues...>;
   using lowerPartitioned = typename values :: template till<N, lowerPartitioner>;
   using upperPartitioned = typename values :: template since<N + 1u, upperPartitioner>;
-  using lowerFailed = typename lowerPartitioned :: template resultTrue<mergeForType <Type> :: template values>;
-  using upperFailed = typename upperPartitioned :: template resultTrue<mergeForType <Type> :: template values>;
+  using lowerFailed = typename lowerPartitioned :: template resultTrue<concatenateForType <Type> :: template values>;
+  using upperFailed = typename upperPartitioned :: template resultTrue<concatenateForType <Type> :: template values>;
   template <template <Type...> class Container = valueListForType <Type> :: template type>
 	  using lowerFinal = typename lowerPartitioned :: template resultFalse<upperFailed :: template with> :: template type<Container>;
   template <template <Type...> class Container>
