@@ -1,7 +1,7 @@
 #ifndef CRAP_ALGORITHM_UNIQUEVALUE
 #define CRAP_ALGORITHM_UNIQUEVALUE
 
-#include "../utility/mergefortype.h"
+#include "../utility/concatenatefortype.h"
 #include "../utility/valuelistfortype.h"
 
 namespace crap
@@ -28,7 +28,7 @@ namespace crap
   using upper = typename values :: template since <half, This> :: template type<>;
   constexpr const static Type lowerLast = lower :: template At <lower :: size - 1u> :: value;
   constexpr const static Type upperFirst = upper :: template At <0u> :: value;
-  using merger = typename lower :: template copy<mergeForType <Type> :: template values>;
+  using merger = typename lower :: template copy<concatenateForType <Type> :: template values>;
   constexpr const static bool shouldSkipUpperFirst = Operator <lowerLast, upperFirst> :: value;
   //Upper with or without first value
   using upperToMerge = typename upper :: template since<(shouldSkipUpperFirst ? 1u : 0u), merger :: template with>;
