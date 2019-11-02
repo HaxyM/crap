@@ -3,7 +3,7 @@
 
 #include <limits>
 
-#include "../utility/mergefortype.h"
+#include "../utility/concatenatefortype.h"
 #include "../utility/valuelistfortype.h"
 
 namespace crap
@@ -25,7 +25,7 @@ namespace crap
   private:
   static_assert(N < (std :: numeric_limits <Type> :: max() - Since), "Overflow.");
   constexpr const static std :: size_t half = (N / 2u);
-  using lower = typename iotaValue <half, Type, Since> :: template type<mergeForType <Type> :: template values>;
+  using lower = typename iotaValue <half, Type, Since> :: template type<concatenateForType <Type> :: template values>;
   using upper = typename iotaValue <N - half, Type, Since + static_cast<Type>(half)> :: template type<lower :: template with>;
   public:
   template <template <Type...> class Container = valueListForType <Type> :: template type> using type = typename upper :: template type<Container>;
