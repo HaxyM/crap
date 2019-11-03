@@ -1,7 +1,12 @@
 #ifndef CRAP_UTILITY_CONCATENATEFORTYPE
 #define CRAP_UTILITY_CONCATENATEFORTYPE
 
-#include "concatenatevalue.h"
+namespace crap
+{
+ template <class Type> struct concatenateForType;
+}
+
+#include "../utility/concatenatevalue.h"
 
 namespace crap
 {
