@@ -1,7 +1,7 @@
 #ifndef CRAP_UTILITY_JOINVALUESOURCES
 #define CRAP_UTILITY_JOINVALUESOURCES
 
-#include "mergefortype.h"
+#include "concatenatefortype.h"
 #include "valuelistfortype.h"
 #include "valuesourcelist.h"
 
@@ -27,7 +27,7 @@ namespace crap
  {
   private:
   template <Type ... Values>
-	  using first = typename Source1 <mergeForType <Type> :: template values> :: template with<Values...>;
+	  using first = typename Source1 <concatenateForType <Type> :: template values> :: template with<Values...>;
   public:
   template <template <Type...> class Conatiner = valueListForType <Type> :: template type>
 	  using type = typename Source2 <first> :: template type<Container>;
@@ -45,7 +45,7 @@ namespace crap
   template <template <Type...> class Container>
 	  using upper = typename sources :: template since <half, This> :: template type<Container>;
   template <Type ... Values>
-	  using first = typename lower <mergeFortType <Type> :: template values> :: template with<Values...>;
+	  using first = typename lower <concatenateFortType <Type> :: template values> :: template with<Values...>;
   public:
   template <template <template <Type...> class> class Container = valueListForType <Type> :: template type>
 	  using type = typename upper <first> :: template type<Container>;
