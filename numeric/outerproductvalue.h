@@ -1,7 +1,7 @@
 #ifndef CRAP_NUMERIC_OUTERPRODUCTVALUE
 #define CRAP_NUMERIC_OUTERPRODUCTVALUE
 
-#include "../utility/mergefortype.h"
+#include "../utility/concatenatefortype.h"
 #include "../utility/valuelistfortype.h"
 
 namespace crap
@@ -44,7 +44,7 @@ namespace crap
   using values = valueList<Type, Values1...>;
   constexpr const static std :: size_t half = (values :: size) / 2u;
   template <Type ... SubValues> using This = outerProductValue<Type, Operator, SubValues...>;
-  using lower = typename values :: template till <half, This> :: template with <Values2...> :: template type<mergeForType <Type> :: template type>;
+  using lower = typename values :: template till <half, This> :: template with <Values2...> :: template type<concatenateForType <Type> :: template type>;
   using upper = typename values :: template since <half, This> :: template with <Values2...> :: template type<lower :: template with>;
   public:
   template <template <Type...> class Container = valueListForType <Type> :: template type>
