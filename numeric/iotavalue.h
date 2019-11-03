@@ -3,13 +3,16 @@
 
 #include <limits>
 
+namespace crap
+{
+ template <std :: size_t N, class Type, Type Since = static_cast<Type>(0)> struct iotaValue;
+}
+
 #include "../utility/concatenatefortype.h"
 #include "../utility/valuelistfortype.h"
 
 namespace crap
 {
- template <std :: size_t N, class Type, Type Since = static_cast<Type>(0)> struct iotaValue;
-
  template <class Type, Type Since> struct iotaValue<0u, Type, Since>
  {
   template <template <Type...> class Container = valueListForType <Type> :: template type> using type = Container<>;
