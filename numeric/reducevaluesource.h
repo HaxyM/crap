@@ -2,6 +2,7 @@
 #define CRAP_NUMERIC_REDUCEVALUESOURCE
 
 #include "../utility/valuesourcelist.h"
+#include "../utility/valuelistfortype.h"
 
 namespace crap
 {
