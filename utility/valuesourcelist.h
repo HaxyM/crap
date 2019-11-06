@@ -1,6 +1,8 @@
 #ifndef CRAP_UTILITY_VALUESOURCELIST
 #define CRAP_UTILITY_VALUESOURCELIST
 
+#include "makeindexsequence.h"
+
 #include <utility>
 
 namespace crap
@@ -67,8 +69,8 @@ namespace crap
   static_assert(N < valueSourceList <Type, StoredSources...> :: size, "Index out of range.");
   template <std :: size_t ... Indices> static
 	  typename valueSourceList <Type, StoredSources...> :: template Impl<Indices...>
-	  generate(std :: index_sequence <Indices...>);
-  using impl = decltype(generate(std :: make_index_sequence<N>{}));
+	  generate(indexSequence <Indices...>);
+  using impl = decltype(generate(makeIndexSequence<N>{}));
   public:
   template <template <Type...> class Container>
 	  using type = typename decltype(impl :: generateAt(typename impl :: template identity<StoredSources>{}...)) :: template type<Container>;
@@ -83,11 +85,11 @@ namespace crap
   template <std :: size_t Index> using sourceAt = typename valueSourceList <Type, StoredSources...> :: template At<Index>;
   template <std :: size_t ... Indices> static
 	  typename valueSourceList <Type, StoredSources...> :: template Generator<sourceAt <Indices> :: template type...>
-	  generate(std :: index_sequence<Indices...>);
+	  generate(indexSequence<Indices...>);
   static_assert(N <= valueSourceList <Type, StoredSources...> :: size, "Index out of range.");
   public:
   template <template <template <template <Type...> class> class...> class SourceContainer = This>
-	  using type = typename decltype(generate(std :: make_index_sequence<N>{})) :: template type<SourceContainer>;
+	  using type = typename decltype(generate(makeIndexSequence<N>{})) :: template type<SourceContainer>;
  };
  
  template <class Type, template <template <Type...> class> class ... StoredSources> template <std :: size_t N>
@@ -99,8 +101,8 @@ namespace crap
 	  using This = typename valueSourceList <Type, StoredSources...> :: template This<SubSources...>;
   template <std :: size_t ... Indices> static 
 	  typename valueSourceList <Type, StoredSources...> :: template Impl<Indices...>
-	  generate(std :: index_sequence<Indices...>);
-  using impl = decltype(generate(std :: make_index_sequence<N>{}));
+	  generate(indexSequence<Indices...>);
+  using impl = decltype(generate(makeIndexSequence<N>{}));
   public:
   template <template <template <template <Type...> class> class...> class SourceContainer = This>
 	  using type = typename decltype(impl :: generateSince(typename impl :: template identity<StoredSources>{}...)) :: template type<SourceContainer>;
