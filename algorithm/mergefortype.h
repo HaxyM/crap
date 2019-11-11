@@ -1,7 +1,7 @@
 #ifndef CRAP_ALGORITHM_MERGEFORTYPE
 #define CRAP_ALGORITHM_MERGEFORTYPE
 
-#include "mergrvalue.h"
+#include "mergevalue.h"
 #include "../functional/comparatorsfortype.h"
 
 namespace crap
