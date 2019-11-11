@@ -2,7 +2,7 @@
 #define CRAP_ALGORITHM_MERGEVALUE
 
 #include "copyvalue.h"
-#include "equalrange.h"
+#include "equalrangevalue.h"
 #include "../utility/valuedemultiplexer.h"
 #include "../utility/valuelist.h"
 #include "../utility/valuelistfortype.h"
