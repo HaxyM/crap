@@ -1,5 +1,5 @@
-#ifndef CRAP_UTILITY_MERGEVALUEZIPPER
-#define CRAP_UTILITY_MERGEVALUEZIPPER
+#ifndef CRAP_ALGORITHM_MERGEVALUEZIPPER
+#define CRAP_ALGORITHM_MERGEVALUEZIPPER
 
 #include "mergefortype.h"
 #include "../utility/valuelistfortype.h"
