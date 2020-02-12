@@ -2,7 +2,7 @@
 #define CRAP_ALGORITHM_PUSHHEAPFORTYPE
 
 #include "pushheapvalue.h"
-#include "../functional/comparatorsfortype"
+#include "../functional/comparatorsfortype.h"
 
 namespace crap
 {
