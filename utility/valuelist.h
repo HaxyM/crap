@@ -16,6 +16,8 @@ namespace crap
 struct Generator;
   public:
   constexpr const static std :: size_t size = sizeof...(Values);
+  constexpr const static std :: size_t begin = 0u;
+  constexpr const static std :: size_t end = size;
   template <std :: size_t N> struct At;
   template <std :: size_t N> struct Till;
   template <std :: size_t N> struct Since;
