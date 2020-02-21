@@ -2,8 +2,8 @@
 #define CRAP_ALGORITHM_SETDIFFERENCEVALUE
 
 #include "equalrangevalue.h"
+#include "fillnvalue.h"
 #include "../utility/concatenatevaluezipper.h"
-#include "../utility/nullvalue.h"
 #include "../utility/valuelist.h"
 #include "../utility/valuelistfortype.h"
 #include "../utility/valuemultiplexer.h"
@@ -38,10 +38,9 @@ namespace crap
  {
   private:
   using found = equalRangeValue<Type, Value1, Operator, Values2...>;
-  template <template <Type...> class Container> using pass = Container<Value1>;
   public:
   template <template <Type...> class Container = valueListForType <Type> :: template type>
-	  using type = typename valueMultiplexer <Type, (found :: begin == found :: end), Container, pass, nullValue <Type> :: template type> :: type;
+	  using type = typename fillNValue <Type, (found :: begin == found :: end) ? 1u : 0u, Value1> :: template type<Container>;
  };
 
  template <class Type, template <Type, Type> class Operator, Type ... Values1>
