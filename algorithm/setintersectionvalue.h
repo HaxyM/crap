@@ -2,7 +2,7 @@
 #define CRAP_ALGORITHM_SETINTERSECTIONVALUE
 
 #include "equalrangevalue.h"
-#include "fillvalue.h"
+#include "fillnvalue.h"
 #include "../utility/concatenatevaluezipper.h"
 #include "../utility/nullvalue.h"
 #include "../utility/valuelist.h"
@@ -43,7 +43,7 @@ namespace crap
   using found = equalRangeValue<Type, Value1, Operator, Values2...>;
   public:
   template <template <Type...> class Container = valueListForType <Type> :: template type>
-	  using type = typename valueMultiplexer <Type, (found :: begin == found :: end), Container, nullValue <Type> :: template type, fillValue <Type, 1u, Value1> :: template type> :: type;
+	  using type = typename valueMultiplexer <Type, (found :: begin == found :: end), Container, nullValue <Type> :: template type, fillNValue <Type, 1u, Value1> :: template type> :: type;
  };
 
  template <class Type, template <Type, Type> class Operator, Type ... Values1>
