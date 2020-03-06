@@ -1,10 +1,11 @@
 #ifndef CRAP_ALGORITHM_SETUNIONVALUE
 #define CRAP_ALGORITHM_SETUNIONVALUE
 
+#include "copyvalue.h"
 #include "equalrangevalue.h"
+#include "../utility/concatenatevaluezipper.h"
 #include "../utility/valuelist.h"
 #include "../utility/valuelistfortype.h"
-#include "../utility/valuemultiplexer.h"
 
 namespace crap
 {
@@ -14,7 +15,7 @@ namespace crap
  template <class Type, template <Type, Type> class Operator>
 	 struct setUnionValue<Type, Operator>
  {
-  template <Type ... Values2> struct with;
+  template <Type ... Values2> using with = copyValue<Type, Values2...>;
  };
 
  template <class Type, template <Type, Type> class Operator, Type Value>
@@ -29,27 +30,20 @@ namespace crap
   template <Type ... Values2> struct with;
  };
 
- template <class Type, template <Type, Type> class Operator>
-	 template <Type ... Values2>
-	 struct setUnionValue <Type, Operator> :: with
- {
-  template <template <Type...> class Container = valueListForType <Type> :: template type>
-	  using type = Container<Values2...>;
- };
-
  template <class Type, template <Type, Type> class Operator, Type Value>
 	 template <Type ... Values2>
 	 struct setUnionValue <Type, Operator, Value> :: with
  {
   private:
   using values2 = valueList<Type, Values2...>;
-  using ranges = equalRangeValue<Type, Value, Operator, Values2...>;
-  template <Type ... LowerValues> struct specialMerger;
-  template <Type ... UpperValues>
-	  using lower = typename values2 :: template till <(ranges :: begin), specialMerger> :: template with<UpperValues...>;
+  using range = equalRangeValue<Type, Value, Operator, Values2...>;
+  constexpr const static std :: size_t newBegin = (((range :: begin) == (range :: end)) ? (range :: begin) : ((range :: begin) + 1u));
+  template <template <Type...> class Container> using middle = typename copyValue <Type, Value> :: template type<Container>;
+  template <template <Type...> class Container> using lower = typename values2 :: template till<(range :: begin), Container>;
+  template <template <Type...> class Container> using upper = typename values2 :: template since<newBegin, Container>;
   public:
   template <template <Type...> class Container = valueListForType <Type> :: template type>
-	  using type = typename values2 :: template since <(ranges :: end), lower> :: template type<Container>;
+	  using type = typename concatenateValueZipper <Type, lower, middle, upper> :: template type<Container>;
  };
 
  template <class Type, template <Type, Type> class Operator, Type ... Values1>
@@ -57,74 +51,26 @@ namespace crap
 	 struct setUnionValue <Type, Operator, Values1...> :: with
  {
   private:
-  template <template <Type...> class Container> using emptySource = Container<Values1...>;
-  struct nonEmpty;
-  public:
-  template <template <Type...> class Container = valueListForType <Type> :: template type>
-	  using type = typename valueMultiplexer <Type, (sizeof...(Values2) == 0u), Container, emptySource, nonEmpty :: template source> :: type;
- };
-
- template <class Type, template <Type, Type> class Operator, Type Value>
-	 template <Type ... Values2>
-	 template <Type ... LowerValues>
-	 struct setUnionValue <Type, Operator, Value> :: template with <Values2...> :: specialMerger
- {
-  template <Type ... UpperValues> struct with;
- };
-
- template <class Type, template <Type, Type> class Operator, Type ... Values1>
-	 template <Type ... Values2>
-	 struct setUnionValue <Type, Operator, Values1...> :: template with <Values2...> :: nonEmpty
- {
-  private:
   using values1 = valueList<Type, Values1...>;
   using values2 = valueList<Type, Values2...>;
-  constexpr const static std :: size_t half = (values1 :: size) / 2u;
-  constexpr const static Type pivot = values1 :: template At <half> :: value;
-  using ranges = equalRangeValue<Type, pivot, Operator, Values2...>;
+  constexpr const static Type midValue = values1 :: template At <(values1 :: size) / 2u> :: value;
+  using range1 = equalRangeValue<Type, midValue, Operator, Values1...>;
+  using range2 = equalRangeValue<Type, midValue, Operator, Values2...>;
+  constexpr const static std :: size_t range1Size = ((range1 :: end) - (range1 :: begin));
+  constexpr const static std :: size_t range2NewBegin = (range2 :: begin) + range1Size;
+  constexpr const static std :: size_t range2Begin = ((range2NewBegin < (range2 :: end)) ? range2NewBegin : (range2 :: end));
   template <Type ... SubValues> using This = setUnionValue<Type, Operator, SubValues...>;
-  template <Type ... SubValues>
-	  using lower1 = typename values1 :: template till <half, This> :: template with<SubValues...>;
-  template <Type ... SubValues>
-	  using upper1 = typename values1 :: template since <half + 1u, This> :: template with<SubValues...>;
+  template <template <Type...> class Container> using middle1 = typename values1 :: template subRange<(range1 :: begin), (range1 :: end), Container>;
+  template <template <Type...> class Container> using middle2 = typename values2 :: template subRange<range2Begin, (range2 :: end), Container>;
   template <template <Type...> class Container>
-	  using lower = typename values2 :: template till <(ranges :: begin), lower1> :: template type<Container>;
+	  using lower = typename values2 :: template
+	  till <(range2 :: begin), values1 :: template till <(range1 :: begin), This> :: template with> :: template type<Container>;
   template <template <Type...> class Container>
-	  using upper = typename values2 :: template since <(ranges :: end), upper1> :: template type<Container>;
-  template <Type Pivot, Type ... LowerValues> struct specialMerger;
-  template <Type ... LowerValues> using specialMergerForThis = specialMerger<pivot, LowerValues...>;
-  template <Type ... SubValues> using lowerToMerge = typename lower<specialMergerForThis> :: template with<SubValues...>;
+	  using upper = typename values2 :: template
+	  since <(range2 :: end), values1 :: template since <(range1 :: end), This> :: template with> :: template type<Container>;
   public:
-  template <template <Type...> class Container>
-	  using source = typename upper <lowerToMerge> :: template type<Container>;
- };
-
- template <class Type, template <Type, Type> class Operator, Type Value>
-	 template <Type ... Values2>
-	 template <Type ... LowerValues>
-	 template <Type ... UpperValues>
-	 struct setUnionValue <Type, Operator, Value> :: template with <Values2...> :: template specialMerger <LowerValues...> :: with
- {
-  template <template <Type...> class Container>
-	  using type = Container<LowerValues..., Value, UpperValues...>;
- };
-
- template <class Type, template <Type, Type> class Operator, Type ... Values1>
-	 template <Type ... Values2>
-	 template <Type Pivot, Type ... LowerValues>
-	 struct setUnionValue <Type, Operator, Values1...> :: template with <Values2...> :: nonEmpty :: specialMerger
- {
-  template <Type ... UpperValues> struct with;
- };
-
- template <class Type, template <Type, Type> class Operator, Type ... Values1>
-	 template <Type ... Values2>
-	 template <Type Pivot, Type ... LowerValues>
-	 template <Type ... UpperValues>
-	 struct setUnionValue <Type, Operator, Values1...> :: template with <Values2...> :: nonEmpty :: template specialMerger <Pivot, LowerValues...> :: with
- {
-  template <template <Type...> class Container>
-	  using type = Container<LowerValues..., Pivot, UpperValues...>;
+  template <template <Type...> class Container = valueListForType <Type> :: template type>
+	  using type = typename concatenateValueZipper <Type, lower, middle1, middle2, upper> :: template type<Container>;
  };
 }
 #endif
