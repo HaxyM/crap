@@ -1,7 +1,9 @@
 #ifndef CRAP_ALGORITHM_LEXICOGRAPHICALCOMPAREVALUE
 #define CRAP_ALGORITHM_LEXICOGRAPHICALCOMPAREVALUE
 
-#include <type_traits>
+#include "copyvalue.h"
+#include "../utility/frontvalue.h"
+#include "../utility/valuedemultiplexer.h"
 #include "../utility/valuelist.h"
 
 namespace crap
@@ -10,115 +12,112 @@ namespace crap
 
  template <class Type, template <Type, Type> class Operator> struct lexicographicalCompareValue<Type, Operator>
  {
-  enum class results
+  enum class detailedResult_t
   {
-   smaller,
+   less = -1,
    equal,
    greater,
   };
   template <Type ... Values2> struct with;
  };
 
- template <class Type, template <Type, Type> class Operator, Type Value>
-	 struct lexicographicalCompareValue<Type, Operator, Value>
+ template <class Type, template <Type, Type> class Operator, Type Value1>
+	 struct lexicographicalCompareValue<Type, Operator, Value1>
  {
-  using results = typename lexicographicalCompareValue <Type, Operator> :: results;
+  using detailedResult_t = typename lexicographicalCompareValue <Type, Operator> :: detailedResult_t;
   template <Type ... Values2> struct with;
  };
 
  template <class Type, template <Type, Type> class Operator, Type ... Values1>
 	 struct lexicographicalCompareValue
  {
-  using results = typename lexicographicalCompareValue <Type, Operator> :: results;
+  using detailedResult_t = typename lexicographicalCompareValue <Type, Operator> :: detailedResult_t;
   template <Type ... Values2> struct with;
  };
 
  template <class Type, template <Type, Type> class Operator> template <Type ... Values2>
 	 struct lexicographicalCompareValue <Type, Operator> :: with
  {
-  using results = typename lexicographicalCompareValue <Type, Operator> :: results;
-  constexpr const static results detailedResult =
-	  ((sizeof...(Values2) != 0u) ? (results :: smaller) : (results :: equal));
-  constexpr const static bool value = (detailedResult == (results :: smaller));
+  using detailedResult_t = typename lexicographicalCompareValue <Type, Operator> :: detailedResult_t;
+  constexpr const static detailedResult_t detailedResult =
+	  ((sizeof...(Values2) != 0u) ? (detailedResult_t :: less) : (detailedResult_t :: equal));
+  constexpr const static bool value = (detailedResult == (detailedResult_t :: less));
  };
 
- template <class Type, template <Type, Type> class Operator, Type Value> template <Type ... Values2>
-	 struct lexicographicalCompareValue <Type, Operator, Value> :: with
+ template <class Type, template <Type, Type> class Operator, Type Value1> template <Type ... Values2>
+	 struct lexicographicalCompareValue <Type, Operator, Value1> :: with
  {
-  public:
-  using results = typename lexicographicalCompareValue <Type, Operator, Value> :: results;
   private:
-  constexpr const static results getResult(...) noexcept;
-  //template <Type FirstValue>
-  //constexpr const static results getResult(std :: integral_constant<Type, FirstValue>) noexcept;
-  template <Type FirstValue>
-	  constexpr const static results getResult(std :: integral_constant<Type, FirstValue>, ...) noexcept;
+  template <Type...> struct emptyImplementation;
+  template <Type...> struct nonemptyImplementation;
+  constexpr const static bool isEmpty = (sizeof...(Values2) == 0u);
+  using result = typename valueDemultiplexer <Type, isEmpty, copyValue <Type> :: template type, emptyImplementation, nonemptyImplementation> :: type;
   public:
-  constexpr const static results detailedResult = getResult(std :: integral_constant<Type, Values2>{}...);
-  constexpr const static bool value = (detailedResult == (results :: smaller));
+  using detailedResult_t = typename lexicographicalCompareValue <Type, Operator> :: detailedResult_t;
+  constexpr const static detailedResult_t detailedResult = (result :: detailedResult);
+  constexpr const static bool value = (detailedResult == (detailedResult_t :: less));
  };
 
  template <class Type, template <Type, Type> class Operator, Type ... Values1>
 	 template <Type ... Values2> struct lexicographicalCompareValue <Type, Operator, Values1...> :: with
  {
-  public:
-  using results = typename lexicographicalCompareValue <Type, Operator, Values1...> :: results;
   private:
-  template <Type ... SubValues> using This = lexicographicalCompareValue <Type, Operator, SubValues...>;
-  constexpr const static results getResult(...) noexcept;
-  constexpr const static results getResult(Type, ...) noexcept;
+  template <Type...> struct emptyImplementation;
+  template <Type...> struct nonemptyImplementation;
+  constexpr const static bool isEmpty = (sizeof...(Values2) == 0u);
+  using result = typename valueDemultiplexer <Type, isEmpty, copyValue <Type> :: template type, emptyImplementation, nonemptyImplementation> :: type;
   public:
-  constexpr const static results detailedResult = getResult(Values2...);
-  constexpr const static bool value = (detailedResult == (results :: smaller));
+  using detailedResult_t = typename lexicographicalCompareValue <Type, Operator> :: detailedResult_t;
+  constexpr const static detailedResult_t detailedResult = (result :: detailedResult);
+  constexpr const static bool value = (detailedResult == (detailedResult_t :: less));
  };
-}
 
-template <class Type, template <Type, Type> class Operator, Type Value>
-template <Type ... Values2> inline constexpr const typename
-crap :: lexicographicalCompareValue <Type, Operator, Value> :: template with <Values2...> :: results
-crap :: lexicographicalCompareValue <Type, Operator, Value> :: template with <Values2...> :: getResult(...) noexcept
-{
- return crap :: lexicographicalCompareValue <Type, Operator, Value> :: template with <Values2...> :: results :: larger;
-}
+ template <class Type, template <Type, Type> class Operator, Type Value1> template <Type ... Values2> template <Type...>
+	 struct lexicographicalCompareValue <Type, Operator, Value1> :: template with <Values2...> :: emptyImplementation
+ {
+  using detailedResult_t = typename lexicographicalCompareValue <Type, Operator> :: detailedResult_t;
+  constexpr const static detailedResult_t detailedResult = (detailedResult_t :: greater);
+ };
 
-template <class Type, template <Type, Type> class Operator, Type Value>
-template <Type ... Values2> template <Type FirstValue> inline constexpr const typename
-crap :: lexicographicalCompareValue <Type, Operator, Value> :: template with <Values2...> :: results
-crap :: lexicographicalCompareValue <Type, Operator, Value> :: template with <Values2...> :: getResult(std :: integral_constant<Type, FirstValue>, ...) noexcept
-{
- constexpr const bool firstSmaller = Operator <Value, FirstValue> :: value;
- constexpr const bool firstGreater = Operator <FirstValue, Value> :: value;
- constexpr const bool hasTail = (sizeof...(Values2) > 1u);
- constexpr const auto Smaller = crap :: lexicographicalCompareValue <Type, Operator, Value> :: template with <Values2...> :: results :: smaller;
- constexpr const auto Greater = crap :: lexicographicalCompareValue <Type, Operator, Value> :: template with <Values2...> :: results :: greater;
- constexpr const auto Equal = crap :: lexicographicalCompareValue <Type, Operator, Value> :: template with <Values2...> :: results :: equal;
- constexpr const auto equalWithTail = (hasTail ? Smaller : Equal);
- constexpr const auto greaterOrEqual = (firstGreater ? Greater : equalWithTail);
- return (firstSmaller ? Smaller : greaterOrEqual);
-}
+ template <class Type, template <Type, Type> class Operator, Type Value1> template <Type ... Values2> template <Type...>
+	 struct lexicographicalCompareValue <Type, Operator, Value1> :: template with <Values2...> :: nonemptyImplementation
+ {
+  private:
+  constexpr const static Type front = frontValue <Type, Values2...> :: value;
+  constexpr const static bool smaller = Operator <Value1, front> :: value;
+  constexpr const static bool greater = Operator <front, Value1> :: value;
+  constexpr const static bool shorter = (sizeof...(Values2) > 1u);
+  constexpr const static bool equal = !(smaller || greater || shorter);
+  constexpr const static bool less = !(equal || greater);
+  public:
+  using detailedResult_t = typename lexicographicalCompareValue <Type, Operator> :: detailedResult_t;
+  constexpr const static detailedResult_t detailedResult =
+	  (less ? (detailedResult_t :: less) : (equal ? (detailedResult_t :: equal) : (detailedResult_t :: greater)));
+ };
 
-template <class Type, template <Type, Type> class Operator, Type ... Values1>
-template <Type ... Values2> inline constexpr const typename
-crap :: lexicographicalCompareValue <Type, Operator, Values1...> :: template with <Values2...> :: results
-crap :: lexicographicalCompareValue <Type, Operator, Values1...> :: template with <Values2...> :: getResult(...) noexcept
-{
- return crap :: lexicographicalCompareValue <Type, Operator, Values1...> :: template with <Values2...> :: results :: greater;
-}
+ template <class Type, template <Type, Type> class Operator, Type ... Values1> template <Type ... Values2> template <Type...>
+	 struct lexicographicalCompareValue <Type, Operator, Values1...> :: template with <Values2...> :: emptyImplementation
+ {
+  using detailedResult_t = typename lexicographicalCompareValue <Type, Operator> :: detailedResult_t;
+  constexpr const static detailedResult_t detailedResult = (detailedResult_t :: greater);
+ };
 
-template <class Type, template <Type, Type> class Operator, Type ... Values1>
-template <Type ... Values2> inline constexpr const typename
-crap :: lexicographicalCompareValue <Type, Operator, Values1...> :: template with <Values2...> :: results
-crap :: lexicographicalCompareValue <Type, Operator, Values1...> :: template with <Values2...> :: getResult(Type, ...) noexcept
-{
- using values1 = valueList<Type, Values1...>;
- using values2 = valueList<Type, Values2...>;
- constexpr const std :: size_t half = ((values1 :: size) < (values2 :: size) ? (values1 :: size) : (values2 :: size)) / 2u;
- using lower1 = typename values1 :: template till <half, This>;
- using upper1 = typename values1 :: template since <half, This>;
- using lower = typename values2 :: template till<half, lower1 :: template with>;
- using upper = typename values2 :: template since<half, upper1 :: template with>;
- constexpr const auto Equal = crap :: lexicographicalCompareValue <Type, Operator, Value> :: template with <Values2...> :: results :: equal;
- return (((lower :: detailedResult) == Equal) ? (upper :: detailedResult) : (lower :: detailedResult));
+ template <class Type, template <Type, Type> class Operator, Type ... Values1> template <Type ... Values2> template <Type...>
+	 struct lexicographicalCompareValue <Type, Operator, Values1...> :: template with <Values2...> :: nonemptyImplementation
+ {
+  private:
+  using values1 = valueList<Type, Values1...>;
+  using values2 = valueList<Type, Values2...>;
+  constexpr const static std :: size_t half1 = ((values1 :: size) / 2u);
+  constexpr const static std :: size_t half = ((half1 < (values2 :: size)) ? half1 : (values2 :: size));
+  template <Type ... SubValues> using This = lexicographicalCompareValue<Type, Operator, SubValues...>;
+  using lower = typename values2 :: template till<half, values1 :: template till <half, This> :: template with>;
+  using upper = typename values2 :: template since<half, values1 :: template since <half, This> :: template with>;
+  public:
+  using detailedResult_t = typename lexicographicalCompareValue <Type, Operator> :: detailedResult_t;
+  constexpr const static detailedResult_t detailedResult =
+	  (((lower :: detailedResult) == (detailedResult_t :: equal)) ? (upper :: detailedResult) : (lower :: detailedResult));
+ };
 }
 #endif
 
