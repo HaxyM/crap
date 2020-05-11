@@ -1,7 +1,9 @@
 #ifndef CRAP_ALGORITHM_EQUALRANGEVALUE
 #define CRAP_ALGORITHM_EQUALRANGEVALUE
 
+#include "copyvalue.h"
 #include "../utility/valuelist.h"
+#include "../utility/valuemultiplexer.h"
 
 namespace crap
 {
@@ -26,13 +28,19 @@ namespace crap
   private:
   using values = valueList<Type, Values...>;
   constexpr const static std :: size_t half = (values :: size) / 2u;
+  template <template <Type...> class Container> using lowerSource = typename values :: template till<half, Container>;
+  template <template <Type...> class Container> using upperSource = typename values :: template since<half, Container>;
+  template <template <Type...> class Container> using emptySource = typename copyValue <Type> :: template type<Container>;
   template <Type ... SubValues> using This = equalRangeValue<Type, Value, Operator, SubValues...>;
-  using lower = typename values :: template till<half, This>;
-  using upper = typename values :: template since<half, This>;
+  constexpr const static Type midVal = values :: template At <half> :: value;
+  constexpr const static bool notInLower = Operator <midVal, Value> :: value;
+  constexpr const static bool notInUpper = Operator <Value, midVal> :: value;
+  using lower = typename valueMultiplexer <Type, notInLower, This, emptySource, lowerSource> :: type;
+  using upper = typename valueMultiplexer <Type, notInUpper, This, emptySource, upperSource> :: type;
   public:
-  constexpr const static std :: size_t begin = (((lower :: begin) != (lower :: npos)) ? (lower :: begin) : ((lower :: npos) + (upper :: begin)));
-  constexpr const static std :: size_t end = (((lower :: end) != (lower :: npos)) ? (lower :: end) : ((lower :: npos) + (upper :: end)));
-  constexpr const static std :: size_t npos = (lower :: npos) + (upper :: npos);
+  constexpr const static std :: size_t begin = (notInLower ? (half + (upper :: begin)) : (lower :: begin));
+  constexpr const static std :: size_t end = (notInLower ? (half + (upper :: end)) : (lower :: end));
+  constexpr const static std :: size_t npos = values :: size;
  };
 }
 #endif
