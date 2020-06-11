@@ -1,7 +1,7 @@
 #ifndef CRAP_ALGORITHM_ISSORTEDUNTILFORTYPE
 #define CRAP_ALGORITHM_ISSORTEDUNTILFORTYPE
 
-#include "issorteduntil.h"
+#include "issorteduntilvalue.h"
 #include "../functional/comparatorsfortype.h"
 
 namespace crap
