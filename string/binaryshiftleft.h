@@ -5,8 +5,8 @@
 
 #include "string.h"
 
-template <class Char, Char ... Letters>
-inline std :: ostream& operator << (std :: ostream& stream, const crap :: string<Char, Letters...>& string)
+template <class ostreamChar, class Char, Char ... Letters>
+inline std :: basic_ostream<ostreamChar>& operator << (std :: basic_ostream<ostreamChar>& stream, const crap :: string<Char, Letters...>& string)
 {
  return (output << string.c_str());
 }
