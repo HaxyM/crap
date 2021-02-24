@@ -1,0 +1,64 @@
+#ifndef CRAP_RATIO_LESSTYPE
+#define CRAP_RATIO_LESSTYPE
+
+#include <limits>
+#include <type_traits>
+
+#include "valueratio.h"
+#include "../functional/lesstype.h"
+#include "../numeric/gcdvalue.h"
+#include "../numeric/zero.h"
+
+namespace crap
+{
+ template <class Type, typename std :: make_signed <Type> :: type Numerator1, typename std :: make_unsigned <Type> :: type Denominator1, typename std :: make_signed <Type> :: type Numerator2, typename std :: make_unsigned <Type> :: type Denominator2>
+	 struct lessType<valueRatio<Type, Numerator1, Denominator1>, valueRatio<Type, Numerator2, Denominator2> >
+ {
+  private:
+  using scaleType = const long double;
+  using numeratorType = typename std :: add_const <typename std :: make_signed <Type> :: type> :: type;
+  using denominatorType = typename std :: add_const <typename std :: make_unsigned <Type> :: type> :: type;
+  constexpr static denominatorType denGCD = gcdValue <denominatorType, Denominator1, Denominator2> :: value;
+  constexpr static denominatorType part1IntScale = Denominator2 / denGCD;
+  constexpr static denominatorType part2IntScale = Denominator1 / denGCD;
+  constexpr static numeratorType numMax = std :: numeric_limits <numeratorType> :: max();
+  constexpr static numeratorType numMin = std :: numeric_limits <numeratorType> :: min();
+  constexpr static const bool num1ExtOverFlow = Numerator1 > static_cast<numeratorType>(numMax / part1IntScale);
+  constexpr static const bool num2ExtOverFlow = Numerator2 > static_cast<numeratorType>(numMax / part2IntScale);
+  constexpr static const bool num1ExtUnderFlow = Numerator1 < static_cast<numeratorType>(numMin / part1IntScale);
+  constexpr static const bool num2ExtUnderFlow = Numerator2 < static_cast<numeratorType>(numMin / part2IntScale);
+  constexpr static scaleType infinity = std :: numeric_limits <scaleType> :: infinity();
+  constexpr static scaleType numerator1ForScale = (Numerator1 != zero <numeratorType> :: value) ? static_cast<scaleType>(Numerator1) : infinity;
+  constexpr static scaleType numerator2ForScale = (Numerator2 != zero <numeratorType> :: value) ? static_cast<scaleType>(Numerator2) : infinity;
+  constexpr static scaleType num1ExtOverScale = num1ExtOverFlow ? std :: abs((static_cast<scaleType>(numMax) / numerator1ForScale) / static_cast<scaleType>(part1IntScale)) : infinity;
+  constexpr static scaleType num2ExtOverScale = num2ExtOverFlow ? std :: abs((static_cast<scaleType>(numMax) / numerator2ForScale) / static_cast<scaleType>(part2IntScale)) : infinity;
+  constexpr static scaleType num1ExtUnderScale = num1ExtUnderFlow ? std :: abs((static_cast<scaleType>(numMin) / numerator1ForScale) / static_cast<scaleType>(part1IntScale)) : infinity;
+  constexpr static scaleType num2ExtUnderScale = num2ExtUnderFlow ? std :: abs((static_cast<scaleType>(numMin) / numerator2ForScale) / static_cast<scaleType>(part2IntScale)) : infinity;
+  constexpr static const bool needScaleExt = num1ExtOverFlow || num2ExtOverFlow || num1ExtUnderFlow || num2ExtUnderFlow;
+  constexpr static scaleType minExt1 = (num2ExtOverScale < num1ExtOverScale) ? num2ExtOverScale : num1ExtOverScale;
+  constexpr static scaleType minExt2 = (num1ExtUnderScale < minExt1) ? num1ExtUnderScale : minExt1;
+  constexpr static scaleType scaleExt = (num2ExtUnderScale < minExt2) ? num2ExtUnderScale : minExt2;
+  constexpr static scaleType num1Float = (scaleExt != infinity) ? (scaleExt * static_cast<scaleType>(Numerator1) * static_cast<scaleType>(part1IntScale)) : infinity;
+  constexpr static scaleType num2Float = (scaleExt != infinity) ? (scaleExt * static_cast<scaleType>(Numerator2) * static_cast<scaleType>(part2IntScale)) : infinity;
+  constexpr static numeratorType numerator1 = needScaleExt ? (static_cast<numeratorType>(num1Float)) : (Numerator1 * part1IntScale);
+  constexpr static numeratorType numerator2 = needScaleExt ? (static_cast<numeratorType>(num2Float)) : (Numerator2 * part2IntScale);
+  constexpr static const bool numUnderFlow = (numerator2 > zero <numeratorType> :: value) ? (numerator1 < (numMin + numerator2)) : false;
+  constexpr static const bool numOverFlow = (numerator2 < zero <numeratorType> :: value) ? (numerator1 > (numMax + numerator2)) : false;
+  public:
+  constexpr static const bool value = (!numOverFlow) && (numUnderFlow || (numerator1 < numerator2));
+ };
+ 
+ template <class Type1, class Type2, typename std :: make_signed <Type1> :: type Numerator1, typename std :: make_unsigned <Type1> :: type Denominator1, typename std :: make_signed <Type2> :: type Numerator2, typename std :: make_unsigned <Type2> :: type Denominator2>
+	 struct lessType<valueRatio<Type1, Numerator1, Denominator1>, valueRatio<Type2, Numerator2, Denominator2> >
+	 : lessType<
+	 valueRatio<typename std :: common_type <Type1, Type2> :: type, static_cast<typename std :: make_signed <typename std :: common_type <Type1, Type2> :: type> :: type>(Numerator1), static_cast<typename std :: make_unsigned <typename std :: common_type <Type1, Type2> :: type> :: type>(Denominator1)>,
+	 valueRatio<typename std :: common_type <Type1, Type2> :: type, static_cast<typename std :: make_signed <typename std :: common_type <Type1, Type2> :: type> :: type>(Numerator2), static_cast<typename std :: make_unsigned <typename std :: common_type <Type1, Type2> :: type> :: type>(Denominator2)> >
+	 {};
+}
+
+template <class Type1, class Type2, typename std :: make_signed <Type1> :: type Numerator1, typename std :: make_unsigned <Type1> :: type Denominator1, typename std :: make_signed <Type2> :: type Numerator2, typename std :: make_unsigned <Type2> :: type Denominator2>
+inline constexpr bool operator < (crap :: valueRatio<Type1, Numerator1, Denominator1>, crap :: valueRatio<Type2, Numerator2, Denominator2> ) noexcept
+{
+ return crap :: lessType <crap :: valueRatio<Type1, Numerator1, Denominator1>, crap :: valueRatio<Type2, Numerator2, Denominator2> > :: value;
+}
+#endif
