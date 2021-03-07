@@ -14,6 +14,11 @@ namespace crap
 
  #if CPP17
  #else
+ template <class Type, Type Value> struct dividesValue<Type, Value>
+ {
+  constexpr const static auto value = Value;
+ };
+
  template <class Type, Type Value1, Type Value2> struct dividesValue<Type, Value1, Value2>
  {
   constexpr const static auto value = (Value1 / Value2);
@@ -26,9 +31,9 @@ namespace crap
   constexpr const static auto value = (FirstValue / ... / Rest);
   #else
   private:
-  template <Type Value1, Type Value2> using Operator = dividesValue<Type, Value1, Value2>;
+  template <Type ... SubValues> using This = dividesValue<Type, SubValues...>;
   public:
-  constexpr const static auto value = accumulateValue <Type, FirstValue, Operator, Rest...> :: value;
+  constexpr const static auto value = accumulateValue <Type, This, FirstValue, Rest...> :: value;
   #endif
  };
 }
