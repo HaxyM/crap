@@ -7,8 +7,8 @@
 #include "contarcttype.h"
 #include "valueratio.h"
 #include "../functional/minustype.h"
+#include "../numeric/accumulatetype.h"
 #include "../numeric/gcdvalue.h"
-#include "../numeric/reducetype.h"
 #include "../numeric/zero.h"
 #include "../utility/typeidentity.h"
 
@@ -69,7 +69,7 @@ namespace crap
 
  template <class Type, typename std :: make_signed <Type> :: type ... Numerators, typename std :: make_unsigned <Type> :: type ... Denominators>
 	 struct minusType<valueRatio<Type, Numerators, Denominators>...>
-	 : reduceType<minusType, valueRatio<Type, Numerators, Denominators>...> {};
+	 : accumulateType<minusType, valueRatio<Type, Numerators, Denominators>...> {};
 
  template <class Type1, class Type2, typename std :: make_signed <Type1> :: type Numerator1, typename std :: make_unsigned <Type1> :: type Denominator1, typename std :: make_signed <Type2> :: type Numerator2, typename std :: make_unsigned <Type2> :: type Denominator2>
 	 struct minusType<valueRatio<Type1, Numerator1, Denominator1>, valueRatio<Type2, Numerator2, Denominator2> >
