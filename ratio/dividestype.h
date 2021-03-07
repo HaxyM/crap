@@ -4,8 +4,8 @@
 #include "valueratio.h"
 #include "../functional/dividestype.h"
 #include "../numeric/absvalue.h"
+#include "../numeric/accumulatetype.h"
 #include "../numeric/identity.h"
-#include "../numeric/reducetype.h"
 #include "../numeric/zero.h"
 
 #include <limits>
@@ -45,7 +45,7 @@ namespace crap
 	 {};
  template <class Type, typename std :: make_signed <Type> :: type ... Numerators, typename std :: make_unsigned <Type> :: type ... Denominators>
 	 struct dividesType<valueRatio<Type,Numerators,Denominators>...>
-	 : reduceType<dividesType, valueRatio<Type, Numerators, Denominators>...> {};
+	 : accumumateType<dividesType, valueRatio<Type, Numerators, Denominators>...> {};
 }
 
 template <class Type1, class Type2, typename std :: make_signed <Type1> :: type Numerator1, typename std :: make_unsigned <Type1> :: type Denominator1, typename std :: make_signed <Type2> :: type Numerator2, typename std :: make_unsigned <Type2> :: type Denominator2>
