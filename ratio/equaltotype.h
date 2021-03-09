@@ -10,7 +10,7 @@
 namespace crap
 {
  template <class Type,
-	  typename std :: make_signed <Type> :: type Numerator1, typename std :: make_unsigned <Type> :: type Denomiantor1,
+	  typename std :: make_signed <Type> :: type Numerator1, typename std :: make_unsigned <Type> :: type Denominator1,
 	  typename std :: make_signed <Type> :: type Numerator2, typename std :: make_unsigned <Type> :: type Denominator2>
 	 struct equalToType<valueRatio<Type, Numerator1, Denominator1>, valueRatio<Type, Numerator2, Denominator2> >
 	 : std :: integral_constant<bool,

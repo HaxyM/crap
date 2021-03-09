@@ -1,6 +1,7 @@
 #ifndef CRAP_RATIO_LESSEQUALTYPE
 #define CRAP_RATIO_LESSEQUALTYPE
 
+#include <cmath>
 #include <limits>
 #include <type_traits>
 

@@ -1,10 +1,11 @@
 #ifndef CRAP_RATIO_PLUSTYPE
 #define CRAP_RATIO_PLUSTYPE
 
+#include <cmath>
 #include <limits>
 #include <type_traits>
 
-#include "contarcttype.h"
+#include "contracttype.h"
 #include "valueratio.h"
 #include "../functional/plustype.h"
 #include "../numeric/gcdvalue.h"
