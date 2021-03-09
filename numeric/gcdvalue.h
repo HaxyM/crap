@@ -35,6 +35,10 @@ namespace crap
   constexpr const static Type value = std :: gcd(Value1, Value2);
   #else
   private:
+  constexpr const static Type
+	  getValue(std :: integral_constant<Type, static_cast<Type>(0)>, std :: integral_constant<Type, static_cast<Type>(1)>);
+  constexpr const static Type
+	  getValue(std :: integral_constant<Type, static_cast<Type>(1)>, std :: integral_constant<Type, static_cast<Type>(0)>);
   template <Type SubValue> constexpr const static Type
 	  getValue(std :: integral_constant<Type, SubValue>, std :: integral_constant<Type, static_cast<Type>(0)>);
   template <Type SubValue> constexpr const static Type
@@ -64,6 +68,18 @@ namespace crap
 
 #if CPP17
 #else
+template <class Type, Type Value1, Type Value2> inline constexpr const Type
+	crap :: gcdValue <Type, Value1, Value2> :: getValue(std :: integral_constant<Type, static_cast<Type>(0)>, std :: integral_constant<Type, static_cast<Type>(1)>)
+{
+ return static_cast<Type>(1);
+}
+
+template <class Type, Type Value1, Type Value2> inline constexpr const Type
+	crap :: gcdValue <Type, Value1, Value2> :: getValue(std :: integral_constant<Type, static_cast<Type>(1)>, std :: integral_constant<Type, static_cast<Type>(0)>)
+{
+ return static_cast<Type>(1);
+}
+
 template <class Type, Type Value1, Type Value2> template <Type SubValue> inline constexpr const Type
 	crap :: gcdValue <Type, Value1, Value2> :: getValue(std :: integral_constant<Type, SubValue>, std :: integral_constant<Type, static_cast<Type>(0)>)
 {

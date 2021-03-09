@@ -3,7 +3,7 @@
 
 #include "dividesvalue.h"
 #include "../numeric/reducetype.h"
-#include "../utility/typeidentiry.h"
+#include "../utility/typeidentity.h"
 
 #include <ratio>
 #include <type_traits>

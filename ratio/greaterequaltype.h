@@ -1,6 +1,7 @@
 #ifndef CRAP_RATIO_GREATEREQUALTYPE
 #define CRAP_RATIO_GREATEREQUALTYPE
 
+#include <cmath>
 #include <limits>
 #include <type_traits>
 

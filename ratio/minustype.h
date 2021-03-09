@@ -1,10 +1,11 @@
 #ifndef CRAP_RATIO_MINUSTYPE
 #define CRAP_RATIO_MINUSTYPE
 
+#include <cmath>
 #include <limits>
 #include <type_traits>
 
-#include "contarcttype.h"
+#include "contracttype.h"
 #include "valueratio.h"
 #include "../functional/minustype.h"
 #include "../numeric/accumulatetype.h"

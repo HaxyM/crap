@@ -16,10 +16,10 @@ namespace crap
 	 : typeIdentity<std :: integral_constant<decltype(plusValue <Type, Values...> :: value), plusValue <Type, Values...> :: value> >
 	 {};
 
- template <intmax_t Numerator, intmax_t Denominator> struct plusType<std :: ratio<Numerator, Denomiantor> >
+ template <intmax_t Numerator, intmax_t Denominator> struct plusType<std :: ratio<Numerator, Denominator> >
 	 : typeIdentity<std :: ratio<Numerator, Denominator> > {};
 
- template <intmax_t Numerator1, intmax_t Denomiantor1, intmax_t Numerator2, intmax_t Denominator2>
+ template <intmax_t Numerator1, intmax_t Denominator1, intmax_t Numerator2, intmax_t Denominator2>
 	 struct plusType<std :: ratio<Numerator1, Denominator1>, std :: ratio<Numerator2, Denominator2> >
 	 : typeIdentity<std :: ratio_add<std :: ratio<Numerator1, Denominator1>, std :: ratio<Numerator2, Denominator2> > >
 	 {};

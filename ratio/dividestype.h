@@ -1,6 +1,7 @@
 #ifndef CRAP_RATIO_DIVIDESTYPE
 #define CRAP_RATIO_DIVIDESTYPE
 
+#include "multipliestype.h"
 #include "valueratio.h"
 #include "../functional/dividestype.h"
 #include "../numeric/absvalue.h"
@@ -14,21 +15,21 @@
 namespace crap
 {
  template <class Type, typename std :: make_signed <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
-	 struct dividesType<valueRatio<Type, Nominator, Denominator> >
+	 struct dividesType<valueRatio<Type, Numerator, Denominator> >
 	 : typeIdentity<valueRatio<Type, Numerator, Denominator> > {};
 
- template <class Type, typename std :: make_signed <Type> :: type Numerator1, typename std :: make_unsigned <Type> :: type Denominator1, typename std :: make_signed <Type> :: type Nominator1, typename std :: make_unsigned <Type> :: type Denomiantor2>
+ template <class Type, typename std :: make_signed <Type> :: type Numerator1, typename std :: make_unsigned <Type> :: type Denominator1, typename std :: make_signed <Type> :: type Numerator2, typename std :: make_unsigned <Type> :: type Denominator2>
 	 struct dividesType<valueRatio<Type, Numerator1, Denominator1>, valueRatio<Type, Numerator2, Denominator2> >
  {
   private:
   using numeratorType = typename std :: add_const <typename std :: make_signed <Type> :: type> :: type;
   using denominatorType = typename std :: add_const <typename std :: make_unsigned <Type> :: type> :: type;
-  constexpr static numeratorType numMax = std :: numeraic_limits <numeratorType> :: max();
+  constexpr static numeratorType numMax = std :: numeric_limits <numeratorType> :: max();
   constexpr static denominatorType scale = (Denominator2 / static_cast<denominatorType>(numMax) + (identity <denominatorType> :: value));
   constexpr const static bool overflow = (Denominator2 > static_cast<denominatorType>(numMax));
   constexpr const static bool negative = (Numerator2 < (zero <numeratorType> :: value));
   constexpr static numeratorType absoluteNumerator = static_cast<numeratorType>((overflow) ? (Denominator2 / scale) : Denominator2);
-  using inversed = valueRatio<Type, (negative ? -absoluteNumerator : absolutrNumerator), static_cast<denominatorType>(absValue <numeratorType, Numerator2> :: value)>;
+  using inversed = valueRatio<Type, (negative ? -absoluteNumerator : absoluteNumerator), static_cast<denominatorType>(absValue <numeratorType, Numerator2> :: value)>;
   public:
   using type = typename multipliesType<valueRatio<Type, Numerator1, Denominator1>, inversed> :: type;
  };
@@ -45,7 +46,7 @@ namespace crap
 	 {};
  template <class Type, typename std :: make_signed <Type> :: type ... Numerators, typename std :: make_unsigned <Type> :: type ... Denominators>
 	 struct dividesType<valueRatio<Type,Numerators,Denominators>...>
-	 : accumumateType<dividesType, valueRatio<Type, Numerators, Denominators>...> {};
+	 : accumulateType<dividesType, valueRatio<Type, Numerators, Denominators>...> {};
 }
 
 template <class Type1, class Type2, typename std :: make_signed <Type1> :: type Numerator1, typename std :: make_unsigned <Type1> :: type Denominator1, typename std :: make_signed <Type2> :: type Numerator2, typename std :: make_unsigned <Type2> :: type Denominator2>
