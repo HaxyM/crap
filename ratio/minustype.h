@@ -34,16 +34,17 @@ namespace crap
   constexpr static denominatorType denMax = std :: numeric_limits <denominatorType> :: max();
   constexpr static numeratorType numMax = std :: numeric_limits <numeratorType> :: max();
   constexpr static numeratorType numMin = std :: numeric_limits <numeratorType> :: min();
+  constexpr static scaleType infinity = std :: numeric_limits <scaleType> :: infinity();
   constexpr static const bool denOverFlow = (denPart2 > (denMax / denPart1));
-  constexpr static const bool num1ExtOverFlow = ((part1IntScale != zero <denominatorType> :: value) ? (Numerator1 > static_cast<numeratorType>(numMax / part1IntScale)) : false); //Is it ok?
-  constexpr static const bool num2ExtOverFlow = ((part2IntScale != zero <denominatorType> :: value) ? (Numerator2 > static_cast<numeratorType>(numMax / part2IntScale)) : false); //Is it ok?
-  constexpr static const bool num1ExtUnderFlow = ((part1IntScale != zero <denominatorType> :: value) ? (Numerator1 < (numMin / static_cast<numeratorType>(part1IntScale))) : false); //Is it ok?
-  constexpr static const bool num2ExtUnderFlow = ((part2IntScale != zero <denominatorType> :: value) ? (Numerator2 < (numMin / static_cast<numeratorType>(part2IntScale))) : false); //Is it ok?
-  constexpr static scaleType denScale = denOverFlow ? ((static_cast<scaleType>(denMax) / static_cast<scaleType>(denPart1)) / (static_cast<scaleType>(denPart2))) : std :: numeric_limits <scaleType> :: infinity();
-  constexpr static scaleType num1ExtOverScale = num1ExtOverFlow ? std :: abs((static_cast<scaleType>(numMax) / static_cast<scaleType>(Numerator1)) / static_cast<scaleType>(part1IntScale)) : std :: numeric_limits <scaleType> :: infinity();
-  constexpr static scaleType num2ExtOverScale = num2ExtOverFlow ? std :: abs((static_cast<scaleType>(numMax) / static_cast<scaleType>(Numerator2)) / static_cast<scaleType>(part2IntScale)) : std :: numeric_limits <scaleType> :: infinity();
-  constexpr static scaleType num1ExtUnderScale = num1ExtUnderFlow ? std :: abs((static_cast<scaleType>(numMin) / static_cast<scaleType>(Numerator1)) / static_cast<scaleType>(part1IntScale)) : std :: numeric_limits <scaleType> :: infinity();
-  constexpr static scaleType num2ExtUnderScale = num2ExtUnderFlow ? std :: abs((static_cast<scaleType>(numMin) / static_cast<scaleType>(Numerator2)) / static_cast<scaleType>(part2IntScale)) : std :: numeric_limits <scaleType> :: infinity();
+  constexpr static const bool num1ExtOverFlow = (Numerator1 > zero <numeratorType> :: value) && (part1IntScale > static_cast<denominatorType>(numMax / Numerator1));
+  constexpr static const bool num2ExtOverFlow = (Numerator2 > zero <numeratorType> :: value) && (part2IntScale > static_cast<denominatorType>(numMax / Numerator2));
+  constexpr static const bool num1ExtUnderFlow = (Numerator1 < zero <numeratorType> :: value) && (part1IntScale > static_cast<denominatorType>(numMin / Numerator1));
+  constexpr static const bool num2ExtUnderFlow = (Numerator2 < zero <numeratorType> :: value) && (part2IntScale > static_cast<denominatorType>(numMin / Numerator2));
+  constexpr static scaleType denScale = denOverFlow ? ((static_cast<scaleType>(denMax) / static_cast<scaleType>(denPart1)) / (static_cast<scaleType>(denPart2))) : infinity;
+  constexpr static scaleType num1ExtOverScale = num1ExtOverFlow ? std :: abs((static_cast<scaleType>(numMax) / static_cast<scaleType>(Numerator1)) / static_cast<scaleType>(part1IntScale)) : infinity;
+  constexpr static scaleType num2ExtOverScale = num2ExtOverFlow ? std :: abs((static_cast<scaleType>(numMax) / static_cast<scaleType>(Numerator2)) / static_cast<scaleType>(part2IntScale)) : infinity;
+  constexpr static scaleType num1ExtUnderScale = num1ExtUnderFlow ? std :: abs((static_cast<scaleType>(numMin) / static_cast<scaleType>(Numerator1)) / static_cast<scaleType>(part1IntScale)) : infinity;
+  constexpr static scaleType num2ExtUnderScale = num2ExtUnderFlow ? std :: abs((static_cast<scaleType>(numMin) / static_cast<scaleType>(Numerator2)) / static_cast<scaleType>(part2IntScale)) : infinity;
   constexpr static const bool needScaleExt = denOverFlow || num1ExtOverFlow || num2ExtOverFlow || num1ExtUnderFlow || num2ExtUnderFlow;
   constexpr static scaleType minExt1 = (denScale < num1ExtOverScale) ? denScale : num1ExtOverScale;
   constexpr static scaleType minExt2 = (num2ExtOverScale < minExt1) ? num2ExtOverScale : minExt1;
@@ -56,10 +57,10 @@ namespace crap
   constexpr static denominatorType denominatorExt = needScaleExt ? static_cast<denominatorType>(denFloat) : (denPart1 * denPart2);
   constexpr static numeratorType numerator1 = needScaleExt ? (static_cast<numeratorType>(num1Float)) : (Numerator1 * part1IntScale);
   constexpr static numeratorType numerator2 = needScaleExt ? (static_cast<numeratorType>(num2Float)) : (Numerator2 * part2IntScale);
-  constexpr static const bool numUnderFlow = (numerator2 > zero <numeratorType> :: value) ? (numerator1 < (numMin + numerator2)) : false;
-  constexpr static const bool numOverFlow = (numerator2 < zero <numeratorType> :: value) ? (numerator1 > (numMax + numerator2)) : false;
-  constexpr static scaleType numOverScale = numOverFlow ? std :: abs(1.0l / (num1Float / static_cast<scaleType>(numMax) - (num2Float / static_cast<scaleType>(numMax)))) : std :: numeric_limits <scaleType> :: infinity();
-  constexpr static scaleType numUnderScale = numUnderFlow ? std :: abs(1.0l / (num1Float / static_cast<scaleType>(numMin) - (num2Float / static_cast<scaleType>(numMin)))) : std :: numeric_limits <scaleType> :: infinity();
+  constexpr static const bool numUnderFlow = (numerator2 > zero <numeratorType> :: value) && (numerator1 < (numMin + numerator2));
+  constexpr static const bool numOverFlow = (numerator2 < zero <numeratorType> :: value) && (numerator1 > (numMax + numerator2));
+  constexpr static scaleType numOverScale = numOverFlow ? std :: abs(1.0l / (num1Float / static_cast<scaleType>(numMax) - (num2Float / static_cast<scaleType>(numMax)))) : infinity;
+  constexpr static scaleType numUnderScale = numUnderFlow ? std :: abs(1.0l / (num1Float / static_cast<scaleType>(numMin) - (num2Float / static_cast<scaleType>(numMin)))) : infinity;
   constexpr static scaleType scale = (numOverScale < numUnderScale) ? numOverScale : numUnderScale;
   constexpr static const bool needScale = (numOverFlow || numUnderFlow);
   constexpr static numeratorType numerator = needScale ? (static_cast<numeratorType>((scale * num1Float) - (scale * num2Float))) : (numerator1 - numerator2);
