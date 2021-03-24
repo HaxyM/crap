@@ -26,7 +26,7 @@ namespace crap
   static_assert(sizeof...(Values) > 0u, "Extremum of empty set is not defined.");
   template <Type ... SubValues> using This = maxValue<Type, Operator, SubValues...>;
   public:
-  constexpr const static Type value = reduce <Type, This, Values...> :: value;
+  constexpr const static Type value = reduceValue <Type, This, Values...> :: value;
  };
 }
 #endif
