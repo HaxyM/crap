@@ -35,7 +35,7 @@ namespace crap
  template <class Type, template <Type, Type> class Operator, Type ... Values>
  template <template <Type...> class Container, Type LowerLast> struct partialSumValue <Type, Operator, Values...> :: merger
  {
-  template <Type ... LowerValues, Type ... UpperValues> static Container<LowerValues..., (LowerLast + UpperValues)...>
+  template <Type ... LowerValues, Type ... UpperValues> static Container<LowerValues..., (Operator <LowerLast, UpperValues> :: value)...>
   merge(valueList<Type, LowerValues...>, valueList<Type, UpperValues...>);
  };
 }
