@@ -10,7 +10,7 @@ namespace crap
  template <template <class> class Operator, class ... Types> struct noneOfType
  {
   private:
-  using resultType = typename commonType <(Operator <Types> :: value)...> :: type;
+  using resultType = typename commonType <decltype(Operator <Types> :: value)...> :: type;
   constexpr const static auto orValue = logicalOrValue <resultType, static_cast<resultType>(Operator <Types> :: value)...> :: value;
   public:
   constexpr const static auto value = logicalNotValue <decltype(orValue), orValue> :: value;
