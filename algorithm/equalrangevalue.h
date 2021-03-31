@@ -39,7 +39,7 @@ namespace crap
   using upper = typename valueMultiplexer <Type, notInUpper, This, emptySource, upperSource> :: type;
   public:
   constexpr const static std :: size_t begin = (notInLower ? (half + (upper :: begin)) : (lower :: begin));
-  constexpr const static std :: size_t end = (notInLower ? (half + (upper :: end)) : (lower :: end));
+  constexpr const static std :: size_t end = (notInUpper ? (lower :: end) : (half + (upper :: end)));
   constexpr const static std :: size_t npos = values :: size;
  };
 }
