@@ -16,11 +16,13 @@ namespace crap
   template <std :: size_t N> struct At;
   template <std :: size_t N, template <class...> class Container> struct Since;
   template <std :: size_t N, template <class...> class Container> struct Till;
+  template <std :: size_t Begin, std :: size_t End, template <class...> class Container> struct SubRange;
   public:
   constexpr const static std :: size_t size = sizeof...(Types);
   template <std :: size_t N> using at = typename At <N> :: type;
   template <std :: size_t N, template <class...> class Container = This> using since = typename Since <N, Container> :: type;
   template <std :: size_t N, template <class...> class Container = This> using till = typename Till <N, Container> :: type;
+  template <std :: size_t Begin, std :: size_t End, template <class...> class Container = This> using subRange = typename SubRange <Begin, End, Container> :: type;
  };
 
  template <class ... Types> struct typeList <Types...> :: ignore
@@ -64,6 +66,15 @@ namespace crap
   template <std :: size_t ... Indices> static Container<at<Indices>...> generate(indexSequence<Indices...>);
   public:
   using type = decltype(generate(makeIndexSequence<N>{}));
+ };
+ 
+ template <class ... Types> template <std :: size_t Begin, std :: size_t End, template <class...> class Container>
+ struct typeList <Types...> :: SubRange
+ {//TODO: Find some better solution.
+  private:
+  template <class ... SubTypes> using Since = typename typeList <SubTypes...> :: template since <Begin, Container>;
+  public:
+  using type = typename typeList <Types...> :: template till<End, Since>;
  };
 
  template <class ... Types> template <std :: size_t N> template <std :: size_t ... Indices>
