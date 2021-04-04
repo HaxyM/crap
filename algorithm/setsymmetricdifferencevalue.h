@@ -4,8 +4,8 @@
 #include "copyvalue.h"
 #include "equalrangevalue.h"
 #include "mergevalue.h"
-#include "removevalue.h"
 #include "../utility/concatenatevaluezipper.h"
+#include "../utility/erasevalue.h"
 #include "../utility/valuedemultiplexer.h"
 #include "../utility/valuelistfortype.h"
 
@@ -35,7 +35,7 @@ namespace crap
   using range = equalRangeValue<Type, Value1, Operator, Values2...>;
   constexpr const static bool has = ((range :: begin) != (range :: end));
   constexpr const static std :: size_t newEnd = (range :: begin) + 1u;
-  template <Type ... Values> using removingContainer = removeValue<Type, (range :: begin), newEnd, Values...>;
+  template <Type ... Values> using removingContainer = eraseValue<Type, (range :: begin), newEnd, Values...>;
   template <Type ... Values> using mergingContainer = typename mergeValue <Type, Operator, Value1> :: template with<Values...>;
   using result = typename valueDemultiplexer <Type, has, copyValue <Type, Values2...> :: template type, removingContainer, mergingContainer> :: type;
   public:

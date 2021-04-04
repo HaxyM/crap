@@ -1,13 +1,13 @@
-#ifndef CRAP_ALGORITHM_REMOVEVALUE
-#define CRAP_ALGORITHM_REMOVEVALUE
+#ifndef CRAP_UTILITY_ERASEVALUE
+#define CRAP_UTILITY_ERASEVALUE
 
-#include "../utility/concatenatefortype.h"
-#include "../utility/valuelist.h"
-#include "../utility/valuelistfortype.h"
+#include "concatenatefortype.h"
+#include "valuelist.h"
+#include "valuelistfortype.h"
 
 namespace crap
 {
- template <class Type, std :: size_t Begin, std :: size_t End, Type ... Values> struct removeValue
+ template <class Type, std :: size_t Begin, std :: size_t End, Type ... Values> struct eraseValue
  {
   private:
   using values = valueList<Type, Values...>;
