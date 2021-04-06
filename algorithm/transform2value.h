@@ -1,9 +1,8 @@
 #ifndef CRAP_ALGORITHM_TRANSFORM2VALUE
 #define CRAP_ALGORITHM_TRANSFORM2VALUE
 
+#include "../utility/commontype.h"
 #include "../utility/valuelistfortype.h"
-
-#include <type_traits>
 
 namespace crap
 {
@@ -33,7 +32,7 @@ namespace crap
  template <Type ... Values2> struct transform2Value <Type, Operator, Values1...> :: with
  {
   static_assert(sizeof...(Values1) == sizeof...(Values2), "Vectors does not have same size.");
-  using resultType = std :: common_type_t<decltype(Operator <Values1, Values2> :: value)...>;
+  using resultType = typename commonType <decltype(Operator <Values1, Values2> :: value)...> :: type;
   template <template <resultType...> class Container = valueListForType <resultType> :: template type>
   using type = Container<(static_cast<resultType>(Operator <Values1, Values2> :: value))...>;
  };

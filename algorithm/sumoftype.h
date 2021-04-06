@@ -2,17 +2,14 @@
 #define CRAP_ALGORITHM_SUMOFTYPE
 
 #include "../functional/plusvalue.h"
-
-
-
-#include <type_traits>
+#include "../utility/commontype.h"
 
 namespace crap
 {
  template <template <class> class Operator, class ... Types> struct sumOfType
  {
   private:
-  using resultType = typename std :: common_type <decltype(Operator <Types> :: value)...> :: type;
+  using resultType = typename commonType <decltype(Operator <Types> :: value)...> :: type;
   public:
   constexpr const static auto value = plusValue <resultType, static_cast<resultType>(Operator <Types> :: value)...> :: value;
   using value_type = decltype(value);
