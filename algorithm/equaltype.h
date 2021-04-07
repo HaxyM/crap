@@ -32,24 +32,32 @@ namespace crap
 	 struct equalType <Operator> :: with
  {
   constexpr const static bool value = (sizeof...(Types2) == 0u);
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <template <class, class> class Operator, class Type1> template <class...>
 	 struct equalType <Operator, Type1> :: with
  {
   constexpr const static bool value = false;
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <template <class, class> class Operator, class Type1> template <class Type2>
 	 struct equalType <Operator, Type1> :: template with<Type2>
  {
   constexpr const static bool value = Operator <Type1, Type2> :: value;
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <template <class, class> class Operator, class ... Types1> template <bool, class...>
 	 struct equalType <Operator, Types1...> :: withImplementation
  {
   constexpr const static bool value = false;
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <template <class, class> class Operator, class ... Types1> template <class ... Types2>
@@ -69,6 +77,8 @@ namespace crap
   public:
   constexpr const static bool value =
 	  upperCheck <lowerEqual, values1 :: template upper, values2 :: template upper> :: value;
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <template <class, class> class Operator, class ... Types1> template <class ... Types2>
@@ -89,6 +99,43 @@ namespace crap
   public:
   constexpr const static bool value = Upper2 <Upper1 <This> :: template with> :: value;
  };
+}
+
+template <template <class, class> class Operator> template <class ... Types2>
+inline constexpr crap :: equalType <Operator> :: template with <Types2...> :: operator
+typename crap :: equalType <Operator> :: template with <Types2...> :: value_type () const noexcept
+{
+ return crap :: equalType <Operator> :: template with <Types2...> :: value;
+}
+
+template <template <class, class> class Operator, class Type1> template <class ... Types2>
+inline constexpr crap :: equalType <Operator, Type1> :: template with <Types2...> :: operator
+typename crap :: equalType <Operator, Type1> :: template with <Types2...> :: value_type () const noexcept
+{
+ return crap :: equalType <Operator, Type1> :: template with <Types2...> :: value;
+}
+
+template <template <class, class> class Operator, class Type1> template <class Type2>
+inline constexpr crap :: equalType <Operator, Type1> :: template with <Type2> :: operator
+typename crap :: equalType <Operator, Type1> :: template with <Type2> :: value_type () const noexcept
+{
+ return crap :: equalType <Operator, Type1> :: template with <Type2> :: value;
+}
+
+template <template <class, class> class Operator, class ... Types1> template <bool Equal, class ... Types2>
+inline constexpr crap :: equalType <Operator, Types1...> :: template withImplementation <Equal, Types2...> :: operator
+typename crap :: equalType <Operator, Types1...> :: template withImplementation <Equal, Types2...> :: value_type ()
+	const noexcept
+{
+ return crap :: equalType <Operator, Types1...> :: template withImplementation <Equal, Types2...> :: value;
+}
+
+template <template <class, class> class Operator, class ... Types1> template <class ... Types2>
+inline constexpr crap :: equalType <Operator, Types1...> :: template withImplementation <true, Types2...> :: operator
+typename crap :: equalType <Operator, Types1...> :: template withImplementation <true, Types2...> :: value_type ()
+	const noexcept
+{
+ return crap :: equalType <Operator, Types1...> :: template withImplementation <true, Types2...> :: value;
 }
 #endif
 
