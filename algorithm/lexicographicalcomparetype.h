@@ -45,6 +45,8 @@ namespace crap
   constexpr const static detailedResult_t detailedResult =
 	  ((sizeof...(Types2) != 0u) ? (detailedResult_t :: less) : (detailedResult_t :: equal));
   constexpr const static bool value = (detailedResult == (detailedResult_t :: less));
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <template <class, class> class Operator, class Type1> template <class...>
@@ -53,6 +55,8 @@ namespace crap
   using detailedResult_t = typename lexicographicalCompareType <Operator> :: detailedResult_t;
   constexpr const static detailedResult_t detailedResult = detailedResult_t :: greater;
   constexpr const static bool value = false;
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <template <class, class> class Operator, class Type1> template <class Only>
@@ -66,6 +70,8 @@ namespace crap
   constexpr const static detailedResult_t detailedResult = 
 	  less ? (detailedResult_t :: less) : (greater ? (detailedResult_t :: greater) : (detailedResult_t :: equal));
   constexpr const static bool value = (detailedResult == (detailedResult_t :: less));
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <template <class, class> class Operator, class Type1> template <class First, class ... Rest>
@@ -78,6 +84,8 @@ namespace crap
   constexpr const static detailedResult_t detailedResult = 
 	  greater ? (detailedResult_t :: greater) : (detailedResult_t :: less);
   constexpr const static bool value = (detailedResult == (detailedResult_t :: less));
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <template <class, class> class Operator, class First1, class ... Rest1> template <class...>
@@ -86,6 +94,8 @@ namespace crap
   using detailedResult_t = typename lexicographicalCompareType <Operator> :: detailedResult_t;
   constexpr const static detailedResult_t detailedResult = detailedResult_t :: greater;
   constexpr const static bool value = false;
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <template <class, class> class Operator, class First1, class ... Rest1> template <class Only>
@@ -98,6 +108,8 @@ namespace crap
   constexpr const static detailedResult_t detailedResult = 
 	  less ? (detailedResult_t :: less) : (detailedResult_t :: greater);
   constexpr const static bool value = (detailedResult == (detailedResult_t :: less));
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <template <class, class> class Operator, class First1, class ... Rest1>
@@ -121,6 +133,8 @@ namespace crap
   public:
   constexpr const static detailedResult_t detailedResult = upper <lowerResult, half> :: detailedResult;
   constexpr const static bool value = (detailedResult == (detailedResult_t :: less));
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <template <class, class> class Operator, class First1, class ... Rest1>
@@ -150,6 +164,64 @@ namespace crap
 	  with <First2, Rest2...> :: detailedResult_t detailedResult
 	  = values2 :: template since <Half, upper1> :: detailedResult;
  };
+}
+
+template <template <class, class> class Operator> template <class ... Types2>
+inline constexpr crap :: lexicographicalCompareType <Operator> :: template with <Types2...> :: operator
+typename crap :: lexicographicalCompareType <Operator> :: template with <Types2...> :: value_type () const noexcept
+{
+ return crap :: lexicographicalCompareType <Operator> :: template with <Types2...> :: value;
+}
+
+template <template <class, class> class Operator, class Type1> template <class ... Types2>
+inline constexpr crap :: lexicographicalCompareType <Operator, Type1> :: template with <Types2...> :: operator
+typename crap :: lexicographicalCompareType <Operator, Type1> :: template with <Types2...> :: value_type ()
+	const noexcept
+{
+ return crap :: lexicographicalCompareType <Operator, Type1> :: template with <Types2...> :: value;
+}
+
+template <template <class, class> class Operator, class Type1> template <class Only>
+inline constexpr crap :: lexicographicalCompareType <Operator, Type1> :: template with <Only> :: operator
+typename crap :: lexicographicalCompareType <Operator, Type1> :: template with <Only> :: value_type ()
+	const noexcept
+{
+ return crap :: lexicographicalCompareType <Operator, Type1> :: template with <Only> :: value;
+}
+
+template <template <class, class> class Operator, class Type1> template <class First, class ... Rest>
+inline constexpr crap :: lexicographicalCompareType <Operator, Type1> :: template with <First, Rest...> :: operator
+typename crap :: lexicographicalCompareType <Operator, Type1> :: template with <First, Rest...> :: value_type ()
+	const noexcept
+{
+ return crap :: lexicographicalCompareType <Operator, Type1> :: template with <First, Rest...> :: value;
+}
+
+template <template <class, class> class Operator, class First1, class ... Rest1> template <class ... Types2>
+inline constexpr crap :: lexicographicalCompareType <Operator, First1, Rest1...> :: template
+	with <Types2...> :: operator
+typename crap :: lexicographicalCompareType <Operator, First1, Rest1...> :: template with <Types2...> :: value_type ()
+	const noexcept
+{
+ return crap :: lexicographicalCompareType <Operator, First1, Rest1...> :: template with <Types2...> :: value;
+}
+
+template <template <class, class> class Operator, class First1, class ... Rest1> template <class Only>
+inline constexpr crap :: lexicographicalCompareType <Operator, First1, Rest1...> :: template with <Only> :: operator
+typename crap :: lexicographicalCompareType <Operator, First1, Rest1...> :: template with <Only> :: value_type ()
+	const noexcept
+{
+ return crap :: lexicographicalCompareType <Operator, First1, Rest1...> :: template with <Only> :: value;
+}
+
+template <template <class, class> class Operator, class First1, class ... Rest1>
+template <class First2, class ... Rest2>
+inline constexpr crap :: lexicographicalCompareType <Operator, First1, Rest1...> :: template
+	with <First2,  Rest2...> :: operator
+typename crap :: lexicographicalCompareType <Operator, First1, Rest1...> :: template
+	with <First2, Rest2...> :: value_type () const noexcept
+{
+ return crap :: lexicographicalCompareType <Operator, First1, Rest1...> :: template with <First2, Rest2...> :: value;
 }
 #endif
 
