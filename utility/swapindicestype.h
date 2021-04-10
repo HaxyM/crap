@@ -74,7 +74,7 @@ namespace crap
   constexpr const static std :: size_t index2 = ((Index1 < Index2) ? Index2 : Index1);
   public:
   template <template <class...> class Container>
-	  using type = Container<Ancestors..., valueAt <index2> :: value, Sibblings..., valueAt <index1> :: value, Offsprings...>;
+	  using type = Container<Ancestors..., valueAt<index2>, Sibblings..., valueAt<index1>, Offsprings...>;
  };
 }
 #endif
