@@ -16,7 +16,7 @@ namespace crap
  template <template <class, class> class Operator, class Type> struct isSortedUntilType<Operator, Type>
  {
   private:
-  template <template <class, class> class, class...> friend struct isSortesUntilType;
+  template <template <class, class> class, class...> friend struct isSortedUntilType;
   using first = Type;
   using last = Type;
   public:
