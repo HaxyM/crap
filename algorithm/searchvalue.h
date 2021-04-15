@@ -1,10 +1,10 @@
 #ifndef CRAP_ALGORITHM_SEARCHVALUE
 #define CRAP_ALGORITHM_SEARCHVALUE
 
-#include "countfortype.h"
 #include "findvalue.h"
 #include "mismatchfortype.h"
 #include "../utility/bisectvalue.h"
+#include "../utility/sizefortype.h"
 #include "../utility/valuelist.h"
 
 #include <cstddef>
@@ -142,9 +142,9 @@ namespace crap
   using result = subPattern<values :: template
 	  upper <mismatchForType <Type, Operator> :: template type> :: template with>;
   constexpr const static std :: size_t subPatternLength =
-	  subPattern <countForType <Type> :: template type> :: value;
+	  subPattern <sizeForType <Type> :: template type> :: value;
   constexpr const static std :: size_t upperLength =
-	  values :: template upper <countForType <Type> :: template type> :: value;
+	  values :: template upper <sizeForType <Type> :: template type> :: value;
   template <std :: size_t MismatchValue, std :: size_t SubPatternLength, std :: size_t UpperLength>
 	  struct partialCheck;
   template <std :: size_t PerfectMatch> struct partialCheck<PerfectMatch, PerfectMatch, PerfectMatch>;

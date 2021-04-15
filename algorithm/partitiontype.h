@@ -1,9 +1,9 @@
 #ifndef CRAP_ALGORITHM_PARTITIONTYPE
 #define CRAP_ALGORITHM_PARTITIONTYPE
 
-#include "counttype.h"
 #include "partitioncopytype.h"
 #include "../utility/concatenatetype.h"
+#include "../utility/sizetype.h"
 #include "../utility/typelist.h"
 
 #include <cstddef>
@@ -19,7 +19,7 @@ namespace crap
 	  using type = typename values :: template
 	  resultFalse <values :: template resultTrue <concatenateType> :: template with> :: template
 	  type<Container>;
-  constexpr const static std :: size_t value = values :: template resultTrue <countType> :: value;
+  constexpr const static std :: size_t value = values :: template resultTrue <sizeType> :: value;
  };
 }
 #endif
