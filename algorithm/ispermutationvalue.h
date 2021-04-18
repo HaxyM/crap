@@ -40,18 +40,24 @@ namespace crap
 	 struct isPermutationValue <Type, Operator, Value1> :: with
  {
   constexpr const static bool value = false;
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <class Type, template <Type, Type> class Operator, Type Value1> template <Type Value2>
 	 struct isPermutationValue <Type, Operator, Value1> :: template with<Value2>
  {
   constexpr const static bool value = (Operator <Value1, Value2> :: value);
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <class Type, template <Type, Type> class Operator, Type ... Values1> template <bool, Type...>
 	 struct isPermutationValue <Type, Operator, Values1...> :: withImplementation
  {
   constexpr const static bool value = false;
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <class Type, template <Type, Type> class Operator, Type ... Values1> template <Type ... Values2>
@@ -63,6 +69,8 @@ namespace crap
   using check = typename mismatchValue <Type, Operator, Values1...> :: template with<Values2...>;
   public:
   constexpr const static bool value = checkUnequal <check :: value, check :: npos> :: value;
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <class Type, template <Type, Type> class Operator, Type ... Values1> template <Type ... Values2>
@@ -140,6 +148,43 @@ namespace crap
   public:
   constexpr const static bool value = ((count1 :: value) == (count2 :: value));
  };
+}
+
+template <class Type, template <Type, Type> class Operator, Type Value1> template <Type ... Values2>
+inline constexpr crap :: isPermutationValue <Type, Operator, Value1> :: template with <Values2...> :: operator
+typename crap :: isPermutationValue <Type, Operator, Value1> :: template with <Values2...> :: value_type ()
+	const noexcept
+{
+ return crap :: isPermutationValue <Type, Operator, Value1> :: template with <Values2...> :: value;
+}
+
+template <class Type, template <Type, Type> class Operator, Type Value1> template <Type Value2>
+inline constexpr crap :: isPermutationValue <Type, Operator, Value1> :: template with <Value2> :: operator
+typename crap :: isPermutationValue <Type, Operator, Value1> :: template with <Value2> :: value_type ()
+	const noexcept
+{
+ return crap :: isPermutationValue <Type, Operator, Value1> :: template with <Value2> :: value;
+}
+
+template <class Type, template <Type, Type> class Operator, Type ... Values1>
+template <bool EqualSize, Type ... Values2>
+inline constexpr crap :: isPermutationValue <Type, Operator, Values1...> :: template
+	withImplementation <EqualSize, Values2...> :: operator
+typename crap :: isPermutationValue <Type, Operator, Values1...> :: template
+	withImplementation <EqualSize, Values2...> :: value_type () const noexcept
+{
+ return crap :: isPermutationValue <Type, Operator, Values1...> :: template
+	 withImplementation <EqualSize, Values2...> :: value;
+}
+
+template <class Type, template <Type, Type> class Operator, Type ... Values1> template <Type ... Values2>
+inline constexpr crap :: isPermutationValue <Type, Operator, Values1...> :: template
+	withImplementation <true, Values2...> :: operator
+typename crap :: isPermutationValue <Type, Operator, Values1...> :: template
+	withImplementation <true, Values2...> :: value_type () const noexcept
+{
+ return crap :: isPermutationValue <Type, Operator, Values1...> :: template
+	 withImplementation <true, Values2...> :: value;
 }
 #endif
 
