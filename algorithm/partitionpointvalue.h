@@ -13,12 +13,16 @@ namespace crap
  {
   constexpr const static std :: size_t value = 0u;
   constexpr const static std :: size_t npos = 0u;
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <class Type, template <Type> class Operator, Type Value> struct partitionPointValue<Type, Operator, Value>
  {
   constexpr const static std :: size_t value = ((Operator <Value> :: value) ? 1u : 0u);
   constexpr const static std :: size_t npos = 1u;
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <class Type, template <Type> class Operator, Type ... Values> struct partitionPointValue
@@ -32,6 +36,8 @@ namespace crap
   public:
   constexpr const static std :: size_t value = upper <lower :: value, lower :: npos> :: value;
   constexpr const static std :: size_t npos = sizeof...(Types);
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <class Type, template <Type> class Operator, Type ... Values>
@@ -51,6 +57,27 @@ namespace crap
   public:
   constexpr const static std :: size_t value = LowerNpos + (values :: template upper <This> :: value);
  };
+}
+
+template <class Type, template <Type> class Operator>
+        constexpr crap :: partitionPointValue <Type, Operator> :: operator
+        typename crap :: partitionPointValue <Type, Operator> :: value_type () const noexcept
+{
+ return crap :: partitionPointValue <Type, Operator> :: value;
+}
+
+template <class Type, template <Type> class Operator, Type Value>
+        constexpr crap :: partitionPointValue <Type, Operator, Value> :: operator
+        typename crap :: partitionPointValue <Type, Operator, Value> :: value_type () const noexcept
+{
+ return crap :: partitionPointValue <Type, Operator, Value> :: value;
+}
+
+template <class Type, template <Type> class Operator, Type ... Values>
+        constexpr crap :: partitionPointValue <Type, Operator, Values...> :: operator
+        typename crap :: partitionPointValue <Type, Operator, Values...> :: value_type () const noexcept
+{
+ return crap :: partitionPointValue <Type, Operator, Values...> :: value;
 }
 #endif
 
