@@ -11,12 +11,16 @@ namespace crap
  {
   constexpr const static std :: size_t value = 0u;
   constexpr const static std :: size_t npos = 0u;
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <class Type, template <Type, Type> class Operator, Type Value> struct adjacentFindValue<Type, Operator, Value>
  {
   constexpr const static std :: size_t value = 1u;
   constexpr const static std :: size_t npos = 1u;
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <class Type, template <Type, Type> class Operator, Type ... Values> struct adjacentFindValue
@@ -34,7 +38,30 @@ namespace crap
   public:
   constexpr const static std :: size_t value = (foundInLower ? (lower :: value) : (foundOnEdge ? (half - 1u) : ((lower :: npos) + (upper :: value))));
   constexpr const static std :: size_t npos = (lower :: npos) + (upper :: npos);
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
+}
+
+template <class Type, template <Type, Type> class Operator>
+        constexpr crap :: adjacentFindValue <Type, Operator> :: operator
+        typename crap :: adjacentFindValue <Type, Operator> :: value_type () const noexcept
+{
+ return crap :: adjacentFindValue <Type, Operator> :: value;
+}
+
+template <class Type, template <Type, Type> class Operator, Type Value>
+        constexpr crap :: adjacentFindValue <Type, Operator, Value> :: operator
+        typename crap :: adjacentFindValue <Type, Operator, Value> :: value_type () const noexcept
+{
+ return crap :: adjacentFindValue <Type, Operator, Value> :: value;
+}
+
+template <class Type, template <Type, Type> class Operator, Type ... Values>
+        constexpr crap :: adjacentFindValue <Type, Operator, Values...> :: operator
+        typename crap :: adjacentFindValue <Type, Operator, Values...> :: value_type () const noexcept
+{
+ return crap :: adjacentFindValue <Type, Operator, Values...> :: value;
 }
 #endif
 

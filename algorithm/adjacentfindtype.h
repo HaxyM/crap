@@ -13,12 +13,16 @@ namespace crap
  {
   constexpr const static std :: size_t value = 0u;
   constexpr const static std :: size_t npos = 0u;
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <template <class, class> class Operator, class Type> struct adjacentFindType<Operator, Type>
  {
   constexpr const static std :: size_t value = 1u;
   constexpr const static std :: size_t npos = 1u;
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <template <class, class> class Operator, class Type1, class Type2>
@@ -26,6 +30,8 @@ namespace crap
  {
   constexpr const static std :: size_t value = ((Operator <Type1, Type2> :: value) ? 0u : 2u);
   constexpr const static std :: size_t npos = 2u;
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <template <class, class> class Operator, class ... Types> struct adjacentFindType
@@ -40,6 +46,8 @@ namespace crap
   public:
   constexpr const static std :: size_t value = checkMiddle <lower :: value, lower :: npos> :: value;
   constexpr const static std :: size_t npos = sizeof...(Types);
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <template <class, class> class Operator, class ... Types>
@@ -88,6 +96,34 @@ namespace crap
   public:
   constexpr const static std :: size_t value = LowerNpos + (upper :: value);
  };
+}
+
+template <template <class, class> class Operator>
+        constexpr crap :: adjacentFindType <Operator> :: operator
+        typename crap :: adjacentFindType <Operator> :: value_type () const noexcept
+{
+ return crap :: adjacentFindType <Operator> :: value;
+}
+
+template <template <class, class> class Operator, class Type>
+        constexpr crap :: adjacentFindType <Operator, Type> :: operator
+        typename crap :: adjacentFindType <Operator, Type> :: value_type () const noexcept
+{
+ return crap :: adjacentFindType <Operator, Type> :: value;
+}
+
+template <template <class, class> class Operator, class Type1, class Type2>
+        constexpr crap :: adjacentFindType <Operator, Type1, Type2> :: operator
+        typename crap :: adjacentFindType <Operator, Type1, Type2> :: value_type () const noexcept
+{
+ return crap :: adjacentFindType <Operator, Type1, Type2> :: value;
+}
+
+template <template <class, class> class Operator, class ... Types>
+        constexpr crap :: adjacentFindType <Operator, Types...> :: operator
+        typename crap :: adjacentFindType <Operator, Types...> :: value_type () const noexcept
+{
+ return crap :: adjacentFindType <Operator, Types...> :: value;
 }
 #endif
 
