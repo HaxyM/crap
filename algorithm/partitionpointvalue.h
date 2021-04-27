@@ -60,21 +60,21 @@ namespace crap
 }
 
 template <class Type, template <Type> class Operator>
-        constexpr crap :: partitionPointValue <Type, Operator> :: operator
+        inline constexpr crap :: partitionPointValue <Type, Operator> :: operator
         typename crap :: partitionPointValue <Type, Operator> :: value_type () const noexcept
 {
  return crap :: partitionPointValue <Type, Operator> :: value;
 }
 
 template <class Type, template <Type> class Operator, Type Value>
-        constexpr crap :: partitionPointValue <Type, Operator, Value> :: operator
+        inline constexpr crap :: partitionPointValue <Type, Operator, Value> :: operator
         typename crap :: partitionPointValue <Type, Operator, Value> :: value_type () const noexcept
 {
  return crap :: partitionPointValue <Type, Operator, Value> :: value;
 }
 
 template <class Type, template <Type> class Operator, Type ... Values>
-        constexpr crap :: partitionPointValue <Type, Operator, Values...> :: operator
+        inline constexpr crap :: partitionPointValue <Type, Operator, Values...> :: operator
         typename crap :: partitionPointValue <Type, Operator, Values...> :: value_type () const noexcept
 {
  return crap :: partitionPointValue <Type, Operator, Values...> :: value;

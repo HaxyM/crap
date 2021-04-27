@@ -99,28 +99,28 @@ namespace crap
 }
 
 template <template <class, class> class Operator>
-        constexpr crap :: adjacentFindType <Operator> :: operator
+        inline constexpr crap :: adjacentFindType <Operator> :: operator
         typename crap :: adjacentFindType <Operator> :: value_type () const noexcept
 {
  return crap :: adjacentFindType <Operator> :: value;
 }
 
 template <template <class, class> class Operator, class Type>
-        constexpr crap :: adjacentFindType <Operator, Type> :: operator
+        inline constexpr crap :: adjacentFindType <Operator, Type> :: operator
         typename crap :: adjacentFindType <Operator, Type> :: value_type () const noexcept
 {
  return crap :: adjacentFindType <Operator, Type> :: value;
 }
 
 template <template <class, class> class Operator, class Type1, class Type2>
-        constexpr crap :: adjacentFindType <Operator, Type1, Type2> :: operator
+        inline constexpr crap :: adjacentFindType <Operator, Type1, Type2> :: operator
         typename crap :: adjacentFindType <Operator, Type1, Type2> :: value_type () const noexcept
 {
  return crap :: adjacentFindType <Operator, Type1, Type2> :: value;
 }
 
 template <template <class, class> class Operator, class ... Types>
-        constexpr crap :: adjacentFindType <Operator, Types...> :: operator
+        inline constexpr crap :: adjacentFindType <Operator, Types...> :: operator
         typename crap :: adjacentFindType <Operator, Types...> :: value_type () const noexcept
 {
  return crap :: adjacentFindType <Operator, Types...> :: value;

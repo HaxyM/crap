@@ -44,21 +44,21 @@ namespace crap
 }
 
 template <class Type, template <Type, Type> class Operator>
-        constexpr crap :: adjacentFindValue <Type, Operator> :: operator
+        inline constexpr crap :: adjacentFindValue <Type, Operator> :: operator
         typename crap :: adjacentFindValue <Type, Operator> :: value_type () const noexcept
 {
  return crap :: adjacentFindValue <Type, Operator> :: value;
 }
 
 template <class Type, template <Type, Type> class Operator, Type Value>
-        constexpr crap :: adjacentFindValue <Type, Operator, Value> :: operator
+        inline constexpr crap :: adjacentFindValue <Type, Operator, Value> :: operator
         typename crap :: adjacentFindValue <Type, Operator, Value> :: value_type () const noexcept
 {
  return crap :: adjacentFindValue <Type, Operator, Value> :: value;
 }
 
 template <class Type, template <Type, Type> class Operator, Type ... Values>
-        constexpr crap :: adjacentFindValue <Type, Operator, Values...> :: operator
+        inline constexpr crap :: adjacentFindValue <Type, Operator, Values...> :: operator
         typename crap :: adjacentFindValue <Type, Operator, Values...> :: value_type () const noexcept
 {
  return crap :: adjacentFindValue <Type, Operator, Values...> :: value;
