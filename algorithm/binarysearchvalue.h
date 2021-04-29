@@ -13,6 +13,8 @@ namespace crap
  template <class Type, Type Value, template <Type, Type> class Operator> struct binarySearchValue<Type, Value, Operator>
  {
   constexpr const static bool value = false;
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <class Type, Type Value, template <Type, Type> class Operator, Type Value1> struct binarySearchValue<Type, Value, Operator, Value1>
@@ -22,6 +24,8 @@ namespace crap
   constexpr const static bool larger = Operator <Value1, Value> :: value;
   public:
   constexpr const static bool value = !(smaller || larger);
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <class Type, Type Value, template <Type, Type> class Operator, Type ... Values> struct binarySearchValue
@@ -35,6 +39,8 @@ namespace crap
   using result = typename valueDemultiplexer <Type, equal, copyValue <Type, Values...> :: template type, found, Continue> :: type;
   public:
   constexpr const static bool value = result :: value;
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <class Type, Type Value, template <Type, Type> class Operator, Type ... Values>
@@ -52,6 +58,27 @@ namespace crap
   public:
   constexpr const static bool value = result :: value;
  };
+}
+
+template <class Type, Type Value, template <Type, Type> class Operator>
+        inline constexpr crap :: binarySearchValue <Type, Value, Operator> :: operator
+        typename crap :: binarySearchValue <Type, Value, Operator> :: value_type () const noexcept
+{
+ return crap :: binarySearchValue <Type, Value, Operator> :: value;
+}
+
+template <class Type, Type Value, template <Type, Type> class Operator, Type Value1>
+        inline constexpr crap :: binarySearchValue <Type, Value, Operator, Value1> :: operator
+        typename crap :: binarySearchValue <Type, Value, Operator, Value1> :: value_type () const noexcept
+{
+ return crap :: binarySearchValue <Type, Value, Operator, Value1> :: value;
+}
+
+template <class Type, Type Value, template <Type, Type> class Operator, Type ... Values>
+        inline constexpr crap :: binarySearchValue <Type, Value, Operator, Values...> :: operator
+        typename crap :: binarySearchValue <Type, Value, Operator, Values...> :: value_type () const noexcept
+{
+ return crap :: binarySearchValue <Type, Value, Operator, Values...> :: value;
 }
 #endif
 

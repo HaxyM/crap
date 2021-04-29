@@ -13,6 +13,8 @@ namespace crap
  template <class Type, template <class, class> class Operator> struct binarySearchType<Type, Operator>
  {
   constexpr const static bool value = false;
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <class Type, template <class, class> class Operator, class Type1>
@@ -23,6 +25,8 @@ namespace crap
   constexpr const static bool larger = Operator <Type1, Type> :: value;
   public:
   constexpr const static bool value = !(smaller || larger);
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <class Type, template <class, class> class Operator, class ... Types> struct binarySearchType
@@ -34,6 +38,8 @@ namespace crap
   constexpr const static bool equal = !((Operator <Type, midType> :: value) || (Operator <midType, Type> :: value));
   public:
   constexpr const static bool value = Continue <equal> :: value;
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <class Type, template <class, class> class Operator, class ... Types>
@@ -61,6 +67,27 @@ namespace crap
   public:
   constexpr const static bool value = result :: value;
  };
+}
+
+template <class Type, template <class, class> class Operator>
+        inline constexpr crap :: binarySearchType <Type, Operator> :: operator
+        typename crap :: binarySearchType <Type, Operator> :: value_type () const noexcept
+{
+ return crap :: binarySearchType <Type, Operator> :: value;
+}
+
+template <class Type, template <class, class> class Operator, class Type1>
+        inline constexpr crap :: binarySearchType <Type, Operator, Type1> :: operator
+        typename crap :: binarySearchType <Type, Operator, Type1> :: value_type () const noexcept
+{
+ return crap :: binarySearchType <Type, Operator, Type1> :: value;
+}
+
+template <class Type, template <class, class> class Operator, class ... Types>
+        inline constexpr crap :: binarySearchType <Type, Operator, Types...> :: operator
+        typename crap :: binarySearchType <Type, Operator, Types...> :: value_type () const noexcept
+{
+ return crap :: binarySearchType <Type, Operator, Types...> :: value;
 }
 #endif
 
