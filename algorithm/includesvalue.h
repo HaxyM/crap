@@ -35,36 +35,48 @@ namespace crap
 	 struct includesValue <Type, Operator> :: with
  {
   constexpr const static bool value = (sizeof...(Values2) == 0u);
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <class Type, template <Type, Type> class Operator, Type Value1> template <Type...>
 	 struct includesValue <Type, Operator, Value1> :: with
  {
   constexpr const static bool value = true;
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <class Type, template <Type, Type> class Operator, Type Value1> template <Type Only>
 	 struct includesValue <Type, Operator, Value1> :: template with<Only>
  {
   constexpr const static bool value = !((Operator <Value1, Only> :: value) || (Operator <Only, Value1> :: value));
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <class Type, template <Type, Type> class Operator, Type Value1> template <Type First, Type ... Rest>
 	 struct includesValue <Type, Operator, Value1> :: template with<First, Rest...>
  {
   constexpr const static bool value = false;
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <class Type, template <Type, Type> class Operator, Type ... Values1> template <Type...>
 	 struct includesValue <Type, Operator, Values1...> :: with
  {
   constexpr const static bool value = true;
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <class Type, template <Type, Type> class Operator, Type ... Values1> template <Type Only>
 	 struct includesValue <Type, Operator, Values1...> :: template with<Only>
  {
   constexpr const static bool value = binarySearchValue <Type, Only, Operator, Values1...> :: value;
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <class Type, template <Type, Type> class Operator, Type ... Values1> template <Type First, Type ... Rest>
@@ -84,6 +96,8 @@ namespace crap
 	  midOk &&
 	  checkLower <midOk, range1 :: begin, range2 :: begin> :: value &&
 	  checkUpper <midOk, range1 :: end, range2 :: end> :: value;
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <class Type, template <Type, Type> class Operator, Type ... Values1>
@@ -127,6 +141,69 @@ namespace crap
   constexpr const static bool value =
 	  values2 :: template since <Begin2, values1 :: template since <Begin1, This> :: template with> :: value;
  };
+}
+
+template <class Type, template <Type, Type> class Operator> template <Type ... Values2>
+        inline constexpr
+	crap :: includesValue <Type, Operator> :: template with <Values2...> :: operator typename
+	crap :: includesValue <Type, Operator> :: template with <Values2...> :: value_type ()
+	const noexcept
+{
+ return crap :: includesValue <Type, Operator> :: template with <Values2...> :: value;
+}
+
+template <class Type, template <Type, Type> class Operator, Type Value1> template <Type ... Empty>
+        inline constexpr
+	crap :: includesValue <Type, Operator, Value1> :: template with <Empty...> :: operator typename
+	crap :: includesValue <Type, Operator, Value1> :: template with <Empty...> :: value_type ()
+	const noexcept
+{
+ return crap :: includesValue <Type, Operator, Value1> :: template with <Empty...> :: value;
+}
+
+template <class Type, template <Type, Type> class Operator, Type Value1> template <Type Only>
+        inline constexpr
+	crap :: includesValue <Type, Operator, Value1> :: template with <Only> :: operator typename
+	crap :: includesValue <Type, Operator, Value1> :: template with <Only> :: value_type ()
+	const noexcept
+{
+ return crap :: includesValue <Type, Operator, Value1> :: template with <Only> :: value;
+}
+
+template <class Type, template <Type, Type> class Operator, Type Value1> template <Type First, Type ... Rest>
+        inline constexpr
+	crap :: includesValue <Type, Operator, Value1> :: template with <First, Rest...> :: operator typename
+	crap :: includesValue <Type, Operator, Value1> :: template with <First, Rest...> :: value_type ()
+	const noexcept
+{
+ return crap :: includesValue <Type, Operator, Value1> :: template with <First, Rest...> :: value;
+}
+
+template <class Type, template <Type, Type> class Operator, Type ... Values1> template <Type ... Empty>
+        inline constexpr
+	crap :: includesValue <Type, Operator, Values1...> :: template with <Empty...> :: operator typename
+	crap :: includesValue <Type, Operator, Values1...> :: template with <Empty...> :: value_type ()
+	const noexcept
+{
+ return crap :: includesValue <Type, Operator, Values1...> :: template with <Empty...> :: value;
+}
+
+template <class Type, template <Type, Type> class Operator, Type ... Values1> template <Type Only>
+        inline constexpr
+	crap :: includesValue <Type, Operator, Values1...> :: template with <Only> :: operator typename
+	crap :: includesValue <Type, Operator, Values1...> :: template with <Only> :: value_type ()
+	const noexcept
+{
+ return crap :: includesValue <Type, Operator, Values1...> :: template with <Only> :: value;
+}
+
+template <class Type, template <Type, Type> class Operator, Type ... Values1> template <Type First, Type ... Rest>
+        inline constexpr
+	crap :: includesValue <Type, Operator, Values1...> :: template with <First, Rest...> :: operator typename
+	crap :: includesValue <Type, Operator, Values1...> :: template with <First, Rest...> :: value_type ()
+	const noexcept
+{
+ return crap :: includesValue <Type, Operator, Values1...> :: template with <First, Rest...> :: value;
 }
 #endif
 
