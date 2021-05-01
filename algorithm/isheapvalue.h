@@ -11,6 +11,8 @@ namespace crap
  template <class Type, template <Type, Type> class Operator> struct isHeapValue<Type, Operator>
  {
   constexpr const static bool value = true;
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <class Type, template <Type, Type> class Operator, Type First, Type ... Rest> struct isHeapValue<Type, Operator, First, Rest...>
@@ -29,6 +31,8 @@ namespace crap
 	  constexpr const static bool isHeap(std :: integral_constant<bool, true>, std :: integral_constant<bool, true>);
   public:
   constexpr const static bool value = isHeap<0u, First>(leftChildIn<0u>{}, rightChildIn<0u>{});
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 }
 
@@ -69,6 +73,20 @@ crap :: isHeapValue <Type, Operator, First, Rest...> :: isHeap(std :: integral_c
  constexpr const bool leftBranchOk =
 	 crap :: isHeapValue <Type, Operator, First, Rest...> :: template isHeap<leftIndex, leftChild>(leftLeftBranch{}, leftRightBranch{});
  return childsOk && rightBranchOk && leftBranchOk;
+}
+
+template <class Type, template <Type, Type> class Operator>
+        inline constexpr crap :: isHeapValue <Type, Operator> :: operator
+        typename crap :: isHeapValue <Type, Operator> :: value_type () const noexcept
+{
+ return crap :: isHeapValue <Type, Operator> :: value;
+}
+
+template <class Type, template <Type, Type> class Operator, Type First, Type ... Rest>
+        inline constexpr crap :: isHeapValue <Type, Operator, First, Rest...> :: operator
+        typename crap :: isHeapValue <Type, Operator, First, Rest...> :: value_type () const noexcept
+{
+ return crap :: isHeapValue <Type, Operator, First, Rest...> :: value;
 }
 #endif
 

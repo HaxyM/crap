@@ -13,6 +13,8 @@ namespace crap
  template <template <class, class> class Operator> struct isHeapType<Operator>
  {
   constexpr const static bool value = true;
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <template <class, class> class Operator, class First, class ... Rest>
@@ -34,6 +36,8 @@ namespace crap
   public:
   constexpr const static bool value =
 	  checkSubHeap <0u, First, leftChildIn <0u> :: value, rightChildIn <0u> :: value> :: value;
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <template <class, class> class Operator, class First, class ... Rest>
@@ -81,6 +85,20 @@ namespace crap
   public:
   constexpr const static bool value = childsOk && rightBranchOk && leftBranchOk;
  };
+}
+
+template <template <class, class> class Operator>
+        inline constexpr crap :: isHeapType <Operator> :: operator
+        typename crap :: isHeapType <Operator> :: value_type () const noexcept
+{
+ return crap :: isHeapType <Operator> :: value;
+}
+
+template <template <class, class> class Operator, class First, class ... Rest>
+        inline constexpr crap :: isHeapType <Operator, First, Rest...> :: operator
+        typename crap :: isHeapType <Operator, First, Rest...> :: value_type () const noexcept
+{
+ return crap :: isHeapType <Operator, First, Rest...> :: value;
 }
 #endif
 
