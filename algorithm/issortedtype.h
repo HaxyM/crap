@@ -35,6 +35,15 @@ namespace crap
   using last = typename upper :: last;
   public:
   constexpr const static auto value = (lower :: value) && (upper :: value) && (Operator <typename lower :: last, typename upper :: first> :: value);
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
+}
+
+template <template <class, class> class Operator, class ... Types>
+        inline constexpr crap :: isSortedType <Operator, Types...> :: operator
+        typename crap :: isSortedType <Operator, Types...> :: value_type () const noexcept
+{
+ return crap :: isSortedType <Operator, Types...> :: value;
 }
 #endif
