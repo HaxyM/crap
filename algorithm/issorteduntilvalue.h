@@ -11,18 +11,24 @@ namespace crap
  {
   constexpr const static std :: size_t value = 0u;
   constexpr const static std :: size_t npos = 0u;
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <class Type, template <Type, Type> class Operator, Type Value1> struct isSortedUntilValue<Type, Operator, Value1>
  {
   constexpr const static std :: size_t value = 1u;
   constexpr const static std :: size_t npos = 1u;
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <class Type, template <Type, Type> class Operator, Type Value1, Type Value2> struct isSortedUntilValue<Type, Operator, Value1, Value2>
  {
   constexpr const static std :: size_t value = ((Operator <Value2, Value1> :: value) ? 1u : 2u);
   constexpr const static std :: size_t npos = 2u;
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <class Type, template <Type, Type> class Operator, Type ... Values> struct isSortedUntilValue
@@ -41,7 +47,44 @@ namespace crap
   public:
   constexpr const static std :: size_t value = (lowerUnsorted ? (lower :: value) : ((lower :: value) + upperValue));
   constexpr const static std :: size_t npos = (values :: size);
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
+}
+
+template <class Type, template <Type, Type> class Operator>
+        inline constexpr crap :: isSortedUntilValue <Type, Operator> :: operator
+        typename crap :: isSortedUntilValue <Type, Operator> :: value_type () const noexcept
+{
+ return crap :: isSortedUntilValue <Type, Operator> :: value;
+}
+
+template <class Type, template <Type, Type> class Operator, Type Value1>
+        inline constexpr crap :: isSortedUntilValue <Type, Operator, Value1> :: operator
+        typename crap :: isSortedUntilValue <Type, Operator, Value1> :: value_type () const noexcept
+{
+ return crap :: isSortedUntilValue <Type, Operator, Value1> :: value;
+}
+
+template <class Type, template <Type, Type> class Operator, Type Value1>
+        inline constexpr crap :: isSortedUntilValue <Type, Operator, Value1> :: operator
+        typename crap :: isSortedUntilValue <Type, Operator, Value1> :: value_type () const noexcept
+{
+ return crap :: isSortedUntilValue <Type, Operator, Value1> :: value;
+}
+
+template <class Type, template <Type, Type> class Operator, Type Value1, Type Value2>
+        inline constexpr crap :: isSortedUntilValue <Type, Operator, Value1, Value2> :: operator
+        typename crap :: isSortedUntilValue <Type, Operator, Value1, Values2> :: value_type () const noexcept
+{
+ return crap :: isSortedUntilValue <Type, Operator, Value1, Value2> :: value;
+}
+
+template <class Type, template <Type, Type> class Operator, Type ... Values>
+        inline constexpr crap :: isSortedUntilValue <Type, Operator, Values...> :: operator
+        typename crap :: isSortedUntilValue <Type, Operator, Values...> :: value_type () const noexcept
+{
+ return crap :: isSortedUntilValue <Type, Operator, Values...> :: value;
 }
 #endif
 
