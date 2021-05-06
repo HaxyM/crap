@@ -39,6 +39,8 @@ namespace crap
  {
   constexpr const static std :: size_t value = 0u;
   constexpr const static std :: size_t npos = sizeof...(Values2);
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <class Type, template <Type, Type> class Operator, Type Value1> template <Type ... Values2>
@@ -50,6 +52,8 @@ namespace crap
   public:
   constexpr const static std :: size_t value = getValue(Values2...);
   constexpr const static std :: size_t npos = ((sizeof...(Values2) > 1u) ? sizeof...(Values2) : 1u);
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <class Type, template <Type, Type> class Operator, Type ... Values1>
@@ -70,7 +74,18 @@ namespace crap
   public:
   constexpr const static std :: size_t value = getValue(Values2...);
   constexpr const static std :: size_t npos = ((sizeof...(Values1) < sizeof...(Values2)) ? sizeof...(Values2) : sizeof...(Values1));
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
+}
+
+template <class Type, template <Type, Type> class Operator> template <Type ... Values2>
+        inline constexpr
+	crap :: mismatchValue <Type, Operator> :: template with <Values2...> :: operator typename
+	crap :: mismatchValue <Type, Operator> :: template with <Values2...> :: value_type ()
+	const noexcept
+{
+ return crap :: mismatchValue <Type, Operator> :: template with <Values2...> :: value;
 }
 
 template <class Type, template <Type, Type> class Operator, Type Value1> template <Type ... Values2>
@@ -84,6 +99,15 @@ constexpr const std :: size_t crap :: mismatchValue <Type, Operator, Value1> :: 
 {
  using values = crap :: valueList<Type, Values2...>;
  return ((Operator <Value1, values :: template At <0u> :: value> :: value) ? 1u : 0u);
+}
+
+template <class Type, template <Type, Type> class Operator, Type Value1> template <Type ... Values2>
+        inline constexpr
+	crap :: mismatchValue <Type, Operator, Value1> :: template with <Values2...> :: operator typename
+	crap :: mismatchValue <Type, Operator, Value1> :: template with <Values2...> :: value_type ()
+	const noexcept
+{
+ return crap :: mismatchValue <Type, Operator, Value1> :: template with <Values2...> :: value;
 }
 
 template <class Type, template <Type, Type> class Operator, Type ... Values1> template <Type ... Values2>
@@ -103,6 +127,15 @@ constexpr const std :: size_t
 crap :: mismatchValue <Type, Operator, Values1...> :: template with <Values2...> :: getValue(Type, Type, ...)
 {
  return ((lower != half) ? lower : (half + upper));
+}
+
+template <class Type, template <Type, Type> class Operator, Type ... Values1> template <Type ... Values2>
+        inline constexpr
+	crap :: mismatchValue <Type, Operator, Values1...> :: template with <Values2...> :: operator typename
+	crap :: mismatchValue <Type, Operator, Values1...> :: template with <Values2...> :: value_type ()
+	const noexcept
+{
+ return crap :: mismatchValue <Type, Operator, Values1...> :: template with <Values2...> :: value;
 }
 #endif
 

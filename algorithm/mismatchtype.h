@@ -34,6 +34,8 @@ namespace crap
  {
   constexpr const static std :: size_t value = 0u;
   constexpr const static std :: size_t npos = sizeof...(Types2);
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <template <class, class> class Operator, class Only1> template <class...>
@@ -41,6 +43,8 @@ namespace crap
  {
   constexpr const static std :: size_t value = 0u;
   constexpr const static std :: size_t npos = 1u;
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <template <class, class> class Operator, class Only1> template <class Only2>
@@ -48,6 +52,8 @@ namespace crap
  {
   constexpr const static std :: size_t value = ((Operator <Only1, Only2> :: value) ? 1u : 0u);
   constexpr const static std :: size_t npos = 1u;
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <template <class, class> class Operator, class Only1> template <class First2, class ... Rest2>
@@ -55,6 +61,8 @@ namespace crap
  {
   constexpr const static std :: size_t value = ((Operator <Only1, First2> :: value) ? 1u : 0u);
   constexpr const static std :: size_t npos = sizeof...(Rest2) + 1u;
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <template <class, class> class Operator, class First1, class ... Rest1> template <class...>
@@ -62,6 +70,8 @@ namespace crap
  {
   constexpr const static std :: size_t value = 0u;
   constexpr const static std :: size_t npos = sizeof...(Rest1) + 1u;
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <template <class, class> class Operator, class First1, class ... Rest1> template <class Only2>
@@ -69,6 +79,8 @@ namespace crap
  {
   constexpr const static std :: size_t value = ((Operator <First1, Only2> :: value) ? 1u : 0u);
   constexpr const static std :: size_t npos = sizeof...(Rest1) + 1u;
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <template <class, class> class Operator, class First1, class ... Rest1>
@@ -88,6 +100,8 @@ namespace crap
   constexpr const static std :: size_t value = upper <lower :: value, lower :: npos> :: value;
   constexpr const static std :: size_t npos =
 	  ((types1 :: size > types2 :: size) ? (types1 :: size) : (types2 :: size));
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <template <class, class> class Operator, class First1, class ... Rest1>
@@ -113,6 +127,70 @@ namespace crap
   public:
   constexpr const static std :: size_t value = LowerNpos + (result :: value);
  }; 
+}
+
+template <template <class, class> class Operator> template <class ... Types2>
+        inline constexpr
+	crap :: mismatchType <Operator> :: template with <Types2...> :: operator typename
+	crap :: mismatchType <Operator> :: template with <Types2...> :: value_type ()
+	const noexcept
+{
+ return crap :: mismatchType <Operator> :: template with <Types2...> :: value;
+}
+
+template <template <class, class> class Operator, class Only1> template <class ... Empty>
+        inline constexpr
+	crap :: mismatchType <Operator, Only1> :: template with <Empty...> :: operator typename
+	crap :: mismatchType <Operator, Only1> :: template with <Empty...> :: value_type ()
+	const noexcept
+{
+ return crap :: mismatchType <Operator, Only1> :: template with <Empty...> :: value;
+}
+
+template <template <class, class> class Operator, class Only1> template <class Only2>
+        inline constexpr
+	crap :: mismatchType <Operator, Only1> :: template with <Only2> :: operator typename
+	crap :: mismatchType <Operator, Only1> :: template with <Only2> :: value_type ()
+	const noexcept
+{
+ return crap :: mismatchType <Operator, Only1> :: template with <Only2> :: value;
+}
+
+template <template <class, class> class Operator, class Only1> template <class First2, class ... Rest2>
+        inline constexpr
+	crap :: mismatchType <Operator, Only1> :: template with <First2, Rest2...> :: operator typename
+	crap :: mismatchType <Operator, Only1> :: template with <First2, Rest2...> :: value_type ()
+	const noexcept
+{
+ return crap :: mismatchType <Operator, Only1> :: template with <First2, Rest2...> :: value;
+}
+
+template <template <class, class> class Operator, class First1, class ... Rest1> template <class ... Empty>
+        inline constexpr
+	crap :: mismatchType <Operator, First1, Rest1...> :: template with <Empty...> :: operator typename
+	crap :: mismatchType <Operator, First1, Rest1...> :: template with <Empty...> :: value_type ()
+	const noexcept
+{
+ return crap :: mismatchType <Operator, First1, Rest1...> :: template with <Empty...> :: value;
+}
+
+template <template <class, class> class Operator, class First1, class ... Rest1> template <class Only2>
+        inline constexpr
+	crap :: mismatchType <Operator, First1, Rest1...> :: template with <Only2> :: operator typename
+	crap :: mismatchType <Operator, First1, Rest1...> :: template with <Only2> :: value_type ()
+	const noexcept
+{
+ return crap :: mismatchType <Operator, First1, Rest1...> :: template with <Only2> :: value;
+}
+
+template <template <class, class> class Operator, class First1, class ... Rest1>
+template <class First2, class ... Rest2>
+        inline constexpr
+	crap :: mismatchType <Operator, First1, Rest1...> :: template with <First2, Rest2...> :: operator typename
+	crap :: mismatchType <Operator, First1, Rest1...> :: template with <First2, Rest2...> :: value_type ()
+	const noexcept
+{
+ return crap :: mismatchType <Operator, First1, Rest1...> :: template with <First2, Rest2...> :: value;
 }
 #endif
 
