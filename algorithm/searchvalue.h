@@ -38,6 +38,8 @@ namespace crap
   constexpr const static std :: size_t matched = 0u;
   constexpr const static std :: size_t value = 0u;
   constexpr const static std :: size_t npos = 0u;
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <class Type, template <Type, Type> class Operator, Type Value> template <Type...>
@@ -46,6 +48,8 @@ namespace crap
   constexpr const static std :: size_t matched = 0u;
   constexpr const static std :: size_t value = 0u;
   constexpr const static std :: size_t npos = 1u;
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <class Type, template <Type, Type> class Operator, Type Value> template <Type Only>
@@ -54,6 +58,8 @@ namespace crap
   constexpr const static std :: size_t matched = ((Operator <Only, Value> :: value) ? 1u : 0u);
   constexpr const static std :: size_t value = ((Operator <Only, Value> :: value) ? 0u : 1u);
   constexpr const static std :: size_t npos = 1u;
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <class Type, template <Type, Type> class Operator, Type Value> template <Type First, Type ... Rest>
@@ -62,6 +68,8 @@ namespace crap
   constexpr const static std :: size_t matched = ((Operator <First, Value> :: value) ? 1u : 0u);
   constexpr const static std :: size_t value = 1u;
   constexpr const static std :: size_t npos = 1u;
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <class Type, template <Type, Type> class Operator, Type ... Values> template <Type...>
@@ -70,6 +78,8 @@ namespace crap
   constexpr const static std :: size_t matched = 0u;
   constexpr const static std :: size_t value = 0u;
   constexpr const static std :: size_t npos = sizeof...(Values);
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <class Type, template <Type, Type> class Operator, Type ... Values> template <Type Only>
@@ -81,6 +91,8 @@ namespace crap
   constexpr const static std :: size_t matched = ((found :: value == found :: npos) ? 0u : 1u);
   constexpr const static std :: size_t value = found :: value;
   constexpr const static std :: size_t npos = found :: npos;
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <class Type, template <Type, Type> class Operator, Type ... Values> template <Type First, Type ... Rest>
@@ -98,6 +110,8 @@ namespace crap
   constexpr const static std :: size_t matched = upper <lower :: value, lower :: npos, lower :: matched> :: matched;
   constexpr const static std :: size_t value = upper <lower :: value, lower :: npos, lower :: matched> :: value;
   constexpr const static std :: size_t npos = sizeof...(Values);
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <class Type, template <Type, Type> class Operator, Type ... Values>
@@ -220,6 +234,69 @@ namespace crap
   constexpr const static std :: size_t value = sizeof...(Values);
   constexpr const static std :: size_t npos = sizeof...(Values);
  };
+}
+
+template <class Type, template <Type, Type> class Operator> template <Type ... Pattern>
+        inline constexpr
+	crap :: searchValue <Type, Operator> :: template with <Pattern...> :: operator typename
+	crap :: searchValue <Type, Operator> :: template with <Pattern...> :: value_type ()
+	const noexcept
+{
+ return crap :: searchValue <Type, Operator> :: template with <Pattern...> :: value;
+}
+
+template <class Type, template <Type, Type> class Operator, Type Value> template <Type ... Empty>
+        inline constexpr
+	crap :: searchValue <Type, Operator, Value> :: template with <Empty...> :: operator typename
+	crap :: searchValue <Type, Operator, Value> :: template with <Empty...> :: value_type ()
+	const noexcept
+{
+ return crap :: searchValue <Type, Operator, Value> :: template with <Empty...> :: value;
+}
+
+template <class Type, template <Type, Type> class Operator, Type Value> template <Type Only>
+        inline constexpr
+	crap :: searchValue <Type, Operator, Value> :: template with <Only> :: operator typename
+	crap :: searchValue <Type, Operator, Value> :: template with <Only> :: value_type ()
+	const noexcept
+{
+ return crap :: searchValue <Type, Operator, Value> :: template with <Only> :: value;
+}
+
+template <class Type, template <Type, Type> class Operator, Type Value> template <Type First, Type ... Rest>
+        inline constexpr
+	crap :: searchValue <Type, Operator, Value> :: template with <First, Rest...> :: operator typename
+	crap :: searchValue <Type, Operator, Value> :: template with <First, Rest...> :: value_type ()
+	const noexcept
+{
+ return crap :: searchValue <Type, Operator, Value> :: template with <First, Rest...> :: value;
+}
+
+template <class Type, template <Type, Type> class Operator, Type ... Values> template <Type ... Empty>
+        inline constexpr
+	crap :: searchValue <Type, Operator, Values...> :: template with <Empty...> :: operator typename
+	crap :: searchValue <Type, Operator, Values...> :: template with <Empty...> :: value_type ()
+	const noexcept
+{
+ return crap :: searchValue <Type, Operator, Values...> :: template with <Empty...> :: value;
+}
+
+template <class Type, template <Type, Type> class Operator, Type ... Values> template <Type Only>
+        inline constexpr
+	crap :: searchValue <Type, Operator, Values...> :: template with <Only> :: operator typename
+	crap :: searchValue <Type, Operator, Values...> :: template with <Only> :: value_type ()
+	const noexcept
+{
+ return crap :: searchValue <Type, Operator, Values...> :: template with <Only> :: value;
+}
+
+template <class Type, template <Type, Type> class Operator, Type ... Values> template <Type First, Type ... Rest>
+        inline constexpr
+	crap :: searchValue <Type, Operator, Values...> :: template with <First, Rest...> :: operator typename
+	crap :: searchValue <Type, Operator, Values...> :: template with <First, Rest...> :: value_type ()
+	const noexcept
+{
+ return crap :: searchValue <Type, Operator, Values...> :: template with <First, Rest...> :: value;
 }
 #endif
 
