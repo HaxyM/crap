@@ -6,7 +6,7 @@
 
 namespace crap
 {
- template <class Type, template <Type, Type> class AdditiveOperator = arithmeticOperatorsForType <Type> :: template Plus2, template <Type, Type> class MultiplicativeOperator = arithmeticOperatorsForType <Type> :: template Multiplies2>
+ template <class Type, template <Type...> class AdditiveOperator = arithmeticOperatorsForType <Type> :: template Plus, template <Type...> class MultiplicativeOperator = arithmeticOperatorsForType <Type> :: template Multiplies>
 	 struct innerProductForType
  {
   template <Type ... Values1> using values = innerProductValue<Type, AdditiveOperator, MultiplicativeOperator, Values1...>;

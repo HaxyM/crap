@@ -6,20 +6,22 @@
 
 namespace crap
 {
- template <template <class, class> class AdditiveOperator, template <class, class> class MultiplicativeOperator, class ... Types1>
+ template <template <class...> class AdditiveOperator, template <class...> class MultiplicativeOperator, class ... Types1>
  struct innerProductType
  {
   template <class ... Types2> struct with;
  };
 
- template <template <class, class> class AdditiveOperator, template <class, class> class MultiplicativeOperator, class ... Types1>
+ template <template <class...> class AdditiveOperator, template <class...> class MultiplicativeOperator, class ... Types1>
  template <class ... Types2> struct innerProductType <AdditiveOperator, MultiplicativeOperator, Types1...> :: with
  {
   private:
+  template <class A, class B> using multiplicative = MultiplicativeOperator<A, B>;
   template <class ... SubTypes> using Reductor = reduceType<AdditiveOperator, SubTypes...>;
-  using reduced = typename transform2Type <MultiplicativeOperator, Types1...> :: template with <Types2...> :: template type<Reductor>;
   public:
-  using type = reduced :: type;
+  using type = typename transform2Type <multiplicative, Types1...> :: template
+	  with <Types2...> :: template type<Reductor> :: type;
  };
 }
 #endif
+
