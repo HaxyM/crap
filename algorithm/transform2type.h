@@ -7,7 +7,7 @@ namespace crap
 {
  template <template <class, class> class Operator, class ... Types1> struct transform2Type
  {
-  template <class ... Types2> using with = copyType<Operator <Types1, Types2> :: type...>;
+  template <class ... Types2> using with = copyType<typename Operator <Types1, Types2> :: type...>;
  };
 }
 #endif
