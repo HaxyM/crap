@@ -28,6 +28,17 @@ namespace crap
   public:
   using type = typename iotaValue <Steps, std :: size_t, 1u> :: template type<sum>;
  };
+
+ template <intmax_t Numerator, intmax_t Denominator>
+	 constexpr typename expType <std :: ratio<Numerator, Denominator> > :: type
+	 exp(std :: ratio<Numerator, Denominator>) noexcept;
+}
+
+template <intmax_t Numerator, intmax_t Denominator>
+inline constexpr typename crap :: expType <std :: ratio<Numerator, Denominator> > :: type
+crap :: exp(std :: ratio<Numerator, Denominator>) noexcept
+{
+ return {};
 }
 #endif
 

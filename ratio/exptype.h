@@ -34,6 +34,17 @@ namespace crap
   public:
   using type = typename iotaValue <Steps, std :: size_t, 1u> :: template type<sum>;
  };
+
+ template <class Type, typename std :: make_signed <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+	 constexpr typename expType <valueRatio<Type, Numerator, Denominator> > :: type
+	 exp(valueRatio<Type, Numerator, Denominator>) noexcept;
+}
+
+template <class Type, typename std :: make_signed <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+inline constexpr typename crap :: expType <crap :: valueRatio<Type, Numerator, Denominator> > :: type
+crap :: exp(crap :: valueRatio<Type, Numerator, Denominator>) noexcept
+{
+ return {};
 }
 #endif
 
