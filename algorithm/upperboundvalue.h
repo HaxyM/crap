@@ -11,12 +11,16 @@ namespace crap
  {
   constexpr const static std :: size_t value = 0u;
   constexpr const static std :: size_t npos = 0u;
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <class Type, Type Value, template <Type, Type> class Operator, Type Value1> struct upperBoundValue<Type, Value, Operator, Value1>
  {
   constexpr const static std :: size_t value = (Operator <Value, Value1> :: value ? 0u : 1u);
   constexpr const static std :: size_t npos = 1u;
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <class Type, Type Value, template <Type, Type> class Operator, Type ... Values> struct upperBoundValue
@@ -30,7 +34,30 @@ namespace crap
   public:
   constexpr const static std :: size_t value = (((lower :: value) != (lower :: npos)) ? (lower :: value) : ((lower :: npos) + (upper :: value)));
   constexpr const static std :: size_t npos = (lower :: npos) + (upper :: npos);
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
+}
+
+template <class Type, Type Value, template <Type, Type> class Operator>
+        inline constexpr crap :: upperBoundValue <Type, Value, Operator> :: operator
+        typename crap :: upperBoundValue <Type, Value, Operator> :: value_type () const noexcept
+{
+ return crap :: upperBoundValue <Type, Value, Operator> :: value;
+}
+
+template <class Type, Type Value, template <Type, Type> class Operator, Type Value1>
+        inline constexpr crap :: upperBoundValue <Type, Value, Operator, Value1> :: operator
+        typename crap :: upperBoundValue <Type, Value, Operator, Value1> :: value_type () const noexcept
+{
+ return crap :: upperBoundValue <Type, Value, Operator, Value1> :: value;
+}
+
+template <class Type, Type Value, template <Type, Type> class Operator, Type ... Values>
+        inline constexpr crap :: upperBoundValue <Type, Value, Operator, Values...> :: operator
+        typename crap :: upperBoundValue <Type, Value, Operator, Values...> :: value_type () const noexcept
+{
+ return crap :: upperBoundValue <Type, Value, Operator, Values...> :: value;
 }
 #endif
 
