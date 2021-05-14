@@ -11,7 +11,8 @@ namespace crap
 	 struct replaceValue
  {
   private:
-  template <Type Value> using value = std :: integral_constant<Type, ((Operator <Value, Old>) ? New : Value)>;
+  template <Type Value>
+	  using value = std :: integral_constant<Type, ((Operator <Value, Old> :: value) ? New : Value)>;
   public:
   template <template <Type...> class Container = valueListForType <Type> :: template type>
 	  using type = Container<(value <Values> :: value)...>;
