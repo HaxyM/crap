@@ -32,12 +32,12 @@ namespace crap
   constexpr static numeratorType contractedNum2 = contractType <valueRatio<Type, Numerator2, Denominator1> > :: type :: num;
   constexpr static denominatorType contractedDen1 = contractType <valueRatio<Type, Numerator2, Denominator1> > :: type :: den;
   constexpr static denominatorType contractedDen2 = contractType <valueRatio<Type, Numerator1, Denominator2> > :: type :: den;
-  constexpr const static bool numOverflow1 = (contractedNum1 > zero <numeratorType> :: value) && (contractedNum2 > zero <numeratorType> :: value) && (contractedNum2 > (numMax / contractedNum1));
-  constexpr const static bool numOverflow2 = (contractedNum1 == minusOne) && (contractedNum2 < zero <numeratorType> :: value) && (zero <numeratorType> :: value > (numMax + contractedNum2));
-  constexpr const static bool numOverflow3 = (contractedNum1 < minusOne) && (contractedNum2 < zero <numeratorType> :: value) && (contractedNum2 < (numMax / contractedNum1));
-  constexpr const static bool numUnderflow1 = (contractedNum1 > zero <numeratorType> :: value) && (contractedNum2 < zero <numeratorType> :: value) && (contractedNum2 < (numMin / contractedNum1));
-  constexpr const static bool numUnderflow2 = (contractedNum1 == minusOne) && (contractedNum2 > zero <numeratorType> :: value) && (zero <numeratorType> :: value < (numMin + contractedNum2));
-  constexpr const static bool numUnderflow3 = (contractedNum1 < minusOne) && (contractedNum2 > zero <numeratorType> :: value) && (contractedNum2 > (numMin / contractedNum1));
+  constexpr const static bool numOverflow1 = ((contractedNum1 > zero <numeratorType> :: value) && (contractedNum2 > zero <numeratorType> :: value)) ? (contractedNum2 > (numMax / contractedNum1)) : false;
+  constexpr const static bool numOverflow2 = ((contractedNum1 == minusOne) && (contractedNum2 < zero <numeratorType> :: value)) ? (zero <numeratorType> :: value > (numMax + contractedNum2)) : false;
+  constexpr const static bool numOverflow3 = ((contractedNum1 < minusOne) && (contractedNum2 < zero <numeratorType> :: value)) ? (contractedNum2 < (numMax / contractedNum1)) : false;
+  constexpr const static bool numUnderflow1 = ((contractedNum1 > zero <numeratorType> :: value) && (contractedNum2 < zero <numeratorType> :: value)) ? (contractedNum2 < (numMin / contractedNum1)) : false;
+  constexpr const static bool numUnderflow2 = ((contractedNum1 == minusOne) && (contractedNum2 > zero <numeratorType> :: value)) ? (zero <numeratorType> :: value < (numMin + contractedNum2)) : false;
+  constexpr const static bool numUnderflow3 = ((contractedNum1 < minusOne) && (contractedNum2 > zero <numeratorType> :: value)) ? (contractedNum2 > (numMin / contractedNum1)) : false;
   constexpr const static bool denOverflow = contractedDen2 > (denMax / contractedDen1);
   constexpr const static bool needScale = numOverflow1 || numOverflow2 || numOverflow3 || numUnderflow1 || numUnderflow2 || numUnderflow3 || denOverflow;
   constexpr static scaleType numOverflowScale = (numOverflow1 || numOverflow2 || numOverflow3) ? (static_cast<scaleType>(numMax) / static_cast<scaleType>(contractedNum1) / static_cast<scaleType>(contractedNum2)) : infinity;
