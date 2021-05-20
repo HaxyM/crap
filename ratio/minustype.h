@@ -57,8 +57,8 @@ namespace crap
   constexpr static denominatorType denominatorExt = needScaleExt ? static_cast<denominatorType>(denFloat) : (denPart1 * denPart2);
   constexpr static numeratorType numerator1 = needScaleExt ? (static_cast<numeratorType>(num1Float)) : (Numerator1 * part1IntScale);
   constexpr static numeratorType numerator2 = needScaleExt ? (static_cast<numeratorType>(num2Float)) : (Numerator2 * part2IntScale);
-  constexpr static const bool numUnderFlow = (numerator2 > zero <numeratorType> :: value) && (numerator1 < (numMin + numerator2));
-  constexpr static const bool numOverFlow = (numerator2 < zero <numeratorType> :: value) && (numerator1 > (numMax + numerator2));
+  constexpr static const bool numUnderFlow = (numerator2 > zero <numeratorType> :: value) ? (numerator1 < (numMin + numerator2)) : false;
+  constexpr static const bool numOverFlow = (numerator2 < zero <numeratorType> :: value) ? (numerator1 > (numMax + numerator2)) : false;
   constexpr static scaleType numOverScale = numOverFlow ? std :: abs(1.0l / (num1Float / static_cast<scaleType>(numMax) - (num2Float / static_cast<scaleType>(numMax)))) : infinity;
   constexpr static scaleType numUnderScale = numUnderFlow ? std :: abs(1.0l / (num1Float / static_cast<scaleType>(numMin) - (num2Float / static_cast<scaleType>(numMin)))) : infinity;
   constexpr static scaleType scale = (numOverScale < numUnderScale) ? numOverScale : numUnderScale;
