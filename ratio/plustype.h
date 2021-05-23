@@ -61,8 +61,9 @@ namespace crap
   constexpr static scaleType numUnderScale = numUnderFlow ? std :: abs(1.0l / (num1Float / static_cast<scaleType>(numMin) + (num2Float / static_cast<scaleType>(numMin)))) : infinity;
   constexpr static scaleType scale = (numOverScale < numUnderScale) ? numOverScale : numUnderScale;
   constexpr static const bool needScale = (numOverFlow || numUnderFlow);
+  constexpr static scaleType scaledDenominator = needScale ? (scale * denFloat) : static_cast<scaleType>(denominatorExt);
   constexpr static numeratorType numerator = needScale ? (static_cast<numeratorType>((scale * num1Float) + (scale * num2Float))) : (numerator1 + numerator2);
-  constexpr static denominatorType denominator = needScale ? (static_cast<denominatorType>(scale * denFloat)) : denominatorExt;
+  constexpr static denominatorType denominator = needScale ? static_cast<denominatorType>((scaledDenominator < 1.0) ? 1.0 : scaledDenominator) : denominatorExt;
   public:
   using type = typename contractType <valueRatio<Type, numerator, denominator> > :: type;
  };
