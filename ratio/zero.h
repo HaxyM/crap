@@ -10,9 +10,9 @@
 
 namespace crap
 {
- template <class Type, typename std :: make_signed <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type>
+ template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type>
 	 struct zero<valueRatio<Type, Numerator, Denominator> >
-	 : typeIdentity<valueRatio<Type, zero <typename std :: make_signed <Type> :: type> :: value, identity <typename std :: make_unsigned <Type> :: type> :: value> >
+	 : typeIdentity<valueRatio<Type, '+', zero <typename std :: make_unsigned <Type> :: type> :: value, identity <typename std :: make_unsigned <Type> :: type> :: value> >
  {};
 }
 #endif
