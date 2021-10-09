@@ -8,6 +8,7 @@
 #include "contracttype.h"
 #include "valueratio.h"
 #include "../functional/multipliestype.h"
+#include "../numeric/zero.h"
 #include "../utility/typeidentity.h"
 
 namespace crap
@@ -27,7 +28,7 @@ namespace crap
   constexpr const static char sign = (Sign1 == Sign2) ? '+' : '-';
   using contracted1 = typename contractType <valueRatio<Type, Sign1, Numerator1, Denominator2> > :: type;
   using contracted2 = typename contractType <valueRatio<Type, Sign2, Numerator2, Denominator1> > :: type;
-  constexpr const static bool numOverflow = (contracted1 :: num > (max / contracted2 :: num));
+  constexpr const static bool numOverflow = (contracted2 :: num > zero <valueType> :: value) ? (contracted1 :: num > (max / contracted2 :: num)) : false;
   constexpr const static bool denOverflow = (contracted1 :: den > (max / contracted2 :: den));
   constexpr const static bool needScale = (numOverflow || denOverflow);
   constexpr static scaleType numOverflowScale = numOverflow ? (static_cast<scaleType>(max) / static_cast<scaleType>(contracted1 :: num) / static_cast<scaleType>(contracted2 :: num)) : infinity;
@@ -59,4 +60,3 @@ operator * (crap :: valueRatio<Type1, Sign1, Numerator1, Denominator1>, crap :: 
  return {};
 }
 #endif
-
