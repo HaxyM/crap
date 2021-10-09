@@ -13,28 +13,26 @@
 
 namespace crap
 {
- template <class Type, typename std :: make_signed <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator, std :: size_t Steps>
-	 struct log10Type<valueRatio<Type, Numerator, Denominator>, Steps>
+ template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator, std :: size_t Steps>
+	 struct log10Type<valueRatio<Type, Sign, Numerator, Denominator>, Steps>
  {
   private:
-  using numeratorType = typename std :: make_signed <Type> :: type;
-  using denominatorType = typename std :: make_unsigned <Type> :: type;
-  using base = typename logType <valueRatio<Type, static_cast<numeratorType>(10), identity <denominatorType> :: value>, Steps> :: type;
-  using ln = typename logType <valueRatio<Type, Numerator, Denominator>, Steps> :: type;
+  using valueType = typename std :: make_unsigned <Type> :: type;
+  using base = typename logType <valueRatio<Type, '+', static_cast<valueType>(10), identity <valueType> :: value>, Steps> :: type;
+  using ln = typename logType <valueRatio<Type, Sign, Numerator, Denominator>, Steps> :: type;
   public:
   using type = typename dividesType <ln, base> :: type;
  };
 
- template <class Type, typename std :: make_signed <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
-	 constexpr typename log10Type <valueRatio<Type, Numerator, Denominator> > :: type
-	 log10(valueRatio<Type, Numerator, Denominator>) noexcept;
+ template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+	 constexpr typename log10Type <valueRatio<Type, Sign, Numerator, Denominator> > :: type
+	 log10(valueRatio<Type, Sign, Numerator, Denominator>) noexcept;
 }
 
-template <class Type, typename std :: make_signed <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
-inline constexpr typename crap :: log10Type <crap :: valueRatio<Type, Numerator, Denominator> > :: type
-crap :: log10(crap :: valueRatio<Type, Numerator, Denominator>) noexcept
+template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+inline constexpr typename crap :: log10Type <crap :: valueRatio<Type, Sign, Numerator, Denominator> > :: type
+crap :: log10(crap :: valueRatio<Type, Sign, Numerator, Denominator>) noexcept
 {
  return {};
 }
 #endif
-
