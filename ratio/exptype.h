@@ -17,34 +17,32 @@
 
 namespace crap
 {
- template <class Type, typename std :: make_signed <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator, std :: size_t Steps>
-	 struct expType<valueRatio<Type, Numerator, Denominator>, Steps>
+ template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator, std :: size_t Steps>
+	 struct expType<valueRatio<Type, Sign, Numerator, Denominator>, Steps>
  {
   private:
-  using numeratorType = typename std :: make_signed <Type> :: type;
-  using denominatorType = typename std :: make_unsigned <Type> :: type;
-  template <denominatorType N> using constant = valueRatio<Type, identity <numeratorType> :: value, N>;
-  template <std :: size_t N> using reproduce = reproduceType<N, valueRatio<Type, Numerator, Denominator> >;
-  template <denominatorType ... N>
+  using valueType = typename std :: make_unsigned <Type> :: type;
+  template <valueType N> using constant = valueRatio<Type, '+', identity <valueType> :: value, N>;
+  template <std :: size_t N> using reproduce = reproduceType<N, valueRatio<Type, Sign, Numerator, Denominator> >;
+  template <valueType ... N>
 	  using constants = innerProductType<multipliesType, multipliesType, constant<N>...>;
   template <std :: size_t N> using at = typename reproduce <N> :: template
-	  type <iotaValue <N, denominatorType, 1u> :: template type <constants> :: template with> :: type;
+	  type <iotaValue <N, valueType, 1u> :: template type <constants> :: template with> :: type;
   template <std :: size_t ... N>
-	  using sum = typename plusType <typename identity<valueRatio<Type, Numerator, Denominator> > :: type, at<N>...> :: type;
+	  using sum = typename plusType <typename identity<valueRatio<Type, Sign, Numerator, Denominator> > :: type, at<N>...> :: type;
   public:
   using type = typename iotaValue <Steps, std :: size_t, 1u> :: template type<sum>;
  };
 
- template <class Type, typename std :: make_signed <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
-	 constexpr typename expType <valueRatio<Type, Numerator, Denominator> > :: type
-	 exp(valueRatio<Type, Numerator, Denominator>) noexcept;
+ template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+	 constexpr typename expType <valueRatio<Type, Sign, Numerator, Denominator> > :: type
+	 exp(valueRatio<Type, Sign, Numerator, Denominator>) noexcept;
 }
 
-template <class Type, typename std :: make_signed <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
-inline constexpr typename crap :: expType <crap :: valueRatio<Type, Numerator, Denominator> > :: type
-crap :: exp(crap :: valueRatio<Type, Numerator, Denominator>) noexcept
+template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+inline constexpr typename crap :: expType <crap :: valueRatio<Type, Sign, Numerator, Denominator> > :: type
+crap :: exp(crap :: valueRatio<Type, Sign, Numerator, Denominator>) noexcept
 {
  return {};
 }
 #endif
-
