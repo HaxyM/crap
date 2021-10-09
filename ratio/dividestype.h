@@ -27,7 +27,7 @@ namespace crap
   constexpr static valueType max = std :: numeric_limits <valueType> :: max();
   constexpr const static char sign = (Sign1 == Sign2) ? '+' : '-';
   using contracted1 = typename contractType <valueRatio<Type, Sign1, Numerator1, Numerator2> > :: type;
-  using contracted2 = typename contractType <valueRatio<Type, Sign2, Denominator1, Denominator2> > :: type;
+  using contracted2 = typename contractType <valueRatio<Type, Sign2, Denominator2, Denominator1> > :: type;
   constexpr const static bool numOverflow = (contracted1 :: num > (max / contracted2 :: num));
   constexpr const static bool denOverflow = (contracted1 :: den > (max / contracted2 :: den));
   constexpr const static bool needScale = (numOverflow || denOverflow);
