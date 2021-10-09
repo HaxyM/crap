@@ -17,16 +17,18 @@
 
 namespace crap
 {
- template <class Type, typename std :: make_signed <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
-	 struct sqrtType<valueRatio<Type, Numerator, Denominator>, 0u>
+ template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+	 struct sqrtType<valueRatio<Type, Sign, Numerator, Denominator>, 0u>
  {
-  using type = valueRatio<Type, Numerator, Denominator>;
+  using type = valueRatio<Type, Sign, Numerator, Denominator>;
  };
- template <class Type, typename std :: make_signed <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator, std :: size_t Steps>
-	 struct sqrtType<valueRatio<Type, Numerator, Denominator>, Steps>
+
+ template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator, std :: size_t Steps>
+	 struct sqrtType<valueRatio<Type, Sign, Numerator, Denominator>, Steps>
  {
   private:
-  using z = valueRatio<Type, Numerator, Denominator>;
+  static_assert(Sign == '+', "Value must be positive.");
+  using z = valueRatio<Type, Sign, Numerator, Denominator>;
   using x = typename sqrtType <z, Steps - 1u> :: type;
   using partNum = typename minusType <typename multipliesType <x, x> :: type, z> :: type;
   using part = typename dividesType <partNum, typename plusType <x, x> :: type> :: type;
@@ -34,16 +36,15 @@ namespace crap
   using type = typename minusType <x, part> :: type;
  };
 
- template <class Type, typename std :: make_signed <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
-	 constexpr typename sqrtType <valueRatio<Type, Numerator, Denominator> > :: type
-	 sqrt(valueRatio<Type, Numerator, Denominator>) noexcept;
+ template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+	 constexpr typename sqrtType <valueRatio<Type, Sign, Numerator, Denominator> > :: type
+	 sqrt(valueRatio<Type, Sign, Numerator, Denominator>) noexcept;
 }
 
-template <class Type, typename std :: make_signed <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
-inline constexpr typename crap :: sqrtType <crap :: valueRatio<Type, Numerator, Denominator> > :: type
-crap :: sqrt(crap :: valueRatio<Type, Numerator, Denominator>) noexcept
+template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+inline constexpr typename crap :: sqrtType <crap :: valueRatio<Type, Sign, Numerator, Denominator> > :: type
+crap :: sqrt(crap :: valueRatio<Type, Sign, Numerator, Denominator>) noexcept
 {
  return {};
 }
 #endif
-
