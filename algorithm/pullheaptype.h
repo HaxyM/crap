@@ -43,9 +43,9 @@ namespace crap
   private:
   using subTypes = typeList<SubTypes...>;
   constexpr const static std :: size_t LeftChildIndex = (2u * ParentIndex) + 1u;
-  constexpr const static std :: size_t RightChildIndex = (2u * ParentIndex) + 1u;
-  constexpr const static bool hasLeftChild = (LeftChildIndex < (subTypes :: size));
-  constexpr const static bool hasRightChild = (RightChildIndex < (subTypes :: size));
+  constexpr const static std :: size_t RightChildIndex = (2u * ParentIndex) + 2u;
+  constexpr const static bool hasLeftChild = (LeftChildIndex < (subTypes :: size - 1u));
+  constexpr const static bool hasRightChild = (RightChildIndex < (subTypes :: size - 1u));
   using leftChild = typename subTypes :: template at<hasLeftChild ? LeftChildIndex : ParentIndex>;
   using rightChild = typename subTypes :: template at<hasRightChild ? RightChildIndex : ParentIndex>;
   constexpr const static std :: size_t ChildIndex =
@@ -66,4 +66,3 @@ namespace crap
  };
 }
 #endif
-
