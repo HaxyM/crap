@@ -42,9 +42,9 @@ namespace crap
   private:
   using subValues = valueList<Type, SubValues...>;
   constexpr const static std :: size_t LeftChildIndex = (2u * ParentIndex) + 1u;
-  constexpr const static std :: size_t RightChildIndex = (2u * ParentIndex) + 1u;
-  constexpr const static bool hasLeftChild = (LeftChildIndex < (subValues :: size));
-  constexpr const static bool hasRightChild = (RightChildIndex < (subValues :: size));
+  constexpr const static std :: size_t RightChildIndex = (2u * ParentIndex) + 2u;
+  constexpr const static bool hasLeftChild = (LeftChildIndex < (subValues :: size - 1u));
+  constexpr const static bool hasRightChild = (RightChildIndex < (subValues :: size - 1u));
   constexpr const static Type leftChild = subValues :: template At <hasLeftChild ? LeftChildIndex : ParentIndex> :: value;
   constexpr const static Type rightChild = subValues :: template At <hasRightChild ? RightChildIndex : ParentIndex> :: value;
   constexpr const static std :: size_t ChildIndex = ((hasRightChild && (Operator <leftChild, rightChild> :: value)) ? RightChildIndex : LeftChildIndex);
@@ -63,4 +63,3 @@ namespace crap
  };
 }
 #endif
-
