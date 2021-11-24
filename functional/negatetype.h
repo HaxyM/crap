@@ -11,7 +11,7 @@ namespace crap
 {
  template <class> struct negateType;
 
- template <class Type, Type Value> struct negateType<std :: ingegral_constant<Type, Value> >
+ template <class Type, Type Value> struct negateType<std :: integral_constant<Type, Value> >
 	 : typeIdentity<std :: integral_constant<typename negateValue <Type, Value> :: value_type, negateValue <Type, Value> :: value> >
  {};
 
