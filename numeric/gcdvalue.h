@@ -113,7 +113,7 @@ template <class Type, Type Value1, Type Value2> template <Type SubValue> inline 
 template <class Type, Type Value1, Type Value2> template <Type SubValue1, Type SubValue2> inline constexpr const Type
 	crap :: gcdValue <Type, Value1, Value2> :: getValue(std :: integral_constant<Type, SubValue1>, std :: integral_constant<Type, SubValue2>)
 {
- return crap :: gcdValue <Type, Value1, Value2> :: getValue(std :: integral_constant<Type, (SubValue1 < SubValue2) ? SubValue1 : (SubValue1 - SubValue2)>{}, std :: integral_constant<Type, (SubValue2 < SubValue1) ? SubValue2 : (SubValue2 - SubValue1)>{});
+ return crap :: gcdValue <Type, Value1, Value2> :: getValue(std :: integral_constant<Type, (SubValue1 < SubValue2) ? SubValue1 : (SubValue1 % SubValue2)>{}, std :: integral_constant<Type, (SubValue2 < SubValue1) ? SubValue2 : (SubValue2 % SubValue1)>{});
 }
 #endif
 #endif
