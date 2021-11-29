@@ -8,6 +8,8 @@
 #include "contracttype.h"
 #include "valueratio.h"
 #include "../functional/multipliestype.h"
+#include "../numeric/identity.h"
+#include "../numeric/reducetype.h"
 #include "../numeric/zero.h"
 #include "../utility/typeidentity.h"
 
@@ -34,9 +36,10 @@ namespace crap
   constexpr static scaleType numOverflowScale = numOverflow ? (static_cast<scaleType>(max) / static_cast<scaleType>(contracted1 :: num) / static_cast<scaleType>(contracted2 :: num)) : infinity;
   constexpr static scaleType denOverflowScale = denOverflow ? (static_cast<scaleType>(max) / static_cast<scaleType>(contracted1 :: den) / static_cast<scaleType>(contracted2 :: den)) : infinity;
   constexpr static scaleType scale = (numOverflowScale < denOverflowScale) ? numOverflowScale : denOverflowScale;
-  constexpr static valueType scaledDenominator = needScale ? static_cast<valueType>(scale * static_cast<scaleType>(contracted1 :: den) * static_cast<scaleType>(contracted2 :: den)) : (contracted1 :: den * contracted2 :: den);
+  constexpr static scaleType scaledDenominator = needScale ? (scale * static_cast<scaleType>(contracted1 :: den) * static_cast<scaleType>(contracted2 :: den)) : static_cast<scaleType>(contracted1 :: den * contracted2 :: den);
   constexpr static valueType numerator = needScale ? static_cast<valueType>(scale * static_cast<scaleType>(contracted1 :: num) * static_cast<scaleType>(contracted2 :: num)) : (contracted1 :: num * contracted2 :: num);
-  constexpr static valueType denominator = needScale ? static_cast<valueType>((scaledDenominator < 1.0) ? 1.0 : scaledDenominator) : (contracted1 :: den * contracted2 :: den);
+  constexpr static valueType scaledDenominatorInRange = (scaledDenominator < 1.0) ? identity <valueType> :: value : ((scaledDenominator > static_cast<scaleType>(max) ? max : static_cast<valueType>(scaledDenominator)));
+  constexpr static valueType denominator = needScale ? scaledDenominatorInRange : (contracted1 :: den * contracted2 :: den);
   public:
   using type = typename contractType <valueRatio<Type, sign, numerator, denominator> > :: type; //TODO: Consider contracting optional on overflow.
  };
