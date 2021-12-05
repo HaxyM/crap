@@ -9,6 +9,7 @@
 #include "valueratio.h"
 #include "../functional/plustype.h"
 #include "../numeric/gcdvalue.h"
+#include "../numeric/identity.h"
 #include "../numeric/zero.h"
 #include "../utility/typeidentity.h"
 
@@ -44,15 +45,17 @@ namespace crap
   constexpr static scaleType denFloat = needScaleExt ? (scaleExt * static_cast<scaleType>(denPart1) * static_cast<scaleType>(denPart2)) : static_cast<scaleType>(denPart1 * denPart2);
   constexpr static scaleType num1Float = needScaleExt ? (scaleExt * static_cast<scaleType>(Numerator1) * static_cast<scaleType>(part1IntScale)) : static_cast<scaleType>(Numerator1 * static_cast<valueType>(part1IntScale));//Is it ok?
   constexpr static scaleType num2Float = needScaleExt ? (scaleExt * static_cast<scaleType>(Numerator2) * static_cast<scaleType>(part2IntScale)) : static_cast<scaleType>(Numerator2 * static_cast<valueType>(part2IntScale));//Is it ok?
-  constexpr static valueType scaledDenominatorInRange = (denFloat < 1.0) ? identity <valueType> :: value : ((denFloat > static_cast<scaleType>(max) ? max : static_cast<valueType>(denFloat)));
+  constexpr static valueType scaledDenominatorInRange = (denFloat < 1.0) ? identity <valueType> :: value : ((denFloat > static_cast<scaleType>(max)) ? max : static_cast<valueType>(denFloat));
   constexpr static valueType denominatorExt = needScaleExt ? scaledDenominatorInRange : (denPart1 * denPart2);
   constexpr static valueType numerator1 = needScaleExt ? (static_cast<valueType>(num1Float)) : (Numerator1 * part1IntScale);
   constexpr static valueType numerator2 = needScaleExt ? (static_cast<valueType>(num2Float)) : (Numerator2 * part2IntScale);
   //Addition
   constexpr static const bool needScale = (Sign1 == Sign2) ? (numerator1 > (max - numerator2)) : false;
-  constexpr static scaleType scale = needScale ? (1.0l / (num1Float / static_cast<scaleType>(max) + (num2Float / static_cast<scaleType>(max)))) : infinity;
+  constexpr static scaleType scale = (1.0l / (num1Float / static_cast<scaleType>(max) + (num2Float / static_cast<scaleType>(max))));
   constexpr static scaleType scaledDenominator = needScale ? (scale * denFloat) : static_cast<scaleType>(denominatorExt);
-  constexpr static valueType numeratorSum = needScale ? (static_cast<valueType>((scale * num1Float) + (scale * num2Float))) : (numerator1 + numerator2);
+  constexpr static scaleType scaledNumerator = (scale * num1Float) + (scale * num2Float);
+  constexpr static valueType scaledNumeratorInRange = (scaledNumerator < 0.0) ? zero <valueType> :: value : ((scaledNumerator > static_cast<scaleType>(max)) ? max : static_cast<valueType>(scaledNumerator));
+  constexpr static valueType numeratorSum = needScale ? scaledNumeratorInRange : ((Sign1 == Sign2) ? (numerator1 + numerator2) : zero <valueType> :: value);
   constexpr static valueType numeratorDiff = (numerator1 < numerator2) ? (numerator2 - numerator1) : (numerator1 - numerator2);
   constexpr static valueType numerator = (Sign1 == Sign2) ? numeratorSum : numeratorDiff;
   //Sign calculation
