@@ -37,8 +37,10 @@ namespace crap
   constexpr static scaleType denOverflowScale = denOverflow ? (static_cast<scaleType>(max) / static_cast<scaleType>(contracted1 :: den) / static_cast<scaleType>(contracted2 :: den)) : infinity;
   constexpr static scaleType scale = (numOverflowScale < denOverflowScale) ? numOverflowScale : denOverflowScale;
   constexpr static scaleType scaledDenominator = needScale ? (scale * static_cast<scaleType>(contracted1 :: den) * static_cast<scaleType>(contracted2 :: den)) : static_cast<scaleType>(contracted1 :: den * contracted2 :: den);
-  constexpr static valueType numerator = needScale ? static_cast<valueType>(scale * static_cast<scaleType>(contracted1 :: num) * static_cast<scaleType>(contracted2 :: num)) : (contracted1 :: num * contracted2 :: num);
-  constexpr static valueType scaledDenominatorInRange = (scaledDenominator < 1.0) ? identity <valueType> :: value : ((scaledDenominator > static_cast<scaleType>(max) ? max : static_cast<valueType>(scaledDenominator)));
+  constexpr static scaleType scaledNumerator = needScale ? (scale * static_cast<scaleType>(contracted1 :: num) * static_cast<scaleType>(contracted2 :: num)) : static_cast<scaleType>(contracted1 :: num * contracted2 :: num);
+  constexpr static valueType scaledNumeratorInRange = (scaledNumerator < 0.0l) ? zero <valueType> :: value : ((scaledNumerator > static_cast<scaleType>(max)) ? max : static_cast<valueType>(scaledNumerator));
+  constexpr static valueType numerator = needScale ? scaledNumeratorInRange : (contracted1 :: num * contracted2 :: num);
+  constexpr static valueType scaledDenominatorInRange = (scaledDenominator < 1.0l) ? identity <valueType> :: value : ((scaledDenominator > static_cast<scaleType>(max) ? max : static_cast<valueType>(scaledDenominator)));
   constexpr static valueType denominator = needScale ? scaledDenominatorInRange : (contracted1 :: den * contracted2 :: den);
   public:
   using type = typename contractType <valueRatio<Type, sign, numerator, denominator> > :: type; //TODO: Consider contracting optional on overflow.
