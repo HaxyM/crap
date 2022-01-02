@@ -27,6 +27,7 @@ namespace crap
 	 struct minValue
  {
   private:
+  static_assert(sizeof...(Values) > 0u, "Extremum of empty set is not defined.");
   template <Type ... SubValues> using This = minValue<Type, Operator, SubValues...>;
   public:
   constexpr const static Type value = reduceValue <Type, This, Values...> :: value;
