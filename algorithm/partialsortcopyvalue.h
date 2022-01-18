@@ -1,10 +1,15 @@
 #ifndef CRAP_ALGORITHM_PARTIALSORTCOPYVALUE
 #define CRAP_ALGORITHM_PARTIALSORTCOPYVALUE
 
+#include <cstddef>
+#include <type_traits>
+
 #include "minvalue.h"
 #include "partitioncopyvalue.h"
 #include "sortvalue.h"
+#include "../utility/concatenatefortype.h"
 #include "../utility/sizefortype.h"
+#include "../utility/valuelist.h"
 #include "../utility/valuelistfortype.h"
 
 namespace crap
