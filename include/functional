@@ -1,0 +1,40 @@
+#ifndef CRAP_FUNCTIONAL
+#define CRAP_FUNCTIONAL
+
+#include <arithmeticoperatorsfortype.h>
+#include <bitwiseandvalue.h>
+#include <bitwisenotvalue.h>
+#include <bitwiseoperatorsfortype.h>
+#include <bitwiseorvalue.h>
+#include <bitwisexorvalue.h>
+#include <comparatorsfortype.h>
+#include <dividestype.h>
+#include <dividesvalue.h>
+#include <equaltotype.h>
+#include <equaltovalue.h>
+#include <greaterequaltype.h>
+#include <greaterequalvalue.h>
+#include <greatertype.h>
+#include <greatervalue.h>
+#include <lessequaltype.h>
+#include <lessequalvalue.h>
+#include <lesstype.h>
+#include <lessvalue.h>
+#include <logicalandvalue.h>
+#include <logicalnotvalue.h>
+#include <logicaloperatorsfortype.h>
+#include <logicalorvalue.h>
+#include <minustype.h>
+#include <minusvalue.h>
+#include <modulusvalue.h>
+#include <multipliestype.h>
+#include <multipliesvalue.h>
+#include <negatetype.h>
+#include <negatevalue.h>
+#include <notequaltotype.h>
+#include <notequaltovalue.h>
+#include <plustype.h>
+#include <plusvalue.h>
+
+#endif
+
