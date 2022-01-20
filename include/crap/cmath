@@ -1,0 +1,16 @@
+#ifndef CRAP_CMATH
+#define CRAP_CMATH
+
+#include "cmath.d/cbrttype.h"
+#include "cmath.d/costype.h"
+#include "cmath.d/exptype.h"
+#include "cmath.d/log10type.h"
+#include "cmath.d/logtype.h"
+#include "cmath.d/ratiopi.h"
+#include "cmath.d/ratiosqrt1_2.h"
+#include "cmath.d/ratiosqrt2.h"
+#include "cmath.d/sintype.h"
+#include "cmath.d/sqrttype.h"
+
+#endif
+
