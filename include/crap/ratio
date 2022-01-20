@@ -1,0 +1,32 @@
+#ifndef CRAP_RATIO
+#define CRAP_RATIO
+
+#include "abstype.h"
+#include "cbrttype.h"
+#include "contracttype.h"
+#include "costype.h"
+#include "dividestype.h"
+#include "equaltotype.h"
+#include "exptype.h"
+#include "greaterequaltype.h"
+#include "greatertype.h"
+#include "identity.h"
+#include "lessequaltype.h"
+#include "lesstype.h"
+#include "log10type.h"
+#include "logtype.h"
+#include "minustype.h"
+#include "multipliestype.h"
+#include "negatetype.h"
+#include "notequaltotype.h"
+#include "plustype.h"
+#include "sintype.h"
+#include "sqrttype.h"
+#include "valueratio.h"
+#include "valueratiopi.h"
+#include "valueratiosqrt1_2.h"
+#include "valueratiosqrt2.h"
+#include "zero.h"
+
+#endif
+

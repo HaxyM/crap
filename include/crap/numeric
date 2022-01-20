@@ -1,0 +1,34 @@
+#ifndef CRAP_NUMERIC
+#define CRAP_NUMERIC
+
+#include "abstype.h"
+#include "absvalue.h"
+#include "accumulatefortype.h"
+#include "accumulatetype.h"
+#include "accumulatetypesource.h"
+#include "accumulatevalue.h"
+#include "accumulatevaluesource.h"
+#include "adjacentdifferencefortype.h"
+#include "adjacentdifferencevalue.h"
+#include "contracttype.h"
+#include "gcdvalue.h"
+#include "identity.h"
+#include "innerproductfortype.h"
+#include "innerproducttype.h"
+#include "innerproductvalue.h"
+#include "iotavalue.h"
+#include "lcmvalue.h"
+#include "outerproductfortype.h"
+#include "outerproductvalue.h"
+#include "outerproductvaluezipper.h"
+#include "partialsumfortype.h"
+#include "partialsumtype.h"
+#include "partialsumvalue.h"
+#include "reducetype.h"
+#include "reducetypesource.h"
+#include "reducevalue.h"
+#include "reducevaluesource.h"
+#include "zero.h"
+
+#endif
+
