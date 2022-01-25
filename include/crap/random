@@ -1,0 +1,7 @@
+#ifndef CRAP_RANDOM
+#define CRAP_RANDOM
+
+#include "randomdevicevalue.h"
+
+#endif
+
