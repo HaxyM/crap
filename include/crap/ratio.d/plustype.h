@@ -53,7 +53,7 @@ namespace crap
   constexpr static valueType numerator2 = needScaleExt ? (static_cast<valueType>(scaledNumerator2InRange)) : (Numerator2 * part2IntScale);
   //Addition
   constexpr static const bool needScale = (Sign1 == Sign2) ? (numerator1 > (max - numerator2)) : false;
-  constexpr static scaleType scale = (1.0l / (num1Float / static_cast<scaleType>(max) + (num2Float / static_cast<scaleType>(max))));
+  constexpr static scaleType scale = needScale ? (1.0l / (num1Float / static_cast<scaleType>(max) + (num2Float / static_cast<scaleType>(max)))) : 1.0l;
   constexpr static scaleType scaledDenominator = needScale ? (scale * denFloat) : static_cast<scaleType>(denominatorExt);
   constexpr static scaleType scaledNumerator = (scale * num1Float) + (scale * num2Float);
   constexpr static valueType scaledNumeratorInRange = (scaledNumerator < 0.0l) ? zero <valueType> :: value : ((scaledNumerator > static_cast<scaleType>(max)) ? max : static_cast<valueType>(scaledNumerator));
