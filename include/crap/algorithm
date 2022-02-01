@@ -183,6 +183,7 @@
 #include "algorithm.d/setuniontypezipper.h"
 #include "algorithm.d/setunionvalue.h"
 #include "algorithm.d/setunionvaluezipper.h"
+#include "algorithm.d/shufflefortype.h"
 #include "algorithm.d/shuffletype.h"
 #include "algorithm.d/shufflevalue.h"
 #include "algorithm.d/sortfortype.h"
