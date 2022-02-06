@@ -8,7 +8,7 @@
 
 namespace crap
 {
- template <class Type, template <Type, Type> class Oparator = comparatorsForType <Type> :: template Less>
+ template <class Type, template <Type, Type> class Operator = comparatorsForType <Type> :: template Less>
 	 struct extremaOperatorsForType
  {
   template <Type ... Values> using Maximum = maxValue<Type, Operator, Values...>;
