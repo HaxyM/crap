@@ -8,7 +8,7 @@ namespace crap
  template <class Type> struct bisectForType
  {
   template <Type ... Values> using type = bisectValue<Type, Values...>;
-  template <Type ... Values> using values = bisectValues<Type, Values...>;
+  template <Type ... Values> using values = bisectValue<Type, Values...>;
  };
 }
 #endif
