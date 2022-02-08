@@ -8,7 +8,7 @@ namespace crap
  template <class Type> struct backForType
  {
   template <Type ... Values> using type = backValue<Type, Values...>;
-  template <Type ... Values> using values = backValues<Type, Values...>;
+  template <Type ... Values> using values = backValue<Type, Values...>;
  };
 }
 #endif
