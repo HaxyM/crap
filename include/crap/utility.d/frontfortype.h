@@ -8,7 +8,7 @@ namespace crap
  template <class Type> struct frontForType
  {
   template <Type ... Values> using type = frontValue<Type, Values...>;
-  template <Type ... Values> using values = frontValues<Type, Values...>;
+  template <Type ... Values> using values = frontValue<Type, Values...>;
  };
 }
 #endif
