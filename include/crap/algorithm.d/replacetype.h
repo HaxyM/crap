@@ -12,10 +12,10 @@ namespace crap
  {
   private:
   template <class Type>
-	  using type = typename std :: conditional<(Operator <Type, Old> :: value), New : Type> :: type;
+	  using properType = typename std :: conditional<(Operator <Type, Old> :: value), New, Type> :: type;
   public:
   template <template <class...> class Container = typeList>
-	  using type = Container<(type<Types>...>;
+	  using type = Container<properType<Types>...>;
  };
 }
 #endif
