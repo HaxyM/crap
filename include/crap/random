@@ -1,7 +1,7 @@
 #ifndef CRAP_RANDOM
 #define CRAP_RANDOM
 
-#include "randomdevicevalue.h"
+#include "random.d/randomdevicevalue.h"
 
 #endif
 
