@@ -1,16 +1,16 @@
 #ifndef CRAP_STRING
 #define CRAP_STRING
 
-#include "binaryshiftleft.h"
-#include "concatenate.h"
-#include "equalto.h"
-#include "greater.h"
-#include "greaterequal.h"
-#include "less.h"
-#include "lessequal.h"
-#include "notequalto.h"
-#include "string.h"
-#include "stringfortype.h"
+#include "string.d/binaryshiftleft.h"
+#include "string.d/concatenate.h"
+#include "string.d/equalto.h"
+#include "string.d/greater.h"
+#include "string.d/greaterequal.h"
+#include "string.d/less.h"
+#include "string.d/lessequal.h"
+#include "string.d/notequalto.h"
+#include "string.d/string.h"
+#include "string.d/stringfortype.h"
 
 #endif
 
