@@ -1,7 +1,7 @@
 #ifndef CRAP_TYPEINFO
 #define CRAP_TYPEINFO
 
-#include "typeid.h"
+#include "typeinfo.d/typeid.h"
 
 #endif
 
