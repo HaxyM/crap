@@ -6,7 +6,7 @@
 namespace crap
 {
  template <template <class> class Operator, class ... Types>
-	 using transformType = copyType<Operator <Types> :: type...>;
+	 using transformType = copyType<typename Operator <Types> :: type...>;
 }
 #endif
 
