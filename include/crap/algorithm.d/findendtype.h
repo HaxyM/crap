@@ -14,7 +14,7 @@ namespace crap
  };
 
  template <template <class, class> class Operator, class ... Types> template <class ... Pattern>
-	 struct findEndType <Type, Operator, Types...> :: with
+	 struct findEndType <Operator, Types...> :: with
  {
   private:
   template <class ... SubTypes> using search = searchType<Operator, SubTypes...>;
