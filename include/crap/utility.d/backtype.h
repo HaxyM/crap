@@ -11,7 +11,7 @@ namespace crap
  {
   using type = typename typeList <First, Rest...> :: template at<sizeof...(Rest)>;
   template <template <class...> class Container>
-	  using pop = typeList <First, Rest...> :: template till<sizeof...(Rest), Container>;
+	  using pop = typename typeList <First, Rest...> :: template till<sizeof...(Rest), Container>;
  };
 
  template <class ... Types> struct backType
