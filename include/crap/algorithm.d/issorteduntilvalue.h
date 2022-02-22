@@ -66,16 +66,9 @@ template <class Type, template <Type, Type> class Operator, Type Value1>
  return crap :: isSortedUntilValue <Type, Operator, Value1> :: value;
 }
 
-template <class Type, template <Type, Type> class Operator, Type Value1>
-        inline constexpr crap :: isSortedUntilValue <Type, Operator, Value1> :: operator
-        typename crap :: isSortedUntilValue <Type, Operator, Value1> :: value_type () const noexcept
-{
- return crap :: isSortedUntilValue <Type, Operator, Value1> :: value;
-}
-
 template <class Type, template <Type, Type> class Operator, Type Value1, Type Value2>
         inline constexpr crap :: isSortedUntilValue <Type, Operator, Value1, Value2> :: operator
-        typename crap :: isSortedUntilValue <Type, Operator, Value1, Values2> :: value_type () const noexcept
+        typename crap :: isSortedUntilValue <Type, Operator, Value1, Value2> :: value_type () const noexcept
 {
  return crap :: isSortedUntilValue <Type, Operator, Value1, Value2> :: value;
 }
