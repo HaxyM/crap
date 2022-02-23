@@ -11,7 +11,7 @@ namespace crap
  {
   constexpr const static std :: size_t value = 0u;
   constexpr const static std :: size_t npos = 0u;
-  using vlaue_type = decltype(value);
+  using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
  };
 
@@ -19,7 +19,7 @@ namespace crap
  {
   constexpr const static std :: size_t value = (Operator <Type1, Type> :: value ? 1u : 0u);
   constexpr const static std :: size_t npos = 1u;
-  using vlaue_type = decltype(value);
+  using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
  };
 
@@ -33,7 +33,7 @@ namespace crap
   public:
   constexpr const static std :: size_t value = (((lower :: value) != (lower :: npos)) ? (lower :: value) : ((lower :: npos) + (upper :: value)));
   constexpr const static std :: size_t npos = (lower :: npos) + (upper :: npos);
-  using vlaue_type = decltype(value);
+  using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
  };
 }
