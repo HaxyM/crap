@@ -35,7 +35,7 @@ namespace crap
   using lower = typename values :: template lower<This>;
   public:
   constexpr const static std :: size_t value = upper <lower :: value, lower :: npos> :: value;
-  constexpr const static std :: size_t npos = sizeof...(Types);
+  constexpr const static std :: size_t npos = sizeof...(Values);
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
  };
