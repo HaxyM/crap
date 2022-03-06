@@ -9,8 +9,8 @@ template <class...> using void_t = void;
 
 template <class, class = void> struct isCompleteType : std :: false_type {};
 #if __cplusplus < 201703
-#else
 template <class Type> struct isCompleteType <Type, void_t<decltype(sizeof(Type))> > : std :: true_type {};
-#endif
+#else
 template <class Type> struct isCompleteType <Type, std :: void_t<decltype(sizeof(Type))> > : std :: true_type {};
+#endif
 #endif
