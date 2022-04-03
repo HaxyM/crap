@@ -3,6 +3,7 @@
 
 #include "ratio.d/abstype.h"
 #include "ratio.d/cbrttype.h"
+#include "ratio.d/ceiltype.h"
 #include "ratio.d/contracttype.h"
 #include "ratio.d/costype.h"
 #include "ratio.d/dividestype.h"
