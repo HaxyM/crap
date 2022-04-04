@@ -5,6 +5,7 @@
 #include "cmath.d/ceiltype.h"
 #include "cmath.d/costype.h"
 #include "cmath.d/exptype.h"
+#include "cmath.d/floortype.h"
 #include "cmath.d/log10type.h"
 #include "cmath.d/logtype.h"
 #include "cmath.d/ratiopi.h"

@@ -9,6 +9,7 @@
 #include "ratio.d/dividestype.h"
 #include "ratio.d/equaltotype.h"
 #include "ratio.d/exptype.h"
+#include "ratio.d/floortype.h"
 #include "ratio.d/greaterequaltype.h"
 #include "ratio.d/greatertype.h"
 #include "ratio.d/identity.h"
