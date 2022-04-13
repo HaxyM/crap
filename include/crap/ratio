@@ -22,6 +22,7 @@
 #include "ratio.d/negatetype.h"
 #include "ratio.d/notequaltotype.h"
 #include "ratio.d/plustype.h"
+#include "ratio.d/roundtype.h"
 #include "ratio.d/signbittype.h"
 #include "ratio.d/sintype.h"
 #include "ratio.d/sqrttype.h"

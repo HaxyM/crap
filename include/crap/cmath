@@ -11,6 +11,7 @@
 #include "cmath.d/ratiopi.h"
 #include "cmath.d/ratiosqrt1_2.h"
 #include "cmath.d/ratiosqrt2.h"
+#include "cmath.d/roundtype.h"
 #include "cmath.d/signbittype.h"
 #include "cmath.d/sintype.h"
 #include "cmath.d/sqrttype.h"
