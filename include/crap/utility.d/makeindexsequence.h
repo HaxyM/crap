@@ -12,15 +12,14 @@ namespace crap
  template <std :: size_t N> using makeIndexSequence = std :: make_index_sequence<N>;
  #else
  template <std :: size_t ... Indices> struct indexSequence {};
- template <std :: size_t N> struct makeIndexSequence;
 }
 
 #include "../numeric.d/iotavalue.h"
 
 namespace crap
 {
- template <std :: size_t N> struct makeIndexSequence : iotaValue <N, std :: size_t> :: template type<indexSequence>{};
+ template <std :: size_t N>
+	 using makeIndexSequence = typename iotaValue <N, std :: size_t> :: template type<indexSequence>;
  #endif
 }
 #endif
-
