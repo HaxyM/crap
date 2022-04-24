@@ -120,31 +120,30 @@ namespace crap
 }
 
 template <class Type, template <Type, Type> class Operator>
-        inline constexpr crap :: isHeapUntilValue <Type, Operator> :: operator
-        typename crap :: isHeapUntilValue <Type, Operator> :: value_type () const noexcept
+        inline constexpr crap :: isHeapUntillValue <Type, Operator> :: operator
+        typename crap :: isHeapUntillValue <Type, Operator> :: value_type () const noexcept
 {
- return crap :: isHeapUntilValue <Type, Operator> :: value;
+ return crap :: isHeapUntillValue <Type, Operator> :: value;
 }
 
 template <class Type, template <Type, Type> class Operator, Type Value1>
-        inline constexpr crap :: isHeapUntilValue <Type, Operator, Value1> :: operator
-        typename crap :: isHeapUntilValue <Type, Operator, Value1> :: value_type () const noexcept
+        inline constexpr crap :: isHeapUntillValue <Type, Operator, Value1> :: operator
+        typename crap :: isHeapUntillValue <Type, Operator, Value1> :: value_type () const noexcept
 {
- return crap :: isHeapUntilValue <Type, Operator, Value1> :: value;
+ return crap :: isHeapUntillValue <Type, Operator, Value1> :: value;
 }
 
 template <class Type, template <Type, Type> class Operator, Type Value1, Type Value2>
-        inline constexpr crap :: isHeapUntilValue <Type, Operator, Value1, Value2> :: operator
-        typename crap :: isHeapUntilValue <Type, Operator, Value1, Value2> :: value_type () const noexcept
+        inline constexpr crap :: isHeapUntillValue <Type, Operator, Value1, Value2> :: operator
+        typename crap :: isHeapUntillValue <Type, Operator, Value1, Value2> :: value_type () const noexcept
 {
- return crap :: isHeapUntilValue <Type, Operator, Value1, Value2> :: value;
+ return crap :: isHeapUntillValue <Type, Operator, Value1, Value2> :: value;
 }
 
 template <class Type, template <Type, Type> class Operator, Type ... Values>
-        inline constexpr crap :: isHeapUntilValue <Type, Operator, Values...> :: operator
-        typename crap :: isHeapUntilValue <Type, Operator, Values...> :: value_type () const noexcept
+        inline constexpr crap :: isHeapUntillValue <Type, Operator, Values...> :: operator
+        typename crap :: isHeapUntillValue <Type, Operator, Values...> :: value_type () const noexcept
 {
- return crap :: isHeapUntilValue <Type, Operator, Values...> :: value;
+ return crap :: isHeapUntillValue <Type, Operator, Values...> :: value;
 }
 #endif
-
