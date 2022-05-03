@@ -60,6 +60,7 @@
 #include "algorithm.d/inplacemergevalue.h"
 #include "algorithm.d/isheapfortype.h"
 #include "algorithm.d/isheaptype.h"
+#include "algorithm.d/isheapuntilltype.h"
 #include "algorithm.d/isheapuntillvalue.h"
 #include "algorithm.d/isheapvalue.h"
 #include "algorithm.d/ispartitionedfortype.h"
