@@ -25,7 +25,17 @@ namespace crap
   using reduced = typename transform2Value <Type, multiplicative, Values1...> :: template with <Values2...> :: template type<Reductor>;
   public:
   constexpr const static Type value = reduced :: value;
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 }
-#endif
 
+template <class Type, template <Type...> class AdditiveOperator, template <Type...> class MultiplicativeOperator, Type ... Values1>  template <Type ... Values2>
+inline constexpr crap :: innerProductnValue <Type, AdditiveOperator, MultiplicativeOperator, Values1...> :: template
+	with <Values2...> :: operator
+typename crap :: innerProductValue <Type, AdditiveOperator, MultiplicativeOperator, Values1...> :: template
+	with <Values2...> :: value_type () const noexcept
+{
+ return crap :: innerProductValue <Type, AdditiveOperator, MultiplicativeOperator, Values1...> :: template with <Values2...> :: value;
+};
+#endif
