@@ -24,6 +24,8 @@ namespace crap
   constexpr const static Type subResult = Operator <Value1, Value2> :: value;
   public:
   constexpr const static Type value = Operator <subResult, Value3> :: value;
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <class Type, template <Type...> class Operator, Type ... Values> struct accumulateValue
@@ -35,7 +37,22 @@ namespace crap
   template <Type ... SubValues> using secondHalf = accumulateValue<Type, Operator, firstHalfValue, SubValues...>;
   public:
   constexpr const static Type value = values :: template upper <secondHalf> :: value;
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 }
-#endif
 
+template <class Type, template <Type...> class Operator, Type Value1, Type Value2, Type Value3>
+	inline constexpr crap :: accumulateValue <Type, Operator, Value1, Value2, Value3> :: operator
+	typename crap :: accumulateValue <Type, Operator, Value1, Value2, Value3> :: value_type () const noexcept
+{
+ return crap :: accumulateValue <Type, Operator, Value1, Value2, Value3> :: value;
+};
+
+template <class Type, template <Type...> class Operator, Type ... Values>
+	inline constexpr crap :: accumulateValue <Type, Operator, Values...> :: operator
+	typename crap :: accumulateValue <Type, Operator, Values...> :: value_type () const noexcept
+{
+ return crap :: accumulateValue <Type, Operator, Values...> :: value;
+};
+#endif
