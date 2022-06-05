@@ -3,6 +3,7 @@
 
 #include "../utility.d/language.h"
 #include "reducevalue.h"
+#include "zero.h"
 
 #if CPP17
 #include <numeric>
@@ -16,17 +17,23 @@ namespace crap
 
  template <class Type> struct gcdValue<Type>
  {
-  constexpr const static Type value = static_cast<Type>(0);
+  constexpr const static Type value = zero <Type> :: value;
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <class Type, Type Value> struct gcdValue<Type, Value>
  {
   constexpr const static Type value = Value;
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <class Type, Type Value> struct gcdValue<Type, Value, Value>
  {
   constexpr const static Type value = Value;
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <class Type, Type Value1, Type Value2> struct gcdValue<Type, Value1, Value2>
@@ -55,6 +62,8 @@ namespace crap
   constexpr const static Type value =
 	  getValue(std :: integral_constant<Type, Value1>{}, std :: integral_constant<Type, Value2>{});
   #endif
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 
  template <class Type, Type ... Values> struct gcdValue
@@ -65,6 +74,20 @@ namespace crap
   constexpr const static Type value = reduceValue <Type, This, Values...> :: value;
  };
 }
+
+template <class Type>
+	inline constexpr crap :: gcdValue <Type> :: operator
+	typename crap :: gcdValue <Type> :: value_type () const noexcept
+{
+ return crap :: gcdValue <Type> :: value;
+};
+
+template <class Type, Type Value>
+	inline constexpr crap :: gcdValue <Type, Value> :: operator
+	typename crap :: gcdValue <Type, Value> :: value_type () const noexcept
+{
+ return crap :: gcdValue <Type, Value> :: value;
+};
 
 #if CPP17
 #else
@@ -116,5 +139,18 @@ template <class Type, Type Value1, Type Value2> template <Type SubValue1, Type S
  return crap :: gcdValue <Type, Value1, Value2> :: getValue(std :: integral_constant<Type, (SubValue1 < SubValue2) ? SubValue1 : (SubValue1 % SubValue2)>{}, std :: integral_constant<Type, (SubValue2 < SubValue1) ? SubValue2 : (SubValue2 % SubValue1)>{});
 }
 #endif
-#endif
 
+template <class Type, Type Value1, Type Value2>
+	inline constexpr crap :: gcdValue <Type, Value1, Value2> :: operator
+	typename crap :: gcdValue <Type, Value1, Value2> :: value_type () const noexcept
+{
+ return crap :: gcdValue <Type, Value1, Value2> :: value;
+};
+
+template <class Type, Type ... Values>
+	inline constexpr crap :: gcdValue <Type, Values...> :: operator
+	typename crap :: gcdValue <Type, Values...> :: value_type () const noexcept
+{
+ return crap :: gcdValue <Type, Values...> :: value;
+};
+#endif
