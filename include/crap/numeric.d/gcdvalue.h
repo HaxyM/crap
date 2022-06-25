@@ -72,6 +72,8 @@ namespace crap
   template <Type ... SubValues> using This = gcdValue<Type, SubValues...>;
   public:
   constexpr const static Type value = reduceValue <Type, This, Values...> :: value;
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 }
 
