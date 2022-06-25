@@ -31,7 +31,7 @@ namespace crap
 }
 
 template <class Type, template <Type...> class AdditiveOperator, template <Type...> class MultiplicativeOperator, Type ... Values1>  template <Type ... Values2>
-inline constexpr crap :: innerProductnValue <Type, AdditiveOperator, MultiplicativeOperator, Values1...> :: template
+inline constexpr crap :: innerProductValue <Type, AdditiveOperator, MultiplicativeOperator, Values1...> :: template
 	with <Values2...> :: operator
 typename crap :: innerProductValue <Type, AdditiveOperator, MultiplicativeOperator, Values1...> :: template
 	with <Values2...> :: value_type () const noexcept
