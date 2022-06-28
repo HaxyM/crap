@@ -25,6 +25,8 @@ namespace crap
  template <intmax_t ... Numerators, intmax_t ... Denominators>
 	 struct dividesType<std :: ratio<Numerators, Denominators>...>
 	 : reduceType<dividesType, std :: ratio<Numerators, Denominators>...> {};
+
+ template <class ... Types> using dividesType_t = typename dividesType <Types...> :: type;
 }
 #endif
 
