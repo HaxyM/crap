@@ -25,6 +25,8 @@ namespace crap
  template <intmax_t ... Numerators, intmax_t ... Denominators>
 	 struct multipliesType<std :: ratio<Numerators, Denominators>...>
 	 : reduceType<multipliesType, std :: ratio<Numerators, Denominators>...> {};
+
+ template <class ... Types> using multipliesType_t = typename multipliesType <Types...> :: type;
 }
 #endif
 
