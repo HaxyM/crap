@@ -17,6 +17,8 @@ namespace crap
 
  template <intmax_t Numerator, intmax_t Denominator> struct negateType<std :: ratio<Numerator, Denominator> >
 	 : typeIdentity<std :: ratio_subtract<std :: ratio<0>, std :: ratio<Numerator, Denominator> > > {};
+
+ template <class Type> using negateType_t = typename negateType <Type> :: type;
 }
 #endif
 
