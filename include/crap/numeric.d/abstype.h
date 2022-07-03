@@ -18,6 +18,8 @@ namespace crap
  template <intmax_t Numerator, intmax_t Denominator> struct absType<std :: ratio<Numerator, Denominator> >
 	 : typeIdentity<std :: ratio<absValue <intmax_t, Numerator> :: value, absValue <intmax_t, Denominator> :: value> >
  {};
+
+ template <class Type> using absType_t = typename absType <Type> :: type;
 }
 #endif
 
