@@ -26,6 +26,8 @@ namespace crap
  template <intmax_t ... Numerators, intmax_t ... Denominators>
 	 struct plusType<std :: ratio<Numerators, Denominators>...>
 	 : reduceType<plusType, std :: ratio<Numerators, Denominators>...> {};
+
+ template <class ... Type> using plusType_t = typename plusType <Type...> :: type;
 }
 #endif
 
