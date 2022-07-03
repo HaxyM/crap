@@ -36,6 +36,8 @@ namespace crap
   public:
   using type = typename types :: template upper <secondHalf> :: type;
  };
+
+ template <template <class...> class Operator, class ... Types> using accumulateType_t = typename accumulateType <Operator, Types...> :: type;
 }
 #endif
 
