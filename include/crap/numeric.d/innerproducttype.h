@@ -10,6 +10,7 @@ namespace crap
  struct innerProductType
  {
   template <class ... Types2> struct with;
+  template <class ... Types2> using with_t = typename with <Types2...> :: type;
  };
 
  template <template <class...> class AdditiveOperator, template <class...> class MultiplicativeOperator, class ... Types1>
