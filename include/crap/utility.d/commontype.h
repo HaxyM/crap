@@ -8,5 +8,6 @@
 namespace crap
 {
  template <class ... Types> using commonType = reduceType<std :: common_type, Types...>;
+ template <class ... Types> using commonType_t = typename commonType <Types...> :: type;
 }
 #endif
