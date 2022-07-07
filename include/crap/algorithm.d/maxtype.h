@@ -29,7 +29,7 @@ namespace crap
   using  type = typename reduceType <This, Types...> :: type;
  };
 
- template <template <class, clas> class Operator, class ... Types> using maxType_t = typename maxType <Operator, Types...> :: type;
+ template <template <class, class> class Operator, class ... Types> using maxType_t = typename maxType <Operator, Types...> :: type;
 }
 #endif
 

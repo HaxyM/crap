@@ -28,7 +28,7 @@ namespace crap
   public:
   using  type = typename reduceType <This, Types...> :: type;
  };
- template <template <class, clas> class Operator, class ... Types> using minType_t = typename minType <Operator, Types...> :: type;
+ template <template <class, class> class Operator, class ... Types> using minType_t = typename minType <Operator, Types...> :: type;
 }
 #endif
 
