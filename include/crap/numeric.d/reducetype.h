@@ -33,6 +33,8 @@ namespace crap
   public:
   using type = typename Operator <typename lower :: type, typename upper :: type> :: type;
  };
+
+ template <template <class...> class Operator, class ... Types> using reduceType_t = typename reduceType <Operator, Types...> :: type;
 }
 #endif
 
