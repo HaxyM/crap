@@ -18,5 +18,7 @@ namespace crap
  {
   static_assert(sizeof...(Types) != 0u, "Collection must not be empty.");
  };
+
+ template <class ... Types> using backType_t = typename backType <Types...> :: type;
 }
 #endif
