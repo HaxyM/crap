@@ -6,5 +6,6 @@
 namespace crap
 {
  template <class, class Type> using typeComa = typeIdentity<Type>;
+ template <class, class Type> using typeComa_t = Type;
 }
 #endif
