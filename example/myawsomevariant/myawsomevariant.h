@@ -15,6 +15,7 @@ template <class ... Types> class MyAwsomeVariant
  constexpr const static bool nothrowDestructible = crap :: allOfType<std :: is_nothrow_destructible, Types...>();
  constexpr const static bool nothrowCopyable = crap :: allOfType<std :: is_nothrow_copy_constructible, Types...>();
  template <class ... AnotherType> friend class MyAwsomeVariant;
+ template <class Type> using hasType = std :: integral_constant<bool, crap :: findType<Type, std :: is_same, Types...>() != crap :: findType <Type, std :: is_same, Types...> :: npos>;
  public:
  template <std :: enable_if_t<std :: is_default_constructible_v<crap :: frontType_t<Types...> >, void*> = nullptr>
 	 MyAwsomeVariant() noexcept(std :: is_nothrow_default_constructible_v<crap :: frontType_t<Types...> >);
@@ -23,6 +24,10 @@ template <class ... Types> class MyAwsomeVariant
 	  std :: enable_if_t<crap :: isPermutationType <std :: is_same, Types...> :: template with<AnotherTypes...> :: value, void*> = nullptr>
 	 MyAwsomeVariant(const MyAwsomeVariant<AnotherTypes...>& a) noexcept(nothrowCopyable);
  ~MyAwsomeVariant() noexcept(nothrowDestructible);
+ template <class Type, class ... Args>
+	 std :: enable_if_t<hasType<Type>{}, std :: add_lvalue_reference_t<Type> >
+	 emplace(Args&& ... args)
+	 noexcept(nothrowDestructible && std :: is_nothrow_constructible<Type, std :: add_rvalue_reference_t<Args>...>());
  private:
  template <class ... AnotherTypes> class indexRemapper;
  constexpr const static std :: size_t maxSize = crap :: maxForType<std :: size_t> :: template values<sizeof(Types)...>();
@@ -88,6 +93,17 @@ inline MyAwsomeVariant <Types...> :: ~MyAwsomeVariant() noexcept(MyAwsomeVariant
  killCurrent();
 }
 
+template <class ... Types> template <class Type, class ... Args>
+inline std :: enable_if_t<typename MyAwsomeVariant <Types...> :: template hasType<Type>{}, std :: add_lvalue_reference_t<Type> >
+	MyAwsomeVariant <Types...> :: emplace(Args&& ... args)
+noexcept(MyAwsomeVariant <Types...> :: nothrowDestructible && std :: is_nothrow_constructible<Type, std :: add_rvalue_reference_t<Args>...>())
+{
+ killCurrent();
+ new (reinterpret_cast<std :: add_pointer_t<Type> >(&data)) Type (std :: forward<Args>(args)...);
+ index = crap :: findType<Type, std :: is_same, Types...>();
+ return *std :: launder(reinterpret_cast<std :: add_pointer_t<Type> >(&data));
+}
+
 template <class ... Types> template <class Type>
 void MyAwsomeVariant <Types...> :: kill() noexcept(MyAwsomeVariant <Types...> :: nothrowDestructible)
 {
@@ -104,6 +120,7 @@ template <class ... Types>
 inline void MyAwsomeVariant <Types...> :: killCurrent() noexcept(MyAwsomeVariant <Types...> :: nothrowDestructible)
 {
  if (index < sizeof...(Types)) (this->*(killers[index]))();
+ index = sizeof...(Types);
 }
 
 template <class ... Types>
