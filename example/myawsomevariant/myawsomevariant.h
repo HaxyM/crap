@@ -12,39 +12,60 @@ template <class ... Types> class MyAwsomeVariant
 {
  static_assert(!crap :: emptyType<Types...>(), "List of types must not be empty.");
  static_assert(crap :: noneOfType<std :: is_void, Types...>(), "None of fields may be void.");
+	//Does not thow from destructor if none of possibly stored types does.
  constexpr const static bool nothrowDestructible = crap :: allOfType<std :: is_nothrow_destructible, Types...>();
+	//Does not throw while copying if none of possibly stored types does.
  constexpr const static bool nothrowCopyable = crap :: allOfType<std :: is_nothrow_copy_constructible, Types...>();
+	//Other template overloads should be friends to each other, so thingh like copying from permutation may work.
  template <class ... AnotherType> friend class MyAwsomeVariant;
- template <class Type> using hasType = std :: integral_constant<bool, crap :: findType<Type, std :: is_same, Types...>() != crap :: findType <Type, std :: is_same, Types...> :: npos>;
+	//Helper checking if "Type" is among possibly stored types.
+ template <class Type>
+	 using hasType = std :: integral_constant<bool, crap :: findType<Type, std :: is_same, Types...>() != crap :: findType <Type, std :: is_same, Types...> :: npos>;
  public:
+	//Default constructor defaultly constructs firs stored type.
+	//Therefore if it is not possible, then there is no default constructor.
  template <std :: enable_if_t<std :: is_default_constructible_v<crap :: frontType_t<Types...> >, void*> = nullptr>
 	 MyAwsomeVariant() noexcept(std :: is_nothrow_default_constructible_v<crap :: frontType_t<Types...> >);
+	//May copy from any other variant that forms permutation of stored types and if all of them may be copied of course.
  template <class ... AnotherTypes,
 	  std :: enable_if_t<crap :: allOfType<std :: is_copy_constructible, Types...>{}, void*> = nullptr,
 	  std :: enable_if_t<crap :: isPermutationType <std :: is_same, Types...> :: template with<AnotherTypes...> :: value, void*> = nullptr>
 	 MyAwsomeVariant(const MyAwsomeVariant<AnotherTypes...>& a) noexcept(nothrowCopyable);
  ~MyAwsomeVariant() noexcept(nothrowDestructible);
+	//Force to store valu of particular type if that type is among stored ones.
  template <class Type, class ... Args>
 	 std :: enable_if_t<hasType<Type>{}, std :: add_lvalue_reference_t<Type> >
 	 emplace(Args&& ... args)
+		 //Will throw only if destruction or construction of new one does so.
 	 noexcept(nothrowDestructible && std :: is_nothrow_constructible<Type, std :: add_rvalue_reference_t<Args>...>());
  private:
+	//Helper translating indices of stroed types.
  template <class ... AnotherTypes> class indexRemapper;
+	//Size required for union is side of largest of stored types.
  constexpr const static std :: size_t maxSize = crap :: maxForType<std :: size_t> :: template values<sizeof(Types)...>();
+	//Alligment is LCM of all alligments (may be simpler on most architectures, but lets not assume anything).
  constexpr const static std :: size_t commonAllignment = crap :: lcmValue<std :: size_t, alignof(Types)...>();
+	//Destroy stored element of type "Type".
  template <class Type> void kill() noexcept(nothrowDestructible);
+	//Copy stored element of type "Type" onto new location (passed as argument).
  template <class Type> void copyOnto(void* newData) const noexcept(nothrowCopyable);
+	//Destroy currently stored element (if any is stored).
  void killCurrent() noexcept(nothrowDestructible);
+	//Copy stored element (if any is stored) onto new location (passed as argument).
  void copyCurrent(void* newData) const noexcept(nothrowCopyable);
+	//Helper subtypes
  using killer_type = crap :: commonType_t<decltype(&MyAwsomeVariant :: template kill<Types>)...>;
  using killers_type = std :: add_const_t<killer_type>[sizeof...(Types)];
  using copier_type = crap :: commonType_t<decltype(&MyAwsomeVariant :: template copyOnto<Types>)...>;
  using copiers_type = std :: add_const_t<copier_type>[sizeof...(Types)];
+	//Arrays (and helpers creating them) mapping index of stored element onto valid methods for its type.
  static killers_type& getKillers() noexcept;
  static copiers_type& getCopiers() noexcept;
  static killers_type& killers;
  static copiers_type& copiers;
+	//Index of curently stored type (if nothing currently stored - points outside of list).
  std :: size_t index;
+	//Buffer to store data.
  std :: aligned_storage_t<maxSize, commonAllignment> data;
 };
 
