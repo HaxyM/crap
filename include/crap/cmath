@@ -3,6 +3,7 @@
 
 #include "cmath.d/cbrttype.h"
 #include "cmath.d/ceiltype.h"
+#include "cmath.d/copysign.h"
 #include "cmath.d/costype.h"
 #include "cmath.d/exptype.h"
 #include "cmath.d/floortype.h"
