@@ -7,6 +7,8 @@
 namespace crap
 {
  template <class> struct truncType;
+ 
+ template <class Type> using truncType_t = typename truncType <Type> :: type;
 
  template <std :: intmax_t Numerator, std :: intmax_t Denominator>
 	 struct truncType<std :: ratio<Numerator, Denominator> >
