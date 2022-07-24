@@ -8,6 +8,15 @@
 
 namespace crap
 {
+ template <class Type, template <Type> class, Type...> struct anyOfValue;
+
+ template <class Type, template <Type> class Operator> struct anyOfValue<Type, Operator>
+ {
+  constexpr const static bool value = false;
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
+ };
+
  template <class Type, template <Type> class Operator, Type ... Values> struct anyOfValue
  {
   private:
@@ -19,6 +28,13 @@ namespace crap
   constexpr operator value_type () const noexcept;
  };
 }
+
+template <class Type, template <Type> class Operator>
+	inline constexpr crap :: anyOfValue <Type, Operator> :: operator
+	typename crap :: anyOfValue <Type, Operator> :: value_type () const noexcept
+{
+ return crap :: anyOfValue <Type, Operator> :: value;
+};
 
 template <class Type, template <Type> class Operator, Type ... Values>
 	inline constexpr crap :: anyOfValue <Type, Operator, Values...> :: operator
