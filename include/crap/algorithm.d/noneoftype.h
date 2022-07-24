@@ -7,6 +7,15 @@
 
 namespace crap
 {
+ template <template <class> class, class...> struct noneOfType;
+
+ template <template <class> class Operator> struct noneOfType<Operator>
+ {
+  constexpr const static bool value = true;
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
+ };
+
  template <template <class> class Operator, class ... Types> struct noneOfType
  {
   private:
@@ -19,8 +28,16 @@ namespace crap
  };
 }
 
+template <template <class> class Operator>
+        inline constexpr crap :: noneOfType <Operator> :: operator
+	typename crap :: noneOfType <Operator> :: value_type () const noexcept
+{
+ return crap :: noneOfType <Operator> :: value;
+}
+
 template <template <class> class Operator, class ... Types>
-inline constexpr crap :: noneOfType <Operator, Types...> :: operator typename crap :: noneOfType <Operator, Types...> :: value_type () const noexcept
+        inline constexpr crap :: noneOfType <Operator, Types...> :: operator
+	typename crap :: noneOfType <Operator, Types...> :: value_type () const noexcept
 {
  return crap :: noneOfType <Operator, Types...> :: value;
 }
