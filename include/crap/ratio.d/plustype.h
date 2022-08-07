@@ -9,8 +9,8 @@
 #include "valueratio.h"
 #include "../functional.d/plustype.h"
 #include "../numbers.d/identity.h"
+#include "../numbers.d/zero.h"
 #include "../numeric.d/gcdvalue.h"
-#include "../numeric.d/zero.h"
 #include "../utility.d/typeidentity.h"
 
 namespace crap

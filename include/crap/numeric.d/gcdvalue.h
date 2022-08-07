@@ -1,9 +1,9 @@
 #ifndef CRAP_NUMERIC_GCDVALUE
 #define CRAP_NUMERIC_GCDVALUE
 
+#include "../numbers.d/zero.h"
 #include "../utility.d/language.h"
 #include "reducevalue.h"
-#include "zero.h"
 
 #if CPP17
 #include <numeric>

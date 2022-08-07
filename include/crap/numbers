@@ -3,6 +3,7 @@
 
 #include "numbers.d/identity.h"
 #include "numbers.d/sqrt2.h"
+#include "numbers.d/zero.h"
 
 #endif
 

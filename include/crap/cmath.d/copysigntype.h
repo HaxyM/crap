@@ -6,8 +6,8 @@
 #include <type_traits>
 
 #include "../numbers.d/identity.h"
+#include "../numbers.d/zero.h"
 #include "../numeric.d/contracttype.h"
-#include "../numeric.d/zero.h"
 
 namespace crap
 {

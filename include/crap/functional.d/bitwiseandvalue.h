@@ -1,7 +1,7 @@
 #ifndef CRAP_FUNCTIONAL_BITWISEANDVALUE
 #define CRAP_FUNCTIONAL_BITWISEANDVALUE
 
-#include "../numeric.d/zero.h"
+#include "../numbers.d/zero.h"
 #include "../utility.d/language.h"
 
 #if CPP17

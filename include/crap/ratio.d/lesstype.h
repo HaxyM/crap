@@ -7,8 +7,8 @@
 
 #include "valueratio.h"
 #include "../functional.d/lesstype.h"
+#include "../numbers.d/zero.h"
 #include "../numeric.d/gcdvalue.h"
-#include "../numeric.d/zero.h"
 
 namespace crap
 {

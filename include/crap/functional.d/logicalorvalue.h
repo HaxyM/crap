@@ -1,7 +1,7 @@
 #ifndef CRAP_FUNCTIONAL_LOGICALORVALUE
 #define CRAP_FUNCTIONAL_LOGICALORVALUE
 
-#include "../numeric.d/zero.h"
+#include "../numbers.d/zero.h"
 #include "../utility.d/language.h"
 
 #if CPP17
