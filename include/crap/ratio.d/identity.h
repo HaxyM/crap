@@ -4,7 +4,7 @@
 #include <type_traits>
 
 #include "valueratio.h"
-#include "../numeric.d/identity.h"
+#include "../numbers.d/identity.h"
 #include "../utility.d/typeidentity.h"
 
 namespace crap

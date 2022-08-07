@@ -1,9 +1,9 @@
 #ifndef CRAP_NUMERIC_LCMVALUE
 #define CRAP_NUMERIC_LCMVALUE
 
+#include "../numbers.d/identity.h"
 #include "../utility.d/language.h"
 #include "reducevalue.h"
-#include "identity.h"
 
 #if CPP17
 #include <numeric>

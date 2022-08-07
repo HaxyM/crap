@@ -8,7 +8,7 @@
 #include "contracttype.h"
 #include "valueratio.h"
 #include "../functional.d/multipliestype.h"
-#include "../numeric.d/identity.h"
+#include "../numbers.d/identity.h"
 #include "../numeric.d/reducetype.h"
 #include "../numeric.d/zero.h"
 #include "../utility.d/typeidentity.h"

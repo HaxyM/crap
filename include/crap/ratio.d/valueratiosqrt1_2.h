@@ -3,7 +3,7 @@
 
 #include "sqrttype.h"
 #include "valueratio.h"
-#include "../numeric.d/identity.h"
+#include "../numbers.d/identity.h"
 
 #include <cstddef>
 #include <type_traits>

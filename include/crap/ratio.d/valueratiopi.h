@@ -8,7 +8,7 @@
 #include "plustype.h"
 #include "sqrttype.h"
 #include "valueratiosqrt1_2.h"
-#include "../numeric.d/identity.h"
+#include "../numbers.d/identity.h"
 
 #include <cstddef>
 #include <ratio>

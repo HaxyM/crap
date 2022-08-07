@@ -7,7 +7,7 @@
 #include "plustype.h"
 #include "valueratio.h"
 #include "../cmath.d/sintype.h"
-#include "../numeric.d/identity.h"
+#include "../numbers.d/identity.h"
 #include "../numeric.d/iotavalue.h"
 
 #include <cstddef>

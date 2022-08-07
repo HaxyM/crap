@@ -6,7 +6,7 @@
 #include "valueratio.h"
 #include "../cmath.d/log10type.h"
 #include "../functional.d/dividestype.h"
-#include "../numeric.d/identity.h"
+#include "../numbers.d/identity.h"
 
 #include <cstddef>
 #include <type_traits>

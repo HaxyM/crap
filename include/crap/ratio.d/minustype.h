@@ -8,9 +8,9 @@
 #include "contracttype.h"
 #include "valueratio.h"
 #include "../functional.d/minustype.h"
+#include "../numbers.d/identity.h"
 #include "../numeric.d/accumulatetype.h"
 #include "../numeric.d/gcdvalue.h"
-#include "../numeric.d/identity.h"
 #include "../numeric.d/zero.h"
 #include "../utility.d/typeidentity.h"
 

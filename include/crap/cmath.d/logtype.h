@@ -5,7 +5,7 @@
 #include "../functional.d/minustype.h"
 #include "../functional.d/multipliestype.h"
 #include "../functional.d/plustype.h"
-#include "../numeric.d/identity.h"
+#include "../numbers.d/identity.h"
 #include "../numeric.d/innerproducttype.h"
 #include "../numeric.d/iotavalue.h"
 #include "../utility.d/reproducetype.h"

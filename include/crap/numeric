@@ -12,7 +12,6 @@
 #include "numeric.d/adjacentdifferencevalue.h"
 #include "numeric.d/contracttype.h"
 #include "numeric.d/gcdvalue.h"
-#include "numeric.d/identity.h"
 #include "numeric.d/inclusivescanfortype.h"
 #include "numeric.d/inclusivescantype.h"
 #include "numeric.d/inclusivescanvalue.h"

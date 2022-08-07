@@ -1,6 +1,7 @@
 #ifndef CRAP_NUMBERS
 #define CRAP_NUMBERS
 
+#include "numbers.d/identity.h"
 #include "numbers.d/sqrt2.h"
 
 #endif

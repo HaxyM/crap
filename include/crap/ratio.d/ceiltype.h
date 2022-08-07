@@ -6,7 +6,7 @@
 #include "contracttype.h"
 #include "valueratio.h"
 #include "../cmath.d/ceiltype.h"
-#include "../numeric.d/identity.h"
+#include "../numbers.d/identity.h"
 
 namespace crap
 {

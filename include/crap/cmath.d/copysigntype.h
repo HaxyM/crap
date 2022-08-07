@@ -5,8 +5,8 @@
 #include <limits>
 #include <type_traits>
 
+#include "../numbers.d/identity.h"
 #include "../numeric.d/contracttype.h"
-#include "../numeric.d/identity.h"
 #include "../numeric.d/zero.h"
 
 namespace crap
