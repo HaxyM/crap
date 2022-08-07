@@ -15,7 +15,7 @@ namespace crap
   constexpr const static double value = 1.4142135623730950488;
  };
 
- template <> struct sqrt2<double>
+ template <> struct sqrt2<long double>
  {
   constexpr const static double value = 1.4142135623730950488l;
  };
