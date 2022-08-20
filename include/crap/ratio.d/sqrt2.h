@@ -1,6 +1,3 @@
-#ifndef CRAP_RATIO_SQRT2
-#define CRAP_RATIO_SQRT2
-
 #include <cstdint>
 #include <type_traits>
 
@@ -13,6 +10,9 @@
 #include "zero.h"
 #include "../numbers.d/sqrt2.h"
 #include "../functional.d/equaltovalue.h"
+
+#ifndef CRAP_RATIO_SQRT2
+#define CRAP_RATIO_SQRT2
 
 namespace crap
 {
