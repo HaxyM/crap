@@ -1,0 +1,7 @@
+#ifndef CRAP_BIT
+#define CRAP_BIT
+
+#include "bit.d/popcountvalue.h"
+
+#endif
+
