@@ -24,15 +24,27 @@ namespace crap
  template <class Type, Type Value> struct bitWidthValue
  {
   private:
-  constexpr const static std :: size_t any = zero <std :: size_t> :: value;
-  constexpr const static std :: size_t zero = any ^ any;
+  constexpr const static Type any = zero <Type> :: value;
+  constexpr const static Type zeros = any ^ any;
+  constexpr const static Type ones = ~zeros;
   constexpr const static std :: size_t bits = CHAR_BIT * sizeof(Type);
   template <std :: size_t ... Indices>
-	  using sum = plusValue<std :: size_t, (((((~zero) << Indices) & Value) != zero) ? 1u : 0u)...>;
+	  using sum = plusValue<std :: size_t, ((((ones << Indices) & Value) != zeros) ? 1u : 0u)...>;
   public:
   constexpr const static std :: size_t value = iotaValue <bits, std :: size_t> :: template type <sum> :: value;
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
  };
 #endif
 }
-#endif
 
+#if CPP20
+#else
+template <class Type, Type Value>
+inline constexpr crap :: bitWidthValue <Type, Value> :: operator
+typename crap :: bitWidthValue <Type, Value> :: value_type () const noexcept
+{
+ return crap :: bitWidthValue <Type, Value> :: value;
+}
+#endif
+#endif
