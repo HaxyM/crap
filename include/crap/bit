@@ -6,6 +6,7 @@
 #include "bit.d/bitwidthvalue.h"
 #include "bit.d/countlonevalue.h"
 #include "bit.d/countlzerovalue.h"
+#include "bit.d/countrzerovalue.h"
 #include "bit.d/hasinglebitvalue.h"
 #include "bit.d/popcountvalue.h"
 
