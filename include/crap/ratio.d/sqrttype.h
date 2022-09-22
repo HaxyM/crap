@@ -1,5 +1,5 @@
-#ifndef CRAP_RATIO_SQRTTYPE
-#define CRAP_RATIO_SQRTTYPE
+#include <cstddef>
+#include <type_traits>
 
 #include "ceiltype.h"
 #include "dividestype.h"
@@ -22,13 +22,13 @@
 #include "../numbers.d/sqrt2.h"
 #include "../numbers.d/zero.h"
 
-#include <cstddef>
-#include <type_traits>
+#ifndef CRAP_RATIO_SQRTTYPE
+#define CRAP_RATIO_SQRTTYPE
 
 namespace crap
 {
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator, std :: size_t Steps>
-	 struct sqrtType<valueRatio<Type, Sign, Numerator, Denominator>, Steps>
+ template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+	 struct sqrtType<valueRatio<Type, Sign, Numerator, Denominator> >
  {
   private:
   static_assert(Sign == '+', "Value must be positive.");
@@ -44,9 +44,9 @@ namespace crap
   using type = typename step <passed, void, bitWidth, true, false> :: type;
  };
 
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator, std :: size_t Steps>
+ template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
 	 template <class A, class C, std :: size_t bitWidth, bool isInitial, bool isFinal>
- struct sqrtType <valueRatio<Type, Sign, Numerator, Denominator>, Steps> :: step
+ struct sqrtType <valueRatio<Type, Sign, Numerator, Denominator> > :: step
  {
   private:
   using const2 = typename plusType <typename identity <A> :: type, typename identity <A> :: type> :: type;
@@ -64,9 +64,9 @@ namespace crap
   using type = typename step <nextA, nextC, bitWidth, false, nextFinal> :: type;
  };
 
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator, std :: size_t Steps>
+ template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
 	 template <class A, class C, std :: size_t bitWidth>
- struct sqrtType <valueRatio<Type, Sign, Numerator, Denominator>, Steps> :: template
+ struct sqrtType <valueRatio<Type, Sign, Numerator, Denominator> > :: template
 	 step<A, C, bitWidth, false, true>
  {
   private:
@@ -84,9 +84,9 @@ namespace crap
   using type = typename scaleUp <scale, (((bitWidth - 1u) % 2u) != 0u)> :: type;
  };
 
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator, std :: size_t Steps>
+ template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
 	 template <class A, class C, std :: size_t bitWidth>
- struct sqrtType <valueRatio<Type, Sign, Numerator, Denominator>, Steps> :: template
+ struct sqrtType <valueRatio<Type, Sign, Numerator, Denominator> > :: template
 	 step<A, C, bitWidth, true, false>
  {
   private:
@@ -100,17 +100,17 @@ namespace crap
   using type = typename step <properA, properC, bitWidth, false, nextFinal> :: type;
  };
 
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator, std :: size_t Steps>
+ template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
 	 template <class A, class C>
- struct sqrtType <valueRatio<Type, Sign, Numerator, Denominator>, Steps> :: template
+ struct sqrtType <valueRatio<Type, Sign, Numerator, Denominator> > :: template
 	 step<A, C, 0u, false, true>
  {
   using type = A;
  };
 
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator, std :: size_t Steps>
+ template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
 	 template <class A, class C>
- struct sqrtType <valueRatio<Type, Sign, Numerator, Denominator>, Steps> :: template
+ struct sqrtType <valueRatio<Type, Sign, Numerator, Denominator> > :: template
 	 step<A, C, 0u, true, false>
  {
   private:
@@ -123,19 +123,19 @@ namespace crap
   using type = typename step <A, properC, 0u, false, (aFinal || cFinal)> :: type;
  };
 
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator, std :: size_t Steps>
+ template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
 	 template <class A, class C, std :: size_t bitWidth>
 	 template <class Scale, bool oddPower>
- struct sqrtType <valueRatio<Type, Sign, Numerator, Denominator>, Steps> :: template
+ struct sqrtType <valueRatio<Type, Sign, Numerator, Denominator> > :: template
 	 step<A, C, bitWidth, false, true> :: scaleUp
  {
   using type = typename multipliesType <A, Scale, typename sqrt2 <typename identity <A> :: type> :: type> :: type;
  };
 
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator, std :: size_t Steps>
+ template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
 	 template <class A, class C, std :: size_t bitWidth>
 	 template <class Scale>
- struct sqrtType <valueRatio<Type, Sign, Numerator, Denominator>, Steps> :: template
+ struct sqrtType <valueRatio<Type, Sign, Numerator, Denominator> > :: template
 	 step<A, C, bitWidth, false, true> :: template scaleUp<Scale, false>
  {
   using type = typename multipliesType <A, Scale> :: type;
