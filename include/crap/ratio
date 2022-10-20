@@ -16,6 +16,7 @@
 #include "ratio.d/identity.h"
 #include "ratio.d/lessequaltype.h"
 #include "ratio.d/lesstype.h"
+#include "ratio.d/ln2.h"
 #include "ratio.d/log10type.h"
 #include "ratio.d/logtype.h"
 #include "ratio.d/minustype.h"
