@@ -89,7 +89,7 @@ namespace crap
   template <class Product, class Root, bool isFinal> struct step;
   template <class Product, class Root> struct step<Product, Root, true>;
   public:
-  using type = typename step <product, initial, nextFinal, 1u> :: type;
+  using type = typename step <product, initial, nextFinal> :: type;
  };
 
  template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
