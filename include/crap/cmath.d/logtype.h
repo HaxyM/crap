@@ -16,23 +16,47 @@
 
 namespace crap
 {
- template <class, std :: size_t Steps = 10u> struct logType;
+ template <class> struct logType;
+}
 
- template <intmax_t Numerator, intmax_t Denominator, std :: size_t Steps>
-	 struct logType<std :: ratio<Numerator, Denominator>, Steps>
+#include <limits>
+#include <ratio>
+#include <type_traits>
+
+#include "../numbers.d/identity.h"
+#include "../numeric.d/contracttype.h"
+#include "../ratio.d/identity.h"
+#include "../ratio.d/sqrttype.h"
+
+namespace crap
+{
+ template <intmax_t Numerator, intmax_t Denominator>
+	 struct logType<std :: ratio<Numerator, Denominator> >
  {
   private:
-  using z = std :: ratio<Numerator, Denominator>;
-  using argument = typename dividesType <typename minusType <z, typename identity <z> :: type> :: type, typename plusType <z, typename identity <z> :: type> :: type> :: type;
-  template <std :: size_t N> using constant = std :: ratio<1, N>;
-  template <std :: size_t N>
-	  using power = typename reproduceType<N, argument> :: template type<multipliesType> :: type;
-  template <std :: size_t ... N> using constants = innerProductType<plusType, multipliesType, constant<N>...>;
-  template <std :: size_t ... N>
-	  using odds = typename constants <(2u * N + 1u)...> :: template with <power<2u * N + 1u>...> :: type;
-  using half = plusType<argument, typename iotaValue <Steps, std :: size_t, 1u> :: template type<odds> >;
+  static_assert((Numerator < 0) == (Denominator < 0), "Value must be positive.");
+  using scaleType = const long double;
+  using valueType = typename std :: add_const<typename std :: make_unsigned <std :: intmax_t> :: type> :: type;
+  using orig = typename contractType <std :: ratio<Numerator, Denominator> > :: type;
+  constexpr const static valueType origNum = static_cast<valueType>(orig :: num);
+  constexpr const static valueType origDen = static_cast<valueType>(orig :: den);
+  using value = typename logType <valueRatio<std :: intmax_t, '+', origNum, origDen> > :: type;
+  constexpr static scaleType infinity = std :: numeric_limits <scaleType> :: infinity();
+  constexpr static scaleType max = static_cast<scaleType>(std :: numeric_limits<std :: intmax_t> :: max());
+  constexpr static scaleType numFloat = static_cast<scaleType>(value :: num);
+  constexpr static scaleType denFloat = static_cast<scaleType>(value :: den);
+  constexpr static const bool numOverflow = (max <= numFloat);
+  constexpr static const bool denOverflow = (max <= denFloat);
+  constexpr static const bool needScale = numOverflow || denOverflow;
+  constexpr static scaleType numScale = numOverflow ? (max / numFloat) : infinity;
+  constexpr static scaleType denScale = denOverflow ? (max / denFloat) : infinity;
+  constexpr static scaleType scale = (numScale < denScale) ? numScale : denScale;
+  constexpr static std :: intmax_t num =
+	  needScale ? static_cast<std :: intmax_t>(scale * numFloat) : static_cast<std :: intmax_t>(value :: num);
+  constexpr static std :: intmax_t den =
+	  needScale ? static_cast<std :: intmax_t>(scale * denFloat) : static_cast<std :: intmax_t>(value :: den);
   public:
-  using type = typename plusType <typename half :: type, typename half :: type> :: type;
+  using type = typename contractType <std :: ratio<num, den> > :: type;
  };
 
  template <intmax_t Numerator, intmax_t Denominator>
