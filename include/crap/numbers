@@ -2,6 +2,7 @@
 #define CRAP_NUMBERS
 
 #include "numbers.d/identity.h"
+#include "numbers.d/ln10.h"
 #include "numbers.d/ln2.h"
 #include "numbers.d/sqrt2.h"
 #include "numbers.d/zero.h"
