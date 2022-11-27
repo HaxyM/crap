@@ -18,6 +18,7 @@
 #include "ratio.d/lesstype.h"
 #include "ratio.d/ln10.h"
 #include "ratio.d/ln2.h"
+#include "ratio.d/log10e.h"
 #include "ratio.d/log10type.h"
 #include "ratio.d/log2e.h"
 #include "ratio.d/logtype.h"
