@@ -32,9 +32,6 @@
 #include "ratio.d/sqrttype.h"
 #include "ratio.d/trunctype.h"
 #include "ratio.d/valueratio.h"
-#include "ratio.d/valueratiopi.h"
-#include "ratio.d/valueratiosqrt1_2.h"
-#include "ratio.d/valueratiosqrt2.h"
 #include "ratio.d/zero.h"
 
 #endif
