@@ -1,6 +1,7 @@
 #ifndef CRAP_NUMBERS
 #define CRAP_NUMBERS
 
+#include "numbers.d/e.h"
 #include "numbers.d/identity.h"
 #include "numbers.d/ln10.h"
 #include "numbers.d/ln2.h"

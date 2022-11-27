@@ -8,6 +8,7 @@
 #include "ratio.d/copysigntype.h"
 #include "ratio.d/costype.h"
 #include "ratio.d/dividestype.h"
+#include "ratio.d/e.h"
 #include "ratio.d/equaltotype.h"
 #include "ratio.d/exptype.h"
 #include "ratio.d/floortype.h"
