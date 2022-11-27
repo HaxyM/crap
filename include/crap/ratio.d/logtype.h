@@ -46,15 +46,15 @@ namespace crap
   using rounded = typename std :: conditional <useInversed, ceilInversed, ceilRegular> :: type;
   using scale =
 	  valueRatio<Type, '+', bitFloorValue <decltype(rounded :: num), rounded :: num> :: value, rounded :: den>;
-  using Root = typename dividesType <valueToBeUsed, scale> :: type;
+  using initialRoot = typename dividesType <valueToBeUsed, scale> :: type;
   using const1 = typename identity <passed> :: type;
-  using initArg1 = typename std :: conditional <useInversed, const1, Root> :: type;
-  using initArg2 = typename std :: conditional <useInversed, Root, const1> :: type;
-  using Product = typename minusType <initArg1, initArg2> :: type;
+  using initArg1 = typename std :: conditional <useInversed, const1, initialRoot> :: type;
+  using initArg2 = typename std :: conditional <useInversed, initialRoot, const1> :: type;
+  using initialProduct = typename minusType <initArg1, initArg2> :: type;
   template <class Product, class Root, bool isFinal> struct step;
   template <class Product, class Root> struct step<Product, Root, false>;
   public:
-  using type = typename step <Product, Root, false> :: type;
+  using type = typename step <initialProduct, initialRoot, false> :: type;
  };
 
  template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
