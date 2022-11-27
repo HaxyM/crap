@@ -1,27 +1,27 @@
-#ifndef CRAP_RATIO_LOG10TYPE
-#define CRAP_RATIO_LOG10TYPE
-
-#include "logtype.h"
-#include "dividestype.h"
-#include "valueratio.h"
-#include "../cmath.d/log10type.h"
-#include "../functional.d/dividestype.h"
-#include "../numbers.d/identity.h"
-
 #include <cstddef>
 #include <type_traits>
 
+#include "identity.h"
+#include "logtype.h"
+#include "log10e.h"
+#include "multipliestype.h"
+#include "../cmath.d/log10type.h"
+
+#ifndef CRAP_RATIO_LOG10TYPE
+#define CRAP_RATIO_LOG10TYPE
+
 namespace crap
 {
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator, std :: size_t Steps>
-	 struct log10Type<valueRatio<Type, Sign, Numerator, Denominator>, Steps>
+ template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+	 struct log10Type<valueRatio<Type, Sign, Numerator, Denominator> >
  {
   private:
-  using valueType = typename std :: make_unsigned <Type> :: type;
-  using base = typename logType <valueRatio<Type, '+', static_cast<valueType>(10), identity <valueType> :: value>, Steps> :: type;
-  using ln = typename logType <valueRatio<Type, Sign, Numerator, Denominator>, Steps> :: type;
+  static_assert(Sign == '+', "Value must be positive.");
+  using passed = valueRatio<Type, Sign, Numerator, Denominator>;
+  using const1 = typename identity <passed> :: type;
+  using log = typename logType <passed> :: type;
   public:
-  using type = typename dividesType <ln, base> :: type;
+  using type = typename multipliesType <log, typename log10e <const1> :: type> :: type;
  };
 
  template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
@@ -36,3 +36,4 @@ crap :: log10(crap :: valueRatio<Type, Sign, Numerator, Denominator>) noexcept
  return {};
 }
 #endif
+
