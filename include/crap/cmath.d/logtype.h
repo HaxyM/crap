@@ -26,7 +26,7 @@ namespace crap
 #include "../numbers.d/identity.h"
 #include "../numeric.d/contracttype.h"
 #include "../ratio.d/identity.h"
-#include "../ratio.d/sqrttype.h"
+#include "../ratio.d/logtype.h"
 
 namespace crap
 {
