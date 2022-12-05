@@ -41,20 +41,35 @@ namespace crap
   constexpr const static valueType origNum = static_cast<valueType>(orig :: num);
   constexpr const static valueType origDen = static_cast<valueType>(orig :: den);
   using value = typename logType <valueRatio<std :: intmax_t, '+', origNum, origDen> > :: type;
+  constexpr static const bool valueNegative = (value :: sign == '-');
   constexpr static scaleType infinity = std :: numeric_limits <scaleType> :: infinity();
-  constexpr static scaleType max = static_cast<scaleType>(std :: numeric_limits<std :: intmax_t> :: max());
-  constexpr static scaleType numFloat = static_cast<scaleType>(value :: num);
+  constexpr static const std :: intmax_t max = std :: numeric_limits<std :: intmax_t> :: max();
+  constexpr static const std :: intmax_t min = std :: numeric_limits<std :: intmax_t> :: min();
+  constexpr static scaleType signFloat = valueNegative ? -1.0l : 1.0l;
+  constexpr static scaleType numFloat = signFloat * static_cast<scaleType>(value :: num);
   constexpr static scaleType denFloat = static_cast<scaleType>(value :: den);
-  constexpr static const bool numOverflow = (max <= numFloat);
-  constexpr static const bool denOverflow = (max <= denFloat);
-  constexpr static const bool needScale = numOverflow || denOverflow;
-  constexpr static scaleType numScale = numOverflow ? (max / numFloat) : infinity;
-  constexpr static scaleType denScale = denOverflow ? (max / denFloat) : infinity;
-  constexpr static scaleType scale = (numScale < denScale) ? numScale : denScale;
+  constexpr static const bool numOverflow = (static_cast<scaleType>(max) <= numFloat);
+  constexpr static const bool denOverflow = (static_cast<scaleType>(max) <= denFloat);
+  constexpr static const bool numUnderflow = (static_cast<scaleType>(min) >= numFloat);
+  constexpr static const bool denUnderflow = (static_cast<scaleType>(min) >= denFloat);
+  constexpr static const bool needScale = numOverflow || denOverflow || numUnderflow || denUnderflow;
+  constexpr static scaleType numOverScale = numOverflow ? (static_cast<scaleType>(max) / numFloat) : infinity;
+  constexpr static scaleType denOverScale = denOverflow ? (static_cast<scaleType>(max) / denFloat) : infinity;
+  constexpr static scaleType numUnderScale = numUnderflow ? (static_cast<scaleType>(min) / numFloat) : infinity;
+  constexpr static scaleType denUnderScale = denUnderflow ? (static_cast<scaleType>(min) / denFloat) : infinity;
+  constexpr static scaleType overScale = (numOverScale < denOverScale) ? numOverScale : denOverScale;
+  constexpr static scaleType underScale = (numUnderScale < denUnderScale) ? numUnderScale : denUnderScale;
+  constexpr static scaleType scale = (overScale < underScale) ? overScale : underScale;
+  constexpr static scaleType scaledNum = needScale ? (scale * numFloat) : numFloat;
+  constexpr static scaleType scaledDen = needScale ? (scale * denFloat) : denFloat;
+  constexpr static std :: intmax_t scaledNumInRange =
+	  (scaledNum < static_cast<scaleType>(min)) ? min : ((scaledNum > static_cast<scaleType>(max)) ? max : static_cast<std :: intmax_t>(scaledNum));
+  constexpr static std :: intmax_t scaledDenInRange =
+	  (scaledDen < 1.0l) ? identity <std :: intmax_t> :: value : ((scaledDen > static_cast<scaleType>(max)) ? max : static_cast<std :: intmax_t>(scaledDen));
   constexpr static std :: intmax_t num =
-	  needScale ? static_cast<std :: intmax_t>(scale * numFloat) : static_cast<std :: intmax_t>(value :: num);
+	  needScale ? static_cast<std :: intmax_t>(scaledNumInRange) : (valueNegative ? -static_cast<std :: intmax_t>(value :: num) : static_cast<std :: intmax_t>(value :: num));
   constexpr static std :: intmax_t den =
-	  needScale ? static_cast<std :: intmax_t>(scale * denFloat) : static_cast<std :: intmax_t>(value :: den);
+	  needScale ? static_cast<std :: intmax_t>(scaledDenInRange) : static_cast<std :: intmax_t>(value :: den);
   public:
   using type = typename contractType <std :: ratio<num, den> > :: type;
  };
