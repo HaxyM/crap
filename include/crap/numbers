@@ -7,6 +7,7 @@
 #include "numbers.d/ln2.h"
 #include "numbers.d/log10e.h"
 #include "numbers.d/log2e.h"
+#include "numbers.d/pi.h"
 #include "numbers.d/sqrt2.h"
 #include "numbers.d/zero.h"
 
