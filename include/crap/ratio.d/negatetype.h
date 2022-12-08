@@ -2,6 +2,7 @@
 #define CRAP_RATIO_NEGATETYPE
 
 #include "valueratio.h"
+#include "../functional.d/negatetype.h"
 #include "../utility.d/typeidentity.h"
 
 #include <type_traits>
