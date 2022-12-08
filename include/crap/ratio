@@ -2,6 +2,7 @@
 #define CRAP_RATIO
 
 #include "ratio.d/abstype.h"
+#include "ratio.d/cbrt2.h"
 #include "ratio.d/cbrttype.h"
 #include "ratio.d/ceiltype.h"
 #include "ratio.d/contracttype.h"
