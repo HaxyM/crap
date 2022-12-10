@@ -28,6 +28,7 @@
 #include "ratio.d/multipliestype.h"
 #include "ratio.d/negatetype.h"
 #include "ratio.d/notequaltotype.h"
+#include "ratio.d/phi.h"
 #include "ratio.d/pi.h"
 #include "ratio.d/plustype.h"
 #include "ratio.d/roundtype.h"
