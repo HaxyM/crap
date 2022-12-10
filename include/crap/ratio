@@ -15,6 +15,7 @@
 #include "ratio.d/floortype.h"
 #include "ratio.d/greaterequaltype.h"
 #include "ratio.d/greatertype.h"
+#include "ratio.d/invsqrt3.h"
 #include "ratio.d/identity.h"
 #include "ratio.d/lessequaltype.h"
 #include "ratio.d/lesstype.h"

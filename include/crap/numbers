@@ -4,6 +4,7 @@
 #include "numbers.d/cbrt2.h"
 #include "numbers.d/e.h"
 #include "numbers.d/identity.h"
+#include "numbers.d/invsqrt3.h"
 #include "numbers.d/ln10.h"
 #include "numbers.d/ln2.h"
 #include "numbers.d/log10e.h"
