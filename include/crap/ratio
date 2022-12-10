@@ -36,6 +36,7 @@
 #include "ratio.d/signbittype.h"
 #include "ratio.d/sintype.h"
 #include "ratio.d/sqrt2.h"
+#include "ratio.d/sqrt3.h"
 #include "ratio.d/sqrttype.h"
 #include "ratio.d/trunctype.h"
 #include "ratio.d/valueratio.h"

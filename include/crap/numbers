@@ -12,6 +12,7 @@
 #include "numbers.d/phi.h"
 #include "numbers.d/pi.h"
 #include "numbers.d/sqrt2.h"
+#include "numbers.d/sqrt3.h"
 #include "numbers.d/zero.h"
 
 #endif
