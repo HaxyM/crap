@@ -9,7 +9,6 @@
 #include "minustype.h"
 #include "multipliestype.h"
 #include "plustype.h"
-#include "sqrttype.h"
 #include "valueratio.h"
 #include "zero.h"
 #include "../bit.d/bitfloorvalue.h"
@@ -46,19 +45,21 @@ namespace crap
   using rounded = typename std :: conditional <useInversed, ceilInversed, ceilRegular> :: type;
   using scale =
 	  valueRatio<Type, '+', bitFloorValue <decltype(rounded :: num), rounded :: num> :: value, rounded :: den>;
-  using initialRoot = typename dividesType <valueToBeUsed, scale> :: type;
+  using x = typename dividesType <valueToBeUsed, scale> :: type;
   using const1 = typename identity <passed> :: type;
-  using initArg1 = typename std :: conditional <useInversed, const1, initialRoot> :: type;
-  using initArg2 = typename std :: conditional <useInversed, initialRoot, const1> :: type;
-  using initialProduct = typename minusType <initArg1, initArg2> :: type;
-  template <class Product, class Root, bool isFinal> struct step;
-  template <class Product, class Root> struct step<Product, Root, false>;
+  using initialX = typename minusType <x, const1> :: type;
+  using initialPower = typename multipliesType <initialX, initialX> :: type;
+  using valueType = typename std :: make_unsigned <Type> :: type;
+  constexpr const static valueType constK1 = identity <valueType> :: value;
+  constexpr const static valueType initialK = constK1 + constK1;
+  template <class Sum, class Power, class X, typename std :: make_unsigned <Type> :: type K, bool isFinal> struct step;
+  template <class Sum, class Power, class X, typename std :: make_unsigned <Type> :: type K> struct step<Sum, Power, X, K, false>;
   public:
-  using type = typename step <initialProduct, initialRoot, false> :: type;
+  using type = typename step <initialX, initialPower, initialX, initialK, false> :: type;
  };
 
  template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
-	 template <class Product, class Root, bool isFinal>
+	 template <class Sum, class Power, class X, typename std :: make_unsigned <Type> :: type K, bool isFinal>
 	 struct logType<valueRatio<Type, Sign, Numerator, Denominator> > :: step
  {
   private:
@@ -80,47 +81,54 @@ namespace crap
  };
 
  template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
-	 template <class Product, class Root>
-	 struct logType<valueRatio<Type, Sign, Numerator, Denominator> > :: template step<Product, Root, false>
+	 template <class Sum, class Power, class X, typename std :: make_unsigned <Type> :: type K>
+	 struct logType<valueRatio<Type, Sign, Numerator, Denominator> > :: template step<Sum, Power, X, K, false>
  {
   private:
-  using passed = valueRatio<Type, Sign, Numerator, Denominator>;
-  using root = typename sqrtType <Root> :: type;
-  using const1 = typename identity <passed> :: type;
-  using const2 = typename plusType <const1, const1> :: type;
-  using element = typename dividesType <const2, typename plusType <const1, root> :: type> :: type;
-  using product = typename multipliesType <Product, element> :: type;
-  using cond = typename minusType <product, Product> :: type;
+  using valueType = typename std :: make_unsigned <Type> :: type;
+  constexpr const static valueType const0 = zero <valueType> :: value;
+  constexpr const static valueType const1 = identity <valueType> :: value;
+  constexpr const static valueType const2 = const1 + const1;
+  constexpr const static bool kOverflow = (K > std :: numeric_limits <valueType> :: max() - const1);
+  constexpr const static valueType nextK = kOverflow ? K : (K + const1);
+  constexpr const static char sign = ((K % const2) == const0) ? '-' : '+';
+  using frac = valueRatio<Type, sign, identity <valueType> :: value, K>;
+  using element = typename multipliesType <frac, Power> :: type;
+  using nextPower = typename multipliesType <Power, X> :: type;
+  using nextSum = typename plusType <Sum, element> :: type;
+  using cond = typename minusType <nextSum, Sum> :: type;
   constexpr const static bool nextFinal = //FIXME: Add check if is zero.
 	  equalToValue <decltype(cond :: num), cond :: num, zero <decltype(cond :: num)> :: value> :: value;
   public:
-  using type = typename step <product, root, nextFinal> :: type;
+  using type = typename step <nextSum, nextPower, X, nextK, nextFinal || kOverflow> :: type;
  };
 
  template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
-	 template <class Product, class Root, bool isFinal>
+	 template <class Sum, class Power, class X, typename std :: make_unsigned <Type> :: type K, bool isFinal>
 	 template <class Scale, bool useInversed>
  struct logType<valueRatio<Type, Sign, Numerator, Denominator> > :: template
-	 step<Product, Root, isFinal> :: scaleUp
+	 step<Sum, Power, X, K, isFinal> :: scaleUp
  {
   private:
-  using constant = typename ln2 <typename identity <Product> :: type> :: type;
+  using constant = typename ln2 <typename identity <Sum> :: type> :: type;
   using shift = typename multipliesType <Scale, constant> :: type;
+  using result = typename plusType <Sum, shift> :: type;
+  constexpr const static char resultSign = (result :: sign == '+') ? '-' : '+';
   public:
-  using type = typename minusType <Product, shift> :: type;
+  using type = valueRatio<Type, resultSign, result :: num, result :: den>;
  };
 
  template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
-	 template <class Product, class Root, bool isFinal>
+	 template <class Sum, class Power, class X, typename std :: make_unsigned <Type> :: type K, bool isFinal>
 	 template <class Scale>
  struct logType<valueRatio<Type, Sign, Numerator, Denominator> > :: template
-	 step<Product, Root, isFinal> :: template scaleUp<Scale, false>
+	 step<Sum, Power, X, K, isFinal> :: template scaleUp<Scale, false>
  {
   private:
-  using constant = typename ln2 <typename identity <Product> :: type> :: type;
+  using constant = typename ln2 <typename identity <Sum> :: type> :: type;
   using shift = typename multipliesType <Scale, constant> :: type;
   public:
-  using type = typename plusType <Product, shift> :: type;
+  using type = typename plusType <Sum, shift> :: type;
  };
 
  template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
@@ -135,4 +143,3 @@ crap :: log(crap :: valueRatio<Type, Sign, Numerator, Denominator>) noexcept
  return {};
 }
 #endif
-
