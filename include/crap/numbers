@@ -3,6 +3,7 @@
 
 #include "numbers.d/cbrt2.h"
 #include "numbers.d/e.h"
+#include "numbers.d/egamma.h"
 #include "numbers.d/identity.h"
 #include "numbers.d/invpi.h"
 #include "numbers.d/invsqrt3.h"
