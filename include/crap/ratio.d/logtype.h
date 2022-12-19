@@ -73,11 +73,14 @@ namespace crap
 	  bitWidthValue <decltype(ceilInversed :: num), ceilInversed :: num> :: value;
   constexpr const static bool useInversed = (bitWidthInversed > bitWidthRegular);
   constexpr const static std :: size_t bitWidth = (useInversed ? bitWidthInversed : bitWidthRegular);
-  using scale = valueRatio<Type, '+', (bitWidth - 1u), identity <decltype(bitWidth - 1u)> :: value>;
-  template <class Scale, bool useInversed> struct scaleUp;
-  template <class Scale> struct scaleUp<Scale, false>;
+  using Scale = valueRatio<Type, '+', (bitWidth - 1u), identity <decltype(bitWidth - 1u)> :: value>;
+  using constant = typename ln2 <typename identity <Sum> :: type> :: type;
+  using shift = typename multipliesType <Scale, constant> :: type;
+  using result = typename plusType <Sum, shift> :: type;
+  constexpr const static char resultSign =
+	  useInversed ? ((result :: sign == '+') ? '-' : '+') : (result :: sign);
   public:
-  using type = typename scaleUp <scale, useInversed> :: type;
+  using type = valueRatio<Type, resultSign, result :: num, result :: den>;
  };
 
  template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
@@ -101,34 +104,6 @@ namespace crap
 	  equalToValue <decltype(cond :: num), cond :: num, zero <decltype(cond :: num)> :: value> :: value;
   public:
   using type = typename step <nextSum, nextPower, X, nextK, nextFinal || kOverflow> :: type;
- };
-
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
-	 template <class Sum, class Power, class X, typename std :: make_unsigned <Type> :: type K, bool isFinal>
-	 template <class Scale, bool useInversed>
- struct logType<valueRatio<Type, Sign, Numerator, Denominator> > :: template
-	 step<Sum, Power, X, K, isFinal> :: scaleUp
- {
-  private:
-  using constant = typename ln2 <typename identity <Sum> :: type> :: type;
-  using shift = typename multipliesType <Scale, constant> :: type;
-  using result = typename plusType <Sum, shift> :: type;
-  constexpr const static char resultSign = (result :: sign == '+') ? '-' : '+';
-  public:
-  using type = valueRatio<Type, resultSign, result :: num, result :: den>;
- };
-
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
-	 template <class Sum, class Power, class X, typename std :: make_unsigned <Type> :: type K, bool isFinal>
-	 template <class Scale>
- struct logType<valueRatio<Type, Sign, Numerator, Denominator> > :: template
-	 step<Sum, Power, X, K, isFinal> :: template scaleUp<Scale, false>
- {
-  private:
-  using constant = typename ln2 <typename identity <Sum> :: type> :: type;
-  using shift = typename multipliesType <Scale, constant> :: type;
-  public:
-  using type = typename plusType <Sum, shift> :: type;
  };
 
  template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
