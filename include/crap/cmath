@@ -11,6 +11,7 @@
 #include "cmath.d/logtype.h"
 #include "cmath.d/roundtype.h"
 #include "cmath.d/signbittype.h"
+#include "cmath.d/sinhtype.h"
 #include "cmath.d/sintype.h"
 #include "cmath.d/sqrttype.h"
 #include "cmath.d/trunctype.h"
