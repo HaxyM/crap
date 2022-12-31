@@ -3,6 +3,7 @@
 
 #include "cmath.d/acoshtype.h"
 #include "cmath.d/asinhtype.h"
+#include "cmath.d/asintype.h"
 #include "cmath.d/atanhtype.h"
 #include "cmath.d/atantype.h"
 #include "cmath.d/cbrttype.h"
