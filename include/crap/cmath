@@ -1,6 +1,7 @@
 #ifndef CRAP_CMATH
 #define CRAP_CMATH
 
+#include "cmath.d/acoshtype.h"
 #include "cmath.d/asinhtype.h"
 #include "cmath.d/cbrttype.h"
 #include "cmath.d/ceiltype.h"
