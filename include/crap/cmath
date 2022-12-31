@@ -18,6 +18,7 @@
 #include "cmath.d/sinhtype.h"
 #include "cmath.d/sintype.h"
 #include "cmath.d/sqrttype.h"
+#include "cmath.d/tanhtype.h"
 #include "cmath.d/trunctype.h"
 
 #endif

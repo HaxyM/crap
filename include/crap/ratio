@@ -46,6 +46,7 @@
 #include "ratio.d/sqrt2.h"
 #include "ratio.d/sqrt3.h"
 #include "ratio.d/sqrttype.h"
+#include "ratio.d/tanhtype.h"
 #include "ratio.d/trunctype.h"
 #include "ratio.d/valueratio.h"
 #include "ratio.d/zero.h"
