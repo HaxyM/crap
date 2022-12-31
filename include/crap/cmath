@@ -2,6 +2,7 @@
 #define CRAP_CMATH
 
 #include "cmath.d/acoshtype.h"
+#include "cmath.d/acostype.h"
 #include "cmath.d/asinhtype.h"
 #include "cmath.d/asintype.h"
 #include "cmath.d/atanhtype.h"
