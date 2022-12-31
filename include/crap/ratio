@@ -4,6 +4,7 @@
 #include "ratio.d/abstype.h"
 #include "ratio.d/acoshtype.h"
 #include "ratio.d/asinhtype.h"
+#include "ratio.d/atanhtype.h"
 #include "ratio.d/cbrt2.h"
 #include "ratio.d/cbrttype.h"
 #include "ratio.d/ceiltype.h"
