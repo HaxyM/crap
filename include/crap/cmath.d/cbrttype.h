@@ -1,19 +1,6 @@
 #ifndef CRAP_CMATH_CBRTTYPE
 #define CRAP_CMATH_CBRTTYPE
 
-#include "../functional.d/dividestype.h"
-#include "../functional.d/minustype.h"
-#include "../functional.d/multipliestype.h"
-#include "../functional.d/plustype.h"
-#include "../numbers.d/identity.h"
-#include "../numeric.d/innerproducttype.h"
-#include "../numeric.d/iotavalue.h"
-#include "../utility.d/reproducetype.h"
-
-#include <cstddef>
-#include <ratio>
-#include <type_traits>
-
 namespace crap
 {
  template <class> struct cbrtType;
@@ -27,8 +14,8 @@ namespace crap
 #include "../numbers.d/identity.h"
 #include "../numbers.d/zero.h"
 #include "../numeric.d/contracttype.h"
-#include "../ratio.d/identity.h"
 #include "../ratio.d/cbrttype.h"
+#include "../ratio.d/identity.h"
 
 namespace crap
 {

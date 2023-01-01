@@ -1,15 +1,6 @@
 #ifndef CRAP_CMATH_SQRTTYPE
 #define CRAP_CMATH_SQRTTYPE
 
-#include "../functional.d/dividestype.h"
-#include "../functional.d/minustype.h"
-#include "../functional.d/multipliestype.h"
-#include "../functional.d/plustype.h"
-
-#include <cstddef>
-#include <ratio>
-#include <type_traits>
-
 namespace crap
 {
  template <class> struct sqrtType;

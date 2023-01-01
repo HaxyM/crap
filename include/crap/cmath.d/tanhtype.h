@@ -1,19 +1,6 @@
 #ifndef CRAP_CMATH_TANHTYPE
 #define CRAP_CMATH_TANHTYPE
 
-#include "../functional.d/dividestype.h"
-#include "../functional.d/minustype.h"
-#include "../functional.d/multipliestype.h"
-#include "../functional.d/plustype.h"
-#include "../numbers.d/identity.h"
-#include "../numeric.d/innerproducttype.h"
-#include "../numeric.d/iotavalue.h"
-#include "../utility.d/reproducetype.h"
-
-#include <cstddef>
-#include <ratio>
-#include <type_traits>
-
 namespace crap
 {
  template <class> struct tanhType;
