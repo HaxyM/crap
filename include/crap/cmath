@@ -16,6 +16,7 @@
 #include "cmath.d/exptype.h"
 #include "cmath.d/floortype.h"
 #include "cmath.d/log10type.h"
+#include "cmath.d/log2type.h"
 #include "cmath.d/logtype.h"
 #include "cmath.d/roundtype.h"
 #include "cmath.d/signbittype.h"
