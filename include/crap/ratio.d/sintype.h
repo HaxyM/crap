@@ -70,10 +70,14 @@ namespace crap
 	 step<Sum, Element, Argument, Step, true>
  {
   private:
+  using const1 = typename identity <Sum> :: type;
+  using absSum = typename absType <Sum> :: type;
+  constexpr const static bool inRange = lessType <absSum, const1> :: value;
   constexpr const static char newSign =
 	  (Sign == '-') ? ((Sum :: sign == '-') ? '+' : '-') : (Sum :: sign);
+  using clamped = typename std :: conditional <inRange, Sum, const1> :: type;
   public:
-  using type = valueRatio<Type, newSign, Sum :: num, Sum :: den>;
+  using type = valueRatio<Type, newSign, clamped :: num, clamped :: den>;
  };
 
  template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>

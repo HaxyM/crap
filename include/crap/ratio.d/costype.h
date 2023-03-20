@@ -69,7 +69,13 @@ namespace crap
  struct cosType<valueRatio<Type, Sign, Numerator, Denominator> > :: template
 	 step<Sum, Element, Argument, Step, true>
  {
-  using type = Sum;
+  private:
+  using const1 = typename identity <Sum> :: type;
+  using absSum = typename absType <Sum> :: type;
+  constexpr const static bool inRange = lessType <absSum, const1> :: value;
+  using clamped = typename std :: conditional <inRange, Sum, const1> :: type;
+  public:
+  using type = valueRatio<Type, Sum :: sign, clamped :: num, clamped :: den>;
  };
 
  template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
