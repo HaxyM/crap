@@ -9,7 +9,7 @@
 #include "plustype.h"
 #include "sqrttype.h"
 #include "valueratio.h"
-#include "../cmath.d/acoshtype.h"
+#include "../cmath.d/asintype.h"
 
 #ifndef CRAP_RATIO_ASINTYPE
 #define CRAP_RATIO_ASINTYPE
@@ -25,9 +25,11 @@ namespace crap
   using const1 = typename identity <x> :: type;
   using elem1 = typename minusType <const1, sqrX> :: type;
   using elem2 = typename sqrtType <elem1> :: type;
-  using elem3 = typename dividesType <x, elem2> :: type;
+  using elem3 = typename plusType <const1, elem2> :: type;
+  using elem4 = typename dividesType <x, elem3> :: type;
+  using elem5 = typename atanType <elem4> :: type;
   public:
-  using type = typename atanType <elem3> :: type;
+  using type = typename plusType <elem5, elem5> :: type;
  };
 
  template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
