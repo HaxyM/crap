@@ -1,10 +1,12 @@
 #include <cstdint>
 #include <type_traits>
 
+#include "abstype.h"
 #include "dividestype.h"
 #include "identity.h"
 #include "minustype.h"
 #include "multipliestype.h"
+#include "pi.h"
 #include "plustype.h"
 #include "sqrttype.h"
 #include "valueratio.h"
@@ -56,9 +58,15 @@ namespace crap
   using x = valueRatio<Type, Sign, Numerator, Denominator>;
   using sqrX = typename multipliesType <x, x> :: type;
   using const1 = typename identity <x> :: type;
+  using const2 = typename plusType <const1, const1> :: type;
+  using limit = typename dividesType <typename pi <const1> :: type, const2> :: type;
   using denominator = typename sqrtType <typename plusType <const1, sqrX> :: type> :: type;
+  using result = typename dividesType <x, denominator, A> :: type;
+  using absResult = typename absType <result> :: type;
+  constexpr const static bool inRange = lessType <absResult, limit> :: value;
+  using clamped = typename std :: conditional <inRange, result, limit> :: type;
   public:
-  using type = typename dividesType <x, denominator, A> :: type;
+  using type = valueRatio<Type, result :: sign, clamped :: num, clamped :: den>;
  };
 
  template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
