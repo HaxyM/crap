@@ -6,6 +6,7 @@
 #include "ratio.d/acostype.h"
 #include "ratio.d/asinhtype.h"
 #include "ratio.d/asintype.h"
+#include "ratio.d/atan2type.h"
 #include "ratio.d/atanhtype.h"
 #include "ratio.d/atantype.h"
 #include "ratio.d/cbrt2.h"
