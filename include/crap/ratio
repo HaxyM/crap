@@ -39,6 +39,7 @@
 #include "ratio.d/log2type.h"
 #include "ratio.d/logtype.h"
 #include "ratio.d/minustype.h"
+#include "ratio.d/modftype.h"
 #include "ratio.d/multipliestype.h"
 #include "ratio.d/negatetype.h"
 #include "ratio.d/notequaltotype.h"
