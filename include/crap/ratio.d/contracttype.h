@@ -9,13 +9,12 @@
 
 namespace crap
 {
- template <typename Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <typename Type, char Sign, Type Numerator, Type Denominator>
 	 struct contractType<valueRatio<Type, Sign, Numerator, Denominator> >
  {
   private:
-  using valueType = typename std :: add_const <typename std :: make_unsigned <Type> :: type> :: type;
-  constexpr static valueType gcd =
-	  gcdValue <typename std :: make_unsigned <Type> :: type, Numerator, Denominator> :: value;
+  using valueType = typename std :: add_const <Type> :: type;
+  constexpr static valueType gcd = gcdValue <Type, Numerator, Denominator> :: value;
   public:
   using type = valueRatio<Type, Sign, Numerator / gcd, Denominator / gcd>;
  };

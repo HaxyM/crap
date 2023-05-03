@@ -16,18 +16,18 @@
 
 namespace crap
 {
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 struct minusType<valueRatio<Type, Sign, Numerator, Denominator> >
 	 : typeIdentity<valueRatio<Type, Sign, Numerator, Denominator> > {};
 
- template <class Type, char Sign1, typename std :: make_unsigned <Type> :: type Numerator1, typename std :: make_unsigned <Type> :: type Denominator1, char Sign2, typename std :: make_unsigned <Type> :: type Numerator2, typename std :: make_unsigned <Type> :: type Denominator2>
+ template <class Type, char Sign1, Type Numerator1, Type Denominator1, char Sign2, Type Numerator2, Type Denominator2>
 	 struct minusType<valueRatio<Type, Sign1, Numerator1, Denominator1>, valueRatio<Type, Sign2, Numerator2, Denominator2> >
  {
   private:
   using scaleType = const long double;
-  using valueType = typename std :: add_const <typename std :: make_unsigned <Type> :: type> :: type;
+  using valueType = typename std :: add_const <Type> :: type;
   //Common denominator
-  constexpr static valueType denGCD = gcdValue <typename std :: make_unsigned <Type> :: type, Denominator1, Denominator2> :: value;
+  constexpr static valueType denGCD = gcdValue <Type, Denominator1, Denominator2> :: value;
   constexpr static valueType denPart1 = ((Denominator1 > Denominator2) ? Denominator1 : Denominator2) / denGCD;
   constexpr static valueType denPart2 = (Denominator1 > Denominator2) ? Denominator2 : Denominator1;
   constexpr static valueType part1IntScale = Denominator2 / denGCD;
@@ -69,19 +69,19 @@ namespace crap
   using type = typename contractType <valueRatio<Type, sign, numerator, denominator> > :: type;
  };
 
- template <class Type, char ... Signs, typename std :: make_unsigned <Type> :: type ... Numerators, typename std :: make_unsigned <Type> :: type ... Denominators>
+ template <class Type, char ... Signs, Type ... Numerators, Type ... Denominators>
 	 struct minusType<valueRatio<Type, Signs, Numerators, Denominators>...>
 	 : accumulateType<minusType, valueRatio<Type, Signs, Numerators, Denominators>...> {};
 
- template <class Type1, class Type2, char Sign1, typename std :: make_unsigned <Type1> :: type Numerator1, typename std :: make_unsigned <Type1> :: type Denominator1, char Sign2, typename std :: make_unsigned <Type2> :: type Numerator2, typename std :: make_unsigned <Type2> :: type Denominator2>
+ template <class Type1, class Type2, char Sign1, Type1 Numerator1, Type1 Denominator1, char Sign2, Type2 Numerator2, Type2 Denominator2>
 	 struct minusType<valueRatio<Type1, Sign1, Numerator1, Denominator1>, valueRatio<Type2, Sign2, Numerator2, Denominator2> >
 	 : minusType<
-	 valueRatio<typename std :: common_type <Type1, Type2> :: type, Sign1, static_cast<typename std :: make_signed <typename std :: common_type <Type1, Type2> :: type> :: type>(Numerator1), static_cast<typename std :: make_unsigned <typename std :: common_type <Type1, Type2> :: type> :: type>(Denominator1)>,
-	 valueRatio<typename std :: common_type <Type1, Type2> :: type, Sign2, static_cast<typename std :: make_signed <typename std :: common_type <Type1, Type2> :: type> :: type>(Numerator2), static_cast<typename std :: make_unsigned <typename std :: common_type <Type1, Type2> :: type> :: type>(Denominator2)> >
+	 valueRatio<typename std :: common_type <Type1, Type2> :: type, Sign1, static_cast<typename std :: common_type <Type1, Type2> :: type>(Numerator1), static_cast<typename std :: common_type <Type1, Type2> :: type>(Denominator1)>,
+	 valueRatio<typename std :: common_type <Type1, Type2> :: type, Sign2, static_cast<typename std :: common_type <Type1, Type2> :: type>(Numerator2), static_cast<typename std :: common_type <Type1, Type2> :: type>(Denominator2)> >
 	 {};
 }
 
-template <class Type1, class Type2, char Sign1, typename std :: make_unsigned <Type1> :: type Numerator1, typename std :: make_unsigned <Type1> :: type Denominator1, char Sign2, typename std :: make_unsigned <Type2> :: type Numerator2, typename std :: make_unsigned <Type2> :: type Denominator2>
+template <class Type1, class Type2, char Sign1, Type1 Numerator1, Type1 Denominator1, char Sign2, Type2 Numerator2, Type2 Denominator2>
 inline constexpr typename crap :: minusType <crap :: valueRatio<Type1, Sign1, Numerator1, Denominator1>, crap :: valueRatio<Type2, Sign2, Numerator2, Denominator2> > :: type
 operator - (crap :: valueRatio<Type1, Sign1, Numerator1, Denominator1>, crap :: valueRatio<Type2, Sign2, Numerator2, Denominator2> ) noexcept
 {
