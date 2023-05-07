@@ -46,6 +46,7 @@
 #include "utility.d/splitvalue.h"
 #include "utility.d/swapindicestype.h"
 #include "utility.d/swapindicesvalue.h"
+#include "utility.d/typecast.h"
 #include "utility.d/typecoma.h"
 #include "utility.d/typedemultiplexer.h"
 #include "utility.d/typeidentity.h"
