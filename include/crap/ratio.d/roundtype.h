@@ -10,7 +10,7 @@
 
 namespace crap
 {
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 struct roundType<valueRatio<Type, Sign, Numerator, Denominator> >
  {
   private:
@@ -18,17 +18,17 @@ namespace crap
   constexpr const static auto remainder = (value :: num % value :: den);
   constexpr const static bool roundDown = (Sign == '+') && ((value :: den - remainder) > remainder);
   constexpr const static bool roundUp = (Sign == '-') && ((value :: den - remainder) < remainder);
-  constexpr const static typename value :: numeratorType newNum = value :: num / value :: den;
+  constexpr const static typename value :: valueType newNum = value :: num / value :: den;
   public:
-  using type = valueRatio<Type, Sign, ((Sign == '-') ? (roundUp ? (newNum + 1u) : newNum) : (roundDown ? newNum : (newNum + 1u))), identity <typename value :: denominatorType> :: value>;
+  using type = valueRatio<Type, Sign, ((Sign == '-') ? (roundUp ? (newNum + 1u) : newNum) : (roundDown ? newNum : (newNum + 1u))), identity <typename value :: valueType> :: value>;
  };
 
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 constexpr typename roundType <valueRatio<Type, Sign, Numerator, Denominator> > :: type
 	 round(valueRatio<Type, Sign, Numerator, Denominator>) noexcept;
 }
 
-template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+template <class Type, char Sign, Type Numerator, Type Denominator>
 inline constexpr typename crap :: roundType <crap :: valueRatio<Type, Sign, Numerator, Denominator> > :: type
 crap :: round(crap :: valueRatio<Type, Sign, Numerator, Denominator>) noexcept
 {
