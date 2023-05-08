@@ -17,13 +17,7 @@
 namespace crap
 {
 #ifdef UINT8_C
- template <char Sign, typename std :: make_unsigned <std :: int8_t> :: type Numerator, typename std :: make_unsigned <std :: int8_t> :: type Denominator>
-	 struct sqrt2<valueRatio<std :: int8_t, Sign, Numerator, Denominator> >
- {
-  using type = valueRatio<std :: int8_t, '+', UINT8_C(255), UINT8_C(181)>;
- };
-
- template <char Sign, typename std :: make_unsigned <std :: uint8_t> :: type Numerator, typename std :: make_unsigned <std :: uint8_t> :: type Denominator>
+ template <char Sign, std :: uint8_t Numerator, std :: uint8_t Denominator>
 	 struct sqrt2<valueRatio<std :: uint8_t, Sign, Numerator, Denominator> >
  {
   using type = valueRatio<std :: uint8_t, '+', UINT8_C(255), UINT8_C(181)>;
@@ -31,13 +25,7 @@ namespace crap
 #endif
 
 #ifdef UINT16_C
- template <char Sign, typename std :: make_unsigned <std :: int16_t> :: type Numerator, typename std :: make_unsigned <std :: int16_t> :: type Denominator>
-	 struct sqrt2<valueRatio<std :: int16_t, Sign, Numerator, Denominator> >
- {
-  using type = valueRatio<std :: int16_t, '+', UINT16_C(65534), UINT16_C(46339)>;
- };
-
- template <char Sign, typename std :: make_unsigned <std :: uint16_t> :: type Numerator, typename std :: make_unsigned <std :: uint16_t> :: type Denominator>
+ template <char Sign, std :: uint16_t Numerator, std :: uint16_t Denominator>
 	 struct sqrt2<valueRatio<std :: uint16_t, Sign, Numerator, Denominator> >
  {
   using type = valueRatio<std :: uint16_t, '+', UINT16_C(65534), UINT16_C(46339)>;
@@ -45,13 +33,7 @@ namespace crap
 #endif
 
 #ifdef UINT32_C
- template <char Sign, typename std :: make_unsigned <std :: int32_t> :: type Numerator, typename std :: make_unsigned <std :: int32_t> :: type Denominator>
-	 struct sqrt2<valueRatio<std :: int32_t, Sign, Numerator, Denominator> >
- {
-  using type = valueRatio<std :: int32_t, '+', UINT32_C(4294967295), UINT32_C(3037000498)>;
- };
-
- template <char Sign, typename std :: make_unsigned <std :: uint32_t> :: type Numerator, typename std :: make_unsigned <std :: uint32_t> :: type Denominator>
+ template <char Sign, std :: uint32_t Numerator, std :: uint32_t Denominator>
 	 struct sqrt2<valueRatio<std :: uint32_t, Sign, Numerator, Denominator> >
  {
   using type = valueRatio<std :: uint32_t, '+', UINT32_C(4294967295), UINT32_C(3037000498)>;
@@ -59,20 +41,14 @@ namespace crap
 #endif
 
 #ifdef UINT64_C
- template <char Sign, typename std :: make_unsigned <std :: int64_t> :: type Numerator, typename std :: make_unsigned <std :: int64_t> :: type Denominator>
-	 struct sqrt2<valueRatio<std :: int64_t, Sign, Numerator, Denominator> >
- {
-  using type = valueRatio<std :: int64_t, '+', UINT64_C(18446744073709551615), UINT64_C(13043817825332782214)>;
- };
-
- template <char Sign, typename std :: make_unsigned <std :: uint64_t> :: type Numerator, typename std :: make_unsigned <std :: uint64_t> :: type Denominator>
+ template <char Sign, std :: uint64_t Numerator, std :: uint64_t Denominator>
 	 struct sqrt2<valueRatio<std :: uint64_t, Sign, Numerator, Denominator> >
  {
   using type = valueRatio<std :: uint64_t, '+', UINT64_C(18446744073709551615), UINT64_C(13043817825332782214)>;
  };
 #endif
 
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 struct sqrt2<valueRatio<Type, Sign, Numerator, Denominator> >
  {
   private:
@@ -86,7 +62,7 @@ namespace crap
   using type = typename step <initialA, initialC, false> :: type;
  };
 
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 template <class A, class C, bool isFinal>
 	 struct sqrt2<valueRatio<Type, Sign, Numerator, Denominator> > :: step
  {
@@ -106,7 +82,7 @@ namespace crap
   using type = typename step <nextA, nextC, nextFinal> :: type;
  };
 
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 template <class A, class C>
 	 struct sqrt2<valueRatio<Type, Sign, Numerator, Denominator> > :: template step<A, C, true>
  {
