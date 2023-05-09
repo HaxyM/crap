@@ -19,13 +19,7 @@
 namespace crap
 {
 #ifdef UINT8_C
- template <char Sign, typename std :: make_unsigned <std :: int8_t> :: type Numerator, typename std :: make_unsigned <std :: int8_t> :: type Denominator>
-	 struct pi<valueRatio<std :: int8_t, Sign, Numerator, Denominator> >
- {
-  using type = valueRatio<std :: int8_t, '+', UINT8_C(85), UINT8_C(27)>;
- };
-
- template <char Sign, typename std :: make_unsigned <std :: uint8_t> :: type Numerator, typename std :: make_unsigned <std :: uint8_t> :: type Denominator>
+ template <char Sign, std :: uint8_t Numerator, std :: uint8_t Denominator>
 	 struct pi<valueRatio<std :: uint8_t, Sign, Numerator, Denominator> >
  {
   using type = valueRatio<std :: uint8_t, '+', UINT8_C(85), UINT8_C(27)>;
@@ -33,13 +27,7 @@ namespace crap
 #endif
 
 #ifdef UINT16_C
- template <char Sign, typename std :: make_unsigned <std :: int16_t> :: type Numerator, typename std :: make_unsigned <std :: int16_t> :: type Denominator>
-	 struct pi<valueRatio<std :: int16_t, Sign, Numerator, Denominator> >
- {
-  using type = valueRatio<std :: int16_t, '+', UINT16_C(23513), UINT16_C(7487)>;
- };
-
- template <char Sign, typename std :: make_unsigned <std :: uint16_t> :: type Numerator, typename std :: make_unsigned <std :: uint16_t> :: type Denominator>
+ template <char Sign, std :: uint16_t Numerator, std :: uint16_t Denominator>
 	 struct pi<valueRatio<std :: uint16_t, Sign, Numerator, Denominator> >
  {
   using type = valueRatio<std :: uint16_t, '+', UINT16_C(23513), UINT16_C(7487)>;
@@ -47,13 +35,7 @@ namespace crap
 #endif
 
 #ifdef UINT32_C
- template <char Sign, typename std :: make_unsigned <std :: int32_t> :: type Numerator, typename std :: make_unsigned <std :: int32_t> :: type Denominator>
-	 struct pi<valueRatio<std :: int32_t, Sign, Numerator, Denominator> >
- {
-  using type = valueRatio<std :: int32_t, '+', UINT32_C(3082798721), UINT32_C(981285313)>;
- };
-
- template <char Sign, typename std :: make_unsigned <std :: uint32_t> :: type Numerator, typename std :: make_unsigned <std :: uint32_t> :: type Denominator>
+ template <char Sign, std :: uint32_t Numerator, std :: uint32_t Denominator>
 	 struct pi<valueRatio<std :: uint32_t, Sign, Numerator, Denominator> >
  {
   using type = valueRatio<std :: uint32_t, '+', UINT32_C(3082798721), UINT32_C(981285313)>;
@@ -61,20 +43,14 @@ namespace crap
 #endif
 
 #ifdef UINT64_C
- template <char Sign, typename std :: make_unsigned <std :: int64_t> :: type Numerator, typename std :: make_unsigned <std :: int64_t> :: type Denominator>
-	 struct pi<valueRatio<std :: int64_t, Sign, Numerator, Denominator> >
- {
-  using type = valueRatio<std :: int64_t, '+', UINT64_C(18446744073709551615), UINT64_C(5871781006564002461)>;
- };
-
- template <char Sign, typename std :: make_unsigned <std :: uint64_t> :: type Numerator, typename std :: make_unsigned <std :: uint64_t> :: type Denominator>
+ template <char Sign, std :: uint64_t Numerator, std :: uint64_t Denominator>
 	 struct pi<valueRatio<std :: uint64_t, Sign, Numerator, Denominator> >
  {
   using type = valueRatio<std :: uint64_t, '+', UINT64_C(18446744073709551615), UINT64_C(5871781006564002461)>;
  };
 #endif
 
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 struct pi<valueRatio<Type, Sign, Numerator, Denominator> >
  {
   private:
@@ -94,7 +70,7 @@ namespace crap
   using type = typename step <initialA, initialB, initialT, initialP, initialResult, false> :: type;
  };
 
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 template <class A, class B, class T, class P, class prevResult, bool isFinal>
 	 struct pi<valueRatio<Type, Sign, Numerator, Denominator> > :: step
  {
@@ -118,7 +94,7 @@ namespace crap
   using type = typename step <nextA, nextB, nextT, nextP, nextResult, nextFinal> :: type;
  };
 
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 template <class A, class B, class T, class P, class prevResult>
  struct pi<valueRatio<Type, Sign, Numerator, Denominator> > :: template
 	 step<A, B, T, P, prevResult, true>
