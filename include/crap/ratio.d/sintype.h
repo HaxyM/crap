@@ -22,7 +22,7 @@
 
 namespace crap
 {
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 struct sinType<valueRatio<Type, Sign, Numerator, Denominator> >
  {
   private:
@@ -44,7 +44,7 @@ namespace crap
   using type = typename step <initialSum, initialElement, initialArgument, initialStep, false> :: type;
  };
 
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 template <class Sum, class Element, class Argument, class Step, bool isFinal>
 	 struct sinType<valueRatio<Type, Sign, Numerator, Denominator> > :: step
  {
@@ -64,7 +64,7 @@ namespace crap
   using type = typename step <sum, nextElement, Argument, nextStep, nextFinal> :: type;
  };
 
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 template <class Sum, class Element, class Argument, class Step>
  struct sinType<valueRatio<Type, Sign, Numerator, Denominator> > :: template
 	 step<Sum, Element, Argument, Step, true>
@@ -80,12 +80,12 @@ namespace crap
   using type = valueRatio<Type, newSign, clamped :: num, clamped :: den>;
  };
 
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 constexpr typename sinType <valueRatio<Type, Sign, Numerator, Denominator> > :: type
 	 sin(valueRatio<Type, Sign, Numerator, Denominator>) noexcept;
 }
 
-template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+template <class Type, char Sign, Type Numerator, Type Denominator>
 inline constexpr typename crap :: sinType <crap :: valueRatio<Type, Sign, Numerator, Denominator> > :: type
 crap :: sin(crap :: valueRatio<Type, Sign, Numerator, Denominator>) noexcept
 {

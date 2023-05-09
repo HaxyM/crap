@@ -22,7 +22,7 @@
 
 namespace crap
 {
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 struct cosType<valueRatio<Type, Sign, Numerator, Denominator> >
  {
   private:
@@ -44,7 +44,7 @@ namespace crap
   using type = typename step <initialSum, initialElement, initialArgument, initialStep, false> :: type;
  };
 
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 template <class Sum, class Element, class Argument, class Step, bool isFinal>
 	 struct cosType<valueRatio<Type, Sign, Numerator, Denominator> > :: step
  {
@@ -64,7 +64,7 @@ namespace crap
   using type = typename step <sum, nextElement, Argument, nextStep, nextFinal> :: type;
  };
 
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 template <class Sum, class Element, class Argument, class Step>
  struct cosType<valueRatio<Type, Sign, Numerator, Denominator> > :: template
 	 step<Sum, Element, Argument, Step, true>
@@ -78,12 +78,12 @@ namespace crap
   using type = valueRatio<Type, Sum :: sign, clamped :: num, clamped :: den>;
  };
 
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 constexpr typename cosType <valueRatio<Type, Sign, Numerator, Denominator> > :: type
 	 cos(valueRatio<Type, Sign, Numerator, Denominator>) noexcept;
 }
 
-template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+template <class Type, char Sign, Type Numerator, Type Denominator>
 inline constexpr typename crap :: cosType <crap :: valueRatio<Type, Sign, Numerator, Denominator> > :: type
 crap :: cos(crap :: valueRatio<Type, Sign, Numerator, Denominator>) noexcept
 {
