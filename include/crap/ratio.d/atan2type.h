@@ -16,7 +16,7 @@
 
 namespace crap
 {
- template <class Type, char SignX, typename std :: make_unsigned <Type> :: type NumeratorX, typename std :: make_unsigned <Type> :: type DenominatorX, char SignY, typename std :: make_unsigned <Type> :: type NumeratorY, typename std :: make_unsigned <Type> :: type DenominatorY>
+ template <class Type, char SignX, Type NumeratorX, Type DenominatorX, char SignY, Type NumeratorY, Type DenominatorY>
 	 struct atan2Type<valueRatio<Type, SignX, NumeratorX, DenominatorX>, valueRatio<Type, SignY, NumeratorY, DenominatorY> >
  {
   private:
@@ -31,7 +31,7 @@ namespace crap
   using type = typename XRange <gt0, lt0> :: type;
  };
 
- template <class Type, char SignX, typename std :: make_unsigned <Type> :: type NumeratorX, typename std :: make_unsigned <Type> :: type DenominatorX, char SignY, typename std :: make_unsigned <Type> :: type NumeratorY, typename std :: make_unsigned <Type> :: type DenominatorY>
+ template <class Type, char SignX, Type NumeratorX, Type DenominatorX, char SignY, Type NumeratorY, Type DenominatorY>
 	 template <bool Xlt0>
  struct atan2Type<valueRatio<Type, SignX, NumeratorX, DenominatorX>, valueRatio<Type, SignY, NumeratorY, DenominatorY> > :: template
 	 XRange<true, Xlt0>
@@ -44,7 +44,7 @@ namespace crap
   using type = typename atanType <arg> :: type;
  };
 
- template <class Type, char SignX, typename std :: make_unsigned <Type> :: type NumeratorX, typename std :: make_unsigned <Type> :: type DenominatorX, char SignY, typename std :: make_unsigned <Type> :: type NumeratorY, typename std :: make_unsigned <Type> :: type DenominatorY>
+ template <class Type, char SignX, Type NumeratorX, Type DenominatorX, char SignY, Type NumeratorY, Type DenominatorY>
 	 template <bool Xlt0>
  struct atan2Type<valueRatio<Type, SignX, NumeratorX, DenominatorX>, valueRatio<Type, SignY, NumeratorY, DenominatorY> > :: template
 	 XRange<false, Xlt0>
@@ -63,7 +63,7 @@ namespace crap
   using type = typename YRange <Xlt0, gt0, lt0> :: type;
  };
 
- template <class Type, char SignX, typename std :: make_unsigned <Type> :: type NumeratorX, typename std :: make_unsigned <Type> :: type DenominatorX, char SignY, typename std :: make_unsigned <Type> :: type NumeratorY, typename std :: make_unsigned <Type> :: type DenominatorY>
+ template <class Type, char SignX, Type NumeratorX, Type DenominatorX, char SignY, Type NumeratorY, Type DenominatorY>
 	 template <bool Xlt0>
 	 template <bool Ylt0>
  struct atan2Type<valueRatio<Type, SignX, NumeratorX, DenominatorX>, valueRatio<Type, SignY, NumeratorY, DenominatorY> > :: template
@@ -80,7 +80,7 @@ namespace crap
   using type = typename plusType <typename atanType <arg> :: type, constPi> :: type;
  };
 
- template <class Type, char SignX, typename std :: make_unsigned <Type> :: type NumeratorX, typename std :: make_unsigned <Type> :: type DenominatorX, char SignY, typename std :: make_unsigned <Type> :: type NumeratorY, typename std :: make_unsigned <Type> :: type DenominatorY>
+ template <class Type, char SignX, Type NumeratorX, Type DenominatorX, char SignY, Type NumeratorY, Type DenominatorY>
 	 template <bool Xlt0>
 	 template <bool Ylt0>
  struct atan2Type<valueRatio<Type, SignX, NumeratorX, DenominatorX>, valueRatio<Type, SignY, NumeratorY, DenominatorY> > :: template
@@ -98,7 +98,7 @@ namespace crap
   using type = typename plusType <typename atanType <arg> :: type, shift> :: type;
  };
 
- template <class Type, char SignX, typename std :: make_unsigned <Type> :: type NumeratorX, typename std :: make_unsigned <Type> :: type DenominatorX, char SignY, typename std :: make_unsigned <Type> :: type NumeratorY, typename std :: make_unsigned <Type> :: type DenominatorY>
+ template <class Type, char SignX, Type NumeratorX, Type DenominatorX, char SignY, Type NumeratorY, Type DenominatorY>
 	 template <bool Xlt0>
 	 template <bool Ylt0>
  struct atan2Type<valueRatio<Type, SignX, NumeratorX, DenominatorX>, valueRatio<Type, SignY, NumeratorY, DenominatorY> > :: template
@@ -114,7 +114,7 @@ namespace crap
   using type = typename dividesType <constPi, const2> :: type;
  };
 
- template <class Type, char SignX, typename std :: make_unsigned <Type> :: type NumeratorX, typename std :: make_unsigned <Type> :: type DenominatorX, char SignY, typename std :: make_unsigned <Type> :: type NumeratorY, typename std :: make_unsigned <Type> :: type DenominatorY>
+ template <class Type, char SignX, Type NumeratorX, Type DenominatorX, char SignY, Type NumeratorY, Type DenominatorY>
 	 template <bool Xlt0>
 	 template <bool Ylt0>
  struct atan2Type<valueRatio<Type, SignX, NumeratorX, DenominatorX>, valueRatio<Type, SignY, NumeratorY, DenominatorY> > :: template
@@ -132,19 +132,19 @@ namespace crap
   using type = valueRatio<Type, '-', result :: num, result :: den>;
  };
 
- template <class TypeX, class TypeY, char SignX, typename std :: make_unsigned <TypeX> :: type NumeratorX, typename std :: make_unsigned <TypeX> :: type DenominatorX, char SignY, typename std :: make_unsigned <TypeY> :: type NumeratorY, typename std :: make_unsigned <TypeY> :: type DenominatorY>
+ template <class TypeX, class TypeY, char SignX, TypeX NumeratorX, TypeX DenominatorX, char SignY, TypeY NumeratorY, TypeY DenominatorY>
 	 struct atan2Type<valueRatio<TypeX, SignX, NumeratorX, DenominatorX>, valueRatio<TypeY, SignY, NumeratorY, DenominatorY> >
 	 : atan2Type<
-	 valueRatio<typename std :: common_type <TypeX, TypeY> :: type, SignX, static_cast<typename std :: make_unsigned <typename std :: common_type <TypeX, TypeY> :: type> :: type>(NumeratorX), static_cast<typename std :: make_unsigned <typename std :: common_type <TypeX, TypeY> :: type> :: type>(DenominatorX)>,
-	 valueRatio<typename std :: common_type <TypeX, TypeY> :: type, SignY, static_cast<typename std :: make_unsigned <typename std :: common_type <TypeX, TypeY> :: type> :: type>(NumeratorY), static_cast<typename std :: make_unsigned <typename std :: common_type <TypeX, TypeY> :: type> :: type>(DenominatorY)> >
+	 valueRatio<typename std :: common_type <TypeX, TypeY> :: type, SignX, static_cast<typename std :: common_type <TypeX, TypeY> :: type>(NumeratorX), static_cast<typename std :: common_type <TypeX, TypeY> :: type>(DenominatorX)>,
+	 valueRatio<typename std :: common_type <TypeX, TypeY> :: type, SignY, static_cast<typename std :: common_type <TypeX, TypeY> :: type>(NumeratorY), static_cast<typename std :: common_type <TypeX, TypeY> :: type>(DenominatorY)> >
 	 {};
 
- template <class TypeX, class TypeY, char SignX, typename std :: make_unsigned <TypeX> :: type NumeratorX, typename std :: make_unsigned <TypeX> :: type DenominatorX, char SignY, typename std :: make_unsigned <TypeY> :: type NumeratorY, typename std :: make_unsigned <TypeY> :: type DenominatorY>
+ template <class TypeX, class TypeY, char SignX, TypeX NumeratorX, TypeX DenominatorX, char SignY, TypeY NumeratorY, TypeY DenominatorY>
 	 constexpr typename atan2Type <valueRatio<TypeX, SignX, NumeratorX, DenominatorX>, valueRatio<TypeY, SignY, NumeratorY, DenominatorY> > :: type
 	 atan2(valueRatio<TypeX, SignX, NumeratorX, DenominatorX>, valueRatio<TypeY, SignY, NumeratorY, DenominatorY>) noexcept;
 }
 
-template <class TypeX, class TypeY, char SignX, typename std :: make_unsigned <TypeX> :: type NumeratorX, typename std :: make_unsigned <TypeX> :: type DenominatorX, char SignY, typename std :: make_unsigned <TypeY> :: type NumeratorY, typename std :: make_unsigned <TypeY> :: type DenominatorY>
+template <class TypeX, class TypeY, char SignX, TypeX NumeratorX, TypeX DenominatorX, char SignY, TypeY NumeratorY, TypeY DenominatorY>
 inline constexpr typename crap :: atan2Type <crap :: valueRatio<TypeX, SignX, NumeratorX, DenominatorX>, crap :: valueRatio<TypeY, SignY, NumeratorY, DenominatorY> > :: type
 crap :: atan2(crap :: valueRatio<TypeX, SignX, NumeratorX, DenominatorX>, crap :: valueRatio<TypeY, SignY, NumeratorY, DenominatorY>) noexcept
 {

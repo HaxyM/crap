@@ -17,7 +17,7 @@
 
 namespace crap
 {
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 struct acosType<valueRatio<Type, Sign, Numerator, Denominator> >
  {
   private:
@@ -33,7 +33,7 @@ namespace crap
   using type = typename Implementation <isZero, cond> :: type;
  };
 
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 template <class atanDenominator>
  struct acosType<valueRatio<Type, Sign, Numerator, Denominator> > :: template
 	 Implementation<true, atanDenominator>
@@ -44,7 +44,7 @@ namespace crap
   using type = typename pi <passed> :: type;
  };
 
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 template <class atanDenominator>
  struct acosType<valueRatio<Type, Sign, Numerator, Denominator> > :: template
 	 Implementation<false, atanDenominator>
@@ -61,12 +61,12 @@ namespace crap
   using type = typename plusType <elem4, elem4> :: type;
  };
 
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 constexpr typename acosType <valueRatio<Type, Sign, Numerator, Denominator> > :: type
 	 acos(valueRatio<Type, Sign, Numerator, Denominator>) noexcept;
 }
 
-template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+template <class Type, char Sign, Type Numerator, Type Denominator>
 inline constexpr typename crap :: acosType <crap :: valueRatio<Type, Sign, Numerator, Denominator> > :: type
 crap :: acos(crap :: valueRatio<Type, Sign, Numerator, Denominator>) noexcept
 {

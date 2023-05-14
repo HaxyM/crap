@@ -4,6 +4,7 @@
 #include "abstype.h"
 #include "dividestype.h"
 #include "identity.h"
+#include "lesstype.h"
 #include "minustype.h"
 #include "multipliestype.h"
 #include "pi.h"
@@ -19,7 +20,7 @@
 
 namespace crap
 {
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 struct atanType<valueRatio<Type, Sign, Numerator, Denominator> >
  {
   private:
@@ -35,7 +36,7 @@ namespace crap
   using type = typename step <initialA, const1, false> :: type;
  };
 
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 template <class A, class B, bool isFinal>
 	 struct atanType<valueRatio<Type, Sign, Numerator, Denominator> > :: step
  {
@@ -50,7 +51,7 @@ namespace crap
   using type = typename step <nextA, nextB, nextFinal> :: type;
  };
 
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 template <class A, class B>
 	 struct atanType<valueRatio<Type, Sign, Numerator, Denominator> > :: template step<A, B, true>
  {
@@ -69,12 +70,12 @@ namespace crap
   using type = valueRatio<Type, result :: sign, clamped :: num, clamped :: den>;
  };
 
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 constexpr typename atanType <valueRatio<Type, Sign, Numerator, Denominator> > :: type
 	 atan(valueRatio<Type, Sign, Numerator, Denominator>) noexcept;
 }
 
-template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+template <class Type, char Sign, Type Numerator, Type Denominator>
 inline constexpr typename crap :: atanType <crap :: valueRatio<Type, Sign, Numerator, Denominator> > :: type
 crap :: atan(crap :: valueRatio<Type, Sign, Numerator, Denominator>) noexcept
 {
