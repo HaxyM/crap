@@ -21,7 +21,7 @@
 
 namespace crap
 {
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 struct expType<valueRatio<Type, Sign, Numerator, Denominator> >
  {
   private:
@@ -53,15 +53,15 @@ namespace crap
 	  struct remPower<Sum, Element, Step, Rem, false>;
   using remPowerPart = typename remPower <const1, const1, const0, remainder, false> :: type;
   using powerOfAbs = typename multipliesType <remPowerPart, naturalPowerPart> :: type;
-  constexpr const static typename powerOfAbs :: numeratorType numerator =
+  constexpr const static typename powerOfAbs :: valueType numerator =
 	  (negative ? (powerOfAbs :: den) : (powerOfAbs :: num));
-  constexpr const static typename powerOfAbs :: denominatorType denominator =
+  constexpr const static typename powerOfAbs :: valueType denominator =
 	  (negative ? (powerOfAbs :: num) : (powerOfAbs :: den));
   public:
   using type = valueRatio<Type, '+', numerator, denominator>;
  };
 
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 template <class AnyType>
  struct expType <valueRatio<Type, Sign, Numerator, Denominator> > :: template
 	 naturalPower<AnyType, UINTMAX_C(0), true>
@@ -72,7 +72,7 @@ namespace crap
   using type = typename identity <passed> :: type;
  };
 
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 template <class AnyType>
  struct expType <valueRatio<Type, Sign, Numerator, Denominator> > :: template
 	 naturalPower<AnyType, UINTMAX_C(1), false>
@@ -83,7 +83,7 @@ namespace crap
   using type = typename e <passed> :: type;
  };
 
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 template <class AnyType>
  struct expType <valueRatio<Type, Sign, Numerator, Denominator> > :: template
 	 naturalPower<AnyType, UINTMAX_C(2), true>
@@ -95,7 +95,7 @@ namespace crap
   using type = typename multipliesType <constE, constE> :: type;
  };
 
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 template <class AnyType>
  struct expType <valueRatio<Type, Sign, Numerator, Denominator> > :: template
 	 naturalPower<AnyType, UINTMAX_C(3), false>
@@ -107,7 +107,7 @@ namespace crap
   using type = typename multipliesType <constE, constE, constE> :: type;
  };
 
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 template <class AnyType, std :: uintmax_t N>
  struct expType <valueRatio<Type, Sign, Numerator, Denominator> > :: template
 	 naturalPower<AnyType, N, true>
@@ -121,7 +121,7 @@ namespace crap
   using type = typename multipliesType <nextType, nextType> :: type;
  };
 
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 template <class AnyType, std :: uintmax_t N>
  struct expType <valueRatio<Type, Sign, Numerator, Denominator> > :: template
 	 naturalPower<AnyType, N, false>
@@ -138,7 +138,7 @@ namespace crap
   using type = typename multipliesType <constE, nextType, nextType> :: type;
  };
 
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 template <class Sum, class Element, class Step, class Rem>
  struct expType <valueRatio<Type, Sign, Numerator, Denominator> > :: template
 	 remPower<Sum, Element, Step, Rem, true>
@@ -146,7 +146,7 @@ namespace crap
   using type = Sum;
  };
 
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 template <class Sum, class Element, class Step, class Rem>
  struct expType <valueRatio<Type, Sign, Numerator, Denominator> > :: template
 	 remPower<Sum, Element, Step, Rem, false>
@@ -165,12 +165,12 @@ namespace crap
   using type = typename remPower <sum, nextElement, nextStep, Rem, nextFinal> :: type;
  };
 
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 constexpr typename expType <valueRatio<Type, Sign, Numerator, Denominator> > :: type
 	 exp(valueRatio<Type, Sign, Numerator, Denominator>) noexcept;
 }
 
-template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+template <class Type, char Sign, Type Numerator, Type Denominator>
 inline constexpr typename crap :: expType <crap :: valueRatio<Type, Sign, Numerator, Denominator> > :: type
 crap :: exp(crap :: valueRatio<Type, Sign, Numerator, Denominator>) noexcept
 {
