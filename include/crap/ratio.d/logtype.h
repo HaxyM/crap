@@ -27,7 +27,7 @@
 
 namespace crap
 {
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 struct logType<valueRatio<Type, Sign, Numerator, Denominator> >
  {
   private:
@@ -49,17 +49,17 @@ namespace crap
   using const1 = typename identity <passed> :: type;
   using initialX = typename minusType <x, const1> :: type;
   using initialPower = typename multipliesType <initialX, initialX> :: type;
-  using valueType = typename std :: make_unsigned <Type> :: type;
-  constexpr const static valueType constK1 = identity <valueType> :: value;
-  constexpr const static valueType initialK = constK1 + constK1;
-  template <class Sum, class Power, class X, typename std :: make_unsigned <Type> :: type K, bool isFinal> struct step;
-  template <class Sum, class Power, class X, typename std :: make_unsigned <Type> :: type K> struct step<Sum, Power, X, K, false>;
+  using valueType = typename std :: add_const <Type> :: type;
+  constexpr static valueType constK1 = identity <valueType> :: value;
+  constexpr static valueType initialK = constK1 + constK1;
+  template <class Sum, class Power, class X, Type K, bool isFinal> struct step;
+  template <class Sum, class Power, class X, Type K> struct step<Sum, Power, X, K, false>;
   public:
   using type = typename step <initialX, initialPower, initialX, initialK, false> :: type;
  };
 
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
-	 template <class Sum, class Power, class X, typename std :: make_unsigned <Type> :: type K, bool isFinal>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
+	 template <class Sum, class Power, class X, Type K, bool isFinal>
 	 struct logType<valueRatio<Type, Sign, Numerator, Denominator> > :: step
  {
   private:
@@ -83,17 +83,17 @@ namespace crap
   using type = valueRatio<Type, resultSign, result :: num, result :: den>;
  };
 
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
-	 template <class Sum, class Power, class X, typename std :: make_unsigned <Type> :: type K>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
+	 template <class Sum, class Power, class X, Type K>
 	 struct logType<valueRatio<Type, Sign, Numerator, Denominator> > :: template step<Sum, Power, X, K, false>
  {
   private:
-  using valueType = typename std :: make_unsigned <Type> :: type;
-  constexpr const static valueType const0 = zero <valueType> :: value;
-  constexpr const static valueType const1 = identity <valueType> :: value;
-  constexpr const static valueType const2 = const1 + const1;
+  using valueType = typename std :: add_const <Type> :: type;
+  constexpr static valueType const0 = zero <valueType> :: value;
+  constexpr static valueType const1 = identity <valueType> :: value;
+  constexpr static valueType const2 = const1 + const1;
   constexpr const static bool kOverflow = (K > std :: numeric_limits <valueType> :: max() - const1);
-  constexpr const static valueType nextK = kOverflow ? K : (K + const1);
+  constexpr static valueType nextK = kOverflow ? K : (K + const1);
   constexpr const static char sign = ((K % const2) == const0) ? '-' : '+';
   using frac = valueRatio<Type, sign, identity <valueType> :: value, K>;
   using element = typename multipliesType <frac, Power> :: type;
@@ -106,12 +106,12 @@ namespace crap
   using type = typename step <nextSum, nextPower, X, nextK, nextFinal || kOverflow> :: type;
  };
 
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 constexpr typename logType <valueRatio<Type, Sign, Numerator, Denominator> > :: type
 	 log(valueRatio<Type, Sign, Numerator, Denominator>) noexcept;
 }
 
-template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+template <class Type, char Sign, Type Numerator, Type Denominator>
 inline constexpr typename crap :: logType <crap :: valueRatio<Type, Sign, Numerator, Denominator> > :: type
 crap :: log(crap :: valueRatio<Type, Sign, Numerator, Denominator>) noexcept
 {
