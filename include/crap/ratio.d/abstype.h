@@ -9,7 +9,7 @@
 
 namespace crap
 {
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 struct absType<valueRatio<Type, Sign, Numerator, Denominator> >
 	 : typeIdentity<valueRatio<Type, '+', Numerator, Denominator> > {};
 }
