@@ -13,7 +13,7 @@
 
 namespace crap
 {
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 struct coshType<valueRatio<Type, Sign, Numerator, Denominator> >
  {
   private:
@@ -27,12 +27,12 @@ namespace crap
   using type = typename dividesType <numerator, const2> :: type;
  };
 
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 constexpr typename coshType <valueRatio<Type, Sign, Numerator, Denominator> > :: type
 	 cosh(valueRatio<Type, Sign, Numerator, Denominator>) noexcept;
 }
 
-template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+template <class Type, char Sign, Type Numerator, Type Denominator>
 inline constexpr typename crap :: coshType <crap :: valueRatio<Type, Sign, Numerator, Denominator> > :: type
 crap :: cosh(crap :: valueRatio<Type, Sign, Numerator, Denominator>) noexcept
 {
