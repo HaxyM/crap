@@ -14,7 +14,7 @@
 
 namespace crap
 {
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 struct sinhType<valueRatio<Type, Sign, Numerator, Denominator> >
  {
   private:
@@ -28,12 +28,12 @@ namespace crap
   using type = typename dividesType <numerator, const2> :: type;
  };
 
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 constexpr typename sinhType <valueRatio<Type, Sign, Numerator, Denominator> > :: type
 	 sinh(valueRatio<Type, Sign, Numerator, Denominator>) noexcept;
 }
 
-template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+template <class Type, char Sign, Type Numerator, Type Denominator>
 inline constexpr typename crap :: sinhType <crap :: valueRatio<Type, Sign, Numerator, Denominator> > :: type
 crap :: sinh(crap :: valueRatio<Type, Sign, Numerator, Denominator>) noexcept
 {
