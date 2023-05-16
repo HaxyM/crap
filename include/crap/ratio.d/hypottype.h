@@ -14,7 +14,7 @@
 
 namespace crap
 {
- template <class Type, char ... Signs, typename std :: make_unsigned <Type> :: type ... Numerators, typename std :: make_unsigned <Type> :: type ... Denominators>
+ template <class Type, char ... Signs, Type ... Numerators, Type ... Denominators>
 	 struct hypotType<valueRatio<Type, Signs, Numerators, Denominators>...>
  {
   private:
@@ -25,12 +25,12 @@ namespace crap
   using type = typename sqrtType <sqr> :: type;
  };
 
- template <class Type, char ... Signs, typename std :: make_unsigned <Type> :: type ... Numerators, typename std :: make_unsigned <Type> :: type ... Denominators>
+ template <class Type, char ... Signs, Type ... Numerators, Type ... Denominators>
 	 constexpr typename hypotType <valueRatio<Type, Signs, Numerators, Denominators>...> :: type
 	 hypot(valueRatio<Type, Signs, Numerators, Denominators>...) noexcept;
 }
 
-template <class Type, char ... Signs, typename std :: make_unsigned <Type> :: type ... Numerators, typename std :: make_unsigned <Type> :: type ... Denominators>
+template <class Type, char ... Signs, Type ... Numerators, Type ... Denominators>
 inline constexpr typename crap :: hypotType <crap :: valueRatio<Type, Signs, Numerators, Denominators>...> :: type
 crap :: hypot(crap :: valueRatio<Type, Signs, Numerators, Denominators>...) noexcept
 {
