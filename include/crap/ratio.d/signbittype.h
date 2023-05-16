@@ -8,15 +8,15 @@
 
 namespace crap
 {
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 struct signbitType<valueRatio<Type, Sign, Numerator, Denominator> >
 	 : std :: integral_constant<bool, Sign == '-'> {};
 
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 constexpr bool signbit(valueRatio<Type, Sign, Numerator, Denominator>) noexcept;
 }
 
-template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+template <class Type, char Sign, Type Numerator, Type Denominator>
 inline constexpr bool crap :: signbit(crap :: valueRatio<Type, Sign, Numerator, Denominator>) noexcept
 {
  return crap :: signbitType <crap :: valueRatio<Type, Sign, Numerator, Denominator> > :: value;
