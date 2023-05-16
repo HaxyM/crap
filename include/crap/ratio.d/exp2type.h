@@ -11,7 +11,7 @@
 
 namespace crap
 {
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 struct exp2Type<valueRatio<Type, Sign, Numerator, Denominator> >
  {
   private:
@@ -22,12 +22,12 @@ namespace crap
   using type = typename expType <exponent> :: type;
  };
 
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 constexpr typename exp2Type <valueRatio<Type, Sign, Numerator, Denominator> > :: type
 	 exp2(valueRatio<Type, Sign, Numerator, Denominator>) noexcept;
 }
 
-template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+template <class Type, char Sign, Type Numerator, Type Denominator>
 inline constexpr typename crap :: exp2Type <crap :: valueRatio<Type, Sign, Numerator, Denominator> > :: type
 crap :: exp2(crap :: valueRatio<Type, Sign, Numerator, Denominator>) noexcept
 {
