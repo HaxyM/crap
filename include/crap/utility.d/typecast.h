@@ -15,12 +15,19 @@ namespace crap
  template <std :: intmax_t Numerator, std :: intmax_t Denominator>
 	 struct typeCast<std :: ratio<Numerator, Denominator> >
  {
-  template <class> struct onto;
-  template <std :: intmax_t Num, std :: intmax_t Den> struct onto<std :: ratio<Num, Den> >;
+  private:
+  template <class, class...> struct ontoImplementation;
+  template <std :: intmax_t Num, std :: intmax_t Den>
+	  struct ontoImplementation<std :: ratio<Num, Den> >;
   template <class Type, char Sign, Type Num, Type Den>
-	  struct onto<valueRatio<Type, Sign, Num, Den> >;
+	  struct ontoImplementation<valueRatio<Type, Sign, Num, Den> >;
   template <char Sign, std :: uintmax_t Num, std :: uintmax_t Den>
-	  struct onto<valueRatio<std :: uintmax_t, Sign, Num, Den> >;
+	  struct ontoImplementation<valueRatio<std :: uintmax_t, Sign, Num, Den> >;
+  template <class ... Empty> struct ontoImplementation<float, Empty...>;
+  template <class ... Empty> struct ontoImplementation<double, Empty...>;
+  template <class ... Empty> struct ontoImplementation<long double, Empty...>;
+  public:
+  template <class Type> using onto = ontoImplementation<Type>;
   template <class Type> using onto_t = typename onto <Type> :: type;
  };
 
@@ -29,17 +36,19 @@ namespace crap
  {
   private:
   template <class> struct NeedScale;
-  template <std :: intmax_t Num, std :: intmax_t Den> struct NeedScale<std :: ratio<Num, Den> >;
   template <class OtherType, char Sign2, OtherType Num, OtherType Den>
 	  struct NeedScale<valueRatio<OtherType, Sign2, Num, Den> >;
 
   template <bool, class> struct Implementation;
-  template <std :: intmax_t Num, std :: intmax_t Den>
-	  struct Implementation<false, std :: ratio<Num, Den> >;
+  template <bool Any, std :: intmax_t Num, std :: intmax_t Den>
+	  struct Implementation<Any, std :: ratio<Num, Den> >;
   template <class OtherType, char OtherSign, OtherType OtherNumerator, OtherType OtherDenominator>
 	  struct Implementation<true, valueRatio<OtherType, OtherSign, OtherNumerator, OtherDenominator> >;
   template <class OtherType, char OtherSign, OtherType OtherNumerator, OtherType OtherDenominator>
 	  struct Implementation<false, valueRatio<OtherType, OtherSign, OtherNumerator, OtherDenominator> >;
+  template <bool Any> struct Implementation<Any, float>;
+  template <bool Any> struct Implementation<Any, double>;
+  template <bool Any> struct Implementation<Any, long double>;
   public:
   template <class OtherType> using onto = Implementation<NeedScale <OtherType> :: value, OtherType>;
   template <class OtherType> using onto_t = typename onto <OtherType> :: type;
@@ -48,7 +57,7 @@ namespace crap
  template <std :: intmax_t Numerator, std :: intmax_t Denominator>
 	 template <std :: intmax_t Num, std :: intmax_t Den>
  struct typeCast<std :: ratio<Numerator, Denominator> > :: template
-	 onto<std :: ratio<Num, Den> >
+	 ontoImplementation<std :: ratio<Num, Den> >
  {
   using type = typename contractType <std :: ratio<Numerator, Denominator> > :: type;
  };
@@ -56,7 +65,7 @@ namespace crap
  template <std :: intmax_t Numerator, std :: intmax_t Denominator>
 	 template <class Type, char Sign, Type Num, Type Den>
  struct typeCast<std :: ratio<Numerator, Denominator> > :: template
-	 onto<valueRatio<Type, Sign, Num, Den> >
+	 ontoImplementation<valueRatio<Type, Sign, Num, Den> >
  {
   private:
   using orig = typename contractType <std :: ratio<Numerator, Denominator> > :: type;
@@ -73,7 +82,7 @@ namespace crap
  template <std :: intmax_t Numerator, std :: intmax_t Denominator>
 	 template <char Sign, std :: uintmax_t Num, std :: uintmax_t Den>
  struct typeCast<std :: ratio<Numerator, Denominator> > :: template
-	 onto<valueRatio<std :: uintmax_t, Sign, Num, Den> >
+	 ontoImplementation<valueRatio<std :: uintmax_t, Sign, Num, Den> >
  {
   private:
   using scaleType = const long double;
@@ -123,10 +132,36 @@ namespace crap
   using type = valueRatio<std :: uintmax_t, sign, num, den>;
  };
 
+ template <std :: intmax_t Numerator, std :: intmax_t Denominator>
+	 template <class ... Empty>
+ struct typeCast<std :: ratio<Numerator, Denominator> > :: template
+	 ontoImplementation<float, Empty...>
+ {
+  constexpr const static float value =
+	  static_cast<float>(static_cast<long double>(Numerator) / static_cast<long double>(Denominator));
+ };
+
+ template <std :: intmax_t Numerator, std :: intmax_t Denominator>
+	 template <class ... Empty>
+ struct typeCast<std :: ratio<Numerator, Denominator> > :: template
+	 ontoImplementation<double, Empty...>
+ {
+  constexpr const static double value =
+	  static_cast<double>(static_cast<long double>(Numerator) / static_cast<long double>(Denominator));
+ };
+
+ template <std :: intmax_t Numerator, std :: intmax_t Denominator>
+	 template <class ... Empty>
+ struct typeCast<std :: ratio<Numerator, Denominator> > :: template
+	 ontoImplementation<long double, Empty...>
+ {
+  constexpr const static long double value =
+	  static_cast<long double>(Numerator) / static_cast<long double>(Denominator);
+ };
+
  template <class Type, char Sign, Type Numerator, Type Denominator>
-	 template <std :: intmax_t Num, std :: intmax_t Den>
- struct typeCast<valueRatio<Type, Sign, Numerator, Denominator> > :: template
-	 NeedScale<std :: ratio<Num, Den> >
+	 template <class>
+ struct typeCast<valueRatio<Type, Sign, Numerator, Denominator> > :: NeedScale
  {
   constexpr static const bool value = false;
  };
@@ -146,9 +181,9 @@ namespace crap
  };
 
  template <class Type, char Sign, Type Numerator, Type Denominator>
-	 template <std :: intmax_t Num, std :: intmax_t Den>
+	 template <bool Any, std :: intmax_t Num, std :: intmax_t Den>
  struct typeCast<valueRatio<Type, Sign, Numerator, Denominator> > :: template
-	 Implementation<false, std :: ratio<Num, Den> >
+	 Implementation<Any, std :: ratio<Num, Den> >
  {
   private:
   using scaleType = const long double;
@@ -253,6 +288,33 @@ namespace crap
 	 Implementation<false, valueRatio<OtherType, OtherSign, OtherNumerator, OtherDenominator> >
  {
   using type = typename contractType <valueRatio<OtherType, Sign, static_cast<OtherType>(Numerator), static_cast<OtherType>(Denominator)> > :: type;
+ };
+
+ template <class Type, char Sign, Type Numerator, Type Denominator>
+	 template <bool Any>
+ struct typeCast<valueRatio<Type, Sign, Numerator, Denominator> > :: template
+	 Implementation<Any, float>
+ {
+  constexpr const static float value =
+	  static_cast<float>(static_cast<long double>(Numerator) / static_cast<long double>(Denominator));
+ };
+
+ template <class Type, char Sign, Type Numerator, Type Denominator>
+	 template <bool Any>
+ struct typeCast<valueRatio<Type, Sign, Numerator, Denominator> > :: template
+	 Implementation<Any, double>
+ {
+  constexpr const static double value =
+	  static_cast<double>(static_cast<long double>(Numerator) / static_cast<long double>(Denominator));
+ };
+
+ template <class Type, char Sign, Type Numerator, Type Denominator>
+	 template <bool Any>
+ struct typeCast<valueRatio<Type, Sign, Numerator, Denominator> > :: template
+	 Implementation<Any, long double>
+ {
+  constexpr const static long double value =
+	  static_cast<long double>(Numerator) / static_cast<long double>(Denominator);
  };
 }
 #endif
