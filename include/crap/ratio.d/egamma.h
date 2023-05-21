@@ -21,13 +21,7 @@
 namespace crap
 {
 #ifdef UINT8_C
- template <char Sign, typename std :: make_unsigned <std :: int8_t> :: type Numerator, typename std :: make_unsigned <std :: int8_t> :: type Denominator>
-	 struct egamma<valueRatio<std :: int8_t, Sign, Numerator, Denominator> >
- {
-  using type = valueRatio<std :: int8_t, '+', UINT8_C(149), UINT8_C(254)>;
- };
-
- template <char Sign, typename std :: make_unsigned <std :: uint8_t> :: type Numerator, typename std :: make_unsigned <std :: uint8_t> :: type Denominator>
+ template <char Sign, std :: uint8_t Numerator, std :: uint8_t Denominator>
 	 struct egamma<valueRatio<std :: uint8_t, Sign, Numerator, Denominator> >
  {
   using type = valueRatio<std :: uint8_t, '+', UINT8_C(149), UINT8_C(254)>;
@@ -35,13 +29,7 @@ namespace crap
 #endif
 
 #ifdef UINT16_C
- template <char Sign, typename std :: make_unsigned <std :: int16_t> :: type Numerator, typename std :: make_unsigned <std :: int16_t> :: type Denominator>
-	 struct egamma<valueRatio<std :: int16_t, Sign, Numerator, Denominator> >
- {
-  using type = valueRatio<std :: int16_t, '+', UINT16_C(37846), UINT16_C(65535)>;
- };
-
- template <char Sign, typename std :: make_unsigned <std :: uint16_t> :: type Numerator, typename std :: make_unsigned <std :: uint16_t> :: type Denominator>
+ template <char Sign, std :: uint16_t Numerator, std :: uint16_t Denominator>
 	 struct egamma<valueRatio<std :: uint16_t, Sign, Numerator, Denominator> >
  {
   using type = valueRatio<std :: uint16_t, '+', UINT16_C(37846), UINT16_C(65535)>;
@@ -49,13 +37,7 @@ namespace crap
 #endif
 
 #ifdef UINT32_C
- template <char Sign, typename std :: make_unsigned <std :: int32_t> :: type Numerator, typename std :: make_unsigned <std :: int32_t> :: type Denominator>
-	 struct egamma<valueRatio<std :: int32_t, Sign, Numerator, Denominator> >
- {
-  using type = valueRatio<std :: int32_t, '+', UINT32_C(2479122442), UINT32_C(4294967295)>;
- };
-
- template <char Sign, typename std :: make_unsigned <std :: uint32_t> :: type Numerator, typename std :: make_unsigned <std :: uint32_t> :: type Denominator>
+ template <char Sign, std :: uint32_t Numerator, std :: uint32_t Denominator>
 	 struct egamma<valueRatio<std :: uint32_t, Sign, Numerator, Denominator> >
  {
   using type = valueRatio<std :: uint32_t, '+', UINT32_C(2479122442), UINT32_C(4294967295)>;
@@ -63,13 +45,7 @@ namespace crap
 #endif
 
 #ifdef UINT64_C
- template <char Sign, typename std :: make_unsigned <std :: int64_t> :: type Numerator, typename std :: make_unsigned <std :: int64_t> :: type Denominator>
-	 struct egamma<valueRatio<std :: int64_t, Sign, Numerator, Denominator> >
- {
-  using type = valueRatio<std :: int64_t, '+', UINT64_C(10647749645774670032), UINT64_C(18446744073709551615)>;
- };
-
- template <char Sign, typename std :: make_unsigned <std :: uint64_t> :: type Numerator, typename std :: make_unsigned <std :: uint64_t> :: type Denominator>
+ template <char Sign, std :: uint64_t Numerator, std :: uint64_t Denominator>
 	 struct egamma<valueRatio<std :: uint64_t, Sign, Numerator, Denominator> >
  {
   using type = valueRatio<std :: uint64_t, '+', UINT64_C(10647749645774670032), UINT64_C(18446744073709551615)>;
@@ -77,12 +53,12 @@ namespace crap
 #endif
 
  //Adell, J. A.; Lekuona A. "Monotone and fast computation of Euler's constant." https://europepmc.org/article/MED/28983179
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 struct egamma<valueRatio<Type, Sign, Numerator, Denominator> >
  {
   private:
   //Common part
-  using valueType = typename std :: make_unsigned <Type> :: type;
+  using valueType = typename std :: add_const <Type> :: type;
   template <class X, std :: uintmax_t y, bool isEven> struct naturalPower;
   template <class X> struct naturalPower <X, UINTMAX_C(0), true>;
   template <class X> struct naturalPower <X, UINTMAX_C(1), false>;
@@ -140,7 +116,7 @@ namespace crap
   using type = typename plusType <shift, avr> :: type;
  };
 
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 template <class X>
  struct egamma <valueRatio<Type, Sign, Numerator, Denominator> > :: template
 	 naturalPower<X, UINTMAX_C(0), true>
@@ -148,7 +124,7 @@ namespace crap
   using type = typename identity <X> :: type;
  };
 
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 template <class X>
  struct egamma <valueRatio<Type, Sign, Numerator, Denominator> > :: template
 	 naturalPower<X, UINTMAX_C(1), false>
@@ -156,7 +132,7 @@ namespace crap
   using type = X;
  };
 
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 template <class X>
  struct egamma <valueRatio<Type, Sign, Numerator, Denominator> > :: template
 	 naturalPower<X, UINTMAX_C(2), true>
@@ -164,7 +140,7 @@ namespace crap
   using type = typename multipliesType <X, X> :: type;
  };
 
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 template <class X>
  struct egamma <valueRatio<Type, Sign, Numerator, Denominator> > :: template
 	 naturalPower<X, UINTMAX_C(3), false>
@@ -172,7 +148,7 @@ namespace crap
   using type = typename multipliesType <X, X, X> :: type;
  };
 
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 template <class X, std :: uintmax_t y>
  struct egamma <valueRatio<Type, Sign, Numerator, Denominator> > :: template
 	 naturalPower<X, y, true>
@@ -185,7 +161,7 @@ namespace crap
   using type = typename multipliesType <ans, ans> :: type;
  };
 
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 template <class X, std :: uintmax_t y>
  struct egamma <valueRatio<Type, Sign, Numerator, Denominator> > :: template
 	 naturalPower<X, y, false>
@@ -198,12 +174,12 @@ namespace crap
   using type = typename multipliesType <X, ans, ans> :: type;
  };
 
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 template <std :: uintmax_t biN, std :: uintmax_t K>
  struct egamma <valueRatio<Type, Sign, Numerator, Denominator> > :: binomial
  {
   private:
-  using valueType = typename std :: make_unsigned <Type> :: type;
+  using valueType = typename std :: add_const <Type> :: type;
   template <std :: uintmax_t J>
 	  using element = valueRatio<Type, '+', static_cast<valueType>(biN + UINTMAX_C(1) - J), static_cast<valueType>(J)>;
   template <std :: uintmax_t ... Js> using product = typename multipliesType <element<Js>...> :: type;
@@ -211,7 +187,7 @@ namespace crap
   using type = typename iotaValue <K, std :: uintmax_t, UINTMAX_C(1)> :: template type<product>;
  };
 
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 template <std :: uintmax_t biN>
  struct egamma <valueRatio<Type, Sign, Numerator, Denominator> > :: template
 	 binomial<biN, UINTMAX_C(0)>
@@ -219,7 +195,7 @@ namespace crap
   using type = typename identity <valueRatio<Type, Sign, Numerator, Denominator> > :: type;
  };
 
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 template <std :: uintmax_t bi>
  struct egamma <valueRatio<Type, Sign, Numerator, Denominator> > :: template
 	 binomial<bi, bi>
@@ -227,7 +203,7 @@ namespace crap
   using type = typename identity <valueRatio<Type, Sign, Numerator, Denominator> > :: type;
  };
 
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 template <std :: uintmax_t J, template <std :: uintmax_t, std :: uintmax_t> class biC, template <std :: uintmax_t> class pow>
  struct egamma <valueRatio<Type, Sign, Numerator, Denominator> > :: An
  {

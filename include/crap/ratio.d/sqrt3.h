@@ -11,13 +11,7 @@
 namespace crap
 {
 #ifdef UINT8_C
- template <char Sign, typename std :: make_unsigned <std :: int8_t> :: type Numerator, typename std :: make_unsigned <std :: int8_t> :: type Denominator>
-	 struct sqrt3<valueRatio<std :: int8_t, Sign, Numerator, Denominator> >
- {
-  using type = valueRatio<std :: int8_t, '+', UINT8_C(51), UINT8_C(29)>;
- };
-
- template <char Sign, typename std :: make_unsigned <std :: uint8_t> :: type Numerator, typename std :: make_unsigned <std :: uint8_t> :: type Denominator>
+ template <char Sign, std :: uint8_t Numerator, std :: uint8_t Denominator>
 	 struct sqrt3<valueRatio<std :: uint8_t, Sign, Numerator, Denominator> >
  {
   using type = valueRatio<std :: uint8_t, '+', UINT8_C(51), UINT8_C(29)>;
@@ -25,13 +19,7 @@ namespace crap
 #endif
 
 #ifdef UINT16_C
- template <char Sign, typename std :: make_unsigned <std :: int16_t> :: type Numerator, typename std :: make_unsigned <std :: int16_t> :: type Denominator>
-	 struct sqrt3<valueRatio<std :: int16_t, Sign, Numerator, Denominator> >
- {
-  using type = valueRatio<std :: int16_t, '+', UINT16_C(13107), UINT16_C(7567)>;
- };
-
- template <char Sign, typename std :: make_unsigned <std :: uint16_t> :: type Numerator, typename std :: make_unsigned <std :: uint16_t> :: type Denominator>
+ template <char Sign, std :: uint16_t Numerator, std :: uint16_t Denominator>
 	 struct sqrt3<valueRatio<std :: uint16_t, Sign, Numerator, Denominator> >
  {
   using type = valueRatio<std :: uint16_t, '+', UINT16_C(13107), UINT16_C(7567)>;
@@ -39,13 +27,7 @@ namespace crap
 #endif
 
 #ifdef UINT32_C
- template <char Sign, typename std :: make_unsigned <std :: int32_t> :: type Numerator, typename std :: make_unsigned <std :: int32_t> :: type Denominator>
-	 struct sqrt3<valueRatio<std :: int32_t, Sign, Numerator, Denominator> >
- {
-  using type = valueRatio<std :: int32_t, '+', UINT32_C(1431655765), UINT32_C(826566841)>;
- };
-
- template <char Sign, typename std :: make_unsigned <std :: uint32_t> :: type Numerator, typename std :: make_unsigned <std :: uint32_t> :: type Denominator>
+ template <char Sign, std :: uint32_t Numerator, std :: uint32_t Denominator>
 	 struct sqrt3<valueRatio<std :: uint32_t, Sign, Numerator, Denominator> >
  {
   using type = valueRatio<std :: uint32_t, '+', UINT32_C(1431655765), UINT32_C(826566841)>;
@@ -53,20 +35,14 @@ namespace crap
 #endif
 
 #ifdef UINT64_C
- template <char Sign, typename std :: make_unsigned <std :: int64_t> :: type Numerator, typename std :: make_unsigned <std :: int64_t> :: type Denominator>
-	 struct sqrt3<valueRatio<std :: int64_t, Sign, Numerator, Denominator> >
- {
-  using type = valueRatio<std :: int64_t, '+', UINT64_C(6148914691236517205), UINT64_C(3550077552209447801)>;
- };
-
- template <char Sign, typename std :: make_unsigned <std :: uint64_t> :: type Numerator, typename std :: make_unsigned <std :: uint64_t> :: type Denominator>
+ template <char Sign, std :: uint64_t Numerator, std :: uint64_t Denominator>
 	 struct sqrt3<valueRatio<std :: uint64_t, Sign, Numerator, Denominator> >
  {
   using type = valueRatio<std :: uint64_t, '+', UINT64_C(6148914691236517205), UINT64_C(3550077552209447801)>;
  };
 #endif
 
- template <class Type, char Sign, typename std :: make_unsigned <Type> :: type Numerator, typename std :: make_unsigned <Type> :: type Denominator>
+ template <class Type, char Sign, Type Numerator, Type Denominator>
 	 struct sqrt3<valueRatio<Type, Sign, Numerator, Denominator> >
  {
   private:
