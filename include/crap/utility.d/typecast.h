@@ -103,7 +103,7 @@ namespace crap
   constexpr static scaleType scaledDen =
 	  needScale ?
 	  (scale * denSignChanger * static_cast<scaleType>(orig :: den)) :
-	  (numSignChanger * static_cast<scaleType>(orig :: den));
+	  (denSignChanger * static_cast<scaleType>(orig :: den));
   constexpr static valueType scaledNumInRange =
 	  (scaledNum < 0.0l) ? zero <std :: uintmax_t> :: value :
 	  ((scaledNum > static_cast<scaleType>(max)) ? max : static_cast<valueType>(scaledNum));
@@ -184,14 +184,10 @@ namespace crap
   constexpr static valueType absDen = needScale1 ? scaledDen1InRange : static_cast<valueType>(orig :: den);
   constexpr static const bool isNegative = (orig :: sign == '-');
   constexpr static const bool numUnderflow2 = isNegative ? (zero <valueType> :: value < (min + absNum)) : false;
-  constexpr static const bool denUnderflow2 = isNegative ? (zero <valueType> :: value < (min + absDen)) : false;
-  constexpr static const bool needScale2 = numUnderflow2 || denUnderflow2;
+  constexpr static const bool needScale2 = numUnderflow2;
   constexpr static scaleType numUnderflow2Scale =
 	  numUnderflow2 ? (static_cast<scaleType>(min) / (-static_cast<scaleType>(absNum))) : infinity;
-  constexpr static scaleType denUnderflow2Scale =
-	  denUnderflow2 ? (static_cast<scaleType>(min) / (-static_cast<scaleType>(absDen))) : infinity;
-  constexpr static scaleType scale2 =
-	  (numUnderflow2Scale < denUnderflow2Scale) ? numUnderflow2Scale : denUnderflow2Scale; 
+  constexpr static scaleType scale2 = numUnderflow2Scale;
   constexpr static scaleType scaledNum2 =
 	  needScale2 ?
 	  (scale2 * (isNegative ? -1.0l : 1.0l) * static_cast<scaleType>(absNum)) :
@@ -231,7 +227,7 @@ namespace crap
   constexpr static scaleType numOverflowScale =
 	  numOverflow ? (static_cast<scaleType>(max) / static_cast<scaleType>(orig :: num)) : infinity;
   constexpr static scaleType denOverflowScale =
-	  numOverflow ? (static_cast<scaleType>(max) / static_cast<scaleType>(orig :: num)) : infinity;
+	  denOverflow ? (static_cast<scaleType>(max) / static_cast<scaleType>(orig :: den)) : infinity;
   constexpr static scaleType scale = (numOverflowScale < denOverflowScale) ? numOverflowScale : denOverflowScale;
   constexpr static scaleType scaledNum =
 	  needScale ? (scale * static_cast<scaleType>(orig :: num)) : static_cast<scaleType>(orig :: num);
