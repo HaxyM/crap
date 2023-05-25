@@ -11,6 +11,8 @@
 #include "numeric.d/adjacentdifferencefortype.h"
 #include "numeric.d/adjacentdifferencevalue.h"
 #include "numeric.d/contracttype.h"
+#include "numeric.d/exclusivescanfortype.h"
+#include "numeric.d/exclusivescanvalue.h"
 #include "numeric.d/gcdvalue.h"
 #include "numeric.d/inclusivescanfortype.h"
 #include "numeric.d/inclusivescantype.h"
