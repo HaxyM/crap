@@ -27,9 +27,9 @@ namespace crap
   constexpr const static Type any = zero <Type> :: value;
   constexpr const static Type zeros = any ^ any;
   constexpr const static Type ones = ~zeros;
-  constexpr const static Type leftMask = (ones << (bits - shift)) & ones;
+  constexpr const static Type leftMask = (shift != 0u) ? ((ones << (bits - shift)) & ones) : zeros;
   constexpr const static Type rightMask = ~leftMask;
-  constexpr const static Type left = (Value << (bits - shift)) & leftMask;
+  constexpr const static Type left = (shift != 0u) ? ((Value << (bits - shift)) & leftMask) : zeros;
   constexpr const static Type right = (Value >> shift) & rightMask;
   public:
   constexpr const static Type value = (left | right);
