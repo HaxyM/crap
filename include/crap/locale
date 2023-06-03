@@ -4,6 +4,7 @@
 #include "locale.d/isalnumvalue.h"
 #include "locale.d/isalphavalue.h"
 #include "locale.d/isblankvalue.h"
+#include "locale.d/iscntrlvalue.h"
 #include "locale.d/isdigitvalue.h"
 #include "locale.d/isgraphvalue.h"
 #include "locale.d/islowervalue.h"
