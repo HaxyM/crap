@@ -8,6 +8,7 @@
 #include "locale.d/isgraphvalue.h"
 #include "locale.d/islowervalue.h"
 #include "locale.d/isprintvalue.h"
+#include "locale.d/isspacevalue.h"
 #include "locale.d/isuppervalue.h"
 #include "locale.d/locale.h"
 
