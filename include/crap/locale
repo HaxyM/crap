@@ -1,6 +1,7 @@
 #ifndef CRAP_LOCALE
 #define CRAP_LOCALE
 
+#include "locale.d/isalnumvalue.h"
 #include "locale.d/isalphavalue.h"
 #include "locale.d/isdigitvalue.h"
 #include "locale.d/islowervalue.h"
