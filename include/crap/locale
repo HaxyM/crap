@@ -3,6 +3,7 @@
 
 #include "locale.d/isdigitvalue.h"
 #include "locale.d/islowervalue.h"
+#include "locale.d/isuppervalue.h"
 #include "locale.d/locale.h"
 
 #endif
