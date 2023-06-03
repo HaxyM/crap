@@ -1,0 +1,7 @@
+#ifndef CRAP_LOCALE
+#define CRAP_LOCALE
+
+#include "locale.d/locale.h"
+
+#endif
+
