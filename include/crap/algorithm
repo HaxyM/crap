@@ -164,6 +164,7 @@
 #include "algorithm.d/rotatetype.h"
 #include "algorithm.d/rotatevalue.h"
 #include "algorithm.d/searchallfortype.h"
+#include "algorithm.d/searchalltype.h"
 #include "algorithm.d/searchallvalue.h"
 #include "algorithm.d/searchfortype.h"
 #include "algorithm.d/searchtype.h"
