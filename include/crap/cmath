@@ -17,6 +17,7 @@
 #include "cmath.d/exptype.h"
 #include "cmath.d/floortype.h"
 #include "cmath.d/hypottype.h"
+#include "cmath.d/laguerretype.h"
 #include "cmath.d/log10type.h"
 #include "cmath.d/log2type.h"
 #include "cmath.d/logtype.h"
