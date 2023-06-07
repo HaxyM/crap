@@ -9,6 +9,8 @@
 #include "plustype.h"
 #include "valueratio.h"
 #include "../cmath.d/laguerretype.h"
+#include "../numeric.d/iotavalue.h"
+#include "../numeric.d/partialsumtype.h"
 #include "../utility.d/typecast.h"
 
 #ifndef CRAP_RATIO_LAGUERRETYPE
@@ -39,17 +41,29 @@ namespace crap
 	 struct laguerreType<Order, valueRatio<Type, Sign, Numerator, Denominator> >
  {
   private:
-  using x = valueRatio<Type, Sign, Numerator, Denominator>;
-  using const1 = typename identity <x> :: type;
-  using kConst = typename typeCast <valueRatio<unsigned int, '+', (Order - 1u), 1u> > :: template onto <x> :: type;
-  using arg1Part1 = typename plusType <kConst, kConst, const1> :: type;
-  using arg1Part2 = typename minusType <arg1Part1, x> :: type;
-  using arg1 = typename multipliesType <arg1Part1, typename laguerreType <(Order - 1u), x> :: type> :: type;
-  using arg2 = typename multipliesType <kConst, typename laguerreType <(Order - 2u), x> :: type> :: type;
-  using num = typename minusType <arg1, arg2> :: type;
-  using den = typename plusType <kConst, const1> :: type;
+  template <std :: size_t K> struct element;
+  using passed = valueRatio<Type, Sign, Numerator, Denominator>;
+  using const1 = typename identity <passed> :: type;
+  template <std :: size_t ... Ks> using combine =
+	  typename partialSumType <multipliesType, const1, typename element <Ks> :: type...> :: template
+	  type <plusType> :: type;
   public:
-  using type = typename dividesType <num, den> :: type;
+  using type = typename iotaValue <Order, std :: size_t, 1u> :: template type <combine> :: type;
+ };
+
+ template <unsigned int Order, class Type, char Sign, Type Numerator, Type Denominator>
+	 template <std :: size_t K>
+ struct laguerreType <Order, valueRatio<Type, Sign, Numerator, Denominator> > :: element
+ {
+  private:
+  using x = valueRatio<Type, Sign, Numerator, Denominator>;
+  using kConst = typename typeCast <valueRatio<std :: size_t, '-', K, 1u> > :: template onto <x> :: type;
+  using nConst = typename typeCast <valueRatio<unsigned int, '-', Order, 1u> > :: template onto <x> :: type;
+  using const1 = typename identity <x> :: type;
+  using arg1 = typename minusType <nConst, const1, kConst> :: type;
+  using arg2 = typename dividesType <x, kConst, kConst> :: type;
+  public:
+  using type = typename multipliesType <arg1, arg2> :: type;
  };
 
  template <unsigned int Order, class Type, char Sign, Type Numerator, Type Denominator>
