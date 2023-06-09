@@ -295,7 +295,7 @@ namespace crap
  struct typeCast<valueRatio<Type, Sign, Numerator, Denominator> > :: template
 	 Implementation<Any, float>
  {
-  constexpr const static float value =
+  constexpr const static float value = ((Sign == '-') ? -1.0f : 1.0) *
 	  static_cast<float>(static_cast<long double>(Numerator) / static_cast<long double>(Denominator));
  };
 
@@ -304,7 +304,7 @@ namespace crap
  struct typeCast<valueRatio<Type, Sign, Numerator, Denominator> > :: template
 	 Implementation<Any, double>
  {
-  constexpr const static double value =
+  constexpr const static double value = ((Sign == '-') ? -1.0 : 1.0) *
 	  static_cast<double>(static_cast<long double>(Numerator) / static_cast<long double>(Denominator));
  };
 
@@ -313,8 +313,8 @@ namespace crap
  struct typeCast<valueRatio<Type, Sign, Numerator, Denominator> > :: template
 	 Implementation<Any, long double>
  {
-  constexpr const static long double value =
-	  static_cast<long double>(Numerator) / static_cast<long double>(Denominator);
+  constexpr const static long double value = ((Sign == '-') ? -1.0l : 1.0l) *
+	  (static_cast<long double>(Numerator) / static_cast<long double>(Denominator));
  };
 }
 #endif
