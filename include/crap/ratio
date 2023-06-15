@@ -12,6 +12,7 @@
 #include "ratio.d/cbrt2.h"
 #include "ratio.d/cbrttype.h"
 #include "ratio.d/ceiltype.h"
+#include "ratio.d/compellint1type.h"
 #include "ratio.d/contracttype.h"
 #include "ratio.d/copysigntype.h"
 #include "ratio.d/coshtype.h"
