@@ -34,8 +34,10 @@ namespace crap
   constexpr static scaleType scaleExt = (num2ExtScale < num1ExtScale) ? num2ExtScale : num1ExtScale;
   constexpr static scaleType num1Float = needScaleExt ? (scaleExt * static_cast<scaleType>(Numerator1) * static_cast<scaleType>(part1IntScale)) : static_cast<scaleType>(Numerator1 * static_cast<valueType>(part1IntScale));//Is it ok?
   constexpr static scaleType num2Float = needScaleExt ? (scaleExt * static_cast<scaleType>(Numerator2) * static_cast<scaleType>(part2IntScale)) : static_cast<scaleType>(Numerator2 * static_cast<valueType>(part2IntScale));//Is it ok?
-  constexpr static valueType numerator1 = needScaleExt ? (static_cast<valueType>(num1Float)) : (Numerator1 * part1IntScale);
-  constexpr static valueType numerator2 = needScaleExt ? (static_cast<valueType>(num2Float)) : (Numerator2 * part2IntScale);
+  constexpr static valueType scaledNumerator1InRange = (num1Float < 0.0l) ? zero <valueType> :: value : ((num1Float > static_cast<scaleType>(max)) ? max : static_cast<valueType>(num1Float));
+  constexpr static valueType scaledNumerator2InRange = (num2Float < 0.0l) ? zero <valueType> :: value : ((num2Float > static_cast<scaleType>(max)) ? max : static_cast<valueType>(num2Float));
+  constexpr static valueType numerator1 = needScaleExt ? scaledNumerator1InRange : (Numerator1 * part1IntScale);
+  constexpr static valueType numerator2 = needScaleExt ? scaledNumerator2InRange : (Numerator2 * part2IntScale);
   //Sign calculation
   constexpr static const bool value1 = ((Sign1 == '+') && (Sign2 == '+')) ? (numerator1 < numerator2) : (Sign1 == '-');
   public:
