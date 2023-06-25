@@ -16,6 +16,7 @@
 #include "cmath.d/coshtype.h"
 #include "cmath.d/costype.h"
 #include "cmath.d/ellint1type.h"
+#include "cmath.d/ellint2type.h"
 #include "cmath.d/exp2type.h"
 #include "cmath.d/exptype.h"
 #include "cmath.d/floortype.h"
