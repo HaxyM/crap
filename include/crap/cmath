@@ -12,6 +12,7 @@
 #include "cmath.d/ceiltype.h"
 #include "cmath.d/compellint1type.h"
 #include "cmath.d/compellint2type.h"
+#include "cmath.d/compellint3type.h"
 #include "cmath.d/copysigntype.h"
 #include "cmath.d/coshtype.h"
 #include "cmath.d/costype.h"
