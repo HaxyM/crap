@@ -34,8 +34,11 @@ namespace crap
  template <template <class, class> class Operator, class Type1> template <class ... Types2>
 	 struct outerProductType <Operator, Type1> :: with
  {
+  private:
+  template <class SubType> using element = typename Operator <Type1, SubType> :: type;
+  public:
   template <template <class...> class Container = typeList>
-	  using type = Container<(typename Operator <Type1, Types2> :: type)...>;
+	  using type = Container<element<Types2>...>;
  };
 
  template <template <class, class> class Operator, class ... Types1> template <class ... Types2>
