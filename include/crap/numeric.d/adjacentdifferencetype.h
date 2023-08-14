@@ -8,7 +8,7 @@ namespace crap
 {
  template <template <class, class> class, class...> struct adjacentDifferenceType;
 
- template <template <class, class> class Operator> struct adjacentDifferenceValue<Operator>
+ template <template <class, class> class Operator> struct adjacentDifferenceType<Operator>
  {
   template <template <class...> class Container = typeList> using type = Container<>;
  };
@@ -27,7 +27,7 @@ namespace crap
  {
   using types = typeList<Types...>;
   template <std :: size_t Index> using typeAt = Operator<typename types :: template at<Index + 1u>, typename types :: template at<Index>>;
-  template <std :: size_t ... Indices> static Container<typename types :: template at<0u>, typeAt <Indices> :: type...>
+  template <std :: size_t ... Indices> static Container<typename types :: template at<0u>, typename typeAt <Indices> :: type...>
   generate(indexSequence<Indices...>);
  };
 }
