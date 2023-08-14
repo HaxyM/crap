@@ -6,7 +6,7 @@
 
 namespace crap
 {
- template <class Type Type Init, template <Type, Type> class Operator = arithmeticOperatorsForType <Type> :: template Plus2>
+ template <class Type, Type Init, template <Type, Type> class Operator = arithmeticOperatorsForType <Type> :: template Plus2>
 	 struct exclusiveScanForType
  {
   template <Type ... Values> using values = exclusiveScanValue<Type, Init, Operator, Values...>;
