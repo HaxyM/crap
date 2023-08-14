@@ -7,6 +7,7 @@
 #include <memory>
 #include <new>
 #include <type_traits>
+#include <utility>
 
 template <class ... Types> class MyAwsomeVariant
 {
@@ -16,13 +17,15 @@ template <class ... Types> class MyAwsomeVariant
  constexpr const static bool nothrowDestructible = crap :: allOfType<std :: is_nothrow_destructible, Types...>();
 	//Does not throw while copying if none of possibly stored types does.
  constexpr const static bool nothrowCopyable = crap :: allOfType<std :: is_nothrow_copy_constructible, Types...>();
+	//Does not throw while moveing if none of possibly stored types does.
+ constexpr const static bool nothrowMoveable = crap :: allOfType<std :: is_nothrow_move_constructible, Types...>();
 	//Other template overloads should be friends to each other, so thingh like copying from permutation may work.
  template <class ... AnotherType> friend class MyAwsomeVariant;
 	//Helper checking if "Type" is among possibly stored types.
  template <class Type>
 	 using hasType = std :: integral_constant<bool, crap :: findType<Type, std :: is_same, Types...>() != crap :: findType <Type, std :: is_same, Types...> :: npos>;
  public:
-	//Default constructor defaultly constructs firs stored type.
+	//Default constructor defaultly constructs first stored type.
 	//Therefore if it is not possible, then there is no default constructor.
  template <std :: enable_if_t<std :: is_default_constructible_v<crap :: frontType_t<Types...> >, void*> = nullptr>
 	 MyAwsomeVariant() noexcept(std :: is_nothrow_default_constructible_v<crap :: frontType_t<Types...> >);
@@ -31,8 +34,13 @@ template <class ... Types> class MyAwsomeVariant
 	  std :: enable_if_t<crap :: allOfType<std :: is_copy_constructible, Types...>{}, void*> = nullptr,
 	  std :: enable_if_t<crap :: isPermutationType <std :: is_same, Types...> :: template with<AnotherTypes...> :: value, void*> = nullptr>
 	 MyAwsomeVariant(const MyAwsomeVariant<AnotherTypes...>& a) noexcept(nothrowCopyable);
+	//May move from any other variant that forms permutation of stored types and if all of them may be moved of course.
+ template <class ... AnotherTypes,
+	  std :: enable_if_t<crap :: allOfType<std :: is_move_constructible, Types...>{}, void*> = nullptr,
+	  std :: enable_if_t<crap :: isPermutationType <std :: is_same, Types...> :: template with<AnotherTypes...> :: value, void*> = nullptr>
+	 MyAwsomeVariant(MyAwsomeVariant<AnotherTypes...>&& a) noexcept(nothrowMoveable);
  ~MyAwsomeVariant() noexcept(nothrowDestructible);
-	//Force to store valu of particular type if that type is among stored ones.
+	//Force to store value of particular type "Type" if that type is among stored ones.
  template <class Type, class ... Args>
 	 std :: enable_if_t<hasType<Type>{}, std :: add_lvalue_reference_t<Type> >
 	 emplace(Args&& ... args)
@@ -49,20 +57,28 @@ template <class ... Types> class MyAwsomeVariant
  template <class Type> void kill() noexcept(nothrowDestructible);
 	//Copy stored element of type "Type" onto new location (passed as argument).
  template <class Type> void copyOnto(void* newData) const noexcept(nothrowCopyable);
+	//Move stored element of type "Type" onto new location (passed as argument).
+ template <class Type> void moveOnto(void* newData) const noexcept(nothrowMoveable);
 	//Destroy currently stored element (if any is stored).
  void killCurrent() noexcept(nothrowDestructible);
 	//Copy stored element (if any is stored) onto new location (passed as argument).
  void copyCurrent(void* newData) const noexcept(nothrowCopyable);
+	//Move stored element (if any is stored) onto new location (passed as argument).
+ void moveCurrent(void* newData) const noexcept(nothrowMoveable);
 	//Helper subtypes
  using killer_type = crap :: commonType_t<decltype(&MyAwsomeVariant :: template kill<Types>)...>;
  using killers_type = std :: add_const_t<killer_type>[sizeof...(Types)];
  using copier_type = crap :: commonType_t<decltype(&MyAwsomeVariant :: template copyOnto<Types>)...>;
  using copiers_type = std :: add_const_t<copier_type>[sizeof...(Types)];
+ using mover_type = crap :: commonType_t<decltype(&MyAwsomeVariant :: template moveOnto<Types>)...>;
+ using movers_type = std :: add_const_t<mover_type>[sizeof...(Types)];
 	//Arrays (and helpers creating them) mapping index of stored element onto valid methods for its type.
  static killers_type& getKillers() noexcept;
  static copiers_type& getCopiers() noexcept;
+ static movers_type& getMovers() noexcept;
  static killers_type& killers;
  static copiers_type& copiers;
+ static movers_type& movers;
 	//Index of curently stored type (if nothing currently stored - points outside of list).
  std :: size_t index;
 	//Buffer to store data.
@@ -71,7 +87,7 @@ template <class ... Types> class MyAwsomeVariant
 
 template <class ... Types> template <class ... AnotherTypes> class MyAwsomeVariant <Types...> :: indexRemapper
 {
- static_assert(crap :: isPermutationType<std :: is_same, Types...> :: template with <AnotherTypes...> :: value, "Type lists must be ate least permutations.");
+ static_assert(crap :: isPermutationType<std :: is_same, Types...> :: template with <AnotherTypes...> :: value, "Type lists must be at least permutations.");
  public:
  static std :: size_t getIndexInThis(std :: size_t index) noexcept;
  static std :: size_t getIndexInAnother(std :: size_t index) noexcept;
@@ -92,6 +108,10 @@ template <class ... Types>
 typename MyAwsomeVariant <Types...> :: copiers_type&
 MyAwsomeVariant <Types...> :: copiers = MyAwsomeVariant <Types...> :: getCopiers();
 
+template <class ... Types>
+typename MyAwsomeVariant <Types...> :: movers_type&
+MyAwsomeVariant <Types...> :: movers = MyAwsomeVariant <Types...> :: getMovers();
+
 template <class ... Types> template <std :: enable_if_t <std :: is_default_constructible_v<typename crap :: frontType <Types...> :: type>, void*> >
 MyAwsomeVariant <Types...> :: MyAwsomeVariant() noexcept(std :: is_nothrow_default_constructible_v<typename crap :: frontType <Types...> :: type>)
 	: index(0u)
@@ -106,6 +126,15 @@ MyAwsomeVariant <Types...> :: MyAwsomeVariant(const MyAwsomeVariant<AnotherTypes
 	: index(MyAwsomeVariant <Types...> :: indexRemapper <AnotherTypes...> :: getIndexInThis(a.index))
 {
  a.copyCurrent(&data);
+}
+
+template <class ... Types> template <class ... AnotherTypes,
+	std :: enable_if_t <crap :: allOfType<std :: is_move_constructible, Types...>{}, void*>,
+	std :: enable_if_t <crap :: isPermutationType <std :: is_same, Types...> :: template with<AnotherTypes...> :: value, void*> >
+MyAwsomeVariant <Types...> :: MyAwsomeVariant(MyAwsomeVariant<AnotherTypes...>&& a) noexcept(MyAwsomeVariant <Types...> :: nothrowMoveable)
+	: index(MyAwsomeVariant <Types...> :: indexRemapper <AnotherTypes...> :: getIndexInThis(a.index))
+{
+ a.moveCurrent(&data);
 }
 
 template <class ... Types>
@@ -137,6 +166,14 @@ void MyAwsomeVariant <Types...> :: copyOnto(void* newData) const noexcept(MyAwso
  new (reinterpret_cast<std :: add_pointer_t<Type> >(newData)) Type(*std :: launder(reinterpret_cast<std :: add_pointer_t<std :: add_const_t<Type> > >(&data)));
 }
 
+template <class ... Types> template <class Type>
+void MyAwsomeVariant <Types...> :: moveOnto(void* newData) const noexcept(MyAwsomeVariant <Types...> :: nothrowMoveable)
+{
+ using ptr = std :: add_pointer_t<Type>;
+ using ptr_to_const = std :: add_pointer_t<std :: add_const_t<Type> >;
+ new (reinterpret_cast<ptr>(newData)) Type(std :: move(*std :: launder(reinterpret_cast<ptr_to_const>(&data))));
+}
+
 template <class ... Types>
 inline void MyAwsomeVariant <Types...> :: killCurrent() noexcept(MyAwsomeVariant <Types...> :: nothrowDestructible)
 {
@@ -151,6 +188,12 @@ inline void MyAwsomeVariant <Types...> :: copyCurrent(void* newData) const noexc
 }
 
 template <class ... Types>
+inline void MyAwsomeVariant <Types...> :: moveCurrent(void* newData) const noexcept(MyAwsomeVariant <Types...> :: nothrowMoveable)
+{
+ if (index < sizeof...(Types)) (this->*(movers[index]))(newData);
+}
+
+template <class ... Types>
 typename MyAwsomeVariant <Types...> :: killers_type& MyAwsomeVariant <Types...> :: getKillers() noexcept
 {
  static typename MyAwsomeVariant <Types...> :: killers_type array {reinterpret_cast<killer_type>(&MyAwsomeVariant <Types...> :: template kill<Types>)...};
@@ -161,6 +204,13 @@ template <class ... Types>
 typename MyAwsomeVariant <Types...> :: copiers_type& MyAwsomeVariant <Types...> :: getCopiers() noexcept
 {
  static typename MyAwsomeVariant <Types...> :: copiers_type array = {reinterpret_cast<copier_type>(&MyAwsomeVariant <Types...> :: template copyOnto<Types>)...};
+ return array;
+}
+
+template <class ... Types>
+typename MyAwsomeVariant <Types...> :: movers_type& MyAwsomeVariant <Types...> :: getMovers() noexcept
+{
+ static typename MyAwsomeVariant <Types...> :: movers_type array = {reinterpret_cast<mover_type>(&MyAwsomeVariant <Types...> :: template moveOnto<Types>)...};
  return array;
 }
 
@@ -180,4 +230,3 @@ std :: size_t MyAwsomeVariant <Types...> :: template indexRemapper <AnotherTypes
  return MyAwsomeVariant <Types...> :: template indexRemapper <AnotherTypes...> :: sizeOfIndicesInThis;
 }
 #endif
-
