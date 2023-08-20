@@ -58,13 +58,13 @@ template <class ... Types> class MyAwsomeVariant
 	//Copy stored element of type "Type" onto new location (passed as argument).
  template <class Type> void copyOnto(void* newData) const noexcept(nothrowCopyable);
 	//Move stored element of type "Type" onto new location (passed as argument).
- template <class Type> void moveOnto(void* newData) const noexcept(nothrowMoveable);
+ template <class Type> void moveOnto(void* newData) noexcept(nothrowMoveable);
 	//Destroy currently stored element (if any is stored).
  void killCurrent() noexcept(nothrowDestructible);
 	//Copy stored element (if any is stored) onto new location (passed as argument).
  void copyCurrent(void* newData) const noexcept(nothrowCopyable);
 	//Move stored element (if any is stored) onto new location (passed as argument).
- void moveCurrent(void* newData) const noexcept(nothrowMoveable);
+ void moveCurrent(void* newData) noexcept(nothrowMoveable);
 	//Helper subtypes
  using killer_type = crap :: commonType_t<decltype(&MyAwsomeVariant :: template kill<Types>)...>;
  using killers_type = std :: add_const_t<killer_type>[sizeof...(Types)];
@@ -167,11 +167,10 @@ void MyAwsomeVariant <Types...> :: copyOnto(void* newData) const noexcept(MyAwso
 }
 
 template <class ... Types> template <class Type>
-void MyAwsomeVariant <Types...> :: moveOnto(void* newData) const noexcept(MyAwsomeVariant <Types...> :: nothrowMoveable)
+void MyAwsomeVariant <Types...> :: moveOnto(void* newData) noexcept(MyAwsomeVariant <Types...> :: nothrowMoveable)
 {
  using ptr = std :: add_pointer_t<Type>;
- using ptr_to_const = std :: add_pointer_t<std :: add_const_t<Type> >;
- new (reinterpret_cast<ptr>(newData)) Type(std :: move(*std :: launder(reinterpret_cast<ptr_to_const>(&data))));
+ new (reinterpret_cast<ptr>(newData)) Type(std :: move(*std :: launder(reinterpret_cast<ptr>(&data))));
 }
 
 template <class ... Types>
@@ -188,7 +187,7 @@ inline void MyAwsomeVariant <Types...> :: copyCurrent(void* newData) const noexc
 }
 
 template <class ... Types>
-inline void MyAwsomeVariant <Types...> :: moveCurrent(void* newData) const noexcept(MyAwsomeVariant <Types...> :: nothrowMoveable)
+inline void MyAwsomeVariant <Types...> :: moveCurrent(void* newData) noexcept(MyAwsomeVariant <Types...> :: nothrowMoveable)
 {
  if (index < sizeof...(Types)) (this->*(movers[index]))(newData);
 }
