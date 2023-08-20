@@ -40,6 +40,18 @@ template <class ... Types> class MyAwsomeVariant
 	  std :: enable_if_t<crap :: isPermutationType <std :: is_same, Types...> :: template with<AnotherTypes...> :: value, void*> = nullptr>
 	 MyAwsomeVariant(MyAwsomeVariant<AnotherTypes...>&& a) noexcept(nothrowMoveable);
  ~MyAwsomeVariant() noexcept(nothrowDestructible);
+	//May copy assign from any other variant that forms permutation of stored types and if all of them may be copied of course.
+	//It copies cotent so layout should not change (and hence returned type).
+ template <class ... AnotherTypes,
+	  std :: enable_if_t<crap :: allOfType<std :: is_copy_constructible, Types...>{}, void*> = nullptr,
+	  std :: enable_if_t<crap :: isPermutationType <std :: is_same, Types...> :: template with<AnotherTypes...> :: value, void*> = nullptr>
+	 MyAwsomeVariant& operator = (const MyAwsomeVariant<AnotherTypes...>& a) noexcept(nothrowCopyable);
+	//May move assign from any other variant that forms permutation of stored types and if all of them may be moved of course.
+	//It moves cotent so layout should not change (and hence returned type).
+ template <class ... AnotherTypes,
+	  std :: enable_if_t<crap :: allOfType<std :: is_move_constructible, Types...>{}, void*> = nullptr,
+	  std :: enable_if_t<crap :: isPermutationType <std :: is_same, Types...> :: template with<AnotherTypes...> :: value, void*> = nullptr>
+	 MyAwsomeVariant& operator = (MyAwsomeVariant<AnotherTypes...>&& a) noexcept(nothrowMoveable);
 	//Force to store value of particular type "Type" if that type is among stored ones.
  template <class Type, class ... Args>
 	 std :: enable_if_t<hasType<Type>{}, std :: add_lvalue_reference_t<Type> >
@@ -141,6 +153,30 @@ template <class ... Types>
 inline MyAwsomeVariant <Types...> :: ~MyAwsomeVariant() noexcept(MyAwsomeVariant <Types...> :: nothrowDestructible)
 {
  killCurrent();
+}
+
+template <class ... Types> template <class ... AnotherTypes,
+	std :: enable_if_t <crap :: allOfType<std :: is_copy_constructible, Types...>{}, void*>,
+	std :: enable_if_t <crap :: isPermutationType <std :: is_same, Types...> :: template with<AnotherTypes...> :: value, void*> >
+MyAwsomeVariant<Types...>& MyAwsomeVariant <Types...> :: operator = (const MyAwsomeVariant<AnotherTypes...>& a) noexcept(MyAwsomeVariant <Types...> :: nothrowCopyable)
+{
+ if (static_cast<const void*>(&a) == static_cast<const void*>(this)) return *this;
+ killCurrent();
+ a.copyCurrent(&data);
+ index = MyAwsomeVariant <Types...> :: indexRemapper <AnotherTypes...> :: getIndexInThis(a.index);
+ return *this;
+}
+
+template <class ... Types> template <class ... AnotherTypes,
+	std :: enable_if_t <crap :: allOfType<std :: is_move_constructible, Types...>{}, void*>,
+	std :: enable_if_t <crap :: isPermutationType <std :: is_same, Types...> :: template with<AnotherTypes...> :: value, void*> >
+MyAwsomeVariant<Types...>& MyAwsomeVariant <Types...> :: operator = (MyAwsomeVariant<AnotherTypes...>&& a) noexcept(MyAwsomeVariant <Types...> :: nothrowMoveable)
+{
+ if (static_cast<void*>(&a) == static_cast<void*>(this)) return *this;
+ killCurrent();
+ a.moveCurrent(&data);
+ index = MyAwsomeVariant <Types...> :: indexRemapper <AnotherTypes...> :: getIndexInThis(a.index);
+ return *this;
 }
 
 template <class ... Types> template <class Type, class ... Args>
