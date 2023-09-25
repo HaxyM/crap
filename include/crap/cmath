@@ -28,6 +28,7 @@
 #include "cmath.d/log2type.h"
 #include "cmath.d/logtype.h"
 #include "cmath.d/modftype.h"
+#include "cmath.d/powtype.h"
 #include "cmath.d/roundtype.h"
 #include "cmath.d/signbittype.h"
 #include "cmath.d/sinhtype.h"

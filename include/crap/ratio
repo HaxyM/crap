@@ -54,6 +54,7 @@
 #include "ratio.d/phi.h"
 #include "ratio.d/pi.h"
 #include "ratio.d/plustype.h"
+#include "ratio.d/powtype.h"
 #include "ratio.d/roundtype.h"
 #include "ratio.d/signbittype.h"
 #include "ratio.d/sinhtype.h"
