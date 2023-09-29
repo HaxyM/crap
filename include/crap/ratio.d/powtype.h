@@ -66,11 +66,13 @@ namespace crap
 	 integralExponent<false, Empty...>
  {
   private:
-  using x = valueRatio<Type, SignX, NumeratorX, DenominatorX>;
-  using y = valueRatio<Type, SignY, NumeratorY, DenominatorY>;
-  using exponent = typename multipliesType <y, typename logType <x> :: type> :: type;
+  template <bool isPowerOfZero, class ... Empty2> struct Implementation;
+  template <class ... Empty2> struct Implementation<true, Empty2...>;
+  template <class ... Empty2> struct Implementation<false, Empty2...>;
+  constexpr const static bool isPowerOfZero = //FIXME: Add check if is zero.
+	  equalToValue <decltype(NumeratorX), NumeratorX, zero <decltype(NumeratorX)> :: value> :: value;
   public:
-  using type = typename expType <exponent> :: type;
+  using type = typename Implementation <isPowerOfZero> :: type;
  };
 
  template <class Type, char SignX, Type NumeratorX, Type DenominatorX, char SignY, Type NumeratorY, Type DenominatorY>
@@ -141,6 +143,34 @@ namespace crap
   using ans = typename naturalPower <X, nextY, nextEven> :: type;
   public:
   using type = typename multipliesType <X, ans, ans> :: type;
+ };
+
+ template <class Type, char SignX, Type NumeratorX, Type DenominatorX, char SignY, Type NumeratorY, Type DenominatorY>
+	 template <class ... Empty>
+	 template <class ... Empty2>
+ struct powType<valueRatio<Type, SignX, NumeratorX, DenominatorX>, valueRatio<Type, SignY, NumeratorY, DenominatorY> > :: template
+	 integralExponent <false, Empty...> :: template
+	 Implementation<true, Empty2...>
+ {
+  private:
+  using x = valueRatio<Type, SignX, NumeratorX, DenominatorX>;
+  public:
+  using type = typename zero <x> :: type;
+ };
+
+ template <class Type, char SignX, Type NumeratorX, Type DenominatorX, char SignY, Type NumeratorY, Type DenominatorY>
+	 template <class ... Empty>
+	 template <class ... Empty2>
+ struct powType<valueRatio<Type, SignX, NumeratorX, DenominatorX>, valueRatio<Type, SignY, NumeratorY, DenominatorY> > :: template
+	 integralExponent <false, Empty...> :: template
+	 Implementation<false, Empty2...>
+ {
+  private:
+  using x = valueRatio<Type, SignX, NumeratorX, DenominatorX>;
+  using y = valueRatio<Type, SignY, NumeratorY, DenominatorY>;
+  using exponent = typename multipliesType <y, typename logType <x> :: type> :: type;
+  public:
+  using type = typename expType <exponent> :: type;
  };
 
  template <class Type, char SignX, Type NumeratorX, Type DenominatorX, class TypeY, TypeY Y>
