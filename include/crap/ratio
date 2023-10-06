@@ -43,6 +43,7 @@
 #include "ratio.d/ln2.h"
 #include "ratio.d/log10e.h"
 #include "ratio.d/log10type.h"
+#include "ratio.d/log1ptype.h"
 #include "ratio.d/log2e.h"
 #include "ratio.d/log2type.h"
 #include "ratio.d/logtype.h"
