@@ -20,6 +20,7 @@
 #include "cmath.d/ellint2type.h"
 #include "cmath.d/ellint3type.h"
 #include "cmath.d/exp2type.h"
+#include "cmath.d/expm1type.h"
 #include "cmath.d/exptype.h"
 #include "cmath.d/floortype.h"
 #include "cmath.d/hypottype.h"

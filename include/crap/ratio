@@ -27,6 +27,7 @@
 #include "ratio.d/ellint3type.h"
 #include "ratio.d/equaltotype.h"
 #include "ratio.d/exp2type.h"
+#include "ratio.d/expm1type.h"
 #include "ratio.d/exptype.h"
 #include "ratio.d/floortype.h"
 #include "ratio.d/greaterequaltype.h"
