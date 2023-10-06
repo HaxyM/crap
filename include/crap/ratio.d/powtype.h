@@ -445,11 +445,22 @@ namespace crap
  template <class TypeX, class TypeY, char SignX, TypeX NumeratorX, TypeX DenominatorX, char SignY, TypeY NumeratorY, TypeY DenominatorY>
 	 constexpr typename powType <valueRatio<TypeX, SignX, NumeratorX, DenominatorX>, valueRatio<TypeY, SignY, NumeratorY, DenominatorY> > :: type
 	 pow(valueRatio<TypeX, SignX, NumeratorX, DenominatorX>, valueRatio<TypeY, SignY, NumeratorY, DenominatorY>) noexcept;
+
+ template <class TypeX, char SignX, TypeX NumeratorX, TypeX DenominatorX, class TypeY, TypeY Y>
+	 constexpr typename powType <valueRatio<TypeX, SignX, NumeratorX, DenominatorX>, std :: integral_constant<TypeY, Y> > :: type
+	 pow(valueRatio<TypeX, SignX, NumeratorX, DenominatorX>, std :: integral_constant<TypeY, Y>) noexcept;
 }
 
 template <class TypeX, class TypeY, char SignX, TypeX NumeratorX, TypeX DenominatorX, char SignY, TypeY NumeratorY, TypeY DenominatorY>
 inline constexpr typename crap :: powType <crap :: valueRatio<TypeX, SignX, NumeratorX, DenominatorX>, crap :: valueRatio<TypeY, SignY, NumeratorY, DenominatorY> > :: type
 crap :: pow(crap :: valueRatio<TypeX, SignX, NumeratorX, DenominatorX>, crap :: valueRatio<TypeY, SignY, NumeratorY, DenominatorY>) noexcept
+{
+ return {};
+}
+
+template <class TypeX, char SignX, TypeX NumeratorX, TypeX DenominatorX, class TypeY, TypeY Y>
+inline constexpr typename crap :: powType <crap :: valueRatio<TypeX, SignX, NumeratorX, DenominatorX>, std :: integral_constant<TypeY, Y> > :: type
+crap :: pow(crap :: valueRatio<TypeX, SignX, NumeratorX, DenominatorX>, std :: integral_constant<TypeY, Y>) noexcept
 {
  return {};
 }
