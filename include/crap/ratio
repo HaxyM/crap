@@ -40,6 +40,7 @@
 #include "ratio.d/laguerretype.h"
 #include "ratio.d/lessequaltype.h"
 #include "ratio.d/lesstype.h"
+#include "ratio.d/lgammatype.h"
 #include "ratio.d/ln10.h"
 #include "ratio.d/ln2.h"
 #include "ratio.d/log10e.h"
