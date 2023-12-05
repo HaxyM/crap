@@ -23,6 +23,7 @@
 #include "cmath.d/expm1type.h"
 #include "cmath.d/exptype.h"
 #include "cmath.d/floortype.h"
+#include "cmath.d/hermitetype.h"
 #include "cmath.d/hypottype.h"
 #include "cmath.d/laguerretype.h"
 #include "cmath.d/lgammatype.h"
