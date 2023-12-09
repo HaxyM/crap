@@ -39,6 +39,7 @@
 #include "ratio.d/invsqrt3.h"
 #include "ratio.d/invsqrtpi.h"
 #include "ratio.d/laguerretype.h"
+#include "ratio.d/legendretype.h"
 #include "ratio.d/lessequaltype.h"
 #include "ratio.d/lesstype.h"
 #include "ratio.d/lgammatype.h"
