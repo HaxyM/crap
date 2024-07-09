@@ -6,6 +6,7 @@
 #include "cmath.d/asinhtype.h"
 #include "cmath.d/asintype.h"
 #include "cmath.d/assoclaguerretype.h"
+#include "cmath.d/assoclegendretype.h"
 #include "cmath.d/atan2type.h"
 #include "cmath.d/atanhtype.h"
 #include "cmath.d/atantype.h"
