@@ -8,6 +8,7 @@
 #include "utility.d/bisectfortype.h"
 #include "utility.d/bisecttype.h"
 #include "utility.d/bisectvalue.h"
+#include "utility.d/cmpequalvalue.h"
 #include "utility.d/commontype.h"
 #include "utility.d/concatenatefortype.h"
 #include "utility.d/concatenatetype.h"
