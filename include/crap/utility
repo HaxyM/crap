@@ -10,6 +10,7 @@
 #include "utility.d/bisectvalue.h"
 #include "utility.d/cmpequalvalue.h"
 #include "utility.d/cmplessvalue.h"
+#include "utility.d/cmpnotequalvalue.h"
 #include "utility.d/commontype.h"
 #include "utility.d/concatenatefortype.h"
 #include "utility.d/concatenatetype.h"
