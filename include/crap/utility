@@ -10,6 +10,7 @@
 #include "utility.d/bisectvalue.h"
 #include "utility.d/cmpequalvalue.h"
 #include "utility.d/cmpgreatervalue.h"
+#include "utility.d/cmpgreaterequalvalue.h"
 #include "utility.d/cmplessvalue.h"
 #include "utility.d/cmplessequalvalue.h"
 #include "utility.d/cmpnotequalvalue.h"
