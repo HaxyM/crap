@@ -11,6 +11,7 @@
 #include "utility.d/cmpequalvalue.h"
 #include "utility.d/cmpgreatervalue.h"
 #include "utility.d/cmplessvalue.h"
+#include "utility.d/cmplessequalvalue.h"
 #include "utility.d/cmpnotequalvalue.h"
 #include "utility.d/commontype.h"
 #include "utility.d/concatenatefortype.h"
