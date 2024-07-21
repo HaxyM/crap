@@ -29,6 +29,7 @@
 #include "utility.d/frontfortype.h"
 #include "utility.d/fronttype.h"
 #include "utility.d/frontvalue.h"
+#include "utility.d/inrangevalue.h"
 #include "utility.d/integralconstantfortype.h"
 #include "utility.d/language.h"
 #include "utility.d/makeindexsequence.h"
