@@ -1,13 +1,13 @@
 #ifndef CRAP_UTILITY_CMPEQUALVALUE
 #define CRAP_UTILITY_CMPEQUALVALUE
 
-#include "language.h"
-#if CPP20
+#include "../version.d/libintegercomparisonfunctions.h"
+#if (crap_lib_integer_comparison_functions >= 202002L)
 #else
 #include "../numbers.d/zero.h"
 #endif
 
-#if CPP20
+#if (crap_lib_integer_comparison_functions >= 202002L)
 #include <utility>
 #else
 #endif
@@ -15,7 +15,7 @@
 
 namespace crap
 {
-#if CPP20
+#if (crap_lib_integer_comparison_functions >= 202002L)
  template <class Type1, Type1 Value1, class Type2, Type2 Value2>
 	 using cmpEqualValue = std :: integral_constant<bool, std :: cmp_equal(Value1, Value2)>;
 #else
