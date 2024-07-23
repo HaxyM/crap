@@ -1,11 +1,11 @@
 #ifndef CRAP_BIT_POPCOUNTVALUE
 #define CRAP_BIT_POPCOUNTVALUE
 
-#include "../utility.d/language.h"
+#include "../version.d/libbitops.h"
 
 #include <cstddef>
 
-#if CPP20
+#if (crap_lib_bitops >= 201907L)
 #include <bit>
 #include <type_traits>
 #else
@@ -17,7 +17,7 @@
 
 namespace crap
 {
-#if CPP20
+#if (crap_lib_bitops >= 201907L)
  template <class Type, Type Value>
 	 using popcountValue = std :: integral_constant<std :: size_t, std :: popcount(Value)>;
 #else
@@ -39,7 +39,7 @@ namespace crap
 #endif
 }
 
-#if CPP20
+#if (crap_lib_bitops >= 201907L)
 #else
 template <class Type, Type Value>
 inline constexpr crap :: popcountValue <Type, Value> :: operator
@@ -49,3 +49,4 @@ typename crap :: popcountValue <Type, Value> :: value_type () const noexcept
 }
 #endif
 #endif
+

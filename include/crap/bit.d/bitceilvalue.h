@@ -1,11 +1,11 @@
 #ifndef CRAP_BIT_BITCEILVALUE
 #define CRAP_BIT_BITCEILVALUE
 
-#include "../utility.d/language.h"
+#include "../version.d/libintpow2.h"
 
 #include <type_traits>
 
-#if CPP20
+#if (crap_lib_int_pow2 >= 202002L)
 #include <bit>
 #else
 #include "bitfloorvalue.h"
@@ -17,7 +17,7 @@
 
 namespace crap
 {
-#if CPP20
+#if (crap_lib_int_pow2 >= 202002L)
  template <class Type, Type Value>
 	 using bitCeilValue = std :: integral_constant<Type, std :: bit_ceil<Type>(Value)>;
 #else
@@ -41,7 +41,7 @@ namespace crap
 #endif
 }
 
-#if CPP20
+#if (crap_lib_int_pow2 >= 202002L)
 #else
 template <class Type, Type Value>
 inline constexpr crap :: bitCeilValue <Type, Value> :: operator

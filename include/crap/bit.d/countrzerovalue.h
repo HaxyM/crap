@@ -1,12 +1,12 @@
 #ifndef CRAP_BIT_COUNTRZEROVALUE
 #define CRAP_BIT_COUNTRZEROVALUE
 
-#include "../utility.d/language.h"
+#include "../version.d/libbitops.h"
 
 #include <cstddef>
 #include <type_traits>
 
-#if CPP20
+#if (crap_lib_bitops >= 201907L)
 #include <bit>
 #else
 #include "../functional.d/plusvalue.h"
@@ -17,7 +17,7 @@
 
 namespace crap
 {
-#if CPP20
+#if (crap_lib_bitops >= 201907L)
  template <class Type, Type Value>
 	 using countrZeroValue = std :: integral_constant<std :: size_t, std :: countr_zero(Value)>;
 #else
@@ -38,7 +38,7 @@ namespace crap
 #endif
 }
 
-#if CPP20
+#if (crap_lib_bitops >= 201907L)
 #else
 template <class Type, Type Value>
 inline constexpr crap :: countrZeroValue <Type, Value> :: operator
@@ -48,3 +48,4 @@ typename crap :: countrZeroValue <Type, Value> :: value_type () const noexcept
 }
 #endif
 #endif
+

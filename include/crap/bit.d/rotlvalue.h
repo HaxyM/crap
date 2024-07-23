@@ -1,12 +1,12 @@
 #ifndef CRAP_BIT_ROTLVALUE
 #define CRAP_BIT_ROTLVALUE
 
-#include "../utility.d/language.h"
+#include "../version.d/libbitops.h"
 
 #include <cstddef>
 #include <type_traits>
 
-#if CPP20
+#if (crap_lib_bitops >= 201907L)
 #include <bit>
 #else
 #include "../numbers.d/zero.h"
@@ -15,9 +15,9 @@
 
 namespace crap
 {
-#if CPP20
+#if (crap_lib_bitops >= 201907L)
  template <std :: size_t N, class Type, Type Value>
-	 using rotlValue = std :: integral_constant<Type, std :: rotr<Type>(Value, N)>;
+	 using rotlValue = std :: integral_constant<Type, std :: rotl<Type>(Value, N)>;
 #else
  template <std :: size_t N, class Type, Type Value> struct rotlValue
  {
@@ -39,7 +39,7 @@ namespace crap
 #endif
 }
 
-#if CPP20
+#if (crap_lib_bitops >= 201907L)
 #else
 template <std :: size_t N, class Type, Type Value>
 inline constexpr crap :: rotlValue <N, Type, Value> :: operator

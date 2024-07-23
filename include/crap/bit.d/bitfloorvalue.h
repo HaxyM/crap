@@ -1,11 +1,11 @@
 #ifndef CRAP_BIT_BITFLOORVALUE
 #define CRAP_BIT_BITFLOORVALUE
 
-#include "../utility.d/language.h"
+#include "../version.d/libintpow2.h"
 
 #include <type_traits>
 
-#if CPP20
+#if (crap_lib_int_pow2 >= 202002L)
 #include <bit>
 #else
 #include "bitwidthvalue.h"
@@ -15,7 +15,7 @@
 
 namespace crap
 {
-#if CPP20
+#if (crap_lib_int_pow2 >= 202002L)
  template <class Type, Type Value>
 	 using bitFloorValue = std :: integral_constant<std :: size_t, std :: bit_floor(Value)>;
 #else
@@ -36,7 +36,7 @@ namespace crap
 #endif
 }
 
-#if CPP20
+#if (crap_lib_int_pow2 >= 202002L)
 #else
 template <class Type, Type Value>
 inline constexpr crap :: bitFloorValue <Type, Value> :: operator

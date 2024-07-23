@@ -9,8 +9,9 @@
 #include "bit.d/countlzerovalue.h"
 #include "bit.d/countronevalue.h"
 #include "bit.d/countrzerovalue.h"
-#include "bit.d/hasinglebitvalue.h"
+#include "bit.d/hassinglebitvalue.h"
 #include "bit.d/popcountvalue.h"
+#include "bit.d/rotlvalue.h"
 #include "bit.d/rotrvalue.h"
 
 #endif

@@ -1,12 +1,12 @@
 #ifndef CRAP_BIT_BYTESWAPVALUE
 #define CRAP_BIT_BYTESWAPVALUE
 
-#include "../utility.d/language.h"
+#include "../version.d/libbyteswap.h"
 
 #include <cstddef>
 #include <type_traits>
 
-#if CPP23
+#if (crap_lib_byteswap >= 202110L)
 #include <bit>
 #else
 #include "rotrvalue.h"
@@ -18,7 +18,7 @@
 
 namespace crap
 {
-#if CPP23
+#if (crap_lib_byteswap >= 202110L)
  template <class Type, Type Value>
 	 using byteswapValue = std :: integral_constant<Type, std :: byteswap<Type>(Value)>;
 #else
@@ -42,7 +42,7 @@ namespace crap
 #endif
 }
 
-#if CPP23
+#if (crap_lib_byteswap >= 202110L)
 #else
 template <class Type, Type Value>
 inline constexpr crap :: byteswapValue <Type, Value> :: operator

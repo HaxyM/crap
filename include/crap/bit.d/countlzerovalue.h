@@ -1,12 +1,12 @@
 #ifndef CRAP_BIT_COUNTLZEROVALUE
 #define CRAP_BIT_COUNTLZEROVALUE
 
-#include "../utility.d/language.h"
+#include "../version.d/libbitops.h"
 
 #include <cstddef>
 #include <type_traits>
 
-#if CPP20
+#if (crap_lib_bitops >= 201907L)
 #include <bit>
 #else
 #include "bitwidthvalue.h"
@@ -15,7 +15,7 @@
 
 namespace crap
 {
-#if CPP20
+#if (crap_lib_bitops >= 201907L)
  template <class Type, Type Value>
 	 using countlZeroValue = std :: integral_constant<std :: size_t, std :: countl_zero<Type>(Value)>;
 #else
@@ -32,7 +32,7 @@ namespace crap
 #endif
 }
 
-#if CPP20
+#if (crap_lib_bitops >= 201907L)
 #else
 template <class Type, Type Value>
 inline constexpr crap :: countlZeroValue <Type, Value> :: operator

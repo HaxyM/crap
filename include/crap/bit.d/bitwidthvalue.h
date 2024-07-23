@@ -1,12 +1,12 @@
 #ifndef CRAP_BIT_BITWIDTHVALUE
 #define CRAP_BIT_BITWIDTHVALUE
 
-#include "../utility.d/language.h"
+#include "../version.d/libintpow2.h"
 
 #include <cstddef>
 #include <type_traits>
 
-#if CPP20
+#if (crap_lib_int_pow2 >= 202002L)
 #include <bit>
 #else
 #include "../functional.d/plusvalue.h"
@@ -17,7 +17,7 @@
 
 namespace crap
 {
-#if CPP20
+#if (crap_lib_int_pow2 >= 202002L)
  template <class Type, Type Value>
 	 using bitWidthValue = std :: integral_constant<std :: size_t, std :: bit_width(Value)>;
 #else
@@ -38,7 +38,7 @@ namespace crap
 #endif
 }
 
-#if CPP20
+#if (crap_lib_int_pow2 >= 202002L)
 #else
 template <class Type, Type Value>
 inline constexpr crap :: bitWidthValue <Type, Value> :: operator
@@ -48,3 +48,4 @@ typename crap :: bitWidthValue <Type, Value> :: value_type () const noexcept
 }
 #endif
 #endif
+
