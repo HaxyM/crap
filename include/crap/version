@@ -1,6 +1,7 @@
 #ifndef CRAP_VERSION
 #define CRAP_VERSION
 
+#include "version.d/libbitops.h"
 #include "version.d/libintegercomparisonfunctions.h"
 
 #endif
