@@ -4,6 +4,7 @@
 #include "version.d/foldexpressions.h"
 #include "version.d/libbitops.h"
 #include "version.d/libbyteswap.h"
+#include "version.d/libgcdlcm.h"
 #include "version.d/libintegercomparisonfunctions.h"
 #include "version.d/libintpow2.h"
 
