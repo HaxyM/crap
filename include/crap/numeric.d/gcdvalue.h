@@ -2,10 +2,10 @@
 #define CRAP_NUMERIC_GCDVALUE
 
 #include "../numbers.d/zero.h"
-#include "../utility.d/language.h"
+#include "../version.d/libgcdlcm.h"
 #include "reducevalue.h"
 
-#if CPP17
+#if (crap_lib_gcd_lcm >= 201606L)
 #include <numeric>
 #else
 #include <type_traits>
@@ -38,9 +38,9 @@ namespace crap
 
  template <class Type, Type Value1, Type Value2> struct gcdValue<Type, Value1, Value2>
  {
-  #if CPP17
+#if (crap_lib_gcd_lcm >= 201606L)
   constexpr const static Type value = std :: gcd(Value1, Value2);
-  #else
+#else
   private:
   constexpr const static Type
 	  getValue(std :: integral_constant<Type, static_cast<Type>(0)>, std :: integral_constant<Type, static_cast<Type>(1)>);
@@ -61,7 +61,7 @@ namespace crap
   public:
   constexpr const static Type value =
 	  getValue(std :: integral_constant<Type, Value1>{}, std :: integral_constant<Type, Value2>{});
-  #endif
+#endif
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
  };
@@ -91,7 +91,7 @@ template <class Type, Type Value>
  return crap :: gcdValue <Type, Value> :: value;
 };
 
-#if CPP17
+#if (crap_lib_gcd_lcm >= 201606L)
 #else
 template <class Type, Type Value1, Type Value2> inline constexpr const Type
 	crap :: gcdValue <Type, Value1, Value2> :: getValue(std :: integral_constant<Type, static_cast<Type>(0)>, std :: integral_constant<Type, static_cast<Type>(1)>)

@@ -2,10 +2,10 @@
 #define CRAP_NUMERIC_LCMVALUE
 
 #include "../numbers.d/identity.h"
-#include "../utility.d/language.h"
+#include "../version.d/libgcdlcm.h"
 #include "reducevalue.h"
 
-#if CPP17
+#if (crap_lib_gcd_lcm >= 201606L)
 #include <numeric>
 #else
 #include "gcdvalue.h"
@@ -32,14 +32,14 @@ namespace crap
 
  template <class Type, Type Value1, Type Value2> struct lcmValue<Type, Value1, Value2>
  {
-  #if CPP17
+#if (crap_lib_gcd_lcm >= 201606L)
   constexpr const static Type value = std :: lcm(Value1, Value2);
-  #else
+#else
   private:
   constexpr const static auto Gcd = gcdValue <Type, Value1, Value2> :: value;
   public:
   constexpr const static Type value = (Value1 / Gcd) * Value2;
-  #endif
+#endif
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
  };
