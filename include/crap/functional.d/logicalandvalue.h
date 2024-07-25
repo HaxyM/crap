@@ -2,9 +2,9 @@
 #define CRAP_FUNCTIONAL_LOGICALANDVALUE
 
 #include "../numbers.d/identity.h"
-#include "../utility.d/language.h"
+#include "../version.d/foldexpressions.h"
 
-#if CPP17
+#if (crap_fold_expressions >= 201603L)
 #else
 #include "../numeric.d/reducevalue.h"
 #endif
@@ -36,14 +36,14 @@ namespace crap
 
  template <class Type, Type ... Values> struct logicalAndValue
  {
-  #if CPP17
+#if (crap_fold_expressions >= 201603L)
   constexpr const static auto value = (Values && ...);
-  #else
+#else
   private:
   template <Type ... SubValues> using This = logicalAndValue<Type, SubValues...>;
   public:
   constexpr const static auto value = reduceValue <Type, This, Values...> :: value;
-  #endif
+#endif
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
  };

@@ -1,9 +1,9 @@
 #ifndef CRAP_FUNCTIONAL_MODULUSVALUE
 #define CRAP_FUNCTIONAL_MODULUSVALUE
 
-#include "../utility.d/language.h"
+#include "../version.d/foldexpressions.h"
 
-#if CPP17
+#if (crap_fold_expressions >= 201603L)
 #else
 #include "../numeric.d/accumulatevalue.h"
 #endif
@@ -12,8 +12,8 @@ namespace crap
 {
  template <class Type, Type...> struct modulusValue;
 
- #if CPP17
- #else
+#if (crap_fold_expressions >= 201603L)
+#else
  template <class Type, Type Value> struct modulusValue<Type, Value>
  {
   constexpr const static auto value = Value;
@@ -27,24 +27,24 @@ namespace crap
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
  };
- #endif
+#endif
 
  template <class Type, Type FirstValue, Type ... Rest> struct modulusValue<Type, FirstValue, Rest...>
  {
-  #if CPP17
+#if (crap_fold_expressions >= 201603L)
   constexpr const static auto value = (FirstValue % ... % Rest);
-  #else
+#else
   private:
   template <Type ... SubValues> using This = modulusValue<Type, SubValues...>;
   public:
   constexpr const static auto value = accumulateValue <Type, This, FirstValue, Rest...> :: value;
-  #endif
+#endif
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
  };
 }
 
-#if CPP17
+#if (crap_fold_expressions >= 201603L)
 #else
 template <class Type, Type Value>
 inline constexpr crap :: modulusValue <Type, Value> :: operator
