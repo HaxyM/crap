@@ -31,7 +31,6 @@
 #include "utility.d/frontvalue.h"
 #include "utility.d/inrangevalue.h"
 #include "utility.d/integralconstantfortype.h"
-#include "utility.d/language.h"
 #include "utility.d/makeindexsequence.h"
 #include "utility.d/nfrom1valuedemultiplexer.h"
 #include "utility.d/nto1valuemultiplexer.h"
