@@ -1,8 +1,8 @@
 #ifndef CRAP_ALGORITHM_EQUALVALUE
 #define CRAP_ALGORITHM_EQUALVALUE
 
-#include "../utility.d/language.h"
 #include "../utility.d/valuelist.h"
+#include "../version.d/variabletemplates.h"
 
 namespace crap
 {
@@ -11,25 +11,25 @@ namespace crap
  template <class Type, template <Type, Type> class Operator> struct equalValue<Type, Operator>
  {
   template <Type ... Values2> struct with;
-  #if CPP14
+#if (crap_variable_templates >= 201304L)
   template <Type ... Values2> constexpr const static bool value = with <Values2...> :: value;
-  #endif
+#endif
  };
 
  template <class Type, template <Type, Type> class Operator, Type Value1> struct equalValue<Type, Operator, Value1>
  {
   template <Type ... Values2> struct with;
-  #if CPP14
+#if (crap_variable_templates >= 201304L)
   template <Type ... Values2> constexpr const static bool value = with <Values2...> :: value;
-  #endif
+#endif
  };
 
  template <class Type, template <Type, Type> class Operator, Type ... Values1> struct equalValue
  {
   template <Type ... Values2> struct with;
-  #if CPP14
+#if (crap_variable_templates >= 201304L)
   template <Type ... Values2> constexpr const static bool value = with <Values2...> :: value;
-  #endif
+#endif
  };
 
  template <class Type, template <Type, Type> class Operator> template <Type ... Values2> struct equalValue <Type, Operator> :: with

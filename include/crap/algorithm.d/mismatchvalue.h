@@ -1,8 +1,8 @@
 #ifndef CRAP_ALGORITHM_MISMATCHVALUE
 #define CRAP_ALGORITHM_MISMATCHVALUE
 
-#include "../utility.d/language.h"
 #include "../utility.d/valuelist.h"
+#include "../version.d/variabletemplates.h"
 
 namespace crap
 {
@@ -11,28 +11,28 @@ namespace crap
  template <class Type, template <Type, Type> class Operator> struct mismatchValue<Type, Operator>
  {
   template <Type ... Values2> struct with;
-  #if CPP14
+#if (crap_variable_templates >= 201304L)
   template <Type ... Values2> constexpr const static std :: size_t value = with <Values2...> :: value;
   template <Type ... Values2> constexpr const static std :: size_t npos = with <Values2...> :: npos;
-  #endif
+#endif
  };
 
  template <class Type, template <Type, Type> class Operator, Type Value1> struct mismatchValue<Type, Operator, Value1>
  {
   template <Type ... Values2> struct with;
-  #if CPP14
+#if (crap_variable_templates >= 201304L)
   template <Type ... Values2> constexpr const static std :: size_t value = with <Values2...> :: value;
   template <Type ... Values2> constexpr const static std :: size_t npos = with <Values2...> :: npos;
-  #endif
+#endif
  };
 
  template <class Type, template <Type, Type> class Operator, Type ... Values1> struct mismatchValue
  {
   template <Type ... Values2> struct with;
-  #if CPP14
+#if (crap_variable_templates >= 201304L)
   template <Type ... Values2> constexpr const static std :: size_t value = with <Values2...> :: value;
   template <Type ... Values2> constexpr const static std :: size_t npos = with <Values2...> :: npos;
-  #endif
+#endif
  };
 
  template <class Type, template <Type, Type> class Operator> template <Type ... Values2> struct mismatchValue <Type, Operator> :: with

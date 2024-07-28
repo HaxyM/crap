@@ -5,7 +5,7 @@
 #include "logicalnotvalue.h"
 #include "logicalorvalue.h"
 
-#include "../utility.d/language.h"
+#include "../version.d/variabletemplates.h"
 
 namespace crap
 {
@@ -16,13 +16,13 @@ namespace crap
   template <Type ... Values> using LogicalAnd = logicalAndValue<Type, Values...>;
   template <Type Value1, Type Value2> using LogicalOr2 = logicalOrValue<Type, Value1, Value2>;
   template <Type Value1, Type Value2> using LogicalAnd2 = logicalAndValue<Type, Value1, Value2>;
-  #if CPP14
+#if (crap_variable_templates >= 201304L)
   template <Type Value> constexpr const static auto logicalNot = logicalNotValue <Type, Value> :: value;
   template <Type ... Values> constexpr const static auto logicalOr = logicalOrValue <Type, Values...> :: value;
   template <Type ... Values> constexpr const static auto logicalAnd = logicalAndValue <Type, Values...> :: value;
   template <Type Value1, Type Value2> constexpr const static auto logicalOr2 = logicalOrValue <Type, Value1, Value2> :: value;
   template <Type Value1, Type Value2> constexpr const static auto logicalAnd2 = logicalAndValue <Type, Value1, Value2> :: value;
-  #endif
+#endif
  };
 }
 #endif

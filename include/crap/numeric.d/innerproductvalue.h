@@ -3,7 +3,7 @@
 
 #include "reducevalue.h"
 #include "../algorithm.d/transform2value.h"
-#include "../utility.d/language.h"
+#include "../version.d/variabletemplates.h"
 
 namespace crap
 {
@@ -11,9 +11,9 @@ namespace crap
  struct innerProductValue
  {
   template <Type ... Values2> struct with;
-  #if CPP14
+#if (crap_variable_templates >= 201304L)
   template <Type ... Values2> constexpr const static Type value = with <Values2...> :: value;
-  #endif
+#endif
  };
 
  template <class Type, template <Type...> class AdditiveOperator, template <Type...> class MultiplicativeOperator, Type ... Values1>

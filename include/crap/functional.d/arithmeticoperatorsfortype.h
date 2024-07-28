@@ -8,7 +8,7 @@
 #include "negatevalue.h"
 #include "plusvalue.h"
 
-#include "../utility.d/language.h"
+#include "../version.d/variabletemplates.h"
 
 namespace crap
 {
@@ -25,7 +25,7 @@ namespace crap
   template <Type Value1, Type Value2> using Divides2 = dividesValue<Type, Value1, Value2>;
   template <Type Value1, Type Value2> using Modulus2 = modulusValue<Type, Value1, Value2>;
   template <Type Value1, Type Value2> using Multiplies2 = multipliesValue<Type, Value1, Value2>;
-  #if CPP14
+#if (crap_variable_templates >= 201304L)
   template <Type Value> constexpr const static auto negate = negateValue <Type, Value> :: value;
   template <Type ... Values> constexpr const static auto plus = plusValue <Type, Values...> :: value;
   template <Type ... Values> constexpr const static auto minus = minusValue <Type, Values...> :: value;
@@ -37,7 +37,7 @@ namespace crap
   template <Type Value1, Type Value2> constexpr const static auto divides2 = dividesValue <Type, Value1, Value2> :: value;
   template <Type Value1, Type Value2> constexpr const static auto modulus2 = modulusValue <Type, Value1, Value2> :: value;
   template <Type Value1, Type Value2> constexpr const static auto multiplies2 = multipliesValue <Type, Value1, Value2> :: value;
-  #endif
+#endif
  };
 }
 #endif

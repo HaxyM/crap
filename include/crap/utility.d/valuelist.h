@@ -3,7 +3,7 @@
 
 #include <utility>
 
-#include "language.h"
+#include "../version.d/variabletemplates.h"
 
 namespace crap
 {
@@ -26,9 +26,9 @@ struct Generator;
   template <std :: size_t N> friend struct valueList <Type, Values...> :: Till;
   template <std :: size_t N> friend struct valueList <Type, Values...> :: Since;
   template <std :: size_t Begin, std :: size_t End> friend struct valueList <Type, Values...> :: SubRange;
-  #if CPP14
+#if (crap_variable_templates >= 201304L)
   template <std :: size_t N> constexpr const static Type at = At <N> :: value;
-  #endif
+#endif
   template <template <Type...> class Container = This> using copy = Container<Values...>;
   template <std :: size_t N, template <Type...> class Container = This> using till = typename Till <N> :: template type<Container>;
   template <std :: size_t N, template <Type...> class Container = This> using since = typename Since <N> :: template type<Container>;

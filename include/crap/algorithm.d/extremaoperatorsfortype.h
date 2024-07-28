@@ -4,7 +4,7 @@
 #include "maxvalue.h"
 #include "minvalue.h"
 #include "../functional.d/comparatorsfortype.h"
-#include "../utility.d/language.h"
+#include "../version.d/variabletemplates.h"
 
 namespace crap
 {
@@ -13,10 +13,10 @@ namespace crap
  {
   template <Type ... Values> using Maximum = maxValue<Type, Operator, Values...>;
   template <Type ... Values> using Minimum = minValue<Type, Operator, Values...>;
-  #if CPP14
+#if (crap_variable_templates >= 201304L)
   template <Type ... Values> constexpr const static auto maximum = maxValue <Type, Operator, Values...> :: value;
   template <Type ... Values> constexpr const static auto minimum = minValue <Type, Operator, Values...> :: value;
-  #endif
+#endif
  };
 }
 #endif
