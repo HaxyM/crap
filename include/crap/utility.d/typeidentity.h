@@ -1,15 +1,15 @@
 #ifndef CRAP_UTILITY_TYPEIDENTITY
 #define CRAP_UTILITY_TYPEIDENTITY
 
-#include "language.h"
+#include "../version.d/libtypeidentity.h"
 
-#if CPP20
+#if (crap_lib_type_identity >= 201806L)
 #include <type_traits>
 #endif
 
 namespace crap
 {
-#if CPP20
+#if (crap_lib_type_identity >= 201806L)
  template <class Type> using typeIdentity = std :: type_identity<Type>;
 #else
  template <class Type> struct typeIdentity
