@@ -8,6 +8,7 @@
 #include "version.d/libintegercomparisonfunctions.h"
 #include "version.d/libintpow2.h"
 #include "version.d/libtypeidentity.h"
+#include "version.d/variabletemplates.h"
 
 #endif
 
