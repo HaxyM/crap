@@ -3,14 +3,14 @@
 
 #include <utility>
 
-#include "language.h"
+#include "../version.d/libintegersequence.h"
 
 namespace crap
 {
- #if CPP14
+#if (crap_lib_integer_sequence >= 201304L)
  template <std :: size_t ... Indices> using indexSequence = std :: index_sequence<Indices...>;
  template <std :: size_t N> using makeIndexSequence = std :: make_index_sequence<N>;
- #else
+#else
  template <std :: size_t ... Indices> struct indexSequence {};
 }
 
@@ -20,6 +20,6 @@ namespace crap
 {
  template <std :: size_t N>
 	 using makeIndexSequence = typename iotaValue <N, std :: size_t> :: template type<indexSequence>;
- #endif
+#endif
 }
 #endif
