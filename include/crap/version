@@ -9,6 +9,7 @@
 #include "version.d/libintegersequence.h"
 #include "version.d/libintpow2.h"
 #include "version.d/libtypeidentity.h"
+#include "version.d/packindexing.h"
 #include "version.d/variabletemplates.h"
 
 #endif
