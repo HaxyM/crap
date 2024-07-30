@@ -36,6 +36,7 @@
 #include "numeric.d/reducetypesource.h"
 #include "numeric.d/reducevalue.h"
 #include "numeric.d/reducevaluesource.h"
+#include "numeric.d/subsatvalue.h"
 
 #endif
 
