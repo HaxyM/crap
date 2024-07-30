@@ -1,6 +1,7 @@
 #ifndef CRAP_VERSION
 #define CRAP_VERSION
 
+#include "version.d/char8t.h"
 #include "version.d/foldexpressions.h"
 #include "version.d/libbitops.h"
 #include "version.d/libbyteswap.h"
@@ -8,8 +9,10 @@
 #include "version.d/libintegercomparisonfunctions.h"
 #include "version.d/libintegersequence.h"
 #include "version.d/libintpow2.h"
+#include "version.d/libsaturationarithmetic.h"
 #include "version.d/libtypeidentity.h"
 #include "version.d/packindexing.h"
+#include "version.d/unicodecharacters.h"
 #include "version.d/variabletemplates.h"
 
 #endif

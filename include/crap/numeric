@@ -8,6 +8,7 @@
 #include "numeric.d/accumulatetypesource.h"
 #include "numeric.d/accumulatevalue.h"
 #include "numeric.d/accumulatevaluesource.h"
+#include "numeric.d/addsatvalue.h"
 #include "numeric.d/adjacentdifferencefortype.h"
 #include "numeric.d/adjacentdifferencetype.h"
 #include "numeric.d/adjacentdifferencevalue.h"
