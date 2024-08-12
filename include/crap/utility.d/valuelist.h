@@ -22,10 +22,13 @@ struct Generator;
   template <std :: size_t N> struct Till;
   template <std :: size_t N> struct Since;
   template <std :: size_t Begin, std :: size_t End> struct SubRange;
+#ifndef _MSC_VER //Possibly issue with cl compiler or my misunderstanding of standard.
   template <std :: size_t N> friend struct valueList <Type, Values...> :: At;
   template <std :: size_t N> friend struct valueList <Type, Values...> :: Till;
   template <std :: size_t N> friend struct valueList <Type, Values...> :: Since;
   template <std :: size_t Begin, std :: size_t End> friend struct valueList <Type, Values...> :: SubRange;
+#endif
+ 
 #if (crap_variable_templates >= 201304L)
   template <std :: size_t N> constexpr const static Type at = At <N> :: value;
 #endif
