@@ -25,6 +25,7 @@
 #include "numeric.d/innerproductvalue.h"
 #include "numeric.d/iotavalue.h"
 #include "numeric.d/lcmvalue.h"
+#include "numeric.d/mulsatvalue.h"
 #include "numeric.d/outerproductfortype.h"
 #include "numeric.d/outerproducttype.h"
 #include "numeric.d/outerproductvalue.h"
