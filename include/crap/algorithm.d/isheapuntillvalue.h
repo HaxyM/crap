@@ -56,7 +56,7 @@ namespace crap
 
  template <class Type, template <Type, Type> class Operator, Type ... Values>
 	 template <bool True>
- struct isHeapUntillValue <Type, Operator, Values...> :: template
+ struct isHeapUntillValue <Type, Operator, Values...> ::
 	 Implementation<True, indexSequence<0u> >
  {
   constexpr const static std :: size_t value = sizeof...(Values);
@@ -64,7 +64,7 @@ namespace crap
 
  template <class Type, template <Type, Type> class Operator, Type ... Values>
 	 template <bool False, std :: size_t Index>
- struct isHeapUntillValue <Type, Operator, Values...> :: template
+ struct isHeapUntillValue <Type, Operator, Values...> ::
 	 Implementation<False, indexSequence<Index> >
  {
   private:
@@ -78,7 +78,7 @@ namespace crap
 
  template <class Type, template <Type, Type> class Operator, Type ... Values>
 	 template <bool HasFront, std :: size_t ... Indices>
- struct isHeapUntillValue <Type, Operator, Values...> :: template
+ struct isHeapUntillValue <Type, Operator, Values...> ::
 	 Implementation<HasFront, indexSequence<Indices...> >
  {
   private:
@@ -96,7 +96,7 @@ namespace crap
  template <class Type, template <Type, Type> class Operator, Type ... Values>
 	 template <bool HasFront, std :: size_t ... Indices>
 	 template <std :: size_t Index, std :: size_t Npos>
- struct isHeapUntillValue <Type, Operator, Values...> :: template
+ struct isHeapUntillValue <Type, Operator, Values...> ::
 	 Implementation <HasFront, indexSequence<Indices...> > :: Upper
  {
   constexpr const static std :: size_t value = Index;
@@ -105,8 +105,8 @@ namespace crap
  template <class Type, template <Type, Type> class Operator, Type ... Values>
 	 template <bool HasFront, std :: size_t ... Indices>
 	 template <std :: size_t Npos>
- struct isHeapUntillValue <Type, Operator, Values...> :: template
-	 Implementation <HasFront, indexSequence<Indices...> > :: template
+ struct isHeapUntillValue <Type, Operator, Values...> ::
+	 Implementation <HasFront, indexSequence<Indices...> > ::
 	 Upper<Npos, Npos>
  {
   private:
