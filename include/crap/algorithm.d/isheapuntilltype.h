@@ -56,7 +56,7 @@ namespace crap
 
  template <template <class, class> class Operator, class ... Types>
 	 template <bool True>
- struct isHeapUntillType <Operator, Types...> :: template
+ struct isHeapUntillType <Operator, Types...> ::
 	 Implementation<True, indexSequence<0u> >
  {
   constexpr const static std :: size_t value = sizeof...(Types);
@@ -64,7 +64,7 @@ namespace crap
 
  template <template <class, class> class Operator, class ... Types>
 	 template <bool False, std :: size_t Index>
- struct isHeapUntillType <Operator, Types...> :: template
+ struct isHeapUntillType <Operator, Types...> ::
 	 Implementation<False, indexSequence<Index> >
  {
   private:
@@ -78,7 +78,7 @@ namespace crap
 
  template <template <class, class> class Operator, class ... Types>
 	 template <bool HasFront, std :: size_t ... Indices>
- struct isHeapUntillType <Operator, Types...> :: template
+ struct isHeapUntillType <Operator, Types...> ::
 	 Implementation<HasFront, indexSequence<Indices...> >
  {
   private:
@@ -96,7 +96,7 @@ namespace crap
  template <template <class, class> class Operator, class ... Types>
 	 template <bool HasFront, std :: size_t ... Indices>
 	 template <std :: size_t Index, std :: size_t Npos>
- struct isHeapUntillType <Operator, Types...> :: template
+ struct isHeapUntillType <Operator, Types...> ::
 	 Implementation <HasFront, indexSequence<Indices...> > :: Upper
  {
   constexpr const static std :: size_t value = Index;
@@ -105,8 +105,8 @@ namespace crap
  template <template <class, class> class Operator, class ... Types>
 	 template <bool HasFront, std :: size_t ... Indices>
 	 template <std :: size_t Npos>
- struct isHeapUntillType <Operator, Types...> :: template
-	 Implementation <HasFront, indexSequence<Indices...> > :: template
+ struct isHeapUntillType <Operator, Types...> ::
+	 Implementation <HasFront, indexSequence<Indices...> > ::
 	 Upper<Npos, Npos>
  {
   private:
