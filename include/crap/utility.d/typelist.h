@@ -101,8 +101,9 @@ namespace crap
  struct typeList <Types...> :: At <N> :: Implementation
  {
   template <class Type> using identity = typename typeList <Types...> :: template identity<Type>;
+  using ignore_t = typename typeList <Types...> :: ignore;
   template <class NthType> static NthType
-  generate(decltype(typename typeList <Types...> :: ignore(Indices))..., identity<NthType>, ...);
+  generate(decltype(static_cast<ignore_t>(Indices))..., identity<NthType>, ...);
  };
 #endif
 
@@ -111,8 +112,9 @@ namespace crap
  struct typeList <Types...> :: Since <N, Container> :: Implementation
  {
   template <class Type> using identity = typename typeList <Types...> :: template identity<Type>;
+  using ignore_t = typename typeList <Types...> :: ignore;
   template <class ... SubTypes> static Container<SubTypes...>
-  generate(decltype(typename typeList <Types...> :: ignore(Indices))..., identity<SubTypes>...);
+  generate(decltype(static_cast<ignore_t>(Indices))..., identity<SubTypes>...);
  };
 }
 #endif
