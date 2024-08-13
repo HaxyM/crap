@@ -98,7 +98,7 @@ namespace crap
 #if (crap_pack_indexing >= 202311L)
 #else
  template <class ... Types> template <std :: size_t N> template <std :: size_t ... Indices>
- struct typeList <Types...> :: template At <N> :: Implementation
+ struct typeList <Types...> :: At <N> :: Implementation
  {
   template <class Type> using identity = typename typeList <Types...> :: template identity<Type>;
   template <class NthType> static NthType
@@ -108,7 +108,7 @@ namespace crap
 
  template <class ... Types> template <std :: size_t N, template <class...> class Container>
  template <std :: size_t ... Indices>
- struct typeList <Types...> :: template Since <N, Container> :: Implementation
+ struct typeList <Types...> :: Since <N, Container> :: Implementation
  {
   template <class Type> using identity = typename typeList <Types...> :: template identity<Type>;
   template <class ... SubTypes> static Container<SubTypes...>
