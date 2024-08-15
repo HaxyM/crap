@@ -94,10 +94,10 @@ namespace crap
  };
 #endif
 
- template <class Type, Type ... Values> struct subSatValue
+ template <class Type, Type ... Values> struct mulSatValue
  {
   private:
-  constexpr const static Type const0 = zero <Type> :: value;
+  template <Type ... SubValues> using This = mulSatValue<Type, SubValues...>;
   public:
   constexpr const static auto value = accumulateValue <Type, This, Values...> :: value;
   using value_type = decltype(value);
@@ -120,14 +120,21 @@ namespace crap
   constexpr const static bool morePositive = (const0 < delta);
   //Largest value safe to have absolute value.
   constexpr const static Type constSecMax = (morePositive ? (max - delta) : max);
-  constexpr const static Type constSecDelta = (morePositive ? delta : const0);
-  constexpr const static Type d = (constSecMax / Value2);
-  constexpr const static bool fracUnder1 = ((Value2 - (constSecMax % Value2)) < (constSecDelta % Value2));
+  //How many times secure max fits in max.
+  constexpr const static Type n = (max / constSecMax);
+  constexpr const static Type constSecDelta = (morePositive ? (max % constSecMax) : const0);
+  //constSecMax is positive, Value2 negative and n positive
+  constexpr const static Type div1 = (morePositive ? ((constSecMax / Value2) * (-n)) : (constSecMax / Value2));
+  //Positive modulo negative, schould be positive, so this schold neither underflow nor overflow.
+  constexpr const static Type rest1 = ((n * constSecMax) % Value2);
+  //Again, positive modulo negative, schould be positive.
+  constexpr const static bool fracUnder1 = ((Value2 + rest1 + (constSecDelta % Value2)) < 0);
+  constexpr const static Type diff1 = (morePositive ? (Value1 + div1) : (Value1 - div1));
   //This may fail iff Value1 is 0, but here it is not
   constexpr const static bool overflow =
-	  ((constSecDelta / Value2) > (fracUnder1 ? (Value1 - d) : (Value1 - d - const1)));
+	  ((constSecDelta / Value2) > (fracUnder1 ? diff1 : (diff1 - const1)));
   public:
-  constexpr const static auto value = (overflow ? std :: numeric_limits <Type> :: min() : (Value1 * Value2));
+  constexpr const static auto value = (overflow ? std :: numeric_limits <Type> :: max() : (Value1 * Value2));
  };
 
  template <class Type, Type Value1, Type Value2>
@@ -184,10 +191,10 @@ typename crap :: mulSatValue <Type, Value1, Value2> :: value_type () const noexc
 #endif
 
 template <class Type, Type ... Values>
-inline constexpr crap :: subSatValue <Type, Values...> :: operator
-typename crap :: subSatValue <Type, Values...> :: value_type () const noexcept
+inline constexpr crap :: mulSatValue <Type, Values...> :: operator
+typename crap :: mulSatValue <Type, Values...> :: value_type () const noexcept
 {
- return crap :: subSatValue <Type, Values...> :: value;
+ return crap :: mulSatValue <Type, Values...> :: value;
 }
 #endif
 
