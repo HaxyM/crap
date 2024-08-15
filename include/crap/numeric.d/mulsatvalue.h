@@ -108,7 +108,7 @@ namespace crap
 
  template <class Type, Type Value1, Type Value2>
  template <class ... Empty>
-	 struct mulSatValue <Type, Value1, Value2> :: template
+	 struct mulSatValue <Type, Value1, Value2> ::
 	 Implementation<true, true, true, Empty...>
  {
   private:
@@ -139,7 +139,7 @@ namespace crap
 
  template <class Type, Type Value1, Type Value2>
  template <class ... Empty>
-	 struct mulSatValue <Type, Value1, Value2> :: template
+	 struct mulSatValue <Type, Value1, Value2> ::
 	 Implementation<true, true, false, Empty...>
  {
   private:
@@ -150,7 +150,7 @@ namespace crap
 
  template <class Type, Type Value1, Type Value2>
  template <class ... Empty>
-	 struct mulSatValue <Type, Value1, Value2> :: template
+	 struct mulSatValue <Type, Value1, Value2> ::
 	 Implementation<true, false, true, Empty...>
  {
   private:
@@ -161,7 +161,7 @@ namespace crap
 
  template <class Type, Type Value1, Type Value2>
  template <class ... Empty>
-	 struct mulSatValue <Type, Value1, Value2> :: template
+	 struct mulSatValue <Type, Value1, Value2> ::
 	 Implementation<true, false, false, Empty...>
  {
   private:
@@ -172,7 +172,7 @@ namespace crap
 
  template <class Type, Type Value1, Type Value2>
  template <bool Val1Neg, bool Val2Neg, class ... Empty>
-	 struct mulSatValue <Type, Value1, Value2> :: template
+	 struct mulSatValue <Type, Value1, Value2> ::
 	 Implementation<false, Val1Neg, Val2Neg, Empty...>
  {
   constexpr const static auto value = (Value1 * Value2);
