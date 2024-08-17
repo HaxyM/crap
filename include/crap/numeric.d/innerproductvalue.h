@@ -3,6 +3,7 @@
 
 #include "reducevalue.h"
 #include "../algorithm.d/transform2value.h"
+#include "../version.d/libintegralconstantcallable.h"
 #include "../version.d/variabletemplates.h"
 
 namespace crap
@@ -17,25 +18,21 @@ namespace crap
  };
 
  template <class Type, template <Type...> class AdditiveOperator, template <Type...> class MultiplicativeOperator, Type ... Values1>
- template <Type ... Values2> struct innerProductValue <Type, AdditiveOperator, MultiplicativeOperator, Values1...> :: with
+	template <Type ... Values2>
+ struct innerProductValue <Type, AdditiveOperator, MultiplicativeOperator, Values1...> :: with
  {
   private:
   template <Type A, Type B> using multiplicative = MultiplicativeOperator<A, B>;
   template <Type ... SubTypes> using Reductor = reduceValue<Type, AdditiveOperator, SubTypes...>;
-  using reduced = typename transform2Value <Type, multiplicative, Values1...> :: template with <Values2...> :: template type<Reductor>;
   public:
-  constexpr const static Type value = reduced :: value;
+  constexpr const static Type value = transform2Value <Type, multiplicative, Values1...> :: template
+	  with <Values2...> :: template type <Reductor> :: value;
   using value_type = decltype(value);
-  constexpr operator value_type () const noexcept;
+  constexpr operator value_type () const noexcept { return value; }
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept { return value; }
+#endif
  };
 }
-
-template <class Type, template <Type...> class AdditiveOperator, template <Type...> class MultiplicativeOperator, Type ... Values1>  template <Type ... Values2>
-inline constexpr crap :: innerProductValue <Type, AdditiveOperator, MultiplicativeOperator, Values1...> :: template
-	with <Values2...> :: operator
-typename crap :: innerProductValue <Type, AdditiveOperator, MultiplicativeOperator, Values1...> :: template
-	with <Values2...> :: value_type () const noexcept
-{
- return crap :: innerProductValue <Type, AdditiveOperator, MultiplicativeOperator, Values1...> :: template with <Values2...> :: value;
-};
 #endif
+
