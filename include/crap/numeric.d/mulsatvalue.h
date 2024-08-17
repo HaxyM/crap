@@ -8,6 +8,7 @@
 #include "../numeric.d/accumulatevalue.h"
 
 #include "../version.d/char8t.h"
+#include "../version.d/libintegralconstantcallable.h"
 #include "../version.d/libsaturationarithmetic.h"
 #include "../version.d/unicodecharacters.h"
 
@@ -91,6 +92,9 @@ namespace crap
 	  Implementation <nonTrivial, (Value1 < const0), (Value2 < const0)> :: value;
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 #endif
 
@@ -102,6 +106,9 @@ namespace crap
   constexpr const static auto value = accumulateValue <Type, This, Values...> :: value;
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 #if (crap_lib_saturation_arithmetic >= 202311L)
 #else
@@ -122,10 +129,12 @@ namespace crap
   constexpr const static Type constSecMax = (morePositive ? (max - delta) : max);
   //How many times secure max fits in max.
   constexpr const static Type n = (max / constSecMax);
+  static_assert(!((constSecMax < n) && (morePositive)), "Range to asimetric.");
   constexpr const static Type constSecDelta = (morePositive ? (max % constSecMax) : const0);
   //constSecMax is positive, Value2 negative and n positive
   constexpr const static Type div1 = (morePositive ? ((constSecMax / Value2) * (-n)) : (constSecMax / Value2));
   //Positive modulo negative, schould be positive, so this schold neither underflow nor overflow.
+  //Also since n = (max / constSecMax), n * constSecMax can not overflow.
   constexpr const static Type rest1 = ((n * constSecMax) % Value2);
   //Again, positive modulo negative, schould be positive.
   constexpr const static bool fracUnder1 = ((Value2 + rest1 + (constSecDelta % Value2)) < 0);
@@ -188,6 +197,15 @@ typename crap :: mulSatValue <Type, Value1, Value2> :: value_type () const noexc
 {
  return crap :: mulSatValue <Type, Value1, Value2> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <class Type, Type Value1, Type Value2>
+inline constexpr typename crap :: mulSatValue <Type, Value1, Value2> :: value_type
+crap :: mulSatValue <Type, Value1, Value2> :: operator () () const noexcept
+{
+ return crap :: mulSatValue <Type, Value1, Value2> :: value;
+}
+#endif
 #endif
 
 template <class Type, Type ... Values>
@@ -196,5 +214,14 @@ typename crap :: mulSatValue <Type, Values...> :: value_type () const noexcept
 {
  return crap :: mulSatValue <Type, Values...> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <class Type, Type ... Values>
+inline constexpr typename crap :: mulSatValue <Type, Values...> :: value_type
+crap :: mulSatValue <Type, Values...> :: operator () () const noexcept
+{
+ return crap :: mulSatValue <Type, Values...> :: value;
+}
+#endif
 #endif
 
