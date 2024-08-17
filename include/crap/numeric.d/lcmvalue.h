@@ -1,48 +1,47 @@
 #ifndef CRAP_NUMERIC_LCMVALUE
 #define CRAP_NUMERIC_LCMVALUE
 
+#include <type_traits>
+
 #include "../numbers.d/identity.h"
 #include "../version.d/libgcdlcm.h"
+#include "../version.d/libintegralconstantcallable.h"
 #include "reducevalue.h"
 
 #if (crap_lib_gcd_lcm >= 201606L)
 #include <numeric>
 #else
 #include "gcdvalue.h"
-#include <type_traits>
 #endif
 
 namespace crap
 {
  template <class Type, Type...> struct lcmValue;
 
- template <class Type> struct lcmValue<Type>
- {
-  constexpr const static Type value = identity <Type> :: value;
-  using value_type = decltype(value);
-  constexpr operator value_type () const noexcept;
- };
+ template <class Type>
+	 struct lcmValue<Type> : std :: integral_constant<Type, identity <Type> :: value> {};
 
- template <class Type, Type Value> struct lcmValue<Type, Value>
- {
-  constexpr const static Type value = Value;
-  using value_type = decltype(value);
-  constexpr operator value_type () const noexcept;
- };
+ template <class Type, Type Value>
+	 struct lcmValue<Type, Value> : std :: integral_constant<Type, Value> {};
 
+#if (crap_lib_gcd_lcm >= 201606L)
+ template <class Type, Type Value1, Type Value2>
+	 struct lcmValue<Type, Value1, Value2>
+	 : std :: integral_constant<Type, std :: lcm(Value1, Value2)> {};
+#else
  template <class Type, Type Value1, Type Value2> struct lcmValue<Type, Value1, Value2>
  {
-#if (crap_lib_gcd_lcm >= 201606L)
-  constexpr const static Type value = std :: lcm(Value1, Value2);
-#else
   private:
   constexpr const static auto Gcd = gcdValue <Type, Value1, Value2> :: value;
   public:
   constexpr const static Type value = (Value1 / Gcd) * Value2;
-#endif
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
+#endif
 
  template <class Type, Type ... Values> struct lcmValue
  {
@@ -54,20 +53,8 @@ namespace crap
   constexpr operator value_type () const noexcept;
  };
 }
-
-template <class Type>
-	inline constexpr crap :: lcmValue <Type> :: operator
-	typename crap :: lcmValue <Type> :: value_type () const noexcept
-{
- return crap :: lcmValue <Type> :: value;
-};
-
-template <class Type, Type Value>
-	inline constexpr crap :: lcmValue <Type, Value> :: operator
-	typename crap :: lcmValue <Type, Value> :: value_type () const noexcept
-{
- return crap :: lcmValue <Type, Value> :: value;
-};
+#if (crap_lib_gcd_lcm >= 201606L)
+#else
 
 template <class Type, Type Value1, Type Value2>
 	inline constexpr crap :: lcmValue <Type, Value1, Value2> :: operator
@@ -75,6 +62,16 @@ template <class Type, Type Value1, Type Value2>
 {
  return crap :: lcmValue <Type, Value1, Value2> :: value;
 };
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <class Type, Type Value1, Type Value2>
+inline constexpr typename crap :: lcmValue <Type, Value1, Value2> :: value_type
+crap :: lcmValue <Type, Value1, Value2> :: operator () () const noexcept
+{
+ return crap :: lcmValue <Type, Value1, Value2> :: value;
+}
+#endif
+#endif
 
 template <class Type, Type ... Values>
 	inline constexpr crap :: lcmValue <Type, Values...> :: operator
@@ -82,5 +79,14 @@ template <class Type, Type ... Values>
 {
  return crap :: lcmValue <Type, Values...> :: value;
 };
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <class Type, Type ... Values>
+inline constexpr typename crap :: lcmValue <Type, Values...> :: value_type
+crap :: lcmValue <Type, Values...> :: operator () () const noexcept
+{
+ return crap :: lcmValue <Type, Values...> :: value;
+}
+#endif
 #endif
 
