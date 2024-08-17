@@ -1,70 +1,56 @@
 #ifndef CRAP_NUMERIC_GCDVALUE
 #define CRAP_NUMERIC_GCDVALUE
 
+#include <type_traits>
+
 #include "../numbers.d/zero.h"
 #include "../version.d/libgcdlcm.h"
+#include "../version.d/libintegralconstantcallable.h"
 #include "reducevalue.h"
 
 #if (crap_lib_gcd_lcm >= 201606L)
 #include <numeric>
 #else
-#include <type_traits>
+#include "../numbers.d/identity.h"
 #endif
 
 namespace crap
 {
  template <class Type, Type...> struct gcdValue;
 
- template <class Type> struct gcdValue<Type>
- {
-  constexpr const static Type value = zero <Type> :: value;
-  using value_type = decltype(value);
-  constexpr operator value_type () const noexcept;
- };
+ template <class Type>
+	 struct gcdValue<Type> : std :: integral_constant<Type, zero <Type> :: value> {};
 
- template <class Type, Type Value> struct gcdValue<Type, Value>
- {
-  constexpr const static Type value = Value;
-  using value_type = decltype(value);
-  constexpr operator value_type () const noexcept;
- };
+ template <class Type, Type Value>
+	 struct gcdValue<Type, Value> : std :: integral_constant<Type, Value> {};
 
- template <class Type, Type Value> struct gcdValue<Type, Value, Value>
- {
-  constexpr const static Type value = Value;
-  using value_type = decltype(value);
-  constexpr operator value_type () const noexcept;
- };
+#if (crap_lib_gcd_lcm >= 201606L)
+ template <class Type, Type Value1, Type Value2>
+	 struct gcdValue<Type, Value1, Value2>
+	 : std :: integral_constant<Type, std :: gcd(Value1, Value2)> {};
+#else
+ template <class Type, Type Value>
+	 struct gcdValue<Type, Value, Value> : std :: integral_constant<Type, Value> {};
 
  template <class Type, Type Value1, Type Value2> struct gcdValue<Type, Value1, Value2>
  {
-#if (crap_lib_gcd_lcm >= 201606L)
-  constexpr const static Type value = std :: gcd(Value1, Value2);
-#else
   private:
-  constexpr const static Type
-	  getValue(std :: integral_constant<Type, static_cast<Type>(0)>, std :: integral_constant<Type, static_cast<Type>(1)>);
-  constexpr const static Type
-	  getValue(std :: integral_constant<Type, static_cast<Type>(1)>, std :: integral_constant<Type, static_cast<Type>(0)>);
-  template <Type SubValue> constexpr const static Type
-	  getValue(std :: integral_constant<Type, SubValue>, std :: integral_constant<Type, static_cast<Type>(0)>);
-  template <Type SubValue> constexpr const static Type
-	  getValue(std :: integral_constant<Type, static_cast<Type>(0)>, std :: integral_constant<Type, SubValue>);
-  template <Type SubValue> constexpr const static Type
-	  getValue(std :: integral_constant<Type, SubValue>, std :: integral_constant<Type, static_cast<Type>(1)>);
-  template <Type SubValue> constexpr const static Type
-	  getValue(std :: integral_constant<Type, static_cast<Type>(1)>, std :: integral_constant<Type, SubValue>);
-  template <Type SubValue> constexpr const static Type
-	  getValue(std :: integral_constant<Type, SubValue>, std :: integral_constant<Type, SubValue>);
-  template <Type SubValue1, Type SubValue2> constexpr const static Type
-	  getValue(std :: integral_constant<Type, SubValue1>, std :: integral_constant<Type, SubValue2>);
+  constexpr const static Type const0 = zero <Type> :: value;
+  constexpr const static Type const1 = identity <Type> :: value;
+  constexpr const static bool nonTrivial =
+	  ((Value1 != const0) && (Value2 != const0) && (Value1 != const1) && (Value2 != const1));
+  template <bool NonTrivial, class ... Empty> struct Implementation;
+  template <class ... Empty> struct Implementation<true, Empty...>;
+  template <class ... Empty> struct Implementation<false, Empty...>;
   public:
-  constexpr const static Type value =
-	  getValue(std :: integral_constant<Type, Value1>{}, std :: integral_constant<Type, Value2>{});
-#endif
+  constexpr const static Type value = Implementation <nonTrivial> :: value;
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
+#endif
 
  template <class Type, Type ... Values> struct gcdValue
  {
@@ -74,73 +60,41 @@ namespace crap
   constexpr const static Type value = reduceValue <Type, This, Values...> :: value;
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
-}
-
-template <class Type>
-	inline constexpr crap :: gcdValue <Type> :: operator
-	typename crap :: gcdValue <Type> :: value_type () const noexcept
-{
- return crap :: gcdValue <Type> :: value;
-};
-
-template <class Type, Type Value>
-	inline constexpr crap :: gcdValue <Type, Value> :: operator
-	typename crap :: gcdValue <Type, Value> :: value_type () const noexcept
-{
- return crap :: gcdValue <Type, Value> :: value;
-};
 
 #if (crap_lib_gcd_lcm >= 201606L)
 #else
-template <class Type, Type Value1, Type Value2> inline constexpr const Type
-	crap :: gcdValue <Type, Value1, Value2> :: getValue(std :: integral_constant<Type, static_cast<Type>(0)>, std :: integral_constant<Type, static_cast<Type>(1)>)
-{
- return static_cast<Type>(1);
-}
+ template <class Type, Type Value1, Type Value2>
+	 template <class ... Empty>
+ struct gcdValue <Type, Value1, Value2> :: Implementation<true, Empty...>
+ {
+  private:
+  constexpr const static Type newVal1 = ((Value1 < Value2) ? Value1 : (Value1 % Value2));
+  constexpr const static Type newVal2 = ((Value2 < Value1) ? Value2 : (Value2 % Value1));
+  public:
+  constexpr const static Type value = gcdValue <Type, newVal1, newVal2> :: value;
+ };
 
-template <class Type, Type Value1, Type Value2> inline constexpr const Type
-	crap :: gcdValue <Type, Value1, Value2> :: getValue(std :: integral_constant<Type, static_cast<Type>(1)>, std :: integral_constant<Type, static_cast<Type>(0)>)
-{
- return static_cast<Type>(1);
-}
+ template <class Type, Type Value1, Type Value2>
 
-template <class Type, Type Value1, Type Value2> template <Type SubValue> inline constexpr const Type
-	crap :: gcdValue <Type, Value1, Value2> :: getValue(std :: integral_constant<Type, SubValue>, std :: integral_constant<Type, static_cast<Type>(0)>)
-{
- return SubValue;
-}
-
-template <class Type, Type Value1, Type Value2> template <Type SubValue> inline constexpr const Type
-	crap :: gcdValue <Type, Value1, Value2> :: getValue(std :: integral_constant<Type, static_cast<Type>(0)>, std :: integral_constant<Type, SubValue>)
-{
- return SubValue;
-}
-
-template <class Type, Type Value1, Type Value2> template <Type SubValue> inline constexpr const Type
-	crap :: gcdValue <Type, Value1, Value2> :: getValue(std :: integral_constant<Type, SubValue>, std :: integral_constant<Type, static_cast<Type>(1)>)
-{
- return static_cast<Type>(1);
-}
-
-template <class Type, Type Value1, Type Value2> template <Type SubValue> inline constexpr const Type
-	crap :: gcdValue <Type, Value1, Value2> :: getValue(std :: integral_constant<Type, static_cast<Type>(1)>, std :: integral_constant<Type, SubValue>)
-{
- return static_cast<Type>(1);
-}
-
-template <class Type, Type Value1, Type Value2> template <Type SubValue> inline constexpr const Type
-	crap :: gcdValue <Type, Value1, Value2> :: getValue(std :: integral_constant<Type, SubValue>, std :: integral_constant<Type, SubValue>)
-{
- return SubValue;
-}
-
-template <class Type, Type Value1, Type Value2> template <Type SubValue1, Type SubValue2> inline constexpr const Type
-	crap :: gcdValue <Type, Value1, Value2> :: getValue(std :: integral_constant<Type, SubValue1>, std :: integral_constant<Type, SubValue2>)
-{
- return crap :: gcdValue <Type, Value1, Value2> :: getValue(std :: integral_constant<Type, (SubValue1 < SubValue2) ? SubValue1 : (SubValue1 % SubValue2)>{}, std :: integral_constant<Type, (SubValue2 < SubValue1) ? SubValue2 : (SubValue2 % SubValue1)>{});
-}
+	 template <class ... Empty>
+ struct gcdValue <Type, Value1, Value2> :: Implementation<false, Empty...>
+ {
+  private:
+  constexpr const static Type const0 = zero <Type> :: value;
+  constexpr const static Type const1 = identity <Type> :: value;
+  constexpr const static bool any1 = ((Value1 == const1) || (Value2 == const1));
+  constexpr const static bool val1non0 = (Value1 != const0);
+  public:
+  constexpr const static Type value = (any1 ? const1 : (val1non0 ? Value1 : Value2));
+ };
 #endif
+}
+#if (crap_lib_gcd_lcm >= 201606L)
+#else
 
 template <class Type, Type Value1, Type Value2>
 	inline constexpr crap :: gcdValue <Type, Value1, Value2> :: operator
@@ -148,6 +102,16 @@ template <class Type, Type Value1, Type Value2>
 {
  return crap :: gcdValue <Type, Value1, Value2> :: value;
 };
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <class Type, Type Value1, Type Value2>
+inline constexpr typename crap :: gcdValue <Type, Value1, Value2> :: value_type
+crap :: gcdValue <Type, Value1, Value2> :: operator () () const noexcept
+{
+ return crap :: gcdValue <Type, Value1, Value2> :: value;
+}
+#endif
+#endif
 
 template <class Type, Type ... Values>
 	inline constexpr crap :: gcdValue <Type, Values...> :: operator
@@ -155,4 +119,14 @@ template <class Type, Type ... Values>
 {
  return crap :: gcdValue <Type, Values...> :: value;
 };
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <class Type, Type ... Values>
+inline constexpr typename crap :: gcdValue <Type, Values...> :: value_type
+crap :: gcdValue <Type, Values...> :: operator () () const noexcept
+{
+ return crap :: gcdValue <Type, Values...> :: value;
+}
 #endif
+#endif
+
