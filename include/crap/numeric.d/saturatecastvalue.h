@@ -1,8 +1,6 @@
 #ifndef CRAP_UTILITY_SATURATECASTVALUE
 #define CRAP_UTILITY_SATURATECASTVALUE
 
-#include "../utility.d/cmpgreatervalue.h"
-#include "../utility.d/cmplessvalue.h"
 #include "../version.d/libsaturationarithmetic.h"
 
 #if (crap_lib_saturation_arithmetic >= 202311L)
@@ -10,6 +8,10 @@
 #else
 #include <limits>
 #include <type_traits>
+
+#include "../utility.d/cmpgreatervalue.h"
+#include "../utility.d/cmplessvalue.h"
+#include "../version.d/libintegralconstantcallable.h"
 #endif
 
 namespace crap
@@ -35,6 +37,9 @@ namespace crap
 	    static_cast<TypeToFitIn>(Value)));
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 #endif
 }
@@ -47,6 +52,15 @@ typename crap :: saturateCastValue <TypeToFitIn, Type, Value> :: value_type () c
 {
  return crap :: saturateCastValue <TypeToFitIn, Type, Value> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <class TypeToFitIn, class Type, Type Value>
+inline constexpr typename crap :: saturateCastValue <TypeToFitIn, Type, Value> :: value_type
+crap :: saturateCastValue <TypeToFitIn, Type, Value> :: operator () () const noexcept
+{
+ return crap :: saturateCastValue <TypeToFitIn, Type, Value> :: value;
+}
+#endif
 #endif
 #endif
 
