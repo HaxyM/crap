@@ -13,7 +13,7 @@ namespace crap
   constexpr const static Type values[sizeof...(Values)] = {Values...};
   template <Type ... SubValues> using This = valueList<Type, SubValues...>;
   template <template <std :: size_t> class Gen, std :: size_t ... Indices>
-struct Generator;
+	  struct Generator;
   public:
   constexpr const static std :: size_t size = sizeof...(Values);
   constexpr const static std :: size_t begin = 0u;
@@ -32,11 +32,24 @@ struct Generator;
 #if (crap_variable_templates >= 201304L)
   template <std :: size_t N> constexpr const static Type at = At <N> :: value;
 #endif
+  constexpr const static Type (& data() noexcept)[sizeof...(Values)];
   template <template <Type...> class Container = This> using copy = Container<Values...>;
-  template <std :: size_t N, template <Type...> class Container = This> using till = typename Till <N> :: template type<Container>;
-  template <std :: size_t N, template <Type...> class Container = This> using since = typename Since <N> :: template type<Container>;
-  template <std :: size_t Begin, std :: size_t End, template <Type...> class Container = This> using subRange = typename SubRange <Begin, End> :: template type<Container>;
+  template <std :: size_t N, template <Type...> class Container = This>
+	  using till = typename Till <N> :: template type<Container>;
+  template <std :: size_t N, template <Type...> class Container = This>
+	  using since = typename Since <N> :: template type<Container>;
+  template <std :: size_t Begin, std :: size_t End, template <Type...> class Container = This>
+	  using subRange = typename SubRange <Begin, End> :: template type<Container>;
  };
+}
+
+template <class Type, Type ... Values>
+constexpr const Type crap :: valueList <Type, Values...> :: values[sizeof...(Values)];
+
+template <class Type, Type ... Values>
+inline constexpr const Type (& crap :: valueList <Type, Values...> :: data() noexcept)[sizeof...(Values)]
+{
+ return crap :: valueList <Type, Values...> :: values;
 }
 
 #include "makeindexsequence.h"
