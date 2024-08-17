@@ -87,7 +87,11 @@ namespace crap
 	   (overflow ? std :: numeric_limits <Type> :: max() : (Value1 - Value2)));
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
+#endif
 
  template <class Type, Type ... Values> struct subSatValue
  {
@@ -97,8 +101,10 @@ namespace crap
   constexpr const static auto value = accumulateValue <Type, This, Values...> :: value;
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
- };
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
 #endif
+ };
 }
 #if (crap_lib_saturation_arithmetic >= 202311L)
 #else
@@ -109,6 +115,15 @@ typename crap :: subSatValue <Type, Value1, Value2> :: value_type () const noexc
 {
  return crap :: subSatValue <Type, Value1, Value2> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <class Type, Type Value1, Type Value2>
+inline constexpr typename crap :: subSatValue <Type, Value1, Value2> :: value_type
+crap :: subSatValue <Type, Value1, Value2> :: operator () () const noexcept
+{
+ return crap :: subSatValue <Type, Value1, Value2> :: value;
+}
+#endif
 #endif
 
 template <class Type, Type ... Values>
@@ -117,5 +132,14 @@ typename crap :: subSatValue <Type, Values...> :: value_type () const noexcept
 {
  return crap :: subSatValue <Type, Values...> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <class Type, Type ... Values>
+inline constexpr typename crap :: subSatValue <Type, Values...> :: value_type
+crap :: subSatValue <Type, Values...> :: operator () () const noexcept
+{
+ return crap :: subSatValue <Type, Values...> :: value;
+}
+#endif
 #endif
 
