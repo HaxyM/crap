@@ -2,6 +2,7 @@
 #define CRAP_ALGORITHM_MISMATCHTYPE
 
 #include "../utility.d/typelist.h"
+#include "../version.d/libintegralconstantcallable.h"
 
 #include <cstddef>
 
@@ -36,6 +37,9 @@ namespace crap
   constexpr const static std :: size_t npos = sizeof...(Types2);
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 
  template <template <class, class> class Operator, class Only1> template <class...>
@@ -45,24 +49,33 @@ namespace crap
   constexpr const static std :: size_t npos = 1u;
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 
  template <template <class, class> class Operator, class Only1> template <class Only2>
-	 struct mismatchType <Operator, Only1> :: template with<Only2>
+	 struct mismatchType <Operator, Only1> :: with<Only2>
  {
   constexpr const static std :: size_t value = ((Operator <Only1, Only2> :: value) ? 1u : 0u);
   constexpr const static std :: size_t npos = 1u;
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 
  template <template <class, class> class Operator, class Only1> template <class First2, class ... Rest2>
-	 struct mismatchType <Operator, Only1> :: template with<First2, Rest2...>
+	 struct mismatchType <Operator, Only1> :: with<First2, Rest2...>
  {
   constexpr const static std :: size_t value = ((Operator <Only1, First2> :: value) ? 1u : 0u);
   constexpr const static std :: size_t npos = sizeof...(Rest2) + 1u;
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 
  template <template <class, class> class Operator, class First1, class ... Rest1> template <class...>
@@ -72,20 +85,26 @@ namespace crap
   constexpr const static std :: size_t npos = sizeof...(Rest1) + 1u;
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 
  template <template <class, class> class Operator, class First1, class ... Rest1> template <class Only2>
-	 struct mismatchType <Operator, First1, Rest1...> :: template with<Only2>
+	 struct mismatchType <Operator, First1, Rest1...> :: with<Only2>
  {
   constexpr const static std :: size_t value = ((Operator <First1, Only2> :: value) ? 1u : 0u);
   constexpr const static std :: size_t npos = sizeof...(Rest1) + 1u;
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 
  template <template <class, class> class Operator, class First1, class ... Rest1>
 	 template <class First2, class ... Rest2>
-	 struct mismatchType <Operator, First1, Rest1...> :: template with<First2, Rest2...>
+	 struct mismatchType <Operator, First1, Rest1...> :: with<First2, Rest2...>
  {
   private:
   using types1 = typeList<First1, Rest1...>;
@@ -102,12 +121,15 @@ namespace crap
 	  ((types1 :: size > types2 :: size) ? (types1 :: size) : (types2 :: size));
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 
  template <template <class, class> class Operator, class First1, class ... Rest1>
 	 template <class First2, class ... Rest2>
 	 template <std :: size_t LowerValue, std :: size_t LowerNpos>
-	 struct mismatchType <Operator, First1, Rest1...> :: template with <First2, Rest2...> :: upper
+	 struct mismatchType <Operator, First1, Rest1...> :: with <First2, Rest2...> :: upper
  {
   constexpr const static std :: size_t value = LowerValue;
  };
@@ -115,8 +137,8 @@ namespace crap
  template <template <class, class> class Operator, class First1, class ... Rest1>
 	 template <class First2, class ... Rest2>
 	 template <std :: size_t LowerNpos>
- struct mismatchType <Operator, First1, Rest1...> :: template
-	 with <First2, Rest2...> :: template upper<LowerNpos, LowerNpos>
+ struct mismatchType <Operator, First1, Rest1...> ::
+	 with <First2, Rest2...> :: upper<LowerNpos, LowerNpos>
  {
   private:
   using types1 = typeList<First1, Rest1...>;
@@ -137,6 +159,17 @@ template <template <class, class> class Operator> template <class ... Types2>
 {
  return crap :: mismatchType <Operator> :: template with <Types2...> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <template <class, class> class Operator> template <class ... Types2>
+        inline constexpr typename
+	crap :: mismatchType <Operator> :: template with <Types2...> :: value_type
+	crap :: mismatchType <Operator> :: template with <Types2...> :: operator () ()
+	const noexcept
+{
+ return crap :: mismatchType <Operator> :: template with <Types2...> :: value;
+}
+#endif
 
 template <template <class, class> class Operator, class Only1> template <class ... Empty>
         inline constexpr
@@ -146,6 +179,17 @@ template <template <class, class> class Operator, class Only1> template <class .
 {
  return crap :: mismatchType <Operator, Only1> :: template with <Empty...> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <template <class, class> class Operator, class Only1> template <class ... Empty>
+        inline constexpr typename
+	crap :: mismatchType <Operator, Only1> :: template with <Empty...> :: value_type
+	crap :: mismatchType <Operator, Only1> :: template with <Empty...> :: operator () ()
+	const noexcept
+{
+ return crap :: mismatchType <Operator, Only1> :: template with <Empty...> :: value;
+}
+#endif
 
 template <template <class, class> class Operator, class Only1> template <class Only2>
         inline constexpr
@@ -155,6 +199,17 @@ template <template <class, class> class Operator, class Only1> template <class O
 {
  return crap :: mismatchType <Operator, Only1> :: template with <Only2> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <template <class, class> class Operator, class Only1> template <class Only2>
+        inline constexpr typename
+	crap :: mismatchType <Operator, Only1> :: template with <Only2> :: value_type
+	crap :: mismatchType <Operator, Only1> :: template with <Only2> :: operator () ()
+	const noexcept
+{
+ return crap :: mismatchType <Operator, Only1> :: template with <Only2> :: value;
+}
+#endif
 
 template <template <class, class> class Operator, class Only1> template <class First2, class ... Rest2>
         inline constexpr
@@ -164,6 +219,17 @@ template <template <class, class> class Operator, class Only1> template <class F
 {
  return crap :: mismatchType <Operator, Only1> :: template with <First2, Rest2...> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <template <class, class> class Operator, class Only1> template <class First2, class ... Rest2>
+        inline constexpr typename
+	crap :: mismatchType <Operator, Only1> :: template with <First2, Rest2...> :: value_type
+	crap :: mismatchType <Operator, Only1> :: template with <First2, Rest2...> :: operator () ()
+	const noexcept
+{
+ return crap :: mismatchType <Operator, Only1> :: template with <First2, Rest2...> :: value;
+}
+#endif
 
 template <template <class, class> class Operator, class First1, class ... Rest1> template <class ... Empty>
         inline constexpr
@@ -173,6 +239,17 @@ template <template <class, class> class Operator, class First1, class ... Rest1>
 {
  return crap :: mismatchType <Operator, First1, Rest1...> :: template with <Empty...> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <template <class, class> class Operator, class First1, class ... Rest1> template <class ... Empty>
+        inline constexpr typename
+	crap :: mismatchType <Operator, First1, Rest1...> :: template with <Empty...> :: value_type
+	crap :: mismatchType <Operator, First1, Rest1...> :: template with <Empty...> :: operator () ()
+	const noexcept
+{
+ return crap :: mismatchType <Operator, First1, Rest1...> :: template with <Empty...> :: value;
+}
+#endif
 
 template <template <class, class> class Operator, class First1, class ... Rest1> template <class Only2>
         inline constexpr
@@ -182,6 +259,17 @@ template <template <class, class> class Operator, class First1, class ... Rest1>
 {
  return crap :: mismatchType <Operator, First1, Rest1...> :: template with <Only2> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <template <class, class> class Operator, class First1, class ... Rest1> template <class Only2>
+        inline constexpr typename
+	crap :: mismatchType <Operator, First1, Rest1...> :: template with <Only2> :: value_type
+	crap :: mismatchType <Operator, First1, Rest1...> :: template with <Only2> :: operator () ()
+	const noexcept
+{
+ return crap :: mismatchType <Operator, First1, Rest1...> :: template with <Only2> :: value;
+}
+#endif
 
 template <template <class, class> class Operator, class First1, class ... Rest1>
 template <class First2, class ... Rest2>
@@ -192,5 +280,17 @@ template <class First2, class ... Rest2>
 {
  return crap :: mismatchType <Operator, First1, Rest1...> :: template with <First2, Rest2...> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <template <class, class> class Operator, class First1, class ... Rest1>
+template <class First2, class ... Rest2>
+        inline constexpr typename
+	crap :: mismatchType <Operator, First1, Rest1...> :: template with <First2, Rest2...> :: value_type
+	crap :: mismatchType <Operator, First1, Rest1...> :: template with <First2, Rest2...> :: operator () ()
+	const noexcept
+{
+ return crap :: mismatchType <Operator, First1, Rest1...> :: template with <First2, Rest2...> :: value;
+}
+#endif
 #endif
 
