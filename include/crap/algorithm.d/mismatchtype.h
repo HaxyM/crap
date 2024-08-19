@@ -154,7 +154,11 @@ namespace crap
 template <template <class, class> class Operator> template <class ... Types2>
         inline constexpr
 	crap :: mismatchType <Operator> :: with <Types2...> :: operator typename
+#if (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
+	crap :: mismatchType <Operator> :: template with <Types2...> :: value_type ()
+#else
 	crap :: mismatchType <Operator> :: with <Types2...> :: value_type ()
+#endif
 	const noexcept
 {
  return crap :: mismatchType <Operator> :: with <Types2...> :: value;
@@ -163,7 +167,12 @@ template <template <class, class> class Operator> template <class ... Types2>
 
 template <template <class, class> class Operator> template <class ... Types2>
         inline constexpr typename
+//TODO: Add version check if changed by clang.
+#if defined(__clang__) || (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
+	crap :: mismatchType <Operator> :: template with <Types2...> :: value_type
+#else
 	crap :: mismatchType <Operator> :: with <Types2...> :: value_type
+#endif
 	crap :: mismatchType <Operator> :: with <Types2...> :: operator () ()
 	const noexcept
 {
@@ -174,7 +183,11 @@ template <template <class, class> class Operator> template <class ... Types2>
 template <template <class, class> class Operator, class Only1> template <class ... Empty>
         inline constexpr
 	crap :: mismatchType <Operator, Only1> :: with <Empty...> :: operator typename
+#if (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
+	crap :: mismatchType <Operator, Only1> :: typename with <Empty...> :: value_type ()
+#else
 	crap :: mismatchType <Operator, Only1> :: with <Empty...> :: value_type ()
+#endif
 	const noexcept
 {
  return crap :: mismatchType <Operator, Only1> :: with <Empty...> :: value;
@@ -183,7 +196,12 @@ template <template <class, class> class Operator, class Only1> template <class .
 
 template <template <class, class> class Operator, class Only1> template <class ... Empty>
         inline constexpr typename
+//TODO: Add version check if changed by clang.
+#if defined(__clang__) || (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
+	crap :: mismatchType <Operator, Only1> :: template with <Empty...> :: value_type
+#else
 	crap :: mismatchType <Operator, Only1> :: with <Empty...> :: value_type
+#endif
 	crap :: mismatchType <Operator, Only1> :: with <Empty...> :: operator () ()
 	const noexcept
 {
@@ -194,7 +212,11 @@ template <template <class, class> class Operator, class Only1> template <class .
 template <template <class, class> class Operator, class Only1> template <class Only2>
         inline constexpr
 	crap :: mismatchType <Operator, Only1> :: with <Only2> :: operator typename
+#if (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
+	crap :: mismatchType <Operator, Only1> :: template with <Only2> :: value_type ()
+#else
 	crap :: mismatchType <Operator, Only1> :: with <Only2> :: value_type ()
+#endif
 	const noexcept
 {
  return crap :: mismatchType <Operator, Only1> :: with <Only2> :: value;
@@ -203,7 +225,12 @@ template <template <class, class> class Operator, class Only1> template <class O
 
 template <template <class, class> class Operator, class Only1> template <class Only2>
         inline constexpr typename
+//TODO: Add version check if changed by clang.
+#if defined(__clang__) || (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
+	crap :: mismatchType <Operator, Only1> :: template with <Only2> :: value_type
+#else
 	crap :: mismatchType <Operator, Only1> :: with <Only2> :: value_type
+#endif
 	crap :: mismatchType <Operator, Only1> :: with <Only2> :: operator () ()
 	const noexcept
 {
@@ -214,7 +241,11 @@ template <template <class, class> class Operator, class Only1> template <class O
 template <template <class, class> class Operator, class Only1> template <class First2, class ... Rest2>
         inline constexpr
 	crap :: mismatchType <Operator, Only1> :: with <First2, Rest2...> :: operator typename
+#if (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
+	crap :: mismatchType <Operator, Only1> :: template with <First2, Rest2...> :: value_type ()
+#else
 	crap :: mismatchType <Operator, Only1> :: with <First2, Rest2...> :: value_type ()
+#endif
 	const noexcept
 {
  return crap :: mismatchType <Operator, Only1> :: with <First2, Rest2...> :: value;
@@ -223,7 +254,12 @@ template <template <class, class> class Operator, class Only1> template <class F
 
 template <template <class, class> class Operator, class Only1> template <class First2, class ... Rest2>
         inline constexpr typename
+//TODO: Add version check if changed by clang.
+#if defined(__clang__) || (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
+	crap :: mismatchType <Operator, Only1> :: template with <First2, Rest2...> :: value_type
+#else
 	crap :: mismatchType <Operator, Only1> :: with <First2, Rest2...> :: value_type
+#endif
 	crap :: mismatchType <Operator, Only1> :: with <First2, Rest2...> :: operator () ()
 	const noexcept
 {
@@ -234,7 +270,11 @@ template <template <class, class> class Operator, class Only1> template <class F
 template <template <class, class> class Operator, class First1, class ... Rest1> template <class ... Empty>
         inline constexpr
 	crap :: mismatchType <Operator, First1, Rest1...> :: with <Empty...> :: operator typename
+#if (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
+	crap :: mismatchType <Operator, First1, Rest1...> :: template with <Empty...> :: value_type ()
+#else
 	crap :: mismatchType <Operator, First1, Rest1...> :: with <Empty...> :: value_type ()
+#endif
 	const noexcept
 {
  return crap :: mismatchType <Operator, First1, Rest1...> :: with <Empty...> :: value;
@@ -243,7 +283,12 @@ template <template <class, class> class Operator, class First1, class ... Rest1>
 
 template <template <class, class> class Operator, class First1, class ... Rest1> template <class ... Empty>
         inline constexpr typename
+//TODO: Add version check if changed by clang.
+#if defined(__clang__) || (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
+	crap :: mismatchType <Operator, First1, Rest1...> :: template with <Empty...> :: value_type
+#else
 	crap :: mismatchType <Operator, First1, Rest1...> :: with <Empty...> :: value_type
+#endif
 	crap :: mismatchType <Operator, First1, Rest1...> :: with <Empty...> :: operator () ()
 	const noexcept
 {
@@ -254,7 +299,11 @@ template <template <class, class> class Operator, class First1, class ... Rest1>
 template <template <class, class> class Operator, class First1, class ... Rest1> template <class Only2>
         inline constexpr
 	crap :: mismatchType <Operator, First1, Rest1...> :: with <Only2> :: operator typename
+#if (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
+	crap :: mismatchType <Operator, First1, Rest1...> :: template with <Only2> :: value_type ()
+#else
 	crap :: mismatchType <Operator, First1, Rest1...> :: with <Only2> :: value_type ()
+#endif
 	const noexcept
 {
  return crap :: mismatchType <Operator, First1, Rest1...> :: with <Only2> :: value;
@@ -263,7 +312,12 @@ template <template <class, class> class Operator, class First1, class ... Rest1>
 
 template <template <class, class> class Operator, class First1, class ... Rest1> template <class Only2>
         inline constexpr typename
+//TODO: Add version check if changed by clang.
+#if defined(__clang__) || (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
+	crap :: mismatchType <Operator, First1, Rest1...> :: template with <Only2> :: value_type
+#else
 	crap :: mismatchType <Operator, First1, Rest1...> :: with <Only2> :: value_type
+#endif
 	crap :: mismatchType <Operator, First1, Rest1...> :: with <Only2> :: operator () ()
 	const noexcept
 {
@@ -275,7 +329,11 @@ template <template <class, class> class Operator, class First1, class ... Rest1>
 template <class First2, class ... Rest2>
         inline constexpr
 	crap :: mismatchType <Operator, First1, Rest1...> :: with <First2, Rest2...> :: operator typename
+#if (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
+	crap :: mismatchType <Operator, First1, Rest1...> :: template with <First2, Rest2...> :: value_type ()
+#else
 	crap :: mismatchType <Operator, First1, Rest1...> :: with <First2, Rest2...> :: value_type ()
+#endif
 	const noexcept
 {
  return crap :: mismatchType <Operator, First1, Rest1...> :: with <First2, Rest2...> :: value;
@@ -285,7 +343,12 @@ template <class First2, class ... Rest2>
 template <template <class, class> class Operator, class First1, class ... Rest1>
 template <class First2, class ... Rest2>
         inline constexpr typename
+//TODO: Add version check if changed by clang.
+#if defined(__clang__) || (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
+	crap :: mismatchType <Operator, First1, Rest1...> :: template with <First2, Rest2...> :: value_type
+#else
 	crap :: mismatchType <Operator, First1, Rest1...> :: with <First2, Rest2...> :: value_type
+#endif
 	crap :: mismatchType <Operator, First1, Rest1...> :: with <First2, Rest2...> :: operator () ()
 	const noexcept
 {
