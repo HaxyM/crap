@@ -153,143 +153,143 @@ namespace crap
 
 template <template <class, class> class Operator> template <class ... Types2>
         inline constexpr
-	crap :: mismatchType <Operator> :: template with <Types2...> :: operator typename
-	crap :: mismatchType <Operator> :: template with <Types2...> :: value_type ()
+	crap :: mismatchType <Operator> :: with <Types2...> :: operator typename
+	crap :: mismatchType <Operator> :: with <Types2...> :: value_type ()
 	const noexcept
 {
- return crap :: mismatchType <Operator> :: template with <Types2...> :: value;
+ return crap :: mismatchType <Operator> :: with <Types2...> :: value;
 }
 #if (crap_lib_integral_constant_callable >= 201304L)
 
 template <template <class, class> class Operator> template <class ... Types2>
         inline constexpr typename
-	crap :: mismatchType <Operator> :: template with <Types2...> :: value_type
-	crap :: mismatchType <Operator> :: template with <Types2...> :: operator () ()
+	crap :: mismatchType <Operator> :: with <Types2...> :: value_type
+	crap :: mismatchType <Operator> :: with <Types2...> :: operator () ()
 	const noexcept
 {
- return crap :: mismatchType <Operator> :: template with <Types2...> :: value;
+ return crap :: mismatchType <Operator> :: with <Types2...> :: value;
 }
 #endif
 
 template <template <class, class> class Operator, class Only1> template <class ... Empty>
         inline constexpr
-	crap :: mismatchType <Operator, Only1> :: template with <Empty...> :: operator typename
-	crap :: mismatchType <Operator, Only1> :: template with <Empty...> :: value_type ()
+	crap :: mismatchType <Operator, Only1> :: with <Empty...> :: operator typename
+	crap :: mismatchType <Operator, Only1> :: with <Empty...> :: value_type ()
 	const noexcept
 {
- return crap :: mismatchType <Operator, Only1> :: template with <Empty...> :: value;
+ return crap :: mismatchType <Operator, Only1> :: with <Empty...> :: value;
 }
 #if (crap_lib_integral_constant_callable >= 201304L)
 
 template <template <class, class> class Operator, class Only1> template <class ... Empty>
         inline constexpr typename
-	crap :: mismatchType <Operator, Only1> :: template with <Empty...> :: value_type
-	crap :: mismatchType <Operator, Only1> :: template with <Empty...> :: operator () ()
+	crap :: mismatchType <Operator, Only1> :: with <Empty...> :: value_type
+	crap :: mismatchType <Operator, Only1> :: with <Empty...> :: operator () ()
 	const noexcept
 {
- return crap :: mismatchType <Operator, Only1> :: template with <Empty...> :: value;
+ return crap :: mismatchType <Operator, Only1> :: with <Empty...> :: value;
 }
 #endif
 
 template <template <class, class> class Operator, class Only1> template <class Only2>
         inline constexpr
-	crap :: mismatchType <Operator, Only1> :: template with <Only2> :: operator typename
-	crap :: mismatchType <Operator, Only1> :: template with <Only2> :: value_type ()
+	crap :: mismatchType <Operator, Only1> :: with <Only2> :: operator typename
+	crap :: mismatchType <Operator, Only1> :: with <Only2> :: value_type ()
 	const noexcept
 {
- return crap :: mismatchType <Operator, Only1> :: template with <Only2> :: value;
+ return crap :: mismatchType <Operator, Only1> :: with <Only2> :: value;
 }
 #if (crap_lib_integral_constant_callable >= 201304L)
 
 template <template <class, class> class Operator, class Only1> template <class Only2>
         inline constexpr typename
-	crap :: mismatchType <Operator, Only1> :: template with <Only2> :: value_type
-	crap :: mismatchType <Operator, Only1> :: template with <Only2> :: operator () ()
+	crap :: mismatchType <Operator, Only1> :: with <Only2> :: value_type
+	crap :: mismatchType <Operator, Only1> :: with <Only2> :: operator () ()
 	const noexcept
 {
- return crap :: mismatchType <Operator, Only1> :: template with <Only2> :: value;
+ return crap :: mismatchType <Operator, Only1> :: with <Only2> :: value;
 }
 #endif
 
 template <template <class, class> class Operator, class Only1> template <class First2, class ... Rest2>
         inline constexpr
-	crap :: mismatchType <Operator, Only1> :: template with <First2, Rest2...> :: operator typename
-	crap :: mismatchType <Operator, Only1> :: template with <First2, Rest2...> :: value_type ()
+	crap :: mismatchType <Operator, Only1> :: with <First2, Rest2...> :: operator typename
+	crap :: mismatchType <Operator, Only1> :: with <First2, Rest2...> :: value_type ()
 	const noexcept
 {
- return crap :: mismatchType <Operator, Only1> :: template with <First2, Rest2...> :: value;
+ return crap :: mismatchType <Operator, Only1> :: with <First2, Rest2...> :: value;
 }
 #if (crap_lib_integral_constant_callable >= 201304L)
 
 template <template <class, class> class Operator, class Only1> template <class First2, class ... Rest2>
         inline constexpr typename
-	crap :: mismatchType <Operator, Only1> :: template with <First2, Rest2...> :: value_type
-	crap :: mismatchType <Operator, Only1> :: template with <First2, Rest2...> :: operator () ()
+	crap :: mismatchType <Operator, Only1> :: with <First2, Rest2...> :: value_type
+	crap :: mismatchType <Operator, Only1> :: with <First2, Rest2...> :: operator () ()
 	const noexcept
 {
- return crap :: mismatchType <Operator, Only1> :: template with <First2, Rest2...> :: value;
+ return crap :: mismatchType <Operator, Only1> :: with <First2, Rest2...> :: value;
 }
 #endif
 
 template <template <class, class> class Operator, class First1, class ... Rest1> template <class ... Empty>
         inline constexpr
-	crap :: mismatchType <Operator, First1, Rest1...> :: template with <Empty...> :: operator typename
-	crap :: mismatchType <Operator, First1, Rest1...> :: template with <Empty...> :: value_type ()
+	crap :: mismatchType <Operator, First1, Rest1...> :: with <Empty...> :: operator typename
+	crap :: mismatchType <Operator, First1, Rest1...> :: with <Empty...> :: value_type ()
 	const noexcept
 {
- return crap :: mismatchType <Operator, First1, Rest1...> :: template with <Empty...> :: value;
+ return crap :: mismatchType <Operator, First1, Rest1...> :: with <Empty...> :: value;
 }
 #if (crap_lib_integral_constant_callable >= 201304L)
 
 template <template <class, class> class Operator, class First1, class ... Rest1> template <class ... Empty>
         inline constexpr typename
-	crap :: mismatchType <Operator, First1, Rest1...> :: template with <Empty...> :: value_type
-	crap :: mismatchType <Operator, First1, Rest1...> :: template with <Empty...> :: operator () ()
+	crap :: mismatchType <Operator, First1, Rest1...> :: with <Empty...> :: value_type
+	crap :: mismatchType <Operator, First1, Rest1...> :: with <Empty...> :: operator () ()
 	const noexcept
 {
- return crap :: mismatchType <Operator, First1, Rest1...> :: template with <Empty...> :: value;
+ return crap :: mismatchType <Operator, First1, Rest1...> :: with <Empty...> :: value;
 }
 #endif
 
 template <template <class, class> class Operator, class First1, class ... Rest1> template <class Only2>
         inline constexpr
-	crap :: mismatchType <Operator, First1, Rest1...> :: template with <Only2> :: operator typename
-	crap :: mismatchType <Operator, First1, Rest1...> :: template with <Only2> :: value_type ()
+	crap :: mismatchType <Operator, First1, Rest1...> :: with <Only2> :: operator typename
+	crap :: mismatchType <Operator, First1, Rest1...> :: with <Only2> :: value_type ()
 	const noexcept
 {
- return crap :: mismatchType <Operator, First1, Rest1...> :: template with <Only2> :: value;
+ return crap :: mismatchType <Operator, First1, Rest1...> :: with <Only2> :: value;
 }
 #if (crap_lib_integral_constant_callable >= 201304L)
 
 template <template <class, class> class Operator, class First1, class ... Rest1> template <class Only2>
         inline constexpr typename
-	crap :: mismatchType <Operator, First1, Rest1...> :: template with <Only2> :: value_type
-	crap :: mismatchType <Operator, First1, Rest1...> :: template with <Only2> :: operator () ()
+	crap :: mismatchType <Operator, First1, Rest1...> :: with <Only2> :: value_type
+	crap :: mismatchType <Operator, First1, Rest1...> :: with <Only2> :: operator () ()
 	const noexcept
 {
- return crap :: mismatchType <Operator, First1, Rest1...> :: template with <Only2> :: value;
+ return crap :: mismatchType <Operator, First1, Rest1...> :: with <Only2> :: value;
 }
 #endif
 
 template <template <class, class> class Operator, class First1, class ... Rest1>
 template <class First2, class ... Rest2>
         inline constexpr
-	crap :: mismatchType <Operator, First1, Rest1...> :: template with <First2, Rest2...> :: operator typename
-	crap :: mismatchType <Operator, First1, Rest1...> :: template with <First2, Rest2...> :: value_type ()
+	crap :: mismatchType <Operator, First1, Rest1...> :: with <First2, Rest2...> :: operator typename
+	crap :: mismatchType <Operator, First1, Rest1...> :: with <First2, Rest2...> :: value_type ()
 	const noexcept
 {
- return crap :: mismatchType <Operator, First1, Rest1...> :: template with <First2, Rest2...> :: value;
+ return crap :: mismatchType <Operator, First1, Rest1...> :: with <First2, Rest2...> :: value;
 }
 #if (crap_lib_integral_constant_callable >= 201304L)
 
 template <template <class, class> class Operator, class First1, class ... Rest1>
 template <class First2, class ... Rest2>
         inline constexpr typename
-	crap :: mismatchType <Operator, First1, Rest1...> :: template with <First2, Rest2...> :: value_type
-	crap :: mismatchType <Operator, First1, Rest1...> :: template with <First2, Rest2...> :: operator () ()
+	crap :: mismatchType <Operator, First1, Rest1...> :: with <First2, Rest2...> :: value_type
+	crap :: mismatchType <Operator, First1, Rest1...> :: with <First2, Rest2...> :: operator () ()
 	const noexcept
 {
- return crap :: mismatchType <Operator, First1, Rest1...> :: template with <First2, Rest2...> :: value;
+ return crap :: mismatchType <Operator, First1, Rest1...> :: with <First2, Rest2...> :: value;
 }
 #endif
 #endif
