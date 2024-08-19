@@ -13,6 +13,7 @@
 #include "numeric.d/adjacentdifferencetype.h"
 #include "numeric.d/adjacentdifferencevalue.h"
 #include "numeric.d/contracttype.h"
+#include "numeric.d/divsatvalue.h"
 #include "numeric.d/exclusivescanfortype.h"
 #include "numeric.d/exclusivescantype.h"
 #include "numeric.d/exclusivescanvalue.h"
