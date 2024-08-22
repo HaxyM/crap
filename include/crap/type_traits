@@ -1,0 +1,7 @@
+#ifndef CRAP_TYPETRAITS
+#define CRAP_TYPETRAITS
+
+#include "type_traits.d/voidt.h"
+
+#endif
+
