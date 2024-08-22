@@ -1,105 +1,92 @@
 #ifndef CRAP_LOCALE_LOCALE
 #define CRAP_LOCALE_LOCALE
 
+#include <cstdint>
+#include <type_traits>
+#include <utility>
+
+#include "../type_traits.d/voidt.h"
+
 namespace crap
 {
- enum class locale
+ enum class locale_category : std :: uint32_t
  {
-  C,
-  af_ZA_ISO_8859_1,
-  br_FR_ISO_8859_1,
-  ca_AD_ISO_8859_1,
-  ca_ES_ISO_8859_1,
-  ca_FR_ISO_8859_1,
-  ca_IT_ISO_8859_1,
-  cy_GB_ISO_8859_1,
-  da_DK_ISO_8859_1,
-  de_AT_ISO_8859_1,
-  de_BE_ISO_8859_1,
-  de_CH_ISO_8859_1,
-  de_DE_ISO_8859_1,
-  de_LU_ISO_8859_1,
-  en_AU_ISO_8859_1,
-  en_BE_ISO_8859_1,
-  en_BW_ISO_8859_1,
-  en_CA_ISO_8859_1,
-  en_DK_ISO_8859_1,
-  en_GB_ISO_8859_1,
-  en_HK_ISO_8859_1,
-  en_IE_ISO_8859_1,
-  en_IN_ISO_8859_1,
-  en_NZ_ISO_8859_1,
-  en_PH_ISO_8859_1,
-  en_SG_ISO_8859_1,
-  en_US_ISO_8859_1,
-  en_ZA_ISO_8859_1,
-  en_ZW_ISO_8859_1,
-  es_AR_ISO_8859_1,
-  es_BO_ISO_8859_1,
-  es_CL_ISO_8859_1,
-  es_CO_ISO_8859_1,
-  es_CR_ISO_8859_1,
-  es_DO_ISO_8859_1,
-  es_EC_ISO_8859_1,
-  es_ES_ISO_8859_1,
-  es_GT_ISO_8859_1,
-  es_HN_ISO_8859_1,
-  es_MX_ISO_8859_1,
-  es_NI_ISO_8859_1,
-  es_PA_ISO_8859_1,
-  es_PE_ISO_8859_1,
-  es_PR_ISO_8859_1,
-  es_PY_ISO_8859_1,
-  es_SV_ISO_8859_1,
-  es_US_ISO_8859_1,
-  es_UY_ISO_8859_1,
-  es_VE_ISO_8859_1,
-  et_EE_ISO_8859_1,
-  eu_ES_ISO_8859_1,
-  fi_FI_ISO_8859_1,
-  fo_FO_ISO_8859_1,
-  fr_BE_ISO_8859_1,
-  fr_CA_ISO_8859_1,
-  fr_CH_ISO_8859_1,
-  fr_FR_ISO_8859_1,
-  fr_LU_ISO_8859_1,
-  ga_IE_ISO_8859_1,
-  gd_GB_ISO_8859_1,
-  gl_ES_ISO_8859_1,
-  gv_GB_ISO_8859_1,
-  id_ID_ISO_8859_1,
-  is_IS_ISO_8859_1,
-  it_CH_ISO_8859_1,
-  it_IT_ISO_8859_1,
-  kl_GL_ISO_8859_1,
-  kw_GB_ISO_8859_1,
-  mi_NZ_ISO_8859_1,
-  ms_MY_ISO_8859_1,
-  nb_NO_ISO_8859_1,
-  nl_BE_ISO_8859_1,
-  nl_NL_ISO_8859_1,
-  nn_NO_ISO_8859_1,
-  no_NO_ISO_8859_1,
-  nr_ZA_ISO_8859_1,
-  ny_NO_ISO_8859_1,
-  oc_FR_ISO_8859_1,
-  pd_DE_ISO_8859_1,
-  pd_US_ISO_8859_1,
-  ph_PH_ISO_8859_1,
-  pp_AN_ISO_8859_1,
-  pt_BR_ISO_8859_1,
-  pt_PT_ISO_8859_1,
-  rw_RW_ISO_8859_1,
-  ss_ZA_ISO_8859_1,
-  st_ZA_ISO_8859_1,
-  sv_FI_ISO_8859_1,
-  sv_SE_ISO_8859_1,
-  tl_PH_ISO_8859_1,
-  ts_ZA_ISO_8859_1,
-  uz_UZ_ISO_8859_1,
-  wa_BE_ISO_8859_1,
-  xh_ZA_ISO_8859_1,
-  zu_ZA_ISO_8859_1
+  none = (std :: uint32_t{} ^ std :: uint32_t{}),
+  collate = ~((~none) << 1),
+  ctype = collate << 1,
+  monetary = ctype << 1,
+  numeric = monetary << 1,
+  time = numeric << 1,
+  messages = time << 1,
+  all = collate | ctype | monetary | numeric | time | messages
+ };
+
+ template <class, locale_category = locale_category :: all> struct locale;
+
+ template <class Facet1, class Facet2, locale_category Cat>
+	 struct locale <std :: pair<Facet1, Facet2>, Cat>
+ {
+  private:
+  template <class, class = void> struct hasFacet : std :: false_type {};
+  template <class Type> struct hasFacet<Type, voidT<typename Type :: facet> > : std :: true_type {};
+  template <class Type> struct isNumeric;
+  public:
+ };
+
+ template <class Facet1, class Facet2, locale_category Cat>
+	 template <class Type>
+ struct locale <std :: pair<Facet1, Facet2>, Cat> :: isNmeric
+ {
+  private:
+  //Type fields verifiers.
+  template <class, class = void> struct hasDecimalPoint : std :: false_type {};
+  template <class SubType> struct hasDecimalPoint<Type, voidT<typename SubType :: decimalPoint> >
+	  : std :: true_type {};
+  template <class, class = void> struct hasThousandsSep : std :: false_type {};
+  template <class SubType> struct hasThousandsSep<Type, voidT<typename SubType :: thousandsSep> >
+	  : std :: true_type {};
+  template <class, class = void> struct hasGrouping : std :: false_type {};
+  template <class SubType> struct hasGrouping<Type, voidT<typename SubType :: grouping> >
+	  : std :: true_type {};
+  template <class, class = void> struct hasTruename : std :: false_type {};
+  template <class SubType> struct hasTruename<Type, voidT<typename SubType :: truename> >
+	  : std :: true_type {};
+  template <class, class = void> struct hasFalsename : std :: false_type {};
+  template <class SubType> struct hasFalsename<Type, voidT<typename SubType :: falsename> >
+	  : std :: true_type {};
+  //Generic type verifiers.
+  template <class> struct isConstant : std :: false_type {};
+  template <class CharType, CharType Char> struct isConstant<std :: integral_constant<CharType, Char> >
+	  : std :: true_type {};
+  template <class> struct isString : std :: false_type {};
+  template <class CharType, CharType ... Chars> struct isString<string<CharType, Chars...> > : std :: true_type {};
+  //Detailed type verifiers.
+  template <bool, class> struct isDecimalPointOkType : std :: false_type {};
+  template <class SubType> struct isDecimalPointOkType <true, SubType> : isConstant<SubType :: decimalPoint> {};
+  template <bool, class> struct isThousandsSepOkType : std :: false_type {};
+  template <class SubType> struct isThousandsSepOkType <true, SubType> : isConstant<SubType :: thousandsSep> {};
+  template <bool, class> struct isThousandsSepOkType : std :: false_type {};
+  template <class SubType> struct isThousandsSepOkType <true, SubType> : isConstant<SubType :: thousandsSep> {};
+  template <bool, class> struct isGroupingOkType : std :: false_type {};
+  template <class SubType> struct isGroupingOkType <true, SubType> : isString<SubType :: grouping> {};
+  template <bool, class> struct isTruenameOkType : std :: false_type {};
+  template <class SubType> struct isTruenameOkType <true, SubType> : isString<SubType :: truename> {};
+  template <bool, class> struct isFalsenameOkType : std :: false_type {};
+  template <class SubType> struct isFalsenameOkType <true, SubType> : isString<SubType :: falsename> {};
+  //Functionalities.
+  constexpr const static auto decimalPiontFine =
+	  isDecimalPointOkType<hasDecimalPoint <Type> :: value, Type> :: value;
+  constexpr const static auto thousandsSepFine =
+	  isThousandsSepOkType<hasThousandsSep <Type> :: value, Type> :: value;
+  constexpr const static auto groupingFine =
+	  isGroupingOkType<hasGrouping <Type> :: value, Type> :: value;
+  constexpr const static auto truenameFine =
+	  isTruenameOkType<hasTruename <Type> :: value, Type> :: value;
+  constexpr const static auto falsenameFine =
+	  isFalsenameOkType<hasFalsename <Type> :: value, Type> :: value;
+  public:
+  constexpr const static auto value =
+	  decimalPointFine || thousandsSepFine || groupingFine || truenameFine || falsenameFine;
  };
 }
 #endif
