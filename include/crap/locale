@@ -14,6 +14,7 @@
 #include "locale.d/isuppervalue.h"
 #include "locale.d/isxdigitvalue.h"
 #include "locale.d/locale.h"
+#include "locale.d/numpunctbyname.h"
 
 #endif
 
