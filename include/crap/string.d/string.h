@@ -13,7 +13,9 @@ namespace crap
   constexpr const static Char (& c_str() noexcept)[sizeof...(Letters) + 1u];
  };
 
+#ifdef __GNUC__
  template <class Char, Char ... Letters> constexpr string<Char, Letters...> operator "" _string () noexcept;
+#endif
 }
 
 template <class Char, Char ... Letters>
@@ -24,9 +26,11 @@ template <class Char, Char ... Letters> inline constexpr const Char (& crap :: s
  return crap :: string <Char, Letters...> :: letters;
 }
 
+#ifdef __GNUC__
 template <class Char, Char ... Letters> inline constexpr crap :: string<Char, Letters...> crap :: operator "" _string () noexcept
 {
  return {};
 }
+#endif
 #endif
 
