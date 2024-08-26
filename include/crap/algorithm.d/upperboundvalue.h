@@ -2,6 +2,7 @@
 #define CRAP_ALGORITHM_UPPERBOUNDVALUE
 
 #include "../utility.d/valuelist.h"
+#include "../version.d/libintegralconstantcallable.h"
 
 namespace crap
 {
@@ -13,6 +14,9 @@ namespace crap
   constexpr const static std :: size_t npos = 0u;
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 
  template <class Type, Type Value, template <Type, Type> class Operator, Type Value1> struct upperBoundValue<Type, Value, Operator, Value1>
@@ -21,6 +25,9 @@ namespace crap
   constexpr const static std :: size_t npos = 1u;
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 
  template <class Type, Type Value, template <Type, Type> class Operator, Type ... Values> struct upperBoundValue
@@ -36,6 +43,9 @@ namespace crap
   constexpr const static std :: size_t npos = (lower :: npos) + (upper :: npos);
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 }
 
@@ -45,6 +55,15 @@ template <class Type, Type Value, template <Type, Type> class Operator>
 {
  return crap :: upperBoundValue <Type, Value, Operator> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <class Type, Type Value, template <Type, Type> class Operator>
+        inline constexpr typename crap :: upperBoundValue <Type, Value, Operator> :: value_type
+        crap :: upperBoundValue <Type, Value, Operator> :: operator () () const noexcept
+{
+ return crap :: upperBoundValue <Type, Value, Operator> :: value;
+}
+#endif
 
 template <class Type, Type Value, template <Type, Type> class Operator, Type Value1>
         inline constexpr crap :: upperBoundValue <Type, Value, Operator, Value1> :: operator
@@ -52,6 +71,15 @@ template <class Type, Type Value, template <Type, Type> class Operator, Type Val
 {
  return crap :: upperBoundValue <Type, Value, Operator, Value1> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <class Type, Type Value, template <Type, Type> class Operator, Type Value1>
+        inline constexpr typename crap :: upperBoundValue <Type, Value, Operator, Value1> :: value_type
+        crap :: upperBoundValue <Type, Value, Operator, Value1> :: operator () () const noexcept
+{
+ return crap :: upperBoundValue <Type, Value, Operator, Value1> :: value;
+}
+#endif
 
 template <class Type, Type Value, template <Type, Type> class Operator, Type ... Values>
         inline constexpr crap :: upperBoundValue <Type, Value, Operator, Values...> :: operator
@@ -59,5 +87,14 @@ template <class Type, Type Value, template <Type, Type> class Operator, Type ...
 {
  return crap :: upperBoundValue <Type, Value, Operator, Values...> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <class Type, Type Value, template <Type, Type> class Operator, Type ... Values>
+        inline constexpr typename crap :: upperBoundValue <Type, Value, Operator, Values...> :: value_type
+        crap :: upperBoundValue <Type, Value, Operator, Values...> :: operator () () const noexcept
+{
+ return crap :: upperBoundValue <Type, Value, Operator, Values...> :: value;
+}
+#endif
 #endif
 
