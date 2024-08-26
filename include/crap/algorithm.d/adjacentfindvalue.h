@@ -2,6 +2,7 @@
 #define CRAP_ALGORITHM_ADJACENTFINDVALUE
 
 #include "../utility.d/valuelist.h"
+#include "../version.d/libintegralconstantcallable.h"
 
 namespace crap
 {
@@ -13,6 +14,9 @@ namespace crap
   constexpr const static std :: size_t npos = 0u;
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 
  template <class Type, template <Type, Type> class Operator, Type Value> struct adjacentFindValue<Type, Operator, Value>
@@ -21,6 +25,9 @@ namespace crap
   constexpr const static std :: size_t npos = 1u;
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 
  template <class Type, template <Type, Type> class Operator, Type ... Values> struct adjacentFindValue
@@ -40,6 +47,9 @@ namespace crap
   constexpr const static std :: size_t npos = (lower :: npos) + (upper :: npos);
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 }
 
@@ -49,6 +59,15 @@ template <class Type, template <Type, Type> class Operator>
 {
  return crap :: adjacentFindValue <Type, Operator> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <class Type, template <Type, Type> class Operator>
+        inline constexpr typename crap :: adjacentFindValue <Type, Operator> :: value_type
+        crap :: adjacentFindValue <Type, Operator> :: operator () () const noexcept
+{
+ return crap :: adjacentFindValue <Type, Operator> :: value;
+}
+#endif
 
 template <class Type, template <Type, Type> class Operator, Type Value>
         inline constexpr crap :: adjacentFindValue <Type, Operator, Value> :: operator
@@ -56,6 +75,15 @@ template <class Type, template <Type, Type> class Operator, Type Value>
 {
  return crap :: adjacentFindValue <Type, Operator, Value> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <class Type, template <Type, Type> class Operator, Type Value>
+        inline constexpr typename crap :: adjacentFindValue <Type, Operator, Value> :: value_type
+        crap :: adjacentFindValue <Type, Operator, Value> :: operator () () const noexcept
+{
+ return crap :: adjacentFindValue <Type, Operator, Value> :: value;
+}
+#endif
 
 template <class Type, template <Type, Type> class Operator, Type ... Values>
         inline constexpr crap :: adjacentFindValue <Type, Operator, Values...> :: operator
@@ -63,5 +91,14 @@ template <class Type, template <Type, Type> class Operator, Type ... Values>
 {
  return crap :: adjacentFindValue <Type, Operator, Values...> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <class Type, template <Type, Type> class Operator, Type ... Values>
+        inline constexpr typename crap :: adjacentFindValue <Type, Operator, Values...> :: value_type
+        crap :: adjacentFindValue <Type, Operator, Values...> :: operator () () const noexcept
+{
+ return crap :: adjacentFindValue <Type, Operator, Values...> :: value;
+}
+#endif
 #endif
 
