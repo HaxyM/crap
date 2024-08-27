@@ -2,6 +2,7 @@
 #define CRAP_ALGORITHM_ISSORTEDTYPE
 
 #include "../utility.d/bisecttype.h"
+#include "../version.d/libintegralconstantcallable.h"
 
 #include <type_traits>
 
@@ -37,6 +38,9 @@ namespace crap
   constexpr const static auto value = (lower :: value) && (upper :: value) && (Operator <typename lower :: last, typename upper :: first> :: value);
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 }
 
@@ -46,4 +50,13 @@ template <template <class, class> class Operator, class ... Types>
 {
  return crap :: isSortedType <Operator, Types...> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <template <class, class> class Operator, class ... Types>
+	inline constexpr typename crap :: isSortedType <Operator, Types...> :: value_type
+	crap :: isSortedType <Operator, Types...> :: operator () () const noexcept
+{
+ return crap :: isSortedType <Operator, Types...> :: value;
+}
+#endif
 #endif
