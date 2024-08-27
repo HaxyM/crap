@@ -38,6 +38,11 @@ template <signed int Lhs, signed int Rhs, signed int Restriction>
  static_assert((Lhs != Restriction) && (Rhs != Restriction), "Failed on restriction!");
 };
 
+template <class Restriction> struct lessConstrainedForClasses
+{
+ template <class Lhs, class Rhs> using type = lessConstrainedType<Lhs, Rhs, Restriction>;
+};
+
 //Normal less comparators.
 template <class, class> struct lessType;
 
@@ -80,6 +85,11 @@ template <signed int Lhs, signed int Rhs, signed int Restriction>
 	 : std :: integral_constant<bool, (Lhs == Rhs)>
 {
  static_assert((Lhs != Restriction) && (Rhs != Restriction), "Failed on restriction!");
+};
+
+template <class Restriction> struct equalConstrainedForClasses
+{
+ template <class Lhs, class Rhs> using type = equalConstrainedType<Lhs, Rhs, Restriction>;
 };
 
 //Normal equality comparators.
