@@ -8,6 +8,20 @@ template <unsigned int Value> using u = std :: integral_constant<unsigned int, V
 template <signed int Value> using i = std :: integral_constant<signed int, Value>;
 
 //Constrained less comparators.
+template <class Type, Type, Type, Type> struct lessConstrainedValue;
+
+template <class Type, Type Lhs, Type Rhs, Type Restriction>
+	 struct lessConstrainedValue
+	 : std :: integral_constant<bool, (Lhs < Rhs)>
+{
+ static_assert((Lhs != Restriction) && (Rhs != Restriction), "Failed on restriction!");
+};
+
+template <class Type, Type Restriction> struct lessConstrainedForType
+{
+ template <Type Lhs, Type Rhs> using type = lessConstrainedValue<Type, Lhs, Rhs, Restriction>;
+};
+
 template <class, class, class> struct lessConstrainedType;
 
 template <unsigned int Lhs, unsigned int Rhs, unsigned int Restriction>
@@ -38,6 +52,20 @@ template <signed int Lhs, signed int Rhs>
 };
 
 //Constrained equality comparators.
+template <class Type, Type, Type, Type> struct equalConstrainedValue;
+
+template <class Type, Type Rhs, Type Lhs, Type Restriction>
+	 struct equalConstrainedValue
+	 : std :: integral_constant<bool, (Lhs == Rhs)>
+{
+ static_assert((Lhs != Restriction) && (Rhs != Restriction), "Failed on restriction!");
+};
+
+template <class Type, Type Restriction> struct equalConstrainedForType
+{
+ template <Type Lhs, Type Rhs> using type = equalConstrainedValue<Type, Lhs, Rhs, Restriction>;
+};
+
 template <class, class, class> struct equalConstrainedType;
 
 template <unsigned int Lhs, unsigned int Rhs, unsigned int Restriction>
