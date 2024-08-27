@@ -33,18 +33,37 @@ namespace crap
  template <class Type, template <class, class> class Operator, class ... Types> struct lowerBoundType
  {
   private:
-  using values = bisectType<Types...>;
+  using types = bisectType<Types...>;
   template <class ... SubTypes> using This = lowerBoundType<Type, Operator, SubTypes...>;
-  using lower = typename values :: template lower<This>;
-  using upper = typename values :: template upper<This>;
+  using lower = typename types :: template lower<This>;
+  template <std :: size_t LowerValue, std :: size_t LowerNpos> struct upper;
+  template <std :: size_t LowerNpos> struct upper<LowerNpos, LowerNpos>;
   public:
-  constexpr const static std :: size_t value = (((lower :: value) != (lower :: npos)) ? (lower :: value) : ((lower :: npos) + (upper :: value)));
-  constexpr const static std :: size_t npos = (lower :: npos) + (upper :: npos);
+  constexpr const static std :: size_t value = upper <lower :: value, lower :: npos> :: value;
+  constexpr const static std :: size_t npos = sizeof...(Types);
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
 #if (crap_lib_integral_constant_callable >= 201304L)
   constexpr value_type operator () () const noexcept;
 #endif
+ };
+
+ template <class Type, template <class, class> class Operator, class ... Types>
+	 template <std :: size_t LowerValue, std :: size_t>
+ struct lowerBoundType <Type, Operator, Types...> :: upper
+ {
+  constexpr const static std :: size_t value = LowerValue;
+ };
+
+ template <class Type, template <class, class> class Operator, class ... Types>
+	 template <std :: size_t LowerNpos>
+ struct lowerBoundType <Type, Operator, Types...> :: upper<LowerNpos, LowerNpos>
+ {
+  private:
+  using types = bisectType<Types...>;
+  template <class ... SubTypes> using This = lowerBoundType<Type, Operator, SubTypes...>;
+  public:
+  constexpr const static std :: size_t value = LowerNpos + types :: template upper <This> :: value;
  };
 }
 
@@ -96,3 +115,4 @@ template <class Type, template <class, class> class Operator, class ... Types>
 }
 #endif
 #endif
+
