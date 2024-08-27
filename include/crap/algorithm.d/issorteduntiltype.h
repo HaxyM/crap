@@ -2,6 +2,7 @@
 #define CRAP_ALGORITHM_ISSORTEDUNTILTYPE
 
 #include "../utility.d/bisecttype.h"
+#include "../version.d/libintegralconstantcallable.h"
 
 namespace crap
 {
@@ -13,6 +14,9 @@ namespace crap
   constexpr const static std :: size_t npos = 0u;
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 
  template <template <class, class> class Operator, class Type> struct isSortedUntilType<Operator, Type>
@@ -26,6 +30,9 @@ namespace crap
   constexpr const static std :: size_t npos = 1u;
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 
  template <template <class, class> class Operator, class Type1, class Type2> struct isSortedUntilType<Operator, Type1, Type2>
@@ -39,6 +46,9 @@ namespace crap
   constexpr const static std :: size_t npos = 2u;
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 
  template <template <class, class> class Operator, class ... Types> struct isSortedUntilType
@@ -59,6 +69,9 @@ namespace crap
   constexpr const static std :: size_t npos = sizeof...(Types);
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 }
 
@@ -68,6 +81,15 @@ template <template <class, class> class Operator>
 {
  return crap :: isSortedUntilType <Operator> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <template <class, class> class Operator>
+        inline constexpr typename crap :: isSortedUntilType <Operator> :: value_type
+        crap :: isSortedUntilType <Operator> :: operator () () const noexcept
+{
+ return crap :: isSortedUntilType <Operator> :: value;
+}
+#endif
 
 template <template <class, class> class Operator, class Type>
         inline constexpr crap :: isSortedUntilType <Operator, Type> :: operator
@@ -75,6 +97,15 @@ template <template <class, class> class Operator, class Type>
 {
  return crap :: isSortedUntilType <Operator, Type> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <template <class, class> class Operator, class Type>
+        inline constexpr typename crap :: isSortedUntilType <Operator, Type> :: value_type
+        crap :: isSortedUntilType <Operator, Type> :: operator () () const noexcept
+{
+ return crap :: isSortedUntilType <Operator, Type> :: value;
+}
+#endif
 
 template <template <class, class> class Operator, class Type1, class Type2>
         inline constexpr crap :: isSortedUntilType <Operator, Type1, Type2> :: operator
@@ -82,6 +113,15 @@ template <template <class, class> class Operator, class Type1, class Type2>
 {
  return crap :: isSortedUntilType <Operator, Type1, Type2> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <template <class, class> class Operator, class Type1, class Type2>
+        inline constexpr typename crap :: isSortedUntilType <Operator, Type1, Type2> :: value_type
+        crap :: isSortedUntilType <Operator, Type1, Type2> :: operator () () const noexcept
+{
+ return crap :: isSortedUntilType <Operator, Type1, Type2> :: value;
+}
+#endif
 
 template <template <class, class> class Operator, class ... Types>
         inline constexpr crap :: isSortedUntilType <Operator, Types...> :: operator
@@ -89,4 +129,13 @@ template <template <class, class> class Operator, class ... Types>
 {
  return crap :: isSortedUntilType <Operator, Types...> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <template <class, class> class Operator, class ... Types>
+        inline constexpr typename crap :: isSortedUntilType <Operator, Types...> :: value_type
+        crap :: isSortedUntilType <Operator, Types...> :: operator () () const noexcept
+{
+ return crap :: isSortedUntilType <Operator, Types...> :: value;
+}
+#endif
 #endif
