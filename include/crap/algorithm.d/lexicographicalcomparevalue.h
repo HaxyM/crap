@@ -5,6 +5,7 @@
 #include "../utility.d/frontvalue.h"
 #include "../utility.d/valuedemultiplexer.h"
 #include "../utility.d/valuelist.h"
+#include "../version.d/libintegralconstantcallable.h"
 
 namespace crap
 {
@@ -44,6 +45,9 @@ namespace crap
   constexpr const static bool value = (detailedResult == (detailedResult_t :: less));
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 
  template <class Type, template <Type, Type> class Operator, Type Value1> template <Type ... Values2>
@@ -60,6 +64,9 @@ namespace crap
   constexpr const static bool value = (detailedResult == (detailedResult_t :: less));
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 
  template <class Type, template <Type, Type> class Operator, Type ... Values1>
@@ -76,17 +83,20 @@ namespace crap
   constexpr const static bool value = (detailedResult == (detailedResult_t :: less));
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 
  template <class Type, template <Type, Type> class Operator, Type Value1> template <Type ... Values2> template <Type...>
-	 struct lexicographicalCompareValue <Type, Operator, Value1> :: template with <Values2...> :: emptyImplementation
+	 struct lexicographicalCompareValue <Type, Operator, Value1> :: with <Values2...> :: emptyImplementation
  {
   using detailedResult_t = typename lexicographicalCompareValue <Type, Operator> :: detailedResult_t;
   constexpr const static detailedResult_t detailedResult = (detailedResult_t :: greater);
  };
 
  template <class Type, template <Type, Type> class Operator, Type Value1> template <Type ... Values2> template <Type...>
-	 struct lexicographicalCompareValue <Type, Operator, Value1> :: template with <Values2...> :: nonemptyImplementation
+	 struct lexicographicalCompareValue <Type, Operator, Value1> :: with <Values2...> :: nonemptyImplementation
  {
   private:
   constexpr const static Type front = frontValue <Type, Values2...> :: value;
@@ -102,14 +112,14 @@ namespace crap
  };
 
  template <class Type, template <Type, Type> class Operator, Type ... Values1> template <Type ... Values2> template <Type...>
-	 struct lexicographicalCompareValue <Type, Operator, Values1...> :: template with <Values2...> :: emptyImplementation
+	 struct lexicographicalCompareValue <Type, Operator, Values1...> :: with <Values2...> :: emptyImplementation
  {
   using detailedResult_t = typename lexicographicalCompareValue <Type, Operator> :: detailedResult_t;
   constexpr const static detailedResult_t detailedResult = (detailedResult_t :: greater);
  };
 
  template <class Type, template <Type, Type> class Operator, Type ... Values1> template <Type ... Values2> template <Type...>
-	 struct lexicographicalCompareValue <Type, Operator, Values1...> :: template with <Values2...> :: nonemptyImplementation
+	 struct lexicographicalCompareValue <Type, Operator, Values1...> :: with <Values2...> :: nonemptyImplementation
  {
   private:
   using values1 = valueList<Type, Values1...>;
@@ -127,29 +137,89 @@ namespace crap
 }
 
 template <class Type, template <Type, Type> class Operator> template <Type ... Values2>
-inline constexpr crap :: lexicographicalCompareValue <Type, Operator> :: template with <Values2...> :: operator
+inline constexpr crap :: lexicographicalCompareValue <Type, Operator> :: with <Values2...> :: operator
+#if (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
 typename crap :: lexicographicalCompareValue <Type, Operator> :: template with <Values2...> :: value_type ()
+#else
+typename crap :: lexicographicalCompareValue <Type, Operator> :: with <Values2...> :: value_type ()
+#endif
 	const noexcept
 {
- return crap :: lexicographicalCompareValue <Type, Operator> :: template with <Values2...> :: value;
+ return crap :: lexicographicalCompareValue <Type, Operator> :: with <Values2...> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <class Type, template <Type, Type> class Operator> template <Type ... Values2>
+        inline constexpr typename
+//TODO: Add version check if changed by clang.
+#if defined(__clang__) || (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
+	crap :: lexicographicalCompareValue <Type, Operator> :: template with <Values2...> :: value_type
+#else
+	crap :: lexicographicalCompareValue <Type, Operator> :: with <Values2...> :: value_type
+#endif
+	crap :: lexicographicalCompareValue <Type, Operator> :: with <Values2...> :: operator () ()
+	const noexcept
+{
+ return crap :: lexicographicalCompareValue <Type, Operator> :: with <Values2...> :: value;
+}
+#endif
 
 template <class Type, template <Type, Type> class Operator, Type Value1> template <Type ... Values2>
-inline constexpr crap :: lexicographicalCompareValue <Type, Operator, Value1> :: template
+inline constexpr crap :: lexicographicalCompareValue <Type, Operator, Value1> ::
 	with <Values2...> :: operator
+#if (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
 typename crap :: lexicographicalCompareValue <Type, Operator, Value1> :: template with <Values2...> :: value_type ()
+#else
+typename crap :: lexicographicalCompareValue <Type, Operator, Value1> :: with <Values2...> :: value_type ()
+#endif
 	const noexcept
 {
- return crap :: lexicographicalCompareValue <Type, Operator, Value1> :: template with <Values2...> :: value;
+ return crap :: lexicographicalCompareValue <Type, Operator, Value1> :: with <Values2...> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <class Type, template <Type, Type> class Operator, Type Value1> template <Type ... Values2>
+        inline constexpr typename
+//TODO: Add version check if changed by clang.
+#if defined(__clang__) || (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
+	crap :: lexicographicalCompareValue <Type, Operator, Value1> :: template with <Values2...> :: value_type
+#else
+	crap :: lexicographicalCompareValue <Type, Operator, Value1> :: with <Values2...> :: value_type
+#endif
+	crap :: lexicographicalCompareValue <Type, Operator, Value1> :: with <Values2...> :: operator () ()
+	const noexcept
+{
+ return crap :: lexicographicalCompareValue <Type, Operator, Value1> :: with <Values2...> :: value;
+}
+#endif
 
 template <class Type, template <Type, Type> class Operator, Type ... Values1> template <Type ... Values2>
-inline constexpr crap :: lexicographicalCompareValue <Type, Operator, Values1...> :: template
+inline constexpr crap :: lexicographicalCompareValue <Type, Operator, Values1...> ::
 	with <Values2...> :: operator
+#if (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
 typename crap :: lexicographicalCompareValue <Type, Operator, Values1...> :: template
+#else
+typename crap :: lexicographicalCompareValue <Type, Operator, Values1...> ::
+#endif
 	with <Values2...> :: value_type () const noexcept
 {
- return crap :: lexicographicalCompareValue <Type, Operator, Values1...> :: template with <Values2...> :: value;
+ return crap :: lexicographicalCompareValue <Type, Operator, Values1...> :: with <Values2...> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <class Type, template <Type, Type> class Operator, Type ... Values1> template <Type ... Values2>
+        inline constexpr typename
+//TODO: Add version check if changed by clang.
+#if defined(__clang__) || (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
+	crap :: lexicographicalCompareValue <Type, Operator, Values1...> :: template with <Values2...> :: value_type
+#else
+	crap :: lexicographicalCompareValue <Type, Operator, Values1...> :: with <Values2...> :: value_type
+#endif
+	crap :: lexicographicalCompareValue <Type, Operator, Values1...> :: with <Values2...> :: operator () ()
+	const noexcept
+{
+ return crap :: lexicographicalCompareValue <Type, Operator, Values1...> :: with <Values2...> :: value;
+}
+#endif
 #endif
 
