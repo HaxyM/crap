@@ -1,7 +1,7 @@
 #ifndef CRAP_ALGORITHM_UPPERBOUNDVALUE
 #define CRAP_ALGORITHM_UPPERBOUNDVALUE
 
-#include "../utility.d/valuelist.h"
+#include "../utility.d/bisectvalue.h"
 #include "../version.d/libintegralconstantcallable.h"
 
 namespace crap
@@ -33,19 +33,37 @@ namespace crap
  template <class Type, Type Value, template <Type, Type> class Operator, Type ... Values> struct upperBoundValue
  {
   private:
-  using values = valueList<Type, Values...>;
-  constexpr const static std :: size_t half = (values :: size) / 2u;
+  using values = bisectValue<Type, Values...>;
   template <Type ... SubValues> using This = upperBoundValue<Type, Value, Operator, SubValues...>;
-  using lower = typename values :: template till<half, This>;
-  using upper = typename values :: template since<half, This>;
+  using lower = typename values :: template lower<This>;
+  template <std :: size_t LowerValue, std :: size_t LowerNpos> struct upper;
+  template <std :: size_t LowerNpos> struct upper<LowerNpos, LowerNpos>;
   public:
-  constexpr const static std :: size_t value = (((lower :: value) != (lower :: npos)) ? (lower :: value) : ((lower :: npos) + (upper :: value)));
-  constexpr const static std :: size_t npos = (lower :: npos) + (upper :: npos);
+  constexpr const static std :: size_t value = upper <lower :: value, lower :: npos> :: value;
+  constexpr const static std :: size_t npos = sizeof...(Values);
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
 #if (crap_lib_integral_constant_callable >= 201304L)
   constexpr value_type operator () () const noexcept;
 #endif
+ };
+
+ template <class Type, Type Value, template <Type, Type> class Operator, Type ... Values>
+	 template <std :: size_t LowerValue, std :: size_t>
+ struct upperBoundValue <Type, Value, Operator, Values...> :: upper
+ {
+  constexpr const static std :: size_t value = LowerValue;
+ };
+
+ template <class Type, Type Value, template <Type, Type> class Operator, Type ... Values>
+	 template <std :: size_t LowerNpos>
+ struct upperBoundValue <Type, Value, Operator, Values...> :: upper<LowerNpos, LowerNpos>
+ {
+  private:
+  using values = bisectValue<Type, Values...>;
+  template <Type ... SubValues> using This = upperBoundValue<Type, Value, Operator, SubValues...>;
+  public:
+  constexpr const static std :: size_t value = LowerNpos + values :: template upper <This> :: value;
  };
 }
 
