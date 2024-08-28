@@ -2,6 +2,7 @@
 #define CRAP_ALGORITHM_LEXICOGRAPHICALCOMPARETYPE
 
 #include "../utility.d/typelist.h"
+#include "../version.d/libintegralconstantcallable.h"
 
 #include <cstddef>
 
@@ -47,6 +48,9 @@ namespace crap
   constexpr const static bool value = (detailedResult == (detailedResult_t :: less));
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 
  template <template <class, class> class Operator, class Type1> template <class...>
@@ -57,10 +61,13 @@ namespace crap
   constexpr const static bool value = false;
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 
  template <template <class, class> class Operator, class Type1> template <class Only>
-	 struct lexicographicalCompareType <Operator, Type1> :: template with<Only>
+	 struct lexicographicalCompareType <Operator, Type1> :: with<Only>
  {
   private:
   constexpr const static auto less = Operator <Type1, Only> :: value;
@@ -72,10 +79,13 @@ namespace crap
   constexpr const static bool value = (detailedResult == (detailedResult_t :: less));
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 
  template <template <class, class> class Operator, class Type1> template <class First, class ... Rest>
-	 struct lexicographicalCompareType <Operator, Type1> :: template with<First, Rest...>
+	 struct lexicographicalCompareType <Operator, Type1> :: with<First, Rest...>
  {
   private:
   constexpr const static auto greater = Operator <First, Type1> :: value;
@@ -86,6 +96,9 @@ namespace crap
   constexpr const static bool value = (detailedResult == (detailedResult_t :: less));
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 
  template <template <class, class> class Operator, class First1, class ... Rest1> template <class...>
@@ -96,10 +109,13 @@ namespace crap
   constexpr const static bool value = false;
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 
  template <template <class, class> class Operator, class First1, class ... Rest1> template <class Only>
-	 struct lexicographicalCompareType <Operator, First1, Rest1...> :: template with<Only>
+	 struct lexicographicalCompareType <Operator, First1, Rest1...> :: with<Only>
  {
   private:
   constexpr const static auto less = Operator <First1, Only> :: value;
@@ -110,11 +126,14 @@ namespace crap
   constexpr const static bool value = (detailedResult == (detailedResult_t :: less));
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 
  template <template <class, class> class Operator, class First1, class ... Rest1>
 	 template <class First2, class ... Rest2>
-	 struct lexicographicalCompareType <Operator, First1, Rest1...> :: template with<First2, Rest2...>
+	 struct lexicographicalCompareType <Operator, First1, Rest1...> :: with<First2, Rest2...>
  {
   public:
   using detailedResult_t = typename lexicographicalCompareType <Operator> :: detailedResult_t;
@@ -135,22 +154,25 @@ namespace crap
   constexpr const static bool value = (detailedResult == (detailedResult_t :: less));
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 
  template <template <class, class> class Operator, class First1, class ... Rest1>
 	 template <class First2, class ... Rest2>
 	 template <typename lexicographicalCompareType <Operator> :: detailedResult_t LowerResult, std :: size_t>
-	 struct lexicographicalCompareType <Operator, First1, Rest1...> :: template with <First2, Rest2...> :: upper
+	 struct lexicographicalCompareType <Operator, First1, Rest1...> :: with <First2, Rest2...> :: upper
  {
-  constexpr const static typename lexicographicalCompareType <Operator, First1, Rest2...> :: template
+  constexpr const static typename lexicographicalCompareType <Operator, First1, Rest2...> ::
 	  with <First2, Rest2...> :: detailedResult_t detailedResult = LowerResult;
  };
 
  template <template <class, class> class Operator, class First1, class ... Rest1>
 	 template <class First2, class ... Rest2>
 	 template <std :: size_t Half>
-	 struct lexicographicalCompareType <Operator, First1, Rest1...> :: template
-	 with <First2, Rest2...> :: template
+	 struct lexicographicalCompareType <Operator, First1, Rest1...> ::
+	 with <First2, Rest2...> ::
 	 upper<lexicographicalCompareType <Operator> :: detailedResult_t :: equal, Half>
  {
   private:
@@ -167,61 +189,197 @@ namespace crap
 }
 
 template <template <class, class> class Operator> template <class ... Types2>
-inline constexpr crap :: lexicographicalCompareType <Operator> :: template with <Types2...> :: operator
+inline constexpr crap :: lexicographicalCompareType <Operator> :: with <Types2...> :: operator
+#if (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
 typename crap :: lexicographicalCompareType <Operator> :: template with <Types2...> :: value_type () const noexcept
+#else
+typename crap :: lexicographicalCompareType <Operator> :: with <Types2...> :: value_type () const noexcept
+#endif
 {
- return crap :: lexicographicalCompareType <Operator> :: template with <Types2...> :: value;
+ return crap :: lexicographicalCompareType <Operator> :: with <Types2...> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <template <class, class> class Operator> template <class ... Types2>
+inline constexpr typename
+//TODO: Add version check if changed by clang.
+#if defined(__clang__) || (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
+crap :: lexicographicalCompareType <Operator> :: template with <Types2...> :: value_type
+#else
+crap :: lexicographicalCompareType <Operator> :: with <Types2...> :: value_type
+#endif
+crap :: lexicographicalCompareType <Operator> :: with <Types2...> :: operator () () const noexcept
+{
+ return crap :: lexicographicalCompareType <Operator> :: with <Types2...> :: value;
+}
+#endif
 
 template <template <class, class> class Operator, class Type1> template <class ... Types2>
-inline constexpr crap :: lexicographicalCompareType <Operator, Type1> :: template with <Types2...> :: operator
+inline constexpr crap :: lexicographicalCompareType <Operator, Type1> :: with <Types2...> :: operator
+#if (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
 typename crap :: lexicographicalCompareType <Operator, Type1> :: template with <Types2...> :: value_type ()
+#else
+typename crap :: lexicographicalCompareType <Operator, Type1> :: with <Types2...> :: value_type ()
+#endif
 	const noexcept
 {
- return crap :: lexicographicalCompareType <Operator, Type1> :: template with <Types2...> :: value;
+ return crap :: lexicographicalCompareType <Operator, Type1> :: with <Types2...> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <template <class, class> class Operator, class Type1> template <class ... Types2>
+inline constexpr typename
+//TODO: Add version check if changed by clang.
+#if defined(__clang__) || (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
+crap :: lexicographicalCompareType <Operator, Type1> :: template with <Types2...> :: value_type
+#else
+crap :: lexicographicalCompareType <Operator, Type1> :: with <Types2...> :: value_type
+#endif
+crap :: lexicographicalCompareType <Operator, Type1> :: with <Types2...> :: operator () () const noexcept
+{
+ return crap :: lexicographicalCompareType <Operator, Type1> :: with <Types2...> :: value;
+}
+#endif
 
 template <template <class, class> class Operator, class Type1> template <class Only>
-inline constexpr crap :: lexicographicalCompareType <Operator, Type1> :: template with <Only> :: operator
+inline constexpr crap :: lexicographicalCompareType <Operator, Type1> :: with <Only> :: operator
+#if (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
 typename crap :: lexicographicalCompareType <Operator, Type1> :: template with <Only> :: value_type ()
+#else
+typename crap :: lexicographicalCompareType <Operator, Type1> :: with <Only> :: value_type ()
+#endif
 	const noexcept
 {
- return crap :: lexicographicalCompareType <Operator, Type1> :: template with <Only> :: value;
+ return crap :: lexicographicalCompareType <Operator, Type1> :: with <Only> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <template <class, class> class Operator, class Type1> template <class Only>
+inline constexpr typename
+//TODO: Add version check if changed by clang.
+#if defined(__clang__) || (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
+crap :: lexicographicalCompareType <Operator, Type1> :: template with <Only> :: value_type
+#else
+crap :: lexicographicalCompareType <Operator, Type1> :: with <Only> :: value_type
+#endif
+crap :: lexicographicalCompareType <Operator, Type1> :: with <Only> :: operator () () const noexcept
+{
+ return crap :: lexicographicalCompareType <Operator, Type1> :: with <Only> :: value;
+}
+#endif
 
 template <template <class, class> class Operator, class Type1> template <class First, class ... Rest>
-inline constexpr crap :: lexicographicalCompareType <Operator, Type1> :: template with <First, Rest...> :: operator
+inline constexpr crap :: lexicographicalCompareType <Operator, Type1> :: with <First, Rest...> :: operator
+#if (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
 typename crap :: lexicographicalCompareType <Operator, Type1> :: template with <First, Rest...> :: value_type ()
+#else
+typename crap :: lexicographicalCompareType <Operator, Type1> :: with <First, Rest...> :: value_type ()
+#endif
 	const noexcept
 {
- return crap :: lexicographicalCompareType <Operator, Type1> :: template with <First, Rest...> :: value;
+ return crap :: lexicographicalCompareType <Operator, Type1> :: with <First, Rest...> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <template <class, class> class Operator, class Type1> template <class First, class ... Rest>
+inline constexpr typename
+//TODO: Add version check if changed by clang.
+#if defined(__clang__) || (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
+crap :: lexicographicalCompareType <Operator, Type1> :: template with <First, Rest...> :: value_type
+#else
+crap :: lexicographicalCompareType <Operator, Type1> :: with <First, Rest...> :: value_type
+#endif
+crap :: lexicographicalCompareType <Operator, Type1> :: with <First, Rest...> :: operator () () const noexcept
+{
+ return crap :: lexicographicalCompareType <Operator, Type1> :: with <First, Rest...> :: value;
+}
+#endif
 
 template <template <class, class> class Operator, class First1, class ... Rest1> template <class ... Types2>
-inline constexpr crap :: lexicographicalCompareType <Operator, First1, Rest1...> :: template
+inline constexpr crap :: lexicographicalCompareType <Operator, First1, Rest1...> ::
 	with <Types2...> :: operator
+#if (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
 typename crap :: lexicographicalCompareType <Operator, First1, Rest1...> :: template with <Types2...> :: value_type ()
+#else
+typename crap :: lexicographicalCompareType <Operator, First1, Rest1...> :: with <Types2...> :: value_type ()
+#endif
 	const noexcept
 {
- return crap :: lexicographicalCompareType <Operator, First1, Rest1...> :: template with <Types2...> :: value;
+ return crap :: lexicographicalCompareType <Operator, First1, Rest1...> :: with <Types2...> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <template <class, class> class Operator, class First1, class ... Rest1> template <class ... Types2>
+inline constexpr typename
+//TODO: Add version check if changed by clang.
+#if defined(__clang__) || (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
+crap :: lexicographicalCompareType <Operator, First1, Rest1...> :: template with <Types2...> :: value_type
+#else
+crap :: lexicographicalCompareType <Operator, First1, Rest1...> :: with <Types2...> :: value_type
+#endif
+crap :: lexicographicalCompareType <Operator, First1, Rest1...> :: with <Types2...> :: operator () () const noexcept
+{
+ return crap :: lexicographicalCompareType <Operator, First1, Rest1...> :: with <Types2...> :: value;
+}
+#endif
 
 template <template <class, class> class Operator, class First1, class ... Rest1> template <class Only>
-inline constexpr crap :: lexicographicalCompareType <Operator, First1, Rest1...> :: template with <Only> :: operator
+inline constexpr crap :: lexicographicalCompareType <Operator, First1, Rest1...> :: with <Only> :: operator
+#if (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
 typename crap :: lexicographicalCompareType <Operator, First1, Rest1...> :: template with <Only> :: value_type ()
+#else
+typename crap :: lexicographicalCompareType <Operator, First1, Rest1...> :: with <Only> :: value_type ()
+#endif
 	const noexcept
 {
- return crap :: lexicographicalCompareType <Operator, First1, Rest1...> :: template with <Only> :: value;
+ return crap :: lexicographicalCompareType <Operator, First1, Rest1...> :: with <Only> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <template <class, class> class Operator, class First1, class ... Rest1> template <class Only>
+inline constexpr typename
+//TODO: Add version check if changed by clang.
+#if defined(__clang__) || (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
+crap :: lexicographicalCompareType <Operator, First1, Rest1...> :: template with <Only> :: value_type
+#else
+crap :: lexicographicalCompareType <Operator, First1, Rest1...> :: with <Only> :: value_type
+#endif
+crap :: lexicographicalCompareType <Operator, First1, Rest1...> :: with <Only> :: operator () () const noexcept
+{
+ return crap :: lexicographicalCompareType <Operator, First1, Rest1...> :: with <Only> :: value;
+}
+#endif
 
 template <template <class, class> class Operator, class First1, class ... Rest1>
 template <class First2, class ... Rest2>
-inline constexpr crap :: lexicographicalCompareType <Operator, First1, Rest1...> :: template
+inline constexpr crap :: lexicographicalCompareType <Operator, First1, Rest1...> ::
 	with <First2,  Rest2...> :: operator
+#if (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
 typename crap :: lexicographicalCompareType <Operator, First1, Rest1...> :: template
+#else
+typename crap :: lexicographicalCompareType <Operator, First1, Rest1...> ::
+#endif
 	with <First2, Rest2...> :: value_type () const noexcept
 {
- return crap :: lexicographicalCompareType <Operator, First1, Rest1...> :: template with <First2, Rest2...> :: value;
+ return crap :: lexicographicalCompareType <Operator, First1, Rest1...> :: with <First2, Rest2...> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <template <class, class> class Operator, class First1, class ... Rest1>
+template <class First2, class ... Rest2>
+inline constexpr typename
+//TODO: Add version check if changed by clang.
+#if defined(__clang__) || (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
+crap :: lexicographicalCompareType <Operator, First1, Rest1...> :: template
+#else
+crap :: lexicographicalCompareType <Operator, First1, Rest1...> ::
+#endif
+	with <First2,  Rest2...> :: value_type
+crap :: lexicographicalCompareType <Operator, First1, Rest1...> ::
+	with <First2,  Rest2...> :: operator () () const noexcept
+{
+ return crap :: lexicographicalCompareType <Operator, First1, Rest1...> :: with <First2,  Rest2...> :: value;
+}
+#endif
 #endif
 
