@@ -3,6 +3,7 @@
 
 #include "../utility.d/valuelist.h"
 #include "../version.d/variabletemplates.h"
+#include "../version.d/libintegralconstantcallable.h"
 
 namespace crap
 {
@@ -37,6 +38,9 @@ namespace crap
   constexpr const static bool value = (sizeof...(Values2) == 0u);
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 
  template <class Type, template <Type, Type> class Operator, Type Value1> template <Type ... Values2> struct equalValue <Type, Operator, Value1> :: with
@@ -48,6 +52,9 @@ namespace crap
   constexpr const static bool value = getValue(Values2...);
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 
  template <class Type, template <Type, Type> class Operator, Type ... Values1>
@@ -67,15 +74,37 @@ namespace crap
   constexpr const static bool value = (lowerEqual && upperEqual);
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 }
 
 template <class Type, template <Type, Type> class Operator> template <Type ... Values2>
-inline constexpr crap :: equalValue <Type, Operator> :: template with <Values2...> :: operator
+inline constexpr crap :: equalValue <Type, Operator> :: with <Values2...> :: operator
+#if (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
 typename crap :: equalValue <Type, Operator> :: template with <Values2...> :: value_type () const noexcept
+#else
+typename crap :: equalValue <Type, Operator> :: with <Values2...> :: value_type () const noexcept
+#endif
 {
- return crap :: equalValue <Type, Operator> :: template with <Values2...> :: value;
+ return crap :: equalValue <Type, Operator> :: with <Values2...> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <class Type, template <Type, Type> class Operator> template <Type ... Values2>
+inline constexpr typename
+//TODO: Add version check if changed by clang.
+#if defined(__clang__) || (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
+crap :: equalValue <Type, Operator> :: template with <Values2...> :: value_type
+#else
+crap :: equalValue <Type, Operator> :: with <Values2...> :: value_type
+#endif
+crap :: equalValue <Type, Operator> :: with <Values2...> :: operator () () const noexcept
+{
+ return crap :: equalValue <Type, Operator> :: with <Values2...> :: value;
+}
+#endif
 
 template <class Type, template <Type, Type> class Operator, Type Value1>
 template <Type ... Values2> constexpr const bool crap :: equalValue <Type, Operator, Value1> :: template with <Values2...> :: getValue(...)
@@ -91,17 +120,55 @@ template <Type ... Values2> constexpr const bool crap :: equalValue <Type, Opera
 }
 
 template <class Type, template <Type, Type> class Operator, Type Value1> template <Type ... Values2>
-inline constexpr crap :: equalValue <Type, Operator, Value1> :: template with <Values2...> :: operator
+inline constexpr crap :: equalValue <Type, Operator, Value1> :: with <Values2...> :: operator
+#if (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
 typename crap :: equalValue <Type, Operator, Value1> :: template with <Values2...> :: value_type () const noexcept
+#else
+typename crap :: equalValue <Type, Operator, Value1> :: with <Values2...> :: value_type () const noexcept
+#endif
 {
- return crap :: equalValue <Type, Operator, Value1> :: template with <Values2...> :: value;
+ return crap :: equalValue <Type, Operator, Value1> :: with <Values2...> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <class Type, template <Type, Type> class Operator, Type Value1> template <Type ... Values2>
+inline constexpr typename
+//TODO: Add version check if changed by clang.
+#if defined(__clang__) || (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
+crap :: equalValue <Type, Operator, Value1> :: template with <Values2...> :: value_type
+#else
+crap :: equalValue <Type, Operator, Value1> :: with <Values2...> :: value_type
+#endif
+crap :: equalValue <Type, Operator, Value1> :: with <Values2...> :: operator () () const noexcept
+{
+ return crap :: equalValue <Type, Operator, Value1> :: with <Values2...> :: value;
+}
+#endif
 
 template <class Type, template <Type, Type> class Operator, Type ... Values1> template <Type ... Values2>
-inline constexpr crap :: equalValue <Type, Operator, Values1...> :: template with <Values2...> :: operator
+inline constexpr crap :: equalValue <Type, Operator, Values1...> :: with <Values2...> :: operator
+#if (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
 typename crap :: equalValue <Type, Operator, Values1...> :: template with <Values2...> :: value_type () const noexcept
+#else
+typename crap :: equalValue <Type, Operator, Values1...> :: with <Values2...> :: value_type () const noexcept
+#endif
 {
- return crap :: equalValue <Type, Operator, Values1...> :: template with <Values2...> :: value;
+ return crap :: equalValue <Type, Operator, Values1...> :: with <Values2...> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <class Type, template <Type, Type> class Operator, Type ... Values1> template <Type ... Values2>
+inline constexpr typename
+//TODO: Add version check if changed by clang.
+#if defined(__clang__) || (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
+crap :: equalValue <Type, Operator, Values1...> :: template with <Values2...> :: value_type
+#else
+crap :: equalValue <Type, Operator, Values1...> :: with <Values2...> :: value_type
+#endif
+crap :: equalValue <Type, Operator, Values1...> :: with <Values2...> :: operator () () const noexcept
+{
+ return crap :: equalValue <Type, Operator, Values1...> :: with <Values2...> :: value;
+}
+#endif
 #endif
 
