@@ -8,6 +8,7 @@
 #include "../numeric.d/iotavalue.h"
 #include "../utility.d/emptyvalue.h"
 #include "../utility.d/valuelist.h"
+#include "../version.d/libintegralconstantcallable.h"
 
 #include <cstddef>
 
@@ -42,14 +43,20 @@ namespace crap
   constexpr const static bool value = false;
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 
  template <class Type, template <Type, Type> class Operator, Type Value1> template <Type Value2>
-	 struct isPermutationValue <Type, Operator, Value1> :: template with<Value2>
+	 struct isPermutationValue <Type, Operator, Value1> :: with<Value2>
  {
   constexpr const static bool value = (Operator <Value1, Value2> :: value);
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 
  template <class Type, template <Type, Type> class Operator, Type ... Values1> template <bool, Type...>
@@ -58,10 +65,13 @@ namespace crap
   constexpr const static bool value = false;
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 
  template <class Type, template <Type, Type> class Operator, Type ... Values1> template <Type ... Values2>
-	 struct isPermutationValue <Type, Operator, Values1...> :: template withImplementation<true, Values2...>
+	 struct isPermutationValue <Type, Operator, Values1...> :: withImplementation<true, Values2...>
  {
   private:
   template <std :: size_t MismatchValue, std :: size_t MismatchNpos> struct checkUnequal;
@@ -71,11 +81,14 @@ namespace crap
   constexpr const static bool value = checkUnequal <check :: value, check :: npos> :: value;
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 
  template <class Type, template <Type, Type> class Operator, Type ... Values1> template <Type ... Values2>
 	 template <std :: size_t MismatchValue, std :: size_t MismatchNpos>
- struct isPermutationValue <Type, Operator, Values1...> :: template
+ struct isPermutationValue <Type, Operator, Values1...> ::
 	withImplementation <true, Values2...> :: checkUnequal
  {
   private:
@@ -88,8 +101,8 @@ namespace crap
 
  template <class Type, template <Type, Type> class Operator, Type ... Values1> template <Type ... Values2>
 	 template <std :: size_t MismatchNpos>
- struct isPermutationValue <Type, Operator, Values1...> :: template
-	withImplementation <true, Values2...> :: template
+ struct isPermutationValue <Type, Operator, Values1...> ::
+	withImplementation <true, Values2...> ::
 	checkUnequal<MismatchNpos, MismatchNpos>
  {
   constexpr const static bool value = true;
@@ -99,8 +112,8 @@ namespace crap
 	 template <Type ... Values2>
 	 template <std :: size_t MismatchValue, std :: size_t MismatchNpos>
 	 template <std :: size_t Index>
- struct isPermutationValue <Type, Operator, Values1...> :: template
-	withImplementation <true, Values2...> :: template
+ struct isPermutationValue <Type, Operator, Values1...> ::
+	withImplementation <true, Values2...> ::
 	checkUnequal <MismatchValue, MismatchNpos> :: checkIndex
  {
   private:
@@ -119,9 +132,9 @@ namespace crap
 	 template <std :: size_t MismatchValue, std :: size_t MismatchNpos>
 	 template <std :: size_t Index>
 	 template <std :: size_t FindValue, std :: size_t FindNpos>
- struct isPermutationValue <Type, Operator, Values1...> :: template
-	withImplementation <true, Values2...> :: template
-	checkUnequal <MismatchValue, MismatchNpos> :: template
+ struct isPermutationValue <Type, Operator, Values1...> ::
+	withImplementation <true, Values2...> ::
+	checkUnequal <MismatchValue, MismatchNpos> ::
 	checkIndex <Index> :: checkCount
  {
   constexpr const static bool value = true;
@@ -132,10 +145,10 @@ namespace crap
 	 template <std :: size_t MismatchValue, std :: size_t MismatchNpos>
 	 template <std :: size_t Index>
 	 template <std :: size_t FoundNpos>
- struct isPermutationValue <Type, Operator, Values1...> :: template
-	withImplementation <true, Values2...> :: template
-	checkUnequal <MismatchValue, MismatchNpos> :: template
-	checkIndex <Index> :: template
+ struct isPermutationValue <Type, Operator, Values1...> ::
+	withImplementation <true, Values2...> ::
+	checkUnequal <MismatchValue, MismatchNpos> ::
+	checkIndex <Index> ::
 	checkCount<FoundNpos, FoundNpos>
  {
   private:
@@ -151,40 +164,125 @@ namespace crap
 }
 
 template <class Type, template <Type, Type> class Operator, Type Value1> template <Type ... Values2>
-inline constexpr crap :: isPermutationValue <Type, Operator, Value1> :: template with <Values2...> :: operator
+inline constexpr crap :: isPermutationValue <Type, Operator, Value1> :: with <Values2...> :: operator
+#if (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
 typename crap :: isPermutationValue <Type, Operator, Value1> :: template with <Values2...> :: value_type ()
+#else
+typename crap :: isPermutationValue <Type, Operator, Value1> :: with <Values2...> :: value_type ()
+#endif
 	const noexcept
 {
- return crap :: isPermutationValue <Type, Operator, Value1> :: template with <Values2...> :: value;
+ return crap :: isPermutationValue <Type, Operator, Value1> :: with <Values2...> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <class Type, template <Type, Type> class Operator, Type Value1> template <Type ... Values2>
+inline constexpr typename
+//TODO: Add version check if changed by clang.
+#if defined(__clang__) || (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
+crap :: isPermutationValue <Type, Operator, Value1> :: template with <Values2...> :: value_type
+#else
+crap :: isPermutationValue <Type, Operator, Value1> :: with <Values2...> :: value_type
+#endif
+crap :: isPermutationValue <Type, Operator, Value1> :: with <Values2...> :: operator () () const noexcept
+{
+ return crap :: isPermutationValue <Type, Operator, Value1> :: with <Values2...> :: value;
+}
+#endif
 
 template <class Type, template <Type, Type> class Operator, Type Value1> template <Type Value2>
-inline constexpr crap :: isPermutationValue <Type, Operator, Value1> :: template with <Value2> :: operator
+inline constexpr crap :: isPermutationValue <Type, Operator, Value1> :: with <Value2> :: operator
+#if (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
 typename crap :: isPermutationValue <Type, Operator, Value1> :: template with <Value2> :: value_type ()
+#else
+typename crap :: isPermutationValue <Type, Operator, Value1> :: with <Value2> :: value_type ()
+#endif
 	const noexcept
 {
- return crap :: isPermutationValue <Type, Operator, Value1> :: template with <Value2> :: value;
+ return crap :: isPermutationValue <Type, Operator, Value1> :: with <Value2> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <class Type, template <Type, Type> class Operator, Type Value1> template <Type Value2>
+inline constexpr typename
+//TODO: Add version check if changed by clang.
+#if defined(__clang__) || (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
+crap :: isPermutationValue <Type, Operator, Value1> :: template with <Value2> :: value_type
+#else
+crap :: isPermutationValue <Type, Operator, Value1> :: with <Value2> :: value_type
+#endif
+crap :: isPermutationValue <Type, Operator, Value1> :: with <Value2> :: operator () () const noexcept
+{
+ return crap :: isPermutationValue <Type, Operator, Value1> :: with <Value2> :: value;
+}
+#endif
 
 template <class Type, template <Type, Type> class Operator, Type ... Values1>
 template <bool EqualSize, Type ... Values2>
-inline constexpr crap :: isPermutationValue <Type, Operator, Values1...> :: template
+inline constexpr crap :: isPermutationValue <Type, Operator, Values1...> ::
 	withImplementation <EqualSize, Values2...> :: operator
+#if (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
 typename crap :: isPermutationValue <Type, Operator, Values1...> :: template
+#else
+typename crap :: isPermutationValue <Type, Operator, Values1...> ::
+#endif
 	withImplementation <EqualSize, Values2...> :: value_type () const noexcept
 {
- return crap :: isPermutationValue <Type, Operator, Values1...> :: template
+ return crap :: isPermutationValue <Type, Operator, Values1...> ::
 	 withImplementation <EqualSize, Values2...> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
 
-template <class Type, template <Type, Type> class Operator, Type ... Values1> template <Type ... Values2>
-inline constexpr crap :: isPermutationValue <Type, Operator, Values1...> :: template
+template <class Type, template <Type, Type> class Operator, Type ... Values1>
+template <bool EqualSize, Type ... Values2>
+inline constexpr typename
+//TODO: Add version check if changed by clang.
+#if defined(__clang__) || (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
+crap :: isPermutationValue <Type, Operator, Values1...> :: template
+#else
+crap :: isPermutationValue <Type, Operator, Values1...> ::
+#endif
+	withImplementation <EqualSize, Values2...> :: value_type
+crap :: isPermutationValue <Type, Operator, Values1...> ::
+	withImplementation <EqualSize, Values2...> :: operator () () const noexcept
+{
+ return crap :: isPermutationValue <Type, Operator, Values1...> ::
+	 withImplementation <EqualSize, Values2...> :: value;
+}
+#endif
+
+template <class Type, template <Type, Type> class Operator, Type ... Values1>
+template <Type ... Values2>
+inline constexpr crap :: isPermutationValue <Type, Operator, Values1...> ::
 	withImplementation <true, Values2...> :: operator
+#if (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
 typename crap :: isPermutationValue <Type, Operator, Values1...> :: template
+#else
+typename crap :: isPermutationValue <Type, Operator, Values1...> ::
+#endif
 	withImplementation <true, Values2...> :: value_type () const noexcept
 {
- return crap :: isPermutationValue <Type, Operator, Values1...> :: template
+ return crap :: isPermutationValue <Type, Operator, Values1...> ::
 	 withImplementation <true, Values2...> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <class Type, template <Type, Type> class Operator, Type ... Values1>
+template <Type ... Values2>
+inline constexpr typename
+//TODO: Add version check if changed by clang.
+#if defined(__clang__) || (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
+crap :: isPermutationValue <Type, Operator, Values1...> :: template
+#else
+crap :: isPermutationValue <Type, Operator, Values1...> ::
+#endif
+	withImplementation <true, Values2...> :: value_type
+crap :: isPermutationValue <Type, Operator, Values1...> ::
+	withImplementation <true, Values2...> :: operator () () const noexcept
+{
+ return crap :: isPermutationValue <Type, Operator, Values1...> ::
+	 withImplementation <true, Values2...> :: value;
+}
+#endif
 #endif
 
