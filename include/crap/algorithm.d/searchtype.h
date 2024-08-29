@@ -6,6 +6,7 @@
 #include "../utility.d/bisecttype.h"
 #include "../utility.d/sizetype.h"
 #include "../utility.d/typelist.h"
+#include "../version.d/libintegralconstantcallable.h"
 
 #include <cstddef>
 
@@ -40,6 +41,9 @@ namespace crap
   constexpr const static std :: size_t npos = 0u;
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 
  template <template <class, class> class Operator, class Type> template <class...>
@@ -50,26 +54,35 @@ namespace crap
   constexpr const static std :: size_t npos = 1u;
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 
  template <template <class, class> class Operator, class Type> template <class Only>
-	 struct searchType <Operator, Type> :: template with<Only>
+	 struct searchType <Operator, Type> :: with<Only>
  {
   constexpr const static std :: size_t matched = ((Operator <Only, Type> :: value) ? 1u : 0u);
   constexpr const static std :: size_t value = ((Operator <Only, Type> :: value) ? 0u : 1u);
   constexpr const static std :: size_t npos = 1u;
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 
  template <template <class, class> class Operator, class Type> template <class First, class ... Rest>
-	 struct searchType <Operator, Type> :: template with<First, Rest...>
+	 struct searchType <Operator, Type> :: with<First, Rest...>
  {
   constexpr const static std :: size_t matched = ((Operator <First, Type> :: value) ? 1u : 0u);
   constexpr const static std :: size_t value = 1u;
   constexpr const static std :: size_t npos = 1u;
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 
  template <template <class, class> class Operator, class ... Types> template <class...>
@@ -80,10 +93,13 @@ namespace crap
   constexpr const static std :: size_t npos = sizeof...(Types);
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 
  template <template <class, class> class Operator, class ... Types> template <class Only>
-	 struct searchType <Operator, Types...> :: template with<Only>
+	 struct searchType <Operator, Types...> :: with<Only>
  {
   private:
   using found = findType<Only, Operator, Types...>;
@@ -93,10 +109,13 @@ namespace crap
   constexpr const static std :: size_t npos = found :: npos;
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 
  template <template <class, class> class Operator, class ... Types> template <class First, class ... Rest>
-	 struct searchType <Operator, Types...> :: template with<First, Rest...>
+	 struct searchType <Operator, Types...> :: with<First, Rest...>
  {
   private:
   using values = bisectType<Types...>;
@@ -112,12 +131,15 @@ namespace crap
   constexpr const static std :: size_t npos = sizeof...(Types);
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 
  template <template <class, class> class Operator, class ... Types>
 	 template <class First, class ... Rest>
 	 template <std :: size_t LowerValue, std :: size_t LowerNpos, std :: size_t LowerMatched>
- struct searchType <Operator, Types...> :: template
+ struct searchType <Operator, Types...> ::
 	with <First, Rest...> :: upper
  {
   constexpr const static std :: size_t matched = LowerMatched;
@@ -128,8 +150,8 @@ namespace crap
  template <template <class, class> class Operator, class ... Types>
 	 template <class First, class ... Rest>
 	 template <std :: size_t LowerNpos>
- struct searchType <Operator, Types...> :: template
- 	with <First, Rest...> :: template upper<LowerNpos, LowerNpos, 0u>
+ struct searchType <Operator, Types...> ::
+ 	with <First, Rest...> :: upper<LowerNpos, LowerNpos, 0u>
  {
   private:
   constexpr const static std :: size_t half = sizeof...(Types) / 2u;
@@ -146,8 +168,8 @@ namespace crap
  template <template <class, class> class Operator, class ... Types>
 	 template <class First, class ... Rest>
 	 template <std :: size_t LowerNpos, std :: size_t LowerMatched>
- struct searchType <Operator, Types...> :: template
-	with <First, Rest...> :: template upper<LowerNpos, LowerNpos, LowerMatched>
+ struct searchType <Operator, Types...> ::
+	with <First, Rest...> :: upper<LowerNpos, LowerNpos, LowerMatched>
  {
   private:
   using values = bisectType<Types...>;
@@ -176,8 +198,8 @@ namespace crap
 	 template <class First, class ... Rest>
 	 template <std :: size_t LowerNpos, std :: size_t LowerMatched>
 	 template <std :: size_t MismatchValue, std :: size_t SubPatternLength, std :: size_t UpperLength>
- struct searchType <Operator, Types...> :: template
-	with <First, Rest...> :: template
+ struct searchType <Operator, Types...> ::
+	with <First, Rest...> ::
 	upper <LowerNpos, LowerNpos, LowerMatched> :: partialCheck
  {
   private:
@@ -195,9 +217,9 @@ namespace crap
 	 template <class First, class ... Rest>
 	 template <std :: size_t LowerNpos, std :: size_t LowerMatched>
 	 template <std :: size_t PerfectMatch>
- struct searchType <Operator, Types...> :: template
-	with <First, Rest...> :: template
-	upper <LowerNpos, LowerNpos, LowerMatched> :: template
+ struct searchType <Operator, Types...> ::
+	with <First, Rest...> ::
+	upper <LowerNpos, LowerNpos, LowerMatched> ::
 	partialCheck<PerfectMatch, PerfectMatch, PerfectMatch>
  {
   constexpr const static std :: size_t matched = sizeof...(Rest) + 1u;
@@ -209,9 +231,9 @@ namespace crap
 	 template <class First, class ... Rest>
 	 template <std :: size_t LowerNpos, std :: size_t LowerMatched>
 	 template <std :: size_t SubPatternLength, std :: size_t UpperLength>
- struct searchType <Operator, Types...> :: template
-	with <First, Rest...> :: template
-	upper <LowerNpos, LowerNpos, LowerMatched> :: template
+ struct searchType <Operator, Types...> ::
+	with <First, Rest...> ::
+	upper <LowerNpos, LowerNpos, LowerMatched> ::
 	partialCheck<SubPatternLength, SubPatternLength, UpperLength>
  {
   constexpr const static std :: size_t matched = 0u;
@@ -223,9 +245,9 @@ namespace crap
 	 template <class First, class ... Rest>
 	 template <std :: size_t LowerNpos, std :: size_t LowerMatched>
 	 template <std :: size_t SubPatternLength, std :: size_t UpperLength>
- struct searchType <Operator, Types...> :: template
-	with <First, Rest...> :: template
-	upper <LowerNpos, LowerNpos, LowerMatched> :: template
+ struct searchType <Operator, Types...> ::
+	with <First, Rest...> ::
+	upper <LowerNpos, LowerNpos, LowerMatched> ::
 	partialCheck<UpperLength, SubPatternLength, UpperLength>
  {
   constexpr const static std :: size_t matched = LowerMatched + UpperLength;
@@ -236,65 +258,205 @@ namespace crap
 
 template <template <class, class> class Operator> template <class ... Pattern>
         inline constexpr
-	crap :: searchType <Operator> :: template with <Pattern...> :: operator typename
+	crap :: searchType <Operator> :: with <Pattern...> :: operator typename
+#if (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
 	crap :: searchType <Operator> :: template with <Pattern...> :: value_type ()
+#else
+	crap :: searchType <Operator> :: with <Pattern...> :: value_type ()
+#endif
 	const noexcept
 {
- return crap :: searchType <Operator> :: template with <Pattern...> :: value;
+ return crap :: searchType <Operator> :: with <Pattern...> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <template <class, class> class Operator> template <class ... Pattern>
+        inline constexpr typename
+//TODO: Add version check if changed by clang.
+#if defined(__clang__) || (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
+        crap :: searchType <Operator> :: template with <Pattern...> :: value_type
+#else
+        crap :: searchType <Operator> :: with <Pattern...> :: value_type
+#endif
+        crap :: searchType <Operator> :: with <Pattern...> :: operator () ()
+	const noexcept
+{
+ return crap :: searchType <Operator> :: with <Pattern...> :: value;
+}
+#endif
 
 template <template <class, class> class Operator, class Type> template <class ... Empty>
         inline constexpr
-	crap :: searchType <Operator, Type> :: template with <Empty...> :: operator typename
+	crap :: searchType <Operator, Type> :: with <Empty...> :: operator typename
+#if (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
 	crap :: searchType <Operator, Type> :: template with <Empty...> :: value_type ()
+#else
+	crap :: searchType <Operator, Type> :: with <Empty...> :: value_type ()
+#endif
 	const noexcept
 {
- return crap :: searchType <Operator, Type> :: template with <Empty...> :: value;
+ return crap :: searchType <Operator, Type> :: with <Empty...> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <template <class, class> class Operator, class Type> template <class ... Empty>
+        inline constexpr typename
+//TODO: Add version check if changed by clang.
+#if defined(__clang__) || (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
+        crap :: searchType <Operator, Type> :: template with <Empty...> :: value_type
+#else
+        crap :: searchType <Operator, Type> :: with <Empty...> :: value_type
+#endif
+        crap :: searchType <Operator, Type> :: with <Empty...> :: operator () ()
+	const noexcept
+{
+ return crap :: searchType <Operator, Type> :: with <Empty...> :: value;
+}
+#endif
 
 template <template <class, class> class Operator, class Type> template <class Only>
         inline constexpr
-	crap :: searchType <Operator, Type> :: template with <Only> :: operator typename
+	crap :: searchType <Operator, Type> :: with <Only> :: operator typename
+#if (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
 	crap :: searchType <Operator, Type> :: template with <Only> :: value_type ()
+#else
+	crap :: searchType <Operator, Type> :: with <Only> :: value_type ()
+#endif
 	const noexcept
 {
- return crap :: searchType <Operator, Type> :: template with <Only> :: value;
+ return crap :: searchType <Operator, Type> :: with <Only> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <template <class, class> class Operator, class Type> template <class Only>
+        inline constexpr typename
+//TODO: Add version check if changed by clang.
+#if defined(__clang__) || (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
+        crap :: searchType <Operator, Type> :: template with <Only> :: value_type
+#else
+        crap :: searchType <Operator, Type> :: with <Only> :: value_type
+#endif
+        crap :: searchType <Operator, Type> :: with <Only> :: operator () ()
+	const noexcept
+{
+ return crap :: searchType <Operator, Type> :: with <Only> :: value;
+}
+#endif
 
 template <template <class, class> class Operator, class Type> template <class First, class ... Rest>
         inline constexpr
-	crap :: searchType <Operator, Type> :: template with <First, Rest...> :: operator typename
+	crap :: searchType <Operator, Type> :: with <First, Rest...> :: operator typename
+#if (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
 	crap :: searchType <Operator, Type> :: template with <First, Rest...> :: value_type ()
+#else
+	crap :: searchType <Operator, Type> :: with <First, Rest...> :: value_type ()
+#endif
 	const noexcept
 {
- return crap :: searchType <Operator, Type> :: template with <First, Rest...> :: value;
+ return crap :: searchType <Operator, Type> :: with <First, Rest...> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <template <class, class> class Operator, class Type> template <class First, class ... Rest>
+        inline constexpr typename
+//TODO: Add version check if changed by clang.
+#if defined(__clang__) || (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
+        crap :: searchType <Operator, Type> :: template with <First, Rest...> :: value_type
+#else
+        crap :: searchType <Operator, Type> :: with <First, Rest...> :: value_type
+#endif
+        crap :: searchType <Operator, Type> :: with <First, Rest...> :: operator () ()
+	const noexcept
+{
+ return crap :: searchType <Operator, Type> :: with <First, Rest...> :: value;
+}
+#endif
 
 template <template <class, class> class Operator, class ... Types> template <class ... Empty>
         inline constexpr
-	crap :: searchType <Operator, Types...> :: template with <Empty...> :: operator typename
+	crap :: searchType <Operator, Types...> :: with <Empty...> :: operator typename
+#if (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
 	crap :: searchType <Operator, Types...> :: template with <Empty...> :: value_type ()
+#else
+	crap :: searchType <Operator, Types...> :: with <Empty...> :: value_type ()
+#endif
 	const noexcept
 {
- return crap :: searchType <Operator, Types...> :: template with <Empty...> :: value;
+ return crap :: searchType <Operator, Types...> :: with <Empty...> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <template <class, class> class Operator, class ... Types> template <class ... Empty>
+        inline constexpr typename
+//TODO: Add version check if changed by clang.
+#if defined(__clang__) || (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
+        crap :: searchType <Operator, Types...> :: template with <Empty...> :: value_type
+#else
+        crap :: searchType <Operator, Types...> :: with <Empty...> :: value_type
+#endif
+        crap :: searchType <Operator, Types...> :: with <Empty...> :: operator () ()
+	const noexcept
+{
+ return crap :: searchType <Operator, Types...> :: with <Empty...> :: value;
+}
+#endif
 
 template <template <class, class> class Operator, class ... Types> template <class Only>
         inline constexpr
-	crap :: searchType <Operator, Types...> :: template with <Only> :: operator typename
+	crap :: searchType <Operator, Types...> :: with <Only> :: operator typename
+#if (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
 	crap :: searchType <Operator, Types...> :: template with <Only> :: value_type ()
+#else
+	crap :: searchType <Operator, Types...> :: with <Only> :: value_type ()
+#endif
 	const noexcept
 {
- return crap :: searchType <Operator, Types...> :: template with <Only> :: value;
+ return crap :: searchType <Operator, Types...> :: with <Only> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <template <class, class> class Operator, class ... Types> template <class Only>
+        inline constexpr typename
+//TODO: Add version check if changed by clang.
+#if defined(__clang__) || (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
+        crap :: searchType <Operator, Types...> :: template with <Only> :: value_type
+#else
+        crap :: searchType <Operator, Types...> :: with <Only> :: value_type
+#endif
+        crap :: searchType <Operator, Types...> :: with <Only> :: operator () ()
+	const noexcept
+{
+ return crap :: searchType <Operator, Types...> :: with <Only> :: value;
+}
+#endif
 
 template <template <class, class> class Operator, class ... Types> template <class First, class ... Rest>
         inline constexpr
-	crap :: searchType <Operator, Types...> :: template with <First, Rest...> :: operator typename
+	crap :: searchType <Operator, Types...> :: with <First, Rest...> :: operator typename
+#if (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
 	crap :: searchType <Operator, Types...> :: template with <First, Rest...> :: value_type ()
+#else
+	crap :: searchType <Operator, Types...> :: with <First, Rest...> :: value_type ()
+#endif
 	const noexcept
 {
- return crap :: searchType <Operator, Types...> :: template with <First, Rest...> :: value;
+ return crap :: searchType <Operator, Types...> :: with <First, Rest...> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <template <class, class> class Operator, class ... Types> template <class First, class ... Rest>
+        inline constexpr typename
+//TODO: Add version check if changed by clang.
+#if defined(__clang__) || (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
+        crap :: searchType <Operator, Types...> :: template with <First, Rest...> :: value_type
+#else
+        crap :: searchType <Operator, Types...> :: with <First, Rest...> :: value_type
+#endif
+        crap :: searchType <Operator, Types...> :: with <First, Rest...> :: operator () ()
+	const noexcept
+{
+ return crap :: searchType <Operator, Types...> :: with <First, Rest...> :: value;
+}
+#endif
 #endif
 
