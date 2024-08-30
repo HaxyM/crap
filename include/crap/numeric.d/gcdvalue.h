@@ -19,10 +19,20 @@ namespace crap
  template <class Type, Type...> struct gcdValue;
 
  template <class Type>
-	 struct gcdValue<Type> : std :: integral_constant<Type, zero <Type> :: value> {};
+	 struct gcdValue<Type> : std :: integral_constant<Type, zero <Type> :: value>
+ {
+  static_assert((std :: is_integral <Type> :: value) &&
+		  !(std :: is_same <typename std :: remove_cv <Type> :: type, bool> :: value),
+		  "Unsupported type.");
+ };
 
  template <class Type, Type Value>
-	 struct gcdValue<Type, Value> : std :: integral_constant<Type, Value> {};
+	 struct gcdValue<Type, Value> : std :: integral_constant<Type, Value>
+ {
+  static_assert((std :: is_integral <Type> :: value) &&
+		  !(std :: is_same <typename std :: remove_cv <Type> :: type, bool> :: value),
+		  "Unsupported type.");
+ };
 
 #if (crap_lib_gcd_lcm >= 201606L)
  template <class Type, Type Value1, Type Value2>
@@ -34,6 +44,9 @@ namespace crap
 
  template <class Type, Type Value1, Type Value2> struct gcdValue<Type, Value1, Value2>
  {
+  static_assert((std :: is_integral <Type> :: value) &&
+		  !(std :: is_same <typename std :: remove_cv <Type> :: type, bool> :: value),
+		  "Unsupported type.");
   private:
   constexpr const static Type const0 = zero <Type> :: value;
   constexpr const static Type const1 = identity <Type> :: value;
@@ -54,6 +67,9 @@ namespace crap
 
  template <class Type, Type ... Values> struct gcdValue
  {
+  static_assert((std :: is_integral <Type> :: value) &&
+		  !(std :: is_same <typename std :: remove_cv <Type> :: type, bool> :: value),
+		  "Unsupported type.");
   private:
   template <Type ... SubValues> using This = gcdValue<Type, SubValues...>;
   public:
