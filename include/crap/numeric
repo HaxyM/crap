@@ -44,6 +44,7 @@
 #include "numeric.d/partialsumfortype.h"
 #include "numeric.d/partialsumtype.h"
 #include "numeric.d/partialsumvalue.h"
+#include "numeric.d/reducefortype.h"
 #include "numeric.d/reducetype.h"
 #include "numeric.d/reducetypesource.h"
 #include "numeric.d/reducevalue.h"
