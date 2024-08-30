@@ -2,6 +2,7 @@
 #define CRAP_ALGORITHM_PARTITIONPOINTVALUE
 
 #include "../utility.d/bisectvalue.h"
+#include "../version.d/libintegralconstantcallable.h"
 
 #include <cstddef>
 
@@ -15,6 +16,9 @@ namespace crap
   constexpr const static std :: size_t npos = 0u;
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 
  template <class Type, template <Type> class Operator, Type Value> struct partitionPointValue<Type, Operator, Value>
@@ -23,6 +27,9 @@ namespace crap
   constexpr const static std :: size_t npos = 1u;
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 
  template <class Type, template <Type> class Operator, Type ... Values> struct partitionPointValue
@@ -38,6 +45,9 @@ namespace crap
   constexpr const static std :: size_t npos = sizeof...(Values);
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 
  template <class Type, template <Type> class Operator, Type ... Values>
@@ -49,7 +59,7 @@ namespace crap
 
  template <class Type, template <Type> class Operator, Type ... Values>
 	 template <std :: size_t LowerNpos>
-	struct partitionPointValue <Type, Operator, Values...> :: template upper<LowerNpos, LowerNpos>
+	struct partitionPointValue <Type, Operator, Values...> :: upper<LowerNpos, LowerNpos>
  {
   private:
   using values = bisectValue<Type, Values...>;
@@ -65,6 +75,15 @@ template <class Type, template <Type> class Operator>
 {
  return crap :: partitionPointValue <Type, Operator> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <class Type, template <Type> class Operator>
+	inline constexpr typename crap :: partitionPointValue <Type, Operator> :: value_type
+	crap :: partitionPointValue <Type, Operator> :: operator () () const noexcept
+{
+ return crap :: partitionPointValue <Type, Operator> :: value;
+}
+#endif
 
 template <class Type, template <Type> class Operator, Type Value>
         inline constexpr crap :: partitionPointValue <Type, Operator, Value> :: operator
@@ -72,6 +91,15 @@ template <class Type, template <Type> class Operator, Type Value>
 {
  return crap :: partitionPointValue <Type, Operator, Value> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <class Type, template <Type> class Operator, Type Value>
+	inline constexpr typename crap :: partitionPointValue <Type, Operator, Value> :: value_type
+	crap :: partitionPointValue <Type, Operator, Value> :: operator () () const noexcept
+{
+ return crap :: partitionPointValue <Type, Operator, Value> :: value;
+}
+#endif
 
 template <class Type, template <Type> class Operator, Type ... Values>
         inline constexpr crap :: partitionPointValue <Type, Operator, Values...> :: operator
@@ -79,5 +107,14 @@ template <class Type, template <Type> class Operator, Type ... Values>
 {
  return crap :: partitionPointValue <Type, Operator, Values...> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <class Type, template <Type> class Operator, Type ... Values>
+	inline constexpr typename crap :: partitionPointValue <Type, Operator, Values...> :: value_type
+	crap :: partitionPointValue <Type, Operator, Values...> :: operator () () const noexcept
+{
+ return crap :: partitionPointValue <Type, Operator, Values...> :: value;
+}
+#endif
 #endif
 
