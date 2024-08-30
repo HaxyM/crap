@@ -2,6 +2,7 @@
 #define CRAP_ALGORITHM_PARTITIONPOINTTYPE
 
 #include "../utility.d/bisecttype.h"
+#include "../version.d/libintegralconstantcallable.h"
 
 #include <cstddef>
 
@@ -15,6 +16,9 @@ namespace crap
   constexpr const static std :: size_t npos = 0u;
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 
  template <template <class> class Operator, class Type> struct partitionPointType<Operator, Type>
@@ -23,6 +27,9 @@ namespace crap
   constexpr const static std :: size_t npos = 1u;
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 
  template <template <class> class Operator, class ... Types> struct partitionPointType
@@ -38,6 +45,9 @@ namespace crap
   constexpr const static std :: size_t npos = sizeof...(Types);
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 
  template <template <class> class Operator, class ... Types>
@@ -49,7 +59,7 @@ namespace crap
 
  template <template <class> class Operator, class ... Types>
 	 template <std :: size_t LowerNpos>
-	struct partitionPointType <Operator, Types...> :: template upper<LowerNpos, LowerNpos>
+	struct partitionPointType <Operator, Types...> :: upper<LowerNpos, LowerNpos>
  {
   private:
   using types = bisectType<Types...>;
@@ -65,6 +75,15 @@ template <template <class> class Operator>
 {
  return crap :: partitionPointType <Operator> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <template <class> class Operator>
+	inline constexpr typename crap :: partitionPointType <Operator> :: value_type
+	crap :: partitionPointType <Operator> :: operator () () const noexcept
+{
+ return crap :: partitionPointType <Operator> :: value;
+}
+#endif
 
 template <template <class> class Operator, class Type>
         inline constexpr crap :: partitionPointType <Operator, Type> :: operator
@@ -72,6 +91,15 @@ template <template <class> class Operator, class Type>
 {
  return crap :: partitionPointType <Operator, Type> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <template <class> class Operator, class Type>
+	inline constexpr typename crap :: partitionPointType <Operator, Type> :: value_type
+	crap :: partitionPointType <Operator, Type> :: operator () () const noexcept
+{
+ return crap :: partitionPointType <Operator, Type> :: value;
+}
+#endif
 
 template <template <class> class Operator, class ... Types>
         inline constexpr crap :: partitionPointType <Operator, Types...> :: operator
@@ -79,5 +107,14 @@ template <template <class> class Operator, class ... Types>
 {
  return crap :: partitionPointType <Operator, Types...> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <template <class> class Operator, class ... Types>
+	inline constexpr typename crap :: partitionPointType <Operator, Types...> :: value_type
+	crap :: partitionPointType <Operator, Types...> :: operator () () const noexcept
+{
+ return crap :: partitionPointType <Operator, Types...> :: value;
+}
+#endif
 #endif
 
