@@ -2,8 +2,8 @@
 #define CRAP_ALGORITHM_PARTITIONTYPE
 
 #include "partitioncopytype.h"
+#include "../iterator.d/sizetype.h"
 #include "../utility.d/concatenatetype.h"
-#include "../utility.d/sizetype.h"
 #include "../utility.d/typelist.h"
 
 #include <cstddef>

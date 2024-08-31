@@ -1,6 +1,7 @@
-#ifndef CRAP_UTILITY_SIZETYPE
-#define CRAP_UTILITY_SIZETYPE
+#ifndef CRAP_ITERATOR_SIZETYPE
+#define CRAP_ITERATOR_SIZETYPE
 
+#include <cstddef>
 #include <type_traits>
 
 namespace crap

@@ -1,5 +1,5 @@
-#ifndef CRAP_UTILITY_EMPTYTYPE
-#define CRAP_UTILITY_EMPTYTYPE
+#ifndef CRAP_ITERATOR_EMPTYTYPE
+#define CRAP_ITERATOR_EMPTYTYPE
 
 #include <type_traits>
 

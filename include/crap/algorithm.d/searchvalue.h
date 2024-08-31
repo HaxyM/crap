@@ -3,8 +3,8 @@
 
 #include "findvalue.h"
 #include "mismatchfortype.h"
+#include "../iterator.d/sizefortype.h"
 #include "../utility.d/bisectvalue.h"
-#include "../utility.d/sizefortype.h"
 #include "../utility.d/valuelist.h"
 #include "../version.d/libintegralconstantcallable.h"
 

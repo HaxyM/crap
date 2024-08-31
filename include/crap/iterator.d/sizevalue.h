@@ -1,8 +1,8 @@
-#ifndef CRAP_UTILITY_SIZEVALUE
-#define CRAP_UTILITY_SIZEVALUE
+#ifndef CRAP_ITERATOR_SIZEVALUE
+#define CRAP_ITERATOR_SIZEVALUE
 
+#include <cstddef>
 #include <type_traits>
-#include <utility>
 
 namespace crap
 {

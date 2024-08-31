@@ -7,8 +7,8 @@
 #include "minvalue.h"
 #include "partitioncopyvalue.h"
 #include "sortvalue.h"
+#include "../iterator.d/sizefortype.h"
 #include "../utility.d/concatenatefortype.h"
-#include "../utility.d/sizefortype.h"
 #include "../utility.d/valuelist.h"
 #include "../utility.d/valuelistfortype.h"
 

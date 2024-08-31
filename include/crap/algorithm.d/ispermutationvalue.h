@@ -5,8 +5,8 @@
 #include "countvalue.h"
 #include "findvalue.h"
 #include "mismatchvalue.h"
+#include "../iterator.d/emptyvalue.h"
 #include "../numeric.d/iotavalue.h"
-#include "../utility.d/emptyvalue.h"
 #include "../utility.d/valuelist.h"
 #include "../version.d/libintegralconstantcallable.h"
 

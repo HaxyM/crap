@@ -1,0 +1,12 @@
+#ifndef CRAP_ITERATOR
+#define CRAP_ITERATOR
+
+#include "iterator.d/emptyfortype.h"
+#include "iterator.d/emptytype.h"
+#include "iterator.d/emptyvalue.h"
+#include "iterator.d/sizefortype.h"
+#include "iterator.d/sizetype.h"
+#include "iterator.d/sizevalue.h"
+
+#endif
+

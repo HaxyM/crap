@@ -5,8 +5,8 @@
 #include "counttype.h"
 #include "findtype.h"
 #include "mismatchtype.h"
+#include "../iterator.d/emptytype.h"
 #include "../numeric.d/iotavalue.h"
-#include "../utility.d/emptytype.h"
 #include "../utility.d/typelist.h"
 #include "../version.d/libintegralconstantcallable.h"
 

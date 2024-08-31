@@ -7,8 +7,8 @@
 #include "mintype.h"
 #include "partitioncopytype.h"
 #include "sorttype.h"
+#include "../iterator.d/sizetype.h"
 #include "../utility.d/concatenatetype.h"
-#include "../utility.d/sizetype.h"
 #include "../utility.d/typelist.h"
 
 namespace crap

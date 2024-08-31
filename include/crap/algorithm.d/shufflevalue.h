@@ -3,8 +3,8 @@
 
 #include <cstddef>
 
+#include "../iterator.d/sizefortype.h"
 #include "../utility.d/bisectvalue.h"
-#include "../utility.d/sizefortype.h"
 #include "../utility.d/swapindicesvalue.h"
 #include "../utility.d/valuelistfortype.h"
 

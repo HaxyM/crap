@@ -3,8 +3,8 @@
 
 #include "findtype.h"
 #include "mismatchtype.h"
+#include "../iterator.d/sizetype.h"
 #include "../utility.d/bisecttype.h"
-#include "../utility.d/sizetype.h"
 #include "../utility.d/typelist.h"
 #include "../version.d/libintegralconstantcallable.h"
 
