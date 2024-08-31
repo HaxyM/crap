@@ -7,6 +7,9 @@
 #include "iterator.d/sizefortype.h"
 #include "iterator.d/sizetype.h"
 #include "iterator.d/sizevalue.h"
+#include "iterator.d/ssizefortype.h"
+#include "iterator.d/ssizetype.h"
+#include "iterator.d/ssizevalue.h"
 
 #endif
 
