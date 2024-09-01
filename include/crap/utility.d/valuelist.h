@@ -11,7 +11,9 @@ namespace crap
  template <class Type, Type ... Values> struct valueList
  {
   private:
-  constexpr const static Type values[sizeof...(Values)] = {Values...};
+  constexpr const static auto tableSize =
+	  (sizeof...(Values) != 0u) ? sizeof...(Values) : (sizeof...(Values) + 1u);
+  constexpr const static Type values[tableSize] = {Values...};
   template <Type ... SubValues> using This = valueList<Type, SubValues...>;
   template <template <std :: size_t> class Gen, std :: size_t ... Indices>
 	  struct Generator;
