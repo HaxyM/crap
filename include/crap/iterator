@@ -1,6 +1,9 @@
 #ifndef CRAP_ITERATOR
 #define CRAP_ITERATOR
 
+#include "iterator.d/datafortype.h"
+#include "iterator.d/datatype.h"
+#include "iterator.d/datavalue.h"
 #include "iterator.d/emptyfortype.h"
 #include "iterator.d/emptytype.h"
 #include "iterator.d/emptyvalue.h"
