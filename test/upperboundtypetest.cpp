@@ -7,6 +7,7 @@
 #include <numeric>
 
 #include "testutils.h"
+#include "../include/crap/iterator.d/datafortype.h"
 #include "../include/crap/utility.d/valuelist.h"
 
 template <class Type, template <class, class> class Operator> struct upperBoundForClasses
@@ -32,7 +33,9 @@ bool test_upperBoundValueTrivialTest()
 	 type <testedFun :: template type>;
  constexpr const static auto testResult = testResult_t :: value;
  static_assert(testResult < testList1 :: size + 1u, "Subject should be somewher!");
- static_assert(testList1 :: data()[testResult - 1u] == Subject, "Subject in wrong place");
+ constexpr const static auto& data1 =
+ 	 testList1 :: copy <dataForType <valueTestType> :: template type> :: data();
+ static_assert(data1[testResult - 1u] == Subject, "Subject in wrong place");
  return true;
 }
 

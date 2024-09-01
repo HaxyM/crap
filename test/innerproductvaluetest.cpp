@@ -4,6 +4,7 @@
 #include <iterator>
 #include <numeric>
 
+#include "../include/crap/iterator.d/datafortype.h"
 #include "../include/crap/numbers.d/zero.h"
 #include "../include/crap/numeric.d/innerproductfortype.h"
 #include "../include/crap/utility.d/valuelist.h"
@@ -28,9 +29,13 @@ bool test_innerProductValue()
  using testedFun =
 	 typename testList1 :: copy <crap :: innerProductForType<valueTestType, add, mul> :: template values>;
  constexpr const static auto testResult = testList2 :: copy <testedFun :: template with> :: value;
+ constexpr const static auto& data1 =
+ 	 testList1 :: copy <dataForType <valueTestType> :: template type> :: data();
+ constexpr const static auto& data2 =
+ 	 testList2 :: copy <dataForType <valueTestType> :: template type> :: data();
  const static auto expectedResult =
-	 std :: inner_product(std :: begin(testList1 :: data()), std :: end(testList1 :: data()),
-			 std :: begin(testList2 :: data()), const0);
+	 std :: inner_product(std :: begin(data1), std :: end(data1),
+			 std :: begin(data2), const0);
  return (testResult == expectedResult);
 }
 
