@@ -34,7 +34,7 @@ bool test_upperBoundValueTrivialTest()
  constexpr const static auto testResult = testResult_t :: value;
  static_assert(testResult < testList1 :: size + 1u, "Subject should be somewher!");
  constexpr const static auto& data1 =
- 	 testList1 :: copy <dataForType <valueTestType> :: template type> :: data();
+ 	 testList1 :: copy <crap :: dataForType <valueTestType> :: template type> :: data();
  static_assert(data1[testResult - 1u] == Subject, "Subject in wrong place");
  return true;
 }

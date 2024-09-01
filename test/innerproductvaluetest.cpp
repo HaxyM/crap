@@ -30,9 +30,9 @@ bool test_innerProductValue()
 	 typename testList1 :: copy <crap :: innerProductForType<valueTestType, add, mul> :: template values>;
  constexpr const static auto testResult = testList2 :: copy <testedFun :: template with> :: value;
  constexpr const static auto& data1 =
- 	 testList1 :: copy <dataForType <valueTestType> :: template type> :: data();
+ 	 testList1 :: copy <crap :: dataForType <valueTestType> :: template type> :: data();
  constexpr const static auto& data2 =
- 	 testList2 :: copy <dataForType <valueTestType> :: template type> :: data();
+ 	 testList2 :: copy <crap :: dataForType <valueTestType> :: template type> :: data();
  const static auto expectedResult =
 	 std :: inner_product(std :: begin(data1), std :: end(data1),
 			 std :: begin(data2), const0);
