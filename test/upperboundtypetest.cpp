@@ -33,6 +33,7 @@ bool test_upperBoundValueTrivialTest()
 	 type <testedFun :: template type>;
  constexpr const static auto testResult = testResult_t :: value;
  static_assert(testResult < testList1 :: size + 1u, "Subject should be somewher!");
+ static_assert(0u < testResult, "Subject should be somewher, but everything is larger!");
  constexpr const static auto& data1 =
  	 testList1 :: copy <crap :: dataForType <valueTestType> :: template type> :: data();
  static_assert(data1[testResult - 1u] == Subject, "Subject in wrong place");
