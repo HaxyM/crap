@@ -1,20 +1,21 @@
 #ifndef CRAP_ITERATOR_SSIZETYPE
 #define CRAP_ITERATOR_SSIZETYPE
 
-#include "ssizevalue.h"
-#include "../utility.d/typeidentity.h"
-
+#include <cstddef>
 #include <type_traits>
+
+#include "../numeric.d/saturatecastvalue.h"
+#include "../utility.d/inrangevalue.h"
 
 namespace crap
 {
- template <class ... Types> struct ssizeType;
-
- template <class Type, Type ... Values> struct ssizeType<std :: integral_constant<Type, Values>...>
-	 : typeIdentity<std :: integral_constant<decltype(ssizeValue <Type, Values...> :: value), ssizeValue <Type, Values...> :: value> >
-	 {};
-
- template <class ... Type> using ssizeType_t = typename ssizeType <Type...> :: type;
+ template <class ... Types> struct ssizeType
+	 : std :: integral_constant<std :: ptrdiff_t,
+     	 saturateCastValue <std :: ptrdiff, decltype(sizeof...(Types)), sizeof...(Types)> :: value>
+ {
+  static_assert(inRangeValue <std :: ptrdiff, decltype(sizeof...(Types)), sizeof...(Types)> :: value,
+	  "Out of range.");
+ };
 }
 #endif
 
