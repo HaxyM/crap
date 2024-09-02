@@ -2,7 +2,6 @@
 #define CRAP_ALGORITHM_ISHEAPVALUE
 
 #include "../utility.d/valuelist.h"
-#include <type_traits>
 
 namespace crap
 {
@@ -15,64 +14,157 @@ namespace crap
   constexpr operator value_type () const noexcept;
  };
 
- template <class Type, template <Type, Type> class Operator, Type First, Type ... Rest> struct isHeapValue<Type, Operator, First, Rest...>
+ template <class Type, template <Type, Type> class Operator, Type Value>
+	 struct isHeapValue<Type, Operator, Value>
  {
-  private:
-  using values = valueList<Type, First, Rest...>;
-  template <std :: size_t Index> using leftChildIndex = std :: integral_constant<std :: size_t, (2u * Index) + 1u>;
-  template <std :: size_t Index> using rightChildIndex = std :: integral_constant<std :: size_t, (2u * Index) + 2u>;
-  template <std :: size_t Index> using leftChildIn = std :: integral_constant<bool, ((leftChildIndex <Index> :: value) < (values :: size))>;
-  template <std :: size_t Index> using rightChildIn = std :: integral_constant<bool, ((rightChildIndex <Index> :: value) < (values :: size))>;
-  template <std :: size_t Index, Type Value>
-	  constexpr const static bool isHeap(std :: integral_constant<bool, false>, std :: integral_constant<bool, false>);
-  template <std :: size_t Index, Type Value>
-	  constexpr const static bool isHeap(std :: integral_constant<bool, true>, std :: integral_constant<bool, false>);
-  template <std :: size_t Index, Type Value>
-	  constexpr const static bool isHeap(std :: integral_constant<bool, true>, std :: integral_constant<bool, true>);
-  public:
-  constexpr const static bool value = isHeap<0u, First>(leftChildIn<0u>{}, rightChildIn<0u>{});
+  constexpr const static bool value = true;
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
  };
-}
 
-template <class Type, template <Type, Type> class Operator, Type First, Type ... Rest> template <std :: size_t Index, Type Value> constexpr const bool
-crap :: isHeapValue <Type, Operator, First, Rest...> :: isHeap(std :: integral_constant<bool, false>, std :: integral_constant<bool, false>)
-{
- return true;
-}
+ template <class Type, template <Type, Type> class Operator, Type Value1, Type Value2>
+	 struct isHeapValue<Type, Operator, Value1, Value2>
+ {
+  constexpr const static bool value = !(Operator <Value1, Value2> :: value);
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
+ };
 
-template <class Type, template <Type, Type> class Operator, Type First, Type ... Rest> template <std :: size_t Index, Type Value> constexpr const bool
-crap :: isHeapValue <Type, Operator, First, Rest...> :: isHeap(std :: integral_constant<bool, true>, std :: integral_constant<bool, false>)
-{
- constexpr const std :: size_t leftIndex = crap :: isHeapValue <Type, Operator, First, Rest...> :: template leftChildIndex <Index> :: value;
- constexpr const Type leftChild = crap :: isHeapValue <Type, Operator, First, Rest...> :: values :: template At <leftIndex> :: value;
- return !(Operator <Value, leftChild> :: value);
-}
+ template <class Type, template <Type, Type> class Operator, Type Value1, Type Value2, Type Value3>
+	 struct isHeapValue<Type, Operator, Value1, Value2, Value3>
+ {
+  private:
+  template <bool, class...> struct CheckRight;
+  template <class ... Empty> struct CheckRight<true, Empty...>;
+  template <class ... Empty> struct CheckRight<false, Empty...>;
+  public:
+  constexpr const static bool value = CheckRight <!(Operator <Value1, Value2> :: value)> :: value;
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
+ };
 
-template <class Type, template <Type, Type> class Operator, Type First, Type ... Rest> template <std :: size_t Index, Type Value> constexpr const bool
-crap :: isHeapValue <Type, Operator, First, Rest...> :: isHeap(std :: integral_constant<bool, true>, std :: integral_constant<bool, true>)
-{
- constexpr const std :: size_t rightIndex = crap :: isHeapValue <Type, Operator, First, Rest...> :: template rightChildIndex <Index> :: value;
- constexpr const std :: size_t leftIndex = crap :: isHeapValue <Type, Operator, First, Rest...> :: template leftChildIndex <Index> :: value;
- constexpr const Type rightChild = crap :: isHeapValue <Type, Operator, First, Rest...> :: values :: template At <rightIndex> :: value;
- constexpr const Type leftChild = crap :: isHeapValue <Type, Operator, First, Rest...> :: values :: template At <leftIndex> :: value;
- using rightRightIn = typename crap :: isHeapValue <Type, Operator, First, Rest...> :: template rightChildIn<rightIndex>;
- using rightLeftIn = typename crap :: isHeapValue <Type, Operator, First, Rest...> :: template leftChildIn<rightIndex>;
- using leftRightIn = typename crap :: isHeapValue <Type, Operator, First, Rest...> :: template rightChildIn<leftIndex>;
- using leftLeftIn = typename crap :: isHeapValue <Type, Operator, First, Rest...> :: template leftChildIn<leftIndex>;
- constexpr const bool rightChildNok = Operator <Value, rightChild> :: value;
- constexpr const bool leftChildNok = Operator <Value, leftChild> :: value;
- constexpr const bool childsOk = !(rightChildNok || leftChildNok);
- using rightRightBranch = std :: integral_constant<bool, (rightRightIn :: value) && childsOk>;
- using rightLeftBranch = std :: integral_constant<bool, (rightLeftIn :: value) && childsOk>;
- using leftRightBranch = std :: integral_constant<bool, (leftRightIn :: value) && childsOk>;
- using leftLeftBranch = std :: integral_constant<bool, (leftLeftIn :: value) && childsOk>;
- constexpr const bool rightBranchOk =
-	 crap :: isHeapValue <Type, Operator, First, Rest...> :: template isHeap<rightIndex, rightChild>(rightLeftBranch{}, rightRightBranch{});
- constexpr const bool leftBranchOk =
-	 crap :: isHeapValue <Type, Operator, First, Rest...> :: template isHeap<leftIndex, leftChild>(leftLeftBranch{}, leftRightBranch{});
- return childsOk && rightBranchOk && leftBranchOk;
+ template <class Type, template <Type, Type> class Operator, Type ... Values> struct isHeapValue
+ {
+  private:
+  template <std :: size_t Index, bool LeftChildIn, bool RightChildIn> struct Implementation;
+  template <std :: size_t Index> struct Implementation<Index, false, false>;
+  template <std :: size_t Index> struct Implementation<Index, true, false>;
+  template <std :: size_t Index> struct Implementation<Index, true, true>;
+  public:
+  constexpr const static bool value =
+	  Implementation <0u, (1u < sizeof...(Values)), (2u < sizeof...(Values))> :: value;
+  using value_type = decltype(value);
+  constexpr operator value_type () const noexcept;
+ };
+
+ template <class Type, template <Type, Type> class Operator, Type Value1, Type Value2, Type Value3>
+	 template <class ... Empty>
+ struct isHeapValue <Type, Operator, Value1, Value2, Value3> :: CheckRight<true, Empty...>
+ {
+  constexpr const static bool value = !(Operator <Value1, Value3> :: value);
+ };
+
+ template <class Type, template <Type, Type> class Operator, Type Value1, Type Value2, Type Value3>
+	 template <class ... Empty>
+ struct isHeapValue <Type, Operator, Value1, Value2, Value3> :: CheckRight<false, Empty...>
+ {
+  constexpr const static bool value = false;
+ };
+
+ template <class Type, template <Type, Type> class Operator, Type ... Values>
+	 template <std :: size_t Index>
+ struct isHeapValue <Type, Operator, Values...> :: Implementation<Index, false, false>
+ {
+  constexpr const static bool value = true;
+ };
+
+ template <class Type, template <Type, Type> class Operator, Type ... Values>
+	 template <std :: size_t Index>
+ struct isHeapValue <Type, Operator, Values...> :: Implementation<Index, true, false>
+ {
+  private:
+  constexpr const static Type parent =
+	  valueList <Type, Values...> :: template At <Index> :: value;
+  constexpr const static Type leftChild =
+	  valueList <Type, Values...> :: template At <(2u * Index) + 1u> :: value;
+  public:
+  constexpr const static bool value = !(Operator <parent, leftChild> :: value);
+ };
+
+ template <class Type, template <Type, Type> class Operator, Type ... Values>
+	 template <std :: size_t Index>
+ struct isHeapValue <Type, Operator, Values...> :: Implementation<Index, true, true>
+ {
+  private:
+  constexpr const static Type parent =
+	  valueList <Type, Values...> :: template At <Index> :: value;
+  constexpr const static Type leftChild = 
+	  valueList <Type, Values...> :: template At <(2u * Index) + 1u> :: value;
+  template <bool, Type> struct CheckRight;
+  template <Type Parent> struct CheckRight<true, Parent>;
+  template <Type Parent> struct CheckRight<false, Parent>;
+  template <bool, std :: size_t> struct CheckSubTree;
+  template <std :: size_t SubIndex> struct CheckSubTree<true, SubIndex>;
+  template <std :: size_t SubIndex> struct CheckSubTree<false, SubIndex>;
+  constexpr const static bool rightFine =
+	  CheckRight <!(Operator <parent, leftChild> :: value), parent> :: value;
+  constexpr const static bool leftSubTreeFine =
+	  CheckSubTree <rightFine, (2u * Index) + 1u> :: value;
+  public:
+  constexpr const static bool value =
+	  CheckSubTree <leftSubTreeFine, (2u * Index) + 2u> :: value;
+ };
+
+ template <class Type, template <Type, Type> class Operator, Type ... Values>
+	 template <std :: size_t Index>
+	 template <Type Parent>
+ struct isHeapValue <Type, Operator, Values...> ::
+	Implementation <Index, true, true> ::
+	CheckRight<true, Parent>
+ {
+  private:
+  constexpr const static Type rightChild =
+	  	  CheckRight <!(Operator <parent, leftChild> :: value), parent> :: value;
+  public:
+  constexpr const static bool value = !(Operator <Parent, rightChild> :: value);
+ };
+
+ template <class Type, template <Type, Type> class Operator, Type ... Values>
+	 template <std :: size_t Index>
+	 template <Type Parent>
+ struct isHeapValue <Type, Operator, Values...> ::
+	Implementation <Index, true, true> ::
+	CheckRight<false, Parent>
+ {
+  constexpr const static bool value = false;
+ };
+
+ template <class Type, template <Type, Type> class Operator, Type ... Values>
+	 template <std :: size_t Index>
+	 template <std :: size_t SubIndex>
+ struct isHeapValue <Type, Operator, Values...> ::
+	Implementation <Index, true, true> ::
+	CheckSubTree<true, SubIndex>
+#if (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
+ : isHeapValue <Type, Operator, Values...> :: template
+#else
+ : isHeapValue <Type, Operator, Values...> ::
+#endif
+	Implementation<SubIndex,
+	(((2u * SubIndex) + 1u) < sizeof...(Values)),
+	(((2u * SubIndex) + 2u) < sizeof...(Values))>
+ {
+ };
+
+ template <class Type, template <Type, Type> class Operator, Type ... Values>
+	 template <std :: size_t Index>
+	 template <std :: size_t SubIndex>
+ struct isHeapValue <Type, Operator, Values...> ::
+	Implementation <Index, true, true> ::
+	CheckSubTree<false, SubIndex>
+ {
+  constexpr const static bool value = false;
+ };
 }
 
 template <class Type, template <Type, Type> class Operator>
@@ -82,11 +174,32 @@ template <class Type, template <Type, Type> class Operator>
  return crap :: isHeapValue <Type, Operator> :: value;
 }
 
-template <class Type, template <Type, Type> class Operator, Type First, Type ... Rest>
-        inline constexpr crap :: isHeapValue <Type, Operator, First, Rest...> :: operator
-        typename crap :: isHeapValue <Type, Operator, First, Rest...> :: value_type () const noexcept
+template <class Type, template <Type, Type> class Operator, Type Value>
+        inline constexpr crap :: isHeapValue <Type, Operator, Value> :: operator
+        typename crap :: isHeapValue <Type, Operator, Value> :: value_type () const noexcept
 {
- return crap :: isHeapValue <Type, Operator, First, Rest...> :: value;
+ return crap :: isHeapValue <Type, Operator, Value> :: value;
+}
+
+template <class Type, template <Type, Type> class Operator, Type Value1, Type Value2>
+        inline constexpr crap :: isHeapValue <Type, Operator, Value1, Value2> :: operator
+        typename crap :: isHeapValue <Type, Operator, Value1, Value2> :: value_type () const noexcept
+{
+ return crap :: isHeapValue <Type, Operator, Value1, Value2> :: value;
+}
+
+template <class Type, template <Type, Type> class Operator, Type Value1, Type Value2, Type Value3>
+        inline constexpr crap :: isHeapValue <Type, Operator, Value1, Value2, Value3> :: operator
+        typename crap :: isHeapValue <Type, Operator, Value1, Value2, Value3> :: value_type () const noexcept
+{
+ return crap :: isHeapValue <Type, Operator, Value1, Value2, Value3> :: value;
+}
+
+template <class Type, template <Type, Type> class Operator, Type ... Values>
+        inline constexpr crap :: isHeapValue <Type, Operator, Values...> :: operator
+        typename crap :: isHeapValue <Type, Operator, Values...> :: value_type () const noexcept
+{
+ return crap :: isHeapValue <Type, Operator, Values...> :: value;
 }
 #endif
 
