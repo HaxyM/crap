@@ -1,8 +1,9 @@
 #ifndef CRAP_ALGORITHM_FINDIFVALUE
 #define CRAP_ALGORITHM_FINDIFVALUE
 
+#include <cstddef>
+
 #include "../utility.d/bisectvalue.h"
-#include "../utility.d/valuemultiplexer.h"
 
 namespace crap
 {
@@ -29,15 +30,32 @@ namespace crap
   private:
   using values = bisectValue<Type, Values...>;
   template <Type ... SubValues> using This = findIfValue<Type, Operator, SubValues...>;
-  template <template <Type...> class Container> using empty = Container<>;
   using lower = typename values :: template lower<This>;
-  constexpr const static bool inLower = (lower :: value) != (lower :: npos);
-  using upper = typename valueMultiplexer <Type, inLower, This, empty, values :: template upper> :: type;
+  template <std :: size_t LowerValue, std :: size_t> struct CheckUpper;
+  template <std :: size_t LowerNpos> struct CheckUpper<LowerNpos, LowerNpos>;
   public:
-  constexpr const static std :: size_t value = (inLower ? (lower :: value) : ((lower :: npos) + (upper :: value)));
+  constexpr const static std :: size_t value = CheckUpper <lower :: value, lower :: npos> :: value;
   constexpr const static std :: size_t npos = sizeof...(Values);
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+ };
+
+ template <class Type, template <Type> class Operator, Type ... Values>
+	 template <std :: size_t LowerValue, std :: size_t>
+ struct findIfValue <Type, Operator, Values...> :: CheckUpper
+ {
+  constexpr const static std :: size_t value = LowerValue;
+ };
+
+ template <class Type, template <Type> class Operator, Type ... Values>
+	 template <std :: size_t LowerNpos>
+ struct findIfValue <Type, Operator, Values...> :: CheckUpper<LowerNpos, LowerNpos>
+ {
+  private:
+  using values = bisectValue<Type, Values...>;
+  template <Type ... SubValues> using This = findIfValue<Type, Operator, SubValues...>;
+  public:
+  constexpr const static std :: size_t value = values :: template upper <This> :: value;
  };
 }
 

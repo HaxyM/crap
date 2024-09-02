@@ -1,8 +1,9 @@
 #ifndef CRAP_ALGORITHM_FINDIFTYPE
 #define CRAP_ALGORITHM_FINDIFTYPE
 
+#include <cstddef>
+
 #include "../utility.d/bisecttype.h"
-#include "../utility.d/typemultiplexer.h"
 
 namespace crap
 {
@@ -27,17 +28,34 @@ namespace crap
  template <template <class> class Operator, class ... Types> struct findIfType
  {
   private:
-  using values = bisectType<Types...>;
+  using types = bisectType<Types...>;
   template <class ... SubTypes> using This = findIfType<Operator, SubTypes...>;
-  template <template <class...> class Container> using empty = Container<>;
-  using lower = typename values :: template lower<This>;
-  constexpr const static bool inLower = (lower :: value) != (lower :: npos);
-  using upper = typename typeMultiplexer <inLower, This, empty, values :: template upper> :: type;
+  using lower = typename types :: template lower<This>;
+  template <std :: size_t LowerValue, std :: size_t> struct CheckUpper;
+  template <std :: size_t LowerNpos> struct CheckUpper<LowerNpos, LowerNpos>;
   public:
-  constexpr const static std :: size_t value = (inLower ? (lower :: value) : ((lower :: npos) + (upper :: value)));
+  constexpr const static std :: size_t value = CheckUpper <lower :: value, lower :: npos> :: value;
   constexpr const static std :: size_t npos = sizeof...(Types);
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+ };
+
+ template <template <class> class Operator, class ... Types>
+	 template <std :: size_t LowerValue, std :: size_t>
+ struct findIfType <Operator, Types...> :: CheckUpper
+ {
+  constexpr const static std :: size_t value = LowerValue;
+ };
+
+ template <template <class> class Operator, class ... Types>
+	 template <std :: size_t LowerNpos>
+ struct findIfType <Operator, Types...> :: CheckUpper<LowerNpos, LowerNpos>
+ {
+  private:
+  using types = bisectType<Types...>;
+  template <class ... SubTypes> using This = findIfType<Operator, SubTypes...>;
+  public:
+  constexpr const static std :: size_t value = typess :: template upper <This> :: value;
  };
 }
 
