@@ -65,7 +65,7 @@ namespace crap
   using types = bisectType<Types...>;
   template <class ... SubTypes> using This = findIfType<Operator, SubTypes...>;
   public:
-  constexpr const static std :: size_t value = typess :: template upper <This> :: value;
+  constexpr const static std :: size_t value = LowerNpos + typess :: template upper <This> :: value;
  };
 }
 
