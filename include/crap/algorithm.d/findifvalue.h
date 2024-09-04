@@ -65,7 +65,7 @@ namespace crap
   using values = bisectValue<Type, Values...>;
   template <Type ... SubValues> using This = findIfValue<Type, Operator, SubValues...>;
   public:
-  constexpr const static std :: size_t value = values :: template upper <This> :: value;
+  constexpr const static std :: size_t value = LowerNpos + values :: template upper <This> :: value;
  };
 }
 
