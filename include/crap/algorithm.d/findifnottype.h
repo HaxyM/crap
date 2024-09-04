@@ -4,6 +4,7 @@
 #include <cstddef>
 
 #include "../utility.d/bisecttype.h"
+#include "../version.d/libintegralconstantcallable.h"
 
 namespace crap
 {
@@ -15,6 +16,9 @@ namespace crap
   constexpr const static std :: size_t npos = 0u;
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 
  template <template <class> class Operator, class Type> struct findIfNotType<Operator, Type>
@@ -23,6 +27,9 @@ namespace crap
   constexpr const static std :: size_t npos = 1u;
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 
  template <template <class> class Operator, class ... Types> struct findIfNotType
@@ -40,6 +47,9 @@ namespace crap
   constexpr const static std :: size_t npos = sizeof...(Types);
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 
  template <template <class> class Operator, class ... Types>
@@ -63,6 +73,15 @@ typename crap :: findIfNotType <Operator> :: value_type () const noexcept
 {
  return crap :: findIfNotType <Operator> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <template <class> class Operator>
+inline constexpr typename crap :: findIfNotType <Operator> :: value_type
+crap :: findIfNotType <Operator> :: operator () () const noexcept
+{
+ return crap :: findIfNotType <Operator> :: value;
+}
+#endif
 
 template <template <class> class Operator, class Type>
 inline constexpr crap :: findIfNotType <Operator, Type> :: operator
@@ -70,6 +89,15 @@ typename crap :: findIfNotType <Operator, Type> :: value_type () const noexcept
 {
  return crap :: findIfNotType <Operator, Type> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <template <class> class Operator, class Type>
+inline constexpr typename crap :: findIfNotType <Operator, Type> :: value_type
+crap :: findIfNotType <Operator, Type> :: operator () () const noexcept
+{
+ return crap :: findIfNotType <Operator, Type> :: value;
+}
+#endif
 
 template <template <class> class Operator, class ... Types>
 inline constexpr crap :: findIfNotType <Operator, Types...> :: operator
@@ -77,5 +105,14 @@ typename crap :: findIfNotType <Operator, Types...> :: value_type () const noexc
 {
  return crap :: findIfNotType <Operator, Types...> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <template <class> class Operator, class ... Types>
+inline constexpr typename crap :: findIfNotType <Operator, Types...> :: value_type
+crap :: findIfNotType <Operator, Types...> :: operator () () const noexcept
+{
+ return crap :: findIfNotType <Operator, Types...> :: value;
+}
+#endif
 #endif
 
