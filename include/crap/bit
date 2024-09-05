@@ -1,6 +1,7 @@
 #ifndef CRAP_BIT
 #define CRAP_BIT
 
+#include "bit.d/bitceiltype.h"
 #include "bit.d/bitceilvalue.h"
 #include "bit.d/bitfloorvalue.h"
 #include "bit.d/bitwidthvalue.h"
