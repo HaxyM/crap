@@ -9,6 +9,7 @@
 #include "bit.d/bitwidthvalue.h"
 #include "bit.d/byteswaptype.h"
 #include "bit.d/byteswapvalue.h"
+#include "bit.d/countlonetype.h"
 #include "bit.d/countlonevalue.h"
 #include "bit.d/countlzerotype.h"
 #include "bit.d/countlzerovalue.h"
