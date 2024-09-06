@@ -17,6 +17,7 @@
 #include "bit.d/countronevalue.h"
 #include "bit.d/countrzerotype.h"
 #include "bit.d/countrzerovalue.h"
+#include "bit.d/hassinglebittype.h"
 #include "bit.d/hassinglebitvalue.h"
 #include "bit.d/popcountvalue.h"
 #include "bit.d/rotlvalue.h"
