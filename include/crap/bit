@@ -7,6 +7,7 @@
 #include "bit.d/bitfloorfortype.h"
 #include "bit.d/bitfloortype.h"
 #include "bit.d/bitfloorvalue.h"
+#include "bit.d/bitwidthfortype.h"
 #include "bit.d/bitwidthtype.h"
 #include "bit.d/bitwidthvalue.h"
 #include "bit.d/byteswaptype.h"
