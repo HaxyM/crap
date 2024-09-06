@@ -15,6 +15,7 @@
 #include "bit.d/countlzerovalue.h"
 #include "bit.d/countronetype.h"
 #include "bit.d/countronevalue.h"
+#include "bit.d/countrzerotype.h"
 #include "bit.d/countrzerovalue.h"
 #include "bit.d/hassinglebitvalue.h"
 #include "bit.d/popcountvalue.h"
