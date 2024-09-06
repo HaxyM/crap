@@ -13,6 +13,7 @@
 #include "bit.d/countlonevalue.h"
 #include "bit.d/countlzerotype.h"
 #include "bit.d/countlzerovalue.h"
+#include "bit.d/countronetype.h"
 #include "bit.d/countronevalue.h"
 #include "bit.d/countrzerovalue.h"
 #include "bit.d/hassinglebitvalue.h"
