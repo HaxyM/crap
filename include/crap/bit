@@ -28,6 +28,7 @@
 #include "bit.d/hassinglebitfortype.h"
 #include "bit.d/hassinglebittype.h"
 #include "bit.d/hassinglebitvalue.h"
+#include "bit.d/popcountfortype.h"
 #include "bit.d/popcounttype.h"
 #include "bit.d/popcountvalue.h"
 #include "bit.d/rotlvalue.h"
