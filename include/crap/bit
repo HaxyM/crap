@@ -22,6 +22,7 @@
 #include "bit.d/countronefortype.h"
 #include "bit.d/countronetype.h"
 #include "bit.d/countronevalue.h"
+#include "bit.d/countrzerofortype.h"
 #include "bit.d/countrzerotype.h"
 #include "bit.d/countrzerovalue.h"
 #include "bit.d/hassinglebittype.h"
