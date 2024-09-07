@@ -10,6 +10,7 @@
 #include "bit.d/bitwidthfortype.h"
 #include "bit.d/bitwidthtype.h"
 #include "bit.d/bitwidthvalue.h"
+#include "bit.d/byteswapfortype.h"
 #include "bit.d/byteswaptype.h"
 #include "bit.d/byteswapvalue.h"
 #include "bit.d/countlonetype.h"
