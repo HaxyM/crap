@@ -19,6 +19,7 @@
 #include "bit.d/countlzerofortype.h"
 #include "bit.d/countlzerotype.h"
 #include "bit.d/countlzerovalue.h"
+#include "bit.d/countronefortype.h"
 #include "bit.d/countronetype.h"
 #include "bit.d/countronevalue.h"
 #include "bit.d/countrzerotype.h"
