@@ -13,6 +13,7 @@
 #include "bit.d/byteswapfortype.h"
 #include "bit.d/byteswaptype.h"
 #include "bit.d/byteswapvalue.h"
+#include "bit.d/countlonefortype.h"
 #include "bit.d/countlonetype.h"
 #include "bit.d/countlonevalue.h"
 #include "bit.d/countlzerotype.h"
