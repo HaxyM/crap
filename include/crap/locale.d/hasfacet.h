@@ -9,6 +9,7 @@
 #include "numpunct.h"
 #include "../algorithm.d/countiftype.h"
 #include "../type_traits.d/voidt.h"
+#include "../utility.d/typelist.h"
 #include "../version.d/libintegralconstantcallable.h"
 
 namespace crap
@@ -104,6 +105,8 @@ namespace crap
   constexpr const static auto hasFacetField_v = hasFacetField <Locale> :: value;
   //Check possible "facet" field types.
   template <class Type> struct isProperFacet : IsNumpunct<Type> {};
+  template <class ... Types> struct isProperFacet<typeList<Types...> >
+	  : std :: integral_constant<bool, (countIfType <IsNumpunct, Types...> :: value == 1u)> {};
   template <class ... Types> struct isProperFacet<std :: tuple<Types...> >
 	  : std :: integral_constant<bool, (countIfType <IsNumpunct, Types...> :: value == 1u)> {};
   template <class Type1, class Type2> struct isProperFacet<std :: pair<Type1, Type2> >
