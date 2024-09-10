@@ -23,15 +23,15 @@ namespace crap
   using positiveSign_t = string<char_type>;
   using negativeSign_t = string<char_type>;
   using posFormat_t = valueList<std :: money_base :: part,
-	  std :: money_base :: part :: symbol,
-	  std :: money_base :: part :: sign,
-	  std :: money_base :: part :: none,
-	  std :: money_base :: part :: value>;
+	  std :: money_base :: symbol,
+	  std :: money_base :: sign,
+	  std :: money_base :: none,
+	  std :: money_base :: value>;
   using negFormat_t = valueList<std :: money_base :: part,
-	  std :: money_base :: part :: symbol,
-	  std :: money_base :: part :: sign,
-	  std :: money_base :: part :: none,
-	  std :: money_base :: part :: value>;
+	  std :: money_base :: symbol,
+	  std :: money_base :: sign,
+	  std :: money_base :: none,
+	  std :: money_base :: value>;
   constexpr decimalPoint_t decimalPoint() const noexcept;
   constexpr thousandsSep_t thousandsSep() const noexcept;
   constexpr grouping_t grouping() const noexcept;
@@ -55,15 +55,15 @@ namespace crap
   using positiveSign_t = string<char_type>;
   using negativeSign_t = string<char_type>;
   using posFormat_t = valueList<std :: money_base :: part,
-	  std :: money_base :: part :: symbol,
-	  std :: money_base :: part :: sign,
-	  std :: money_base :: part :: none,
-	  std :: money_base :: part :: value>;
+	  std :: money_base :: symbol,
+	  std :: money_base :: sign,
+	  std :: money_base :: none,
+	  std :: money_base :: value>;
   using negFormat_t = valueList<std :: money_base :: part,
-	  std :: money_base :: part :: symbol,
-	  std :: money_base :: part :: sign,
-	  std :: money_base :: part :: none,
-	  std :: money_base :: part :: value>;
+	  std :: money_base :: symbol,
+	  std :: money_base :: sign,
+	  std :: money_base :: none,
+	  std :: money_base :: value>;
   constexpr decimalPoint_t decimalPoint() const noexcept;
   constexpr thousandsSep_t thousandsSep() const noexcept;
   constexpr grouping_t grouping() const noexcept;
