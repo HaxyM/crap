@@ -59,7 +59,7 @@ namespace crap
 
  template <class CharType, bool International, class Locale>
 	 template <class Type>
- struct hasFacet <std :: moneypunct<CharType, Internationl>, Locale> :: isMoneypunct
+ struct hasFacet <std :: moneypunct<CharType, International>, Locale> :: isMoneypunct
  { //Check if has moneypunct interface.
   private:
   //Type fields verifiers.
@@ -85,7 +85,7 @@ namespace crap
   template <class SubType> struct hasNegativeSign<SubType, voidT<typename SubType :: negativeSign_t> >
 	  : std :: true_type {};
   template <class, class = void> struct hasPosFormat : std :: false_type {};
-  template <class SubType> struct hasPosformat<SubType, voidT<typename SubType :: posFormat_t> >
+  template <class SubType> struct hasPosFormat<SubType, voidT<typename SubType :: posFormat_t> >
 	  : std :: true_type {};
   template <class, class = void> struct hasNegFormat : std :: false_type {};
   template <class SubType> struct hasNegFormat<SubType, voidT<typename SubType :: negFormat_t> >

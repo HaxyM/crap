@@ -19,7 +19,7 @@ namespace crap
   using thousandsSep_t = std :: integral_constant<char_type, ','>;
   using grouping_t = string<char_type>;
   using currSymbol_t = string<char_type>;
-  using fracDigits_t = std :: integral_constants<int, 0>;
+  using fracDigits_t = std :: integral_constant<int, 0>;
   using positiveSign_t = string<char_type>;
   using negativeSign_t = string<char_type>;
   using posFormat_t = valueList<std :: money_base :: part,
@@ -35,12 +35,12 @@ namespace crap
   constexpr decimalPoint_t decimalPoint() const noexcept;
   constexpr thousandsSep_t thousandsSep() const noexcept;
   constexpr grouping_t grouping() const noexcept;
-  constexpr currSymbol_t curr_symbol() const noexcept;
-  constexpr fracDigits_t frac_digits() const noexcept;
-  constexpr positiveSign_t positive_sign() const noexcept;
-  constexpr negativeSign_t negative_sign() const noexcept;
-  constexpr posFormat_t pos_format() const noexcept;
-  constexpr negFormat_t neg_format() const noexcept;
+  constexpr currSymbol_t currSymbol() const noexcept;
+  constexpr fracDigits_t fracDigits() const noexcept;
+  constexpr positiveSign_t positiveSign() const noexcept;
+  constexpr negativeSign_t negativeSign() const noexcept;
+  constexpr posFormat_t posFormat() const noexcept;
+  constexpr negFormat_t negFormat() const noexcept;
  };
 
  template <bool International> struct moneypunct <wchar_t, International>
@@ -51,7 +51,7 @@ namespace crap
   using thousandsSep_t = std :: integral_constant<char_type, L','>;
   using grouping_t = string<char_type>;
   using currSymbol_t = string<char_type>;
-  using fracDigits_t = std :: integral_constants<int, 0>;
+  using fracDigits_t = std :: integral_constant<int, 0>;
   using positiveSign_t = string<char_type>;
   using negativeSign_t = string<char_type>;
   using posFormat_t = valueList<std :: money_base :: part,
@@ -67,12 +67,12 @@ namespace crap
   constexpr decimalPoint_t decimalPoint() const noexcept;
   constexpr thousandsSep_t thousandsSep() const noexcept;
   constexpr grouping_t grouping() const noexcept;
-  constexpr currSymbol_t curr_symbol() const noexcept;
-  constexpr fracDigits_t frac_digits() const noexcept;
-  constexpr positiveSign_t positive_sign() const noexcept;
-  constexpr negativeSign_t negative_sign() const noexcept;
-  constexpr posFormat_t pos_format() const noexcept;
-  constexpr negFormat_t neg_format() const noexcept;
+  constexpr currSymbol_t currSymbol() const noexcept;
+  constexpr fracDigits_t fracDigits() const noexcept;
+  constexpr positiveSign_t positiveSign() const noexcept;
+  constexpr negativeSign_t negativeSign() const noexcept;
+  constexpr posFormat_t posFormat() const noexcept;
+  constexpr negFormat_t negFormat() const noexcept;
  };
 }
 
@@ -189,7 +189,7 @@ crap :: moneypunct <wchar_t, International> :: negativeSign() const noexcept
 }
 
 template <bool International>
-inline constexpr typename crap :: moneypunct <wchar_t, International> :: posFromat_t
+inline constexpr typename crap :: moneypunct <wchar_t, International> :: posFormat_t
 crap :: moneypunct <wchar_t, International> :: posFormat() const noexcept
 {
  return {};
