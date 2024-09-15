@@ -1,6 +1,8 @@
 #ifndef CRAP_LOCALE
 #define CRAP_LOCALE
 
+#include "locale.d/ctype.h"
+#include "locale.d/ctypebase.h"
 #include "locale.d/hasfacet.h"
 #include "locale.d/isalnumvalue.h"
 #include "locale.d/isalphavalue.h"
