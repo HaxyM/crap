@@ -15,6 +15,7 @@
 #include "../numbers.d/zero.h"
 #include "../numeric.d/iotavalue.h"
 #include "../version.d/char8t.h"
+#include "../version.d/libintegralconstantcallable.h"
 #include "../version.d/unicodecharacters.h"
 #endif
 
@@ -50,6 +51,9 @@ namespace crap
   constexpr const static std :: size_t value = iotaValue <bits, std :: size_t> :: template type <sum> :: value;
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 #endif
 }
@@ -62,6 +66,15 @@ typename crap :: popcountValue <Type, Value> :: value_type () const noexcept
 {
  return crap :: popcountValue <Type, Value> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <class Type, Type Value>
+inline constexpr typename crap :: popcountValue <Type, Value> :: value_type
+crap :: popcountValue <Type, Value> :: operator () () const noexcept
+{
+ return crap :: popcountValue <Type, Value> :: value;
+}
+#endif
 #endif
 #endif
 
