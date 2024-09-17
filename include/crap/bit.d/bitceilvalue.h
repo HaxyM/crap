@@ -15,6 +15,7 @@
 #include "hassinglebitvalue.h"
 #include "../numbers.d/zero.h"
 #include "../version.d/char8t.h"
+#include "../version.d/libintegralconstantcallable.h"
 #include "../version.d/unicodecharacters.h"
 #endif
 
@@ -52,6 +53,9 @@ namespace crap
 	  ((floor == maxPower) && (shift == 1u)) ? zero : ((floor == zero) ? one : ((floor << shift) & ones));
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 #endif
 }
@@ -64,6 +68,15 @@ typename crap :: bitCeilValue <Type, Value> :: value_type () const noexcept
 {
  return crap :: bitCeilValue <Type, Value> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <class Type, Type Value>
+inline constexpr typename crap :: bitCeilValue <Type, Value> :: value_type
+crap :: bitCeilValue <Type, Value> :: operator () () const noexcept
+{
+ return crap :: bitCeilValue <Type, Value> :: value;
+}
+#endif
 #endif
 #endif
 
