@@ -13,6 +13,7 @@
 #include "bitwidthvalue.h"
 #include "../numbers.d/zero.h"
 #include "../version.d/char8t.h"
+#include "../version.d/libintegralconstantcallable.h"
 #include "../version.d/unicodecharacters.h"
 #endif
 
@@ -47,6 +48,9 @@ namespace crap
   constexpr const static Type value = (width == 0u) ? zero : (one << wLess);
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 #endif
 }
@@ -59,6 +63,15 @@ typename crap :: bitFloorValue <Type, Value> :: value_type () const noexcept
 {
  return crap :: bitFloorValue <Type, Value> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <class Type, Type Value>
+inline constexpr typename crap :: bitFloorValue <Type, Value> :: value_type
+crap :: bitFloorValue <Type, Value> :: operator () () const noexcept
+{
+ return crap :: bitFloorValue <Type, Value> :: value;
+}
+#endif
 #endif
 #endif
 
