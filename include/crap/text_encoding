@@ -1,0 +1,7 @@
+#ifndef CRAP_TEXTENCODING
+#define CRAP_TEXTENCODING
+
+#include "text_encoding.d/textencodingtype.h"
+
+#endif
+
