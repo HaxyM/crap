@@ -17,9 +17,9 @@ namespace crap
  template <class ... Ignored>
  struct textEncodingType <void> :: literal<char, Ignored...>
  {
-#if !defined(__clang__) && defined(__GNUC__)
+#if defined(__GNUC_EXECUTION_CHARSET_NAME)
   constexpr const static char name[] = __GNUC_EXECUTION_CHARSET_NAME;
-#elif defined(__clang__)
+#elif defined(__clang_literal_encoding__)
   constexpr const static char name[] = __clang_literal_encoding__;
 #else
 #warning "No known way to get execution encoding. Assuming Unknown."
@@ -29,9 +29,9 @@ namespace crap
  template <class ... Ignored>
  struct textEncodingType <void> :: literal<wchar_t, Ignored...>
  {
-#if !defined(__clang__) && defined(__GNUC__)
+#if defined(__GNUC_WIDE_EXECUTION_CHARSET_NAME)
   constexpr const static char name[] = __GNUC_WIDE_EXECUTION_CHARSET_NAME;
-#elif defined(__clang__)
+#elif defined(__clang_wide_literal_encoding__)
   constexpr const static char name[] = __clang_wide_literal_encoding__;
 #else
 #warning "No known way to get execution encoding. Assuming Unknown."
