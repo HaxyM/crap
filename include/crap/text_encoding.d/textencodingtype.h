@@ -2,6 +2,7 @@
 #define CRAP_TEXTENCODING_TEXTENCODINGTYPE
 
 #include "../string.d/string.h"
+#include "../utility.d/typelist.h"
 #include "../version.d/libtextencoding.h"
 
 #include <utility>
@@ -30,6 +31,9 @@ namespace crap
 
 #if (crap_lib_text_encoding >= 202306L)
 #else
+#if defined(__GNUC__) && !defined(__clang__)
+ template <>
+#endif
  enum class textEncodingType<void> :: id : std :: int_least32_t
  {
   other = INT32_C(1),
@@ -292,6 +296,87 @@ namespace crap
   CP50220 = INT32_C(2260)
  };
 #endif
+
+ using text_encoding_id_ASCII_t =
+	  std :: integral_constant<textEncodingType <void> :: id, textEncodingType <void> :: id :: ASCII>;
+
+ template <>
+ struct textEncodingType<text_encoding_id_ASCII_t> : textEncodingType<void>
+ {
+  using mib = text_encoding_id_ASCII_t;
+  using name = string<char, 'U', 'S', '-', 'A', 'S', 'C', 'I', 'I'>;
+  using aliases = typeList<
+	  string<char 'i', 's', 'o', '-', 'i', 'r', '-', '6'>,
+	  string<char 'A', 'N', 'S', 'I', '_', 'X', '3', '.', '4', '-', '1', '9', '6', '8'>,
+	  string<char 'A', 'N', 'S', 'I', '_', 'X', '3', '.', '4', '-', '1', '9', '8', '6'>,
+	  string<char 'I', 'S', 'O', '_', '6', '4', '6', '.', 'i', 'r', 'v', ':', '1', '9', '9', '1'>,
+	  string<char 'I', 'S', 'O', '6', '4', '6', '-', 'U', 'S'>,
+	  string<char 'U', 'S', '-', 'A', 'S', 'C', 'I', 'I'>,
+	  string<char 'u', 's'>,
+	  string<char 'I', 'B', 'M', '3', '6', '7'>,
+	  string<char 'c', 'p', '3', '6', '7'>,
+	  string<char 'c', 's', 'A', 'S', 'C', 'I', 'I'> >;
+ };
+
+ template <>
+ struct textEncodingType<string<char 'A', 'N', 'S', 'I', '_', 'X', '3', '.', '4', '-', '1', '9', '6', '8'> >
+ : textEncodingType<text_encoding_id_ASCII_t>
+ {
+ };
+
+ template <>
+ struct textEncodingType<string<char 'A', 'N', 'S', 'I', '_', 'X', '3', '.', '4', '-', '1', '9', '8', '6'> >
+ : textEncodingType<text_encoding_id_ASCII_t>
+ {
+ };
+
+ template <>
+ struct textEncodingType<string<char 'c', 'p', '3', '6', '7'> >
+ : textEncodingType<text_encoding_id_ASCII_t>
+ {
+ };
+
+ template <>
+ struct textEncodingType<string<char 'c', 's', 'A', 'S', 'C', 'I', 'I'> >
+ : textEncodingType<text_encoding_id_ASCII_t>
+ {
+ };
+
+ template <>
+ struct textEncodingType<string<char 'I', 'B', 'M', '3', '6', '7'> >
+ : textEncodingType<text_encoding_id_ASCII_t>
+ {
+ };
+
+ template <>
+ struct textEncodingType<string<char 'I', 'S', 'O', '6', '4', '6', '-', 'U', 'S'>, >
+ : textEncodingType<text_encoding_id_ASCII_t>
+ {
+ };
+
+ template <>
+ struct textEncodingType<string<char 'I', 'S', 'O', '_', '6', '4', '6', '.', 'i', 'r', 'v', ':', '1', '9', '9', '1'> >
+ : textEncodingType<text_encoding_id_ASCII_t>
+ {
+ };
+
+ template <>
+ struct textEncodingType<string<char 'i', 's', 'o', '-', 'i', 'r', '-', '6'> >
+ : textEncodingType<text_encoding_id_ASCII_t>
+ {
+ };
+
+ template <>
+ struct textEncodingType<string<char 'u', 's'> >
+ : textEncodingType<text_encoding_id_ASCII_t>
+ {
+ };
+
+ template <>
+ struct textEncodingType<string<char 'U', 'S', '-', 'A', 'S', 'C', 'I', 'I'> >
+ : textEncodingType<text_encoding_id_ASCII_t>
+ {
+ };
 
  template <class ... Ignored>
  struct textEncodingType <void> :: literal<char, Ignored...>
