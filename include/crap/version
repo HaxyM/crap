@@ -11,6 +11,7 @@
 #include "version.d/libintegralconstantcallable.h"
 #include "version.d/libintpow2.h"
 #include "version.d/libsaturationarithmetic.h"
+#include "version.d/libtextencoding.h"
 #include "version.d/libtypeidentity.h"
 #include "version.d/libvoidt.h"
 #include "version.d/packindexing.h"
