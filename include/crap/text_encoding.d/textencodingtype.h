@@ -318,6 +318,9 @@ namespace crap
  using text_encoding_id_ISOLatinArabic_t =
 	  std :: integral_constant<textEncodingType <void> :: id, textEncodingType <void> :: id :: ISOLatinArabic>;
 
+ using text_encoding_id_ISOLatinGreek_t =
+	  std :: integral_constant<textEncodingType <void> :: id, textEncodingType <void> :: id :: ISOLatinGreek>;
+
  template <>
  struct textEncodingType<text_encoding_id_ASCII_t> : textEncodingType<void>
  {
@@ -349,7 +352,7 @@ namespace crap
 	  string<char, 'l', '1'>,
 	  string<char, 'I', 'B', 'M', '8', '1', '9'>,
 	  string<char, 'C', 'P', '8', '1', '9'>,
-	  string<char 'c', 's', 'I', 'S', 'O', 'L', 'a', 't', 'i', 'n', '1'> >;
+	  string<char 'c', 's', 'I', 'S', 'O', 'L', 'a', 't', 'i', 'n', '1'> >; //Libstdc++ adds alias "ISO-8859-1:1987" (name)
  };
 
  template <>
@@ -363,7 +366,7 @@ namespace crap
 	  string<char, 'I', 'S', 'O', '-', '8', '8', '5', '9', '-', '2'>,
 	  string<char, 'l', 'a', 't', 'i', 'n', '2'>,
 	  string<char, 'l', '2'>,
-	  string<char 'c', 's', 'I', 'S', 'O', 'L', 'a', 't', 'i', 'n', '2'> >;
+	  string<char 'c', 's', 'I', 'S', 'O', 'L', 'a', 't', 'i', 'n', '2'> >; //Libstdc++ adds alias "ISO-8859-2:1987" (name)
  };
 
  template <>
@@ -377,7 +380,7 @@ namespace crap
 	  string<char, 'I', 'S', 'O', '-', '8', '8', '5', '9', '-', '3'>,
 	  string<char, 'l', 'a', 't', 'i', 'n', '3'>,
 	  string<char, 'l', '3'>,
-	  string<char 'c', 's', 'I', 'S', 'O', 'L', 'a', 't', 'i', 'n', '3'> >;
+	  string<char 'c', 's', 'I', 'S', 'O', 'L', 'a', 't', 'i', 'n', '3'> >; //Libstdc++ adds alias "ISO-8859-3:1988" (name)
  };
 
  template <>
@@ -391,7 +394,7 @@ namespace crap
 	  string<char, 'I', 'S', 'O', '-', '8', '8', '5', '9', '-', '4'>,
 	  string<char, 'l', 'a', 't', 'i', 'n', '4'>,
 	  string<char, 'l', '4'>,
-	  string<char 'c', 's', 'I', 'S', 'O', 'L', 'a', 't', 'i', 'n', '4'> >;
+	  string<char 'c', 's', 'I', 'S', 'O', 'L', 'a', 't', 'i', 'n', '4'> >; //Libstdc++ adds alias "ISO-8859-4:1988" (name)
  };
 
  template <>
@@ -404,7 +407,7 @@ namespace crap
 	  string<char, 'I', 'S', 'O', '_', '8', '8', '5', '9', '-', '5'>,
 	  string<char, 'I', 'S', 'O', '-', '8', '8', '5', '9', '-', '5'>,
 	  string<char, 'c', 'y', 'r', 'i', 'l', 'l', 'i', 'c'>,
-	  string<char 'c', 's', 'I', 'S', 'O', 'L', 'a', 't', 'i', 'n', 'C', 'y', 'r', 'i', 'l', 'l', 'i', 'c'> >;
+	  string<char 'c', 's', 'I', 'S', 'O', 'L', 'a', 't', 'i', 'n', 'C', 'y', 'r', 'i', 'l', 'l', 'i', 'c'> >; //Libstdc++ adds alias "ISO-8859-5:1988" (name)
  };
 
  template <>
@@ -419,7 +422,23 @@ namespace crap
 	  string<char, 'E', 'C', 'M', 'A', '-', '1', '1', '4'>,
 	  string<char, 'A', 'S', 'M', 'O', '-', '7', '0', '8'>,
 	  string<char, 'a', 'r', 'a', 'b', 'i', 'c'>,
-	  string<char 'c', 's', 'I', 'S', 'O', 'L', 'a', 't', 'i', 'n', 'A', 'r', 'a', 'b', 'i', 'c'> >;
+	  string<char 'c', 's', 'I', 'S', 'O', 'L', 'a', 't', 'i', 'n', 'A', 'r', 'a', 'b', 'i', 'c'> >; //Libstdc++ adds alias "ISO-8859-6:1987" (name)
+ };
+
+ template <>
+ struct textEncodingType<text_encoding_id_ISOLatinGreek_t> : textEncodingType<void>
+ {
+  using mib = text_encoding_id_ISOLatinGreek_t;
+  using name = string<char, 'I', 'S', 'O', '-', '8', '8', '5', '9', '-', '7', ':', '1', '9', '8', '7'>;
+  using aliases = typeList<
+	  string<char 'i', 's', 'o', '-', 'i', 'r', '-', '1', '2', '6'>,
+	  string<char, 'I', 'S', 'O', '_', '8', '8', '5', '9', '-', '7'>,
+	  string<char, 'I', 'S', 'O', '-', '8', '8', '5', '9', '-', '7'>,
+	  string<char, 'E', 'L', 'O', 'T', '_', '9', '2', '8'>,
+	  string<char, 'E', 'C', 'M', 'A', '-', '1', '1', '8'>,
+	  string<char, 'g', 'r', 'e', 'e', 'k'>,
+	  string<char, 'g', 'r', 'e', 'e', 'k', '8'>,
+	  string<char 'c', 's', 'I', 'S', 'O', 'L', 'a', 't', 'i', 'n', 'G', 'r', 'e', 'e', 'k'> >; //Libstdc++ adds alias "ISO-8859-7:1987" (name)
  };
 
  template <>
@@ -501,6 +520,12 @@ namespace crap
  };
 
  template <>
+ struct textEncodingType<string<char 'c', 's', 'I', 'S', 'O', 'L', 'a', 't', 'i', 'n', 'G', 'r', 'e', 'e', 'k'> >
+ : textEncodingType<text_encoding_id_ISOLatinGreek_t>
+ {
+ };
+
+ template <>
  struct textEncodingType<string<char 'c', 'y', 'r', 'i', 'l', 'l', 'i', 'c'> >
  : textEncodingType<text_encoding_id_ISOLatinCyrillic_t>
  {
@@ -509,6 +534,30 @@ namespace crap
  template <>
  struct textEncodingType<string<char 'E', 'C', 'M', 'A', '-', '1', '1', '4'> >
  : textEncodingType<text_encoding_id_ISOLatinArabic_t>
+ {
+ };
+
+ template <>
+ struct textEncodingType<string<char 'E', 'C', 'M', 'A', '-', '1', '1', '8'> >
+ : textEncodingType<text_encoding_id_ISOLatinGreek_t>
+ {
+ };
+
+ template <>
+ struct textEncodingType<string<char 'E', 'L', 'O', 'T', '_', '9', '2', '8'> >
+ : textEncodingType<text_encoding_id_ISOLatinGreek_t>
+ {
+ };
+
+ template <>
+ struct textEncodingType<string<char 'g', 'r', 'e', 'e', 'k'> >
+ : textEncodingType<text_encoding_id_ISOLatinGreek_t>
+ {
+ };
+
+ template <>
+ struct textEncodingType<string<char 'g', 'r', 'e', 'e', 'k', '8'> >
+ : textEncodingType<text_encoding_id_ISOLatinGreek_t>
  {
  };
 
@@ -569,6 +618,12 @@ namespace crap
  template <>
  struct textEncodingType<string<char 'I', 'S', 'O', '_', '8', '8', '5', '9', '-', '6'> >
  : textEncodingType<text_encoding_id_ISOLatinArabic_t>
+ {
+ };
+
+ template <>
+ struct textEncodingType<string<char 'I', 'S', 'O', '_', '8', '8', '5', '9', '-', '7'> >
+ : textEncodingType<text_encoding_id_ISOLatinGreek_t>
  {
  };
 
@@ -645,6 +700,18 @@ namespace crap
  };
 
  template <>
+ struct textEncodingType<string<char 'I', 'S', 'O', '-', '8', '8', '5', '9', '-', '7'> >
+ : textEncodingType<text_encoding_id_ISOLatinGreek_t>
+ {
+ };
+
+ template <>
+ struct textEncodingType<string<char 'I', 'S', 'O', '-', '8', '8', '5', '9', '-', '7', ':', '1', '9', '8', '7'> >
+ : textEncodingType<text_encoding_id_ISOLatinGreek_t>
+ {
+ };
+
+ template <>
  struct textEncodingType<string<char 'i', 's', 'o', '-', 'i', 'r', '-', '1', '0', '0'> >
  : textEncodingType<text_encoding_id_ISOLatin1_t>
  {
@@ -665,6 +732,12 @@ namespace crap
  template <>
  struct textEncodingType<string<char 'i', 's', 'o', '-', 'i', 'r', '-', '1', '1', '0'> >
  : textEncodingType<text_encoding_id_ISOLatin4_t>
+ {
+ };
+
+ template <>
+ struct textEncodingType<string<char 'i', 's', 'o', '-', 'i', 'r', '-', '1', '2', '8'> >
+ : textEncodingType<text_encoding_id_ISOLatinGreek_t>
  {
  };
 
