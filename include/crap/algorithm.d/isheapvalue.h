@@ -1,6 +1,8 @@
 #ifndef CRAP_ALGORITHM_ISHEAPVALUE
 #define CRAP_ALGORITHM_ISHEAPVALUE
 
+#include "../algorithm.d/findifvalue.h"
+#include "../numeric.d/iotavalue.h"
 #include "../utility.d/valuelist.h"
 
 namespace crap
@@ -46,13 +48,13 @@ namespace crap
  template <class Type, template <Type, Type> class Operator, Type ... Values> struct isHeapValue
  {
   private:
-  template <std :: size_t Index, bool LeftChildIn, bool RightChildIn> struct Implementation;
-  template <std :: size_t Index> struct Implementation<Index, false, false>;
-  template <std :: size_t Index> struct Implementation<Index, true, false>;
-  template <std :: size_t Index> struct Implementation<Index, true, true>;
+  template <std :: size_t Index> struct CheckIfFails;
+  template <std :: size_t ... Indices> using CheckIndices =
+	  findIfValue<std :: size_t, CheckIfFails, Indices...>;
+  using Implementation =
+	  iotaValue <sizeof...(Values), std :: size_t, 1u> :: template type<ChqckIndices>;
   public:
-  constexpr const static bool value =
-	  Implementation <0u, (1u < sizeof...(Values)), (2u < sizeof...(Values))> :: value;
+  constexpr const static bool value = (Implementation :: value == Impementation :: npos);
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
  };
@@ -73,97 +75,16 @@ namespace crap
 
  template <class Type, template <Type, Type> class Operator, Type ... Values>
 	 template <std :: size_t Index>
- struct isHeapValue <Type, Operator, Values...> :: Implementation<Index, false, false>
- {
-  constexpr const static bool value = true;
- };
-
- template <class Type, template <Type, Type> class Operator, Type ... Values>
-	 template <std :: size_t Index>
- struct isHeapValue <Type, Operator, Values...> :: Implementation<Index, true, false>
+ struct isHeapValue <Type, Operator, Values...> :: CheckIfFails
  {
   private:
+  constexpr const static std :: size_t parentIndex = (Index - 1u) / 2u;
   constexpr const static Type parent =
+	  valueList <Type, Values...> :: template At <parentIndex> :: value;
+  constexpr const static Type child =
 	  valueList <Type, Values...> :: template At <Index> :: value;
-  constexpr const static Type leftChild =
-	  valueList <Type, Values...> :: template At <(2u * Index) + 1u> :: value;
   public:
-  constexpr const static bool value = !(Operator <parent, leftChild> :: value);
- };
-
- template <class Type, template <Type, Type> class Operator, Type ... Values>
-	 template <std :: size_t Index>
- struct isHeapValue <Type, Operator, Values...> :: Implementation<Index, true, true>
- {
-  private:
-  constexpr const static Type parent =
-	  valueList <Type, Values...> :: template At <Index> :: value;
-  constexpr const static Type leftChild = 
-	  valueList <Type, Values...> :: template At <(2u * Index) + 1u> :: value;
-  template <bool, Type> struct CheckRight;
-  template <Type Parent> struct CheckRight<true, Parent>;
-  template <Type Parent> struct CheckRight<false, Parent>;
-  template <bool, std :: size_t> struct CheckSubTree;
-  template <std :: size_t SubIndex> struct CheckSubTree<true, SubIndex>;
-  template <std :: size_t SubIndex> struct CheckSubTree<false, SubIndex>;
-  constexpr const static bool rightFine =
-	  CheckRight <!(Operator <parent, leftChild> :: value), parent> :: value;
-  constexpr const static bool leftSubTreeFine =
-	  CheckSubTree <rightFine, (2u * Index) + 1u> :: value;
-  public:
-  constexpr const static bool value =
-	  CheckSubTree <leftSubTreeFine, (2u * Index) + 2u> :: value;
- };
-
- template <class Type, template <Type, Type> class Operator, Type ... Values>
-	 template <std :: size_t Index>
-	 template <Type Parent>
- struct isHeapValue <Type, Operator, Values...> ::
-	Implementation <Index, true, true> ::
-	CheckRight<true, Parent>
- {
-  private:
-  constexpr const static Type rightChild =
-	  	  CheckRight <!(Operator <parent, leftChild> :: value), parent> :: value;
-  public:
-  constexpr const static bool value = !(Operator <Parent, rightChild> :: value);
- };
-
- template <class Type, template <Type, Type> class Operator, Type ... Values>
-	 template <std :: size_t Index>
-	 template <Type Parent>
- struct isHeapValue <Type, Operator, Values...> ::
-	Implementation <Index, true, true> ::
-	CheckRight<false, Parent>
- {
-  constexpr const static bool value = false;
- };
-
- template <class Type, template <Type, Type> class Operator, Type ... Values>
-	 template <std :: size_t Index>
-	 template <std :: size_t SubIndex>
- struct isHeapValue <Type, Operator, Values...> ::
-	Implementation <Index, true, true> ::
-	CheckSubTree<true, SubIndex>
-#if (!defined(__clang__) && defined(__GNUC__) && (__GNUC__ < 10))
- : isHeapValue <Type, Operator, Values...> :: template
-#else
- : isHeapValue <Type, Operator, Values...> ::
-#endif
-	Implementation<SubIndex,
-	(((2u * SubIndex) + 1u) < sizeof...(Values)),
-	(((2u * SubIndex) + 2u) < sizeof...(Values))>
- {
- };
-
- template <class Type, template <Type, Type> class Operator, Type ... Values>
-	 template <std :: size_t Index>
-	 template <std :: size_t SubIndex>
- struct isHeapValue <Type, Operator, Values...> ::
-	Implementation <Index, true, true> ::
-	CheckSubTree<false, SubIndex>
- {
-  constexpr const static bool value = false;
+  constexpr const static bool value = Operator <parent, leftChild> :: value;
  };
 }
 
