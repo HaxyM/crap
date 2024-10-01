@@ -52,7 +52,8 @@ namespace crap
   template <std :: size_t ... Indices> using CheckIndices =
 	  findIfValue<std :: size_t, CheckIfFails, Indices...>;
   using Implementation =
-	  iotaValue <sizeof...(Values), std :: size_t, 1u> :: template type<ChqckIndices>;
+	  typename iotaValue <sizeof...(Values), std :: size_t, 1u> :: template
+	  type<ChqckIndices>;
   public:
   constexpr const static bool value = (Implementation :: value == Impementation :: npos);
   using value_type = decltype(value);

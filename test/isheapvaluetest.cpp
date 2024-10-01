@@ -17,7 +17,7 @@ bool test_isHeapValueTrivialPassingTest()
 	 crap :: valueList<valueTestType, 9u, 8u, 7u, 7u, 7u, 7u, 5u, 5u, 3u>;
  using testedFun = crap :: isHeapForType<
 	 valueTestType,
-	 lessConstrainedForType <valueTestType, Constrain> :: template type>;
+	 crap :: comparatorsForType <valueTestType> :: template Less>;
  using testResult_t = typename testList1 :: copy <testedFun :: template type>;
  constexpr const static auto testResult = testResult_t :: value;
  static_assert(testResult, "Set is a heap!");
@@ -35,7 +35,7 @@ bool test_isHeapValueTrivialFailingTest()
 	 crap :: valueList<valueTestType, 9u, 8u, 7u, 7u, 7u, 7u, 5u, Subject, Constrain>;
  using testedFun = crap :: isHeapForType<
 	 valueTestType,
-	 crap :: comparatorsForType <valueTestType> :: template Less>;
+	 lessConstrainedForType <valueTestType, Constrain> :: template type>;
  using testResult_t = typename testList1 :: copy <testedFun :: template type>;
  constexpr const static auto testResult = testResult_t :: value;
  static_assert(!testResult, "Set is not a heap!");
