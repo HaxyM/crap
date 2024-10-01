@@ -53,7 +53,7 @@ namespace crap
 	  findIfValue<std :: size_t, CheckIfFails, Indices...>;
   using Implementation =
 	  typename iotaValue <sizeof...(Values), std :: size_t, 1u> :: template
-	  type<ChqckIndices>;
+	  type<CheckIndices>;
   public:
   constexpr const static bool value = (Implementation :: value == Impementation :: npos);
   using value_type = decltype(value);
@@ -85,7 +85,7 @@ namespace crap
   constexpr const static Type child =
 	  valueList <Type, Values...> :: template At <Index> :: value;
   public:
-  constexpr const static bool value = Operator <parent, leftChild> :: value;
+  constexpr const static bool value = Operator <parent, child> :: value;
  };
 }
 
