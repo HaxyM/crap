@@ -52,10 +52,10 @@ namespace crap
   template <std :: size_t ... Indices> using CheckIndices =
 	  findIfValue<std :: size_t, CheckIfFails, Indices...>;
   using Implementation =
-	  typename iotaValue <sizeof...(Values), std :: size_t, 1u> :: template
+	  typename iotaValue <sizeof...(Values) - 1u, std :: size_t, 1u> :: template
 	  type<CheckIndices>;
   public:
-  constexpr const static bool value = (Implementation :: value == Impementation :: npos);
+  constexpr const static bool value = (Implementation :: value == Implementation :: npos);
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
  };
