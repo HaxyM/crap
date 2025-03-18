@@ -1,4 +1,5 @@
 #include <type_traits>
+
 #include "../textencodingtype.h"
 
 #ifndef CRAP_TEXTENCODING_IANAENCODINGS_ISOLATIN1TEXTENCODINGTYPE
