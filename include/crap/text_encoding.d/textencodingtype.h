@@ -313,6 +313,7 @@ namespace crap
 #include "IANA_encodings.d/HalfWidthKatakana_textencodingtype.h"
 #include "IANA_encodings.d/JISEncoding_textencodingtype.h"
 #include "IANA_encodings.d/ShiftJIS_textencodingtype.h"
+#include "IANA_encodings.d/EUCPkdFmtJapanese_textencodingtype.h"
 
 namespace crap
 {
