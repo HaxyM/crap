@@ -311,6 +311,7 @@ namespace crap
 #include "IANA_encodings.d/ISOLatin6_textencodingtype.h"
 #include "IANA_encodings.d/ISOTextComm_textencodingtype.h"
 #include "IANA_encodings.d/HalfWidthKatakana_textencodingtype.h"
+#include "IANA_encodings.d/JISEncoding_textencodingtype.h"
 
 namespace crap
 {
