@@ -309,6 +309,7 @@ namespace crap
 #include "IANA_encodings.d/ISOLatinHebrew_textencodingtype.h"
 #include "IANA_encodings.d/ISOLatin5_textencodingtype.h"
 #include "IANA_encodings.d/ISOLatin6_textencodingtype.h"
+#include "IANA_encodings.d/ISOTextComm_textencodingtype.h"
 
 namespace crap
 {
