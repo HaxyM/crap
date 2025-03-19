@@ -314,6 +314,7 @@ namespace crap
 #include "IANA_encodings.d/JISEncoding_textencodingtype.h"
 #include "IANA_encodings.d/ShiftJIS_textencodingtype.h"
 #include "IANA_encodings.d/EUCPkdFmtJapanese_textencodingtype.h"
+#include "IANA_encodings.d/EUCFixWidJapanese_textencodingtype.h"
 
 namespace crap
 {
