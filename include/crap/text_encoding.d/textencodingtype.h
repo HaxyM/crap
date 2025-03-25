@@ -317,6 +317,7 @@ namespace crap
 #include "IANA_encodings.d/EUCFixWidJapanese_textencodingtype.h"
 #include "IANA_encodings.d/ISO4UnitedKingdom_textencodingtype.h"
 #include "IANA_encodings.d/ISO11SwedishForNames_textencodingtype.h"
+#include "IANA_encodings.d/ISO15Italian_textencodingtype.h"
 
 namespace crap
 {
