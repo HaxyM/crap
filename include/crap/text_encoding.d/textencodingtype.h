@@ -319,6 +319,7 @@ namespace crap
 #include "IANA_encodings.d/ISO11SwedishForNames_textencodingtype.h"
 #include "IANA_encodings.d/ISO15Italian_textencodingtype.h"
 #include "IANA_encodings.d/ISO17Spanish_textencodingtype.h"
+#include "IANA_encodings.d/ISO21German_textencodingtype.h"
 
 namespace crap
 {
