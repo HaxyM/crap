@@ -323,6 +323,7 @@ namespace crap
 #include "IANA_encodings.d/ISO60DanishNorwegian_textencodingtype.h"
 #include "IANA_encodings.d/ISO69French_textencodingtype.h"
 #include "IANA_encodings.d/ISO10646UTF1_textencodingtype.h"
+#include "IANA_encodings.d/ISO646basic1983_textencodingtype.h"
 
 namespace crap
 {
