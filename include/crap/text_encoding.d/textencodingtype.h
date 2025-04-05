@@ -68,6 +68,8 @@ namespace crap
   ISO2IntlRefVersion = INT32_C(30),
   NATSSEFI = INT32_C(31),
   NATSSEFIADD = INT32_C(32),
+  //NATSDYNO = INT32_C(33), //Excluded from standard
+  //NATSDYNOADD = INT32_C(34), //Excluded from standard
   ISO10Swedish = INT32_C(35),
   KSC56011987 = INT32_C(36),
   ISO2022KR = INT32_C(37),
@@ -328,6 +330,9 @@ namespace crap
 #include "IANA_encodings.d/ISO2IntlRefVersion_textencodingtype.h"
 #include "IANA_encodings.d/NATSSEFI_textencodingtype.h"
 #include "IANA_encodings.d/NATSSEFIADD_textencodingtype.h"
+//NATS-DYNO excluded form standard
+//NATD-DYNO-ADD excluded form standard
+#include "IANA_encodings.d/ISO10Swedish_textencodingtype.h"
 
 namespace crap
 {
