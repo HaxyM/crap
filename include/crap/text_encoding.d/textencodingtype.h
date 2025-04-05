@@ -334,6 +334,7 @@ namespace crap
 //NATS-DYNO-ADD excluded form standard
 #include "IANA_encodings.d/ISO10Swedish_textencodingtype.h"
 #include "IANA_encodings.d/KSC5601187_textencodingtype.h"
+#include "IANA_encodings.d/ISO2022KR_textencodingtype.h"
 
 namespace crap
 {
