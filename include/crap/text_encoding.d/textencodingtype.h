@@ -343,6 +343,7 @@ namespace crap
 #include "IANA_encodings.d/ISO16Portuguese_textencodingtype.h"
 #include "IANA_encodings.d/ISO18Greek7Old_textencodingtype.h"
 #include "IANA_encodings.d/ISO19LatinGreek_textencodingtype.h"
+#include "IANA_encodings.d/ISO25French_textencodingtype.h"
 
 namespace crap
 {
