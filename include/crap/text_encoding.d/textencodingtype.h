@@ -352,6 +352,7 @@ namespace crap
 #include "IANA_encodings.d/ISO50INIS8_textencodingtype.h"
 #include "IANA_encodings.d/ISO50INISCyrillic_textencodingtype.h"
 #include "IANA_encodings.d/ISO54271981_textencodingtype.h"
+#include "IANA_encodings.d/ISO5428Greek_textencodingtype.h"
 
 namespace crap
 {
