@@ -340,6 +340,7 @@ namespace crap
 #include "IANA_encodings.d/ISO2022JP2_textencodingtype.h"
 #include "IANA_encodings.d/ISO13JISC6220jp_textencodingtype.h"
 #include "IANA_encodings.d/ISO14JISC6220ro_textencodingtype.h"
+#include "IANA_encodings.d/ISO16Portuguese_textencodingtype.h"
 
 namespace crap
 {
