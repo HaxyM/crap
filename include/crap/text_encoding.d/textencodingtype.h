@@ -356,6 +356,7 @@ namespace crap
 #include "IANA_encodings.d/ISO57GB1988_textencodingtype.h"
 #include "IANA_encodings.d/ISO58GB231280_textencodingtype.h"
 #include "IANA_encodings.d/ISO61Norwegian2_textencodingtype.h"
+#include "IANA_encodings.d/ISO70VideotexSupp1_textencodingtype.h"
 
 namespace crap
 {
