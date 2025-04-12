@@ -769,6 +769,7 @@ namespace crap
 
 #include "aliases.d/ASCII_textencodingtype_alias.h"
 #include "aliases.d/ISOLatin1_textencodingtype_alias.h"
+#include "aliases.d/ISOLatin2_textencodingtype_alias.h"
 
 namespace crap
 {
