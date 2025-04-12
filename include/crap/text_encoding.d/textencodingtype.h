@@ -28,7 +28,7 @@ namespace crap
 #if (crap_lib_text_encoding >= 202306L)
   using id = std :: text_encoding :: id;
 #else
-  enum class id : std :: int_least32_t
+  enum class id : std :: int_least32_t;
 #endif
   template <class, class...> struct literal;
   template <class ... Ignored> struct literal<char, Ignored...>;
@@ -339,7 +339,7 @@ namespace crap
 //NATS-DYNO excluded form standard
 //NATS-DYNO-ADD excluded form standard
 #include "IANA_encodings.d/ISO10Swedish_textencodingtype.h"
-#include "IANA_encodings.d/KSC5601187_textencodingtype.h"
+#include "IANA_encodings.d/KSC56011987_textencodingtype.h"
 #include "IANA_encodings.d/ISO2022KR_textencodingtype.h"
 #include "IANA_encodings.d/EUCKR_textencodingtype.h"
 #include "IANA_encodings.d/ISO2022JP_textencodingtype.h"
@@ -356,7 +356,7 @@ namespace crap
 #include "IANA_encodings.d/ISO47BSViewdata_textencodingtype.h"
 #include "IANA_encodings.d/ISO49INIS_textencodingtype.h"
 #include "IANA_encodings.d/ISO50INIS8_textencodingtype.h"
-#include "IANA_encodings.d/ISO50INISCyrillic_textencodingtype.h"
+#include "IANA_encodings.d/ISO51INISCyrillic_textencodingtype.h"
 #include "IANA_encodings.d/ISO54271981_textencodingtype.h"
 #include "IANA_encodings.d/ISO5428Greek_textencodingtype.h"
 #include "IANA_encodings.d/ISO57GB1988_textencodingtype.h"
@@ -658,7 +658,7 @@ namespace crap
 	  : std :: integral_constant<wchar_t, L'z'> {};
   template <class SubCharType, SubCharType Letter, SubCharType ... Ignored>
 	  struct toLowerImpl<SubCharType, Letter, Ignored...>
-	  : std :: integral_constant<SubcharType, Letter> {}; 
+	  : std :: integral_constant<SubCharType, Letter> {}; 
   template <CharType Letter> using toLower = toLowerImpl<CharType, Letter>;
   template <template <CharType...> class Container> using makeLower =
 	  typename removeExtra<transformForType <CharType, toLower> :: template
@@ -777,7 +777,7 @@ namespace crap
  {
   using mib = std :: integral_constant<textEncodingType <void> :: id,
 	textEncodingType <void> :: id :: other>;
-  using name = string<CharType, Letters..>;
+  using name = string<CharType, Letters...>;
   using aliases = typeList<>;
  };
  
@@ -825,7 +825,7 @@ namespace crap
 	  struct EndsWithDigit
 	  : std :: integral_constant<bool, false> {};
   template <CharType SubSubFirst, CharType ... SubSubRest>
-	  struct EndsWithDigit<SubSubFirst, SubRest...>;
+	  struct EndsWithDigit<SubSubFirst, SubSubRest...>;
   template <CharType ... SubLetters>
 	  using lowerParser = Implementation<KeepInitial0s, SubLetters...>;
   using values = bisectValue<CharType, SubFirst, SubRest...>;

@@ -59,7 +59,7 @@ namespace crap
  };
  
  template <>
- struct textEncodingType<string<char, 'I', 'S', 'O', '6', '4', '6', '-', 'U', 'S'>, >
+ struct textEncodingType<string<char, 'I', 'S', 'O', '6', '4', '6', '-', 'U', 'S'> >
  : textEncodingType<text_encoding_id_ASCII_t>
  {
  };

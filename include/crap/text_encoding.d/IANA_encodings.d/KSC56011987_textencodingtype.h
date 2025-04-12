@@ -16,7 +16,7 @@ namespace crap
   using mib = text_encoding_id_KSC56011987_t;
   using name = string<char, 'K', 'S', '_', 'C', '_', '5', '6', '0', '1', '-', '1', '9', '8', '7'>;
   using aliases = typeList<
-	  string<char, 'K', 'S', '_', 'C', '_', '5', '6', '0', '1', '-'. '1', '9', '8', '7'>,
+	  string<char, 'K', 'S', '_', 'C', '_', '5', '6', '0', '1', '-', '1', '9', '8', '7'>,
       string<char, 'i', 's', 'o', '-', 'i', 'r', '-', '1', '4', '9'>,
       string<char, 'K', 'S', '_', 'C', '_', '5', '6', '0', '1', '-', '1', '9', '8', '9'>,
 	  string<char, 'K', 'S', 'C', '_', '5', '6', '0', '1'>,

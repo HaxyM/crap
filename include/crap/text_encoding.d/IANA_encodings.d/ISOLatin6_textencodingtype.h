@@ -56,7 +56,7 @@ namespace crap
  };
 
  template <>
- struct textEncodingType<string<char, 'l', ''> >
+ struct textEncodingType<string<char, 'l', '6'> >
  : textEncodingType<text_encoding_id_ISOLatin6_t>
  {
  };

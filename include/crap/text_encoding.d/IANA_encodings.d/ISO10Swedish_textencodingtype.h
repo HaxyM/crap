@@ -16,7 +16,7 @@ namespace crap
   using mib = text_encoding_id_ISO10Swedish_t;
   using name = string<char, 'S', 'E', 'N', '_', '8', '5', '0', '2', '0', '0', '_', 'B'>;
   using aliases = typeList<
-	  string<char, 'S', 'E', 'N', '_', '8', '5', '0', '2', '0', '0'. '_', 'B'>,
+	  string<char, 'S', 'E', 'N', '_', '8', '5', '0', '2', '0', '0', '_', 'B'>,
       string<char, 'i', 's', 'o', '-', 'i', 'r', '-', '1', '0'>,
       string<char, 'F', 'I'>,
 	  string<char, 'I', 'S', 'O', '6', '4', '6', '-', 'F', 'I'>,
