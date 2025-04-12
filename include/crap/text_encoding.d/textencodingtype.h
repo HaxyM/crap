@@ -755,7 +755,7 @@ namespace crap
   public:
   template <template <CharType...> class Container>
 	  using type = typename upper <lower <concatenateForType <CharType> :: template
-	  vales> :: template with> :: template type<Container>;
+	  type> :: template with> :: template type<Container>;
  };
 
  template <class CharType, CharType ... Letters>
@@ -842,7 +842,7 @@ namespace crap
   public:
   template <template <CharType...> class Container>
 	  using type = typename upper <lower <concatenateForType <CharType> :: template
-	  vales> :: template with> :: template type<Container>;
+	  type> :: template with> :: template type<Container>;
  };
  template <class CharType, CharType ... Letters>
 	 template <CharType First, CharType ... Rest>
