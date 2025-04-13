@@ -674,6 +674,12 @@ namespace crap
 	  using makeAlias = typename makeLower <delete0> :: template
 	  type<Container>;
   template <class PlaceHolder, class SubCharType, SubCharType...> struct alias;
+  //Possible aliases declarations
+  //(fixing issue wth clang not seeing spesialisations even placed before generic template)
+  #include "aliases_declarations.d/ASCII_textencodingtype_aliasesdeclaration.h"
+  #include "aliases_declarations.d/ISOLatin1_textencodingtype_aliasesdeclaration.h"
+  #include "aliases_declarations.d/ISOLatin2_textencodingtype_aliasesdeclaration.h"
+  //
   template <CharType ... SubLetters>
 	  using aliasMaker = alias<CharType, CharType, SubLetters...>; 
   public:
