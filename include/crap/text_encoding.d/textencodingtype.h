@@ -689,6 +689,7 @@ namespace crap
   #include "aliases_declarations.d/ISOLatin6_textencodingtype_aliasesdeclaration.h"
   #include "aliases_declarations.d/ISOTextComm_textencodingtype_aliasesdeclaration.h"
   #include "aliases_declarations.d/HalfWidthKatakana_textencodingtype_aliasesdeclaration.h"
+  #include "aliases_declarations.d/JISEncoding_textencodingtype_aliasesdeclaration.h"
   //
   template <CharType ... SubLetters>
 	  using aliasMaker = alias<CharType, CharType, SubLetters...>; 
@@ -799,6 +800,7 @@ namespace crap
 #include "aliases.d/ISOLatin6_textencodingtype_alias.h"
 #include "aliases.d/ISOTextComm_textencodingtype_alias.h"
 #include "aliases.d/HalfWidthKatakana_textencodingtype_alias.h"
+#include "aliases.d/JISEncoding_textencodingtype_alias.h"
 
 namespace crap
 {
