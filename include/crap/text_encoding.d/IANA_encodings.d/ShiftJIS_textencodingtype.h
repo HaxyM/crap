@@ -23,7 +23,7 @@ namespace crap
  };
 
  template <>
- struct textEncodingType<string<char, 'c', 's', 'S', 'h', 'i', 'f', 'y', 'J', 'I', 'S'> >
+ struct textEncodingType<string<char, 'c', 's', 'S', 'h', 'i', 'f', 't', 'J', 'I', 'S'> >
  : textEncodingType<text_encoding_id_ShiftJIS_t>
  {
  };
