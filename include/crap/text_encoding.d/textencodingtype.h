@@ -371,6 +371,7 @@ namespace crap
 #include "IANA_encodings.d/ISO89ASMO449_textencodingtype.h"
 #include "IANA_encodings.d/ISO90_textencodingtype.h"
 #include "IANA_encodings.d/ISO91JISC62291984a_textencodingtype.h"
+#include "IANA_encodings.d/ISO92JISC62991984b_textencodingtype.h"
 
 namespace crap
 {
