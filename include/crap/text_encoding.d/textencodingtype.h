@@ -380,6 +380,7 @@ namespace crap
 #include "IANA_encodings.d/ISO99NAPLPS_textencodingtype.h"
 #include "IANA_encodings.d/ISO102T617bit_textencodingtype.h"
 #include "IANA_encodings.d/ISO103T618bit_textencodingtype.h"
+#include "IANA_encodings.d/ISO111ECMACyrillic_textencodingtype.h"
 
 namespace crap
 {
