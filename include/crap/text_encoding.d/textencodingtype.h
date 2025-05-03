@@ -381,6 +381,7 @@ namespace crap
 #include "IANA_encodings.d/ISO102T617bit_textencodingtype.h"
 #include "IANA_encodings.d/ISO103T618bit_textencodingtype.h"
 #include "IANA_encodings.d/ISO111ECMACyrillic_textencodingtype.h"
+#include "IANA_encodings.d/ISO121Canadian1_textencodingtype.h"
 
 namespace crap
 {
