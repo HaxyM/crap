@@ -384,6 +384,7 @@ namespace crap
 #include "IANA_encodings.d/ISO121Canadian1_textencodingtype.h"
 #include "IANA_encodings.d/ISO122Canadian2_textencodingtype.h"
 #include "IANA_encodings.d/ISO123CSAZ24341985gr_textencodingtype.h"
+#include "IANA_encodings.d/ISO88596E_textencodingtype.h"
 
 namespace crap
 {
