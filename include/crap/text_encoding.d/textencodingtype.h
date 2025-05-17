@@ -714,6 +714,7 @@ namespace crap
   #include "aliases_declarations.d/EUCPkdFmtJapanese_textencodingtype_aliasesdeclaration.h"
   #include "aliases_declarations.d/EUCFixWidJapanese_textencodingtype_aliasesdeclaration.h"
   #include "aliases_declarations.d/ISO4UnitedKingdom_textencodingtype_aliasesdeclaration.h"
+  #include "aliases_declarations.d/ISO11SwedishForNames_textencodingtype_aliasesdeclaration.h"
   //
   template <CharType ... SubLetters>
 	  using aliasMaker = alias<CharType, CharType, SubLetters...>; 
@@ -829,6 +830,7 @@ namespace crap
 #include "aliases.d/EUCPkdFmtJapanese_textencodingtype_alias.h"
 #include "aliases.d/EUCFixWidJapanese_textencodingtype_alias.h"
 #include "aliases.d/ISO4UnitedKingdom_textencodingtype_alias.h"
+#include "aliases.d/ISO11SwedishForNames_textencodingtype_alias.h"
 
 namespace crap
 {
