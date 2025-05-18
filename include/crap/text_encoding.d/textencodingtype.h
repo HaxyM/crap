@@ -718,6 +718,7 @@ namespace crap
   #include "aliases_declarations.d/ISO15Italian_textencodingtype_aliasesdeclaration.h"
   #include "aliases_declarations.d/ISO17Spanish_textencodingtype_aliasesdeclaration.h"
   #include "aliases_declarations.d/ISO21German_textencodingtype_aliasesdeclaration.h"
+  #include "aliases_declarations.d/ISO60DanishNorwegian_textencodingtype_aliasesdeclaration.h"
   //
   template <CharType ... SubLetters>
 	  using aliasMaker = alias<CharType, CharType, SubLetters...>; 
@@ -837,6 +838,7 @@ namespace crap
 #include "aliases.d/ISO15Italian_textencodingtype_alias.h"
 #include "aliases.d/ISO17Spanish_textencodingtype_alias.h"
 #include "aliases.d/ISO21German_textencodingtype_alias.h"
+#include "aliases.d/ISO60DanishNorwegian_textencodingtype_alias.h"
 
 namespace crap
 {
