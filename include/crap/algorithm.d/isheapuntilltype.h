@@ -6,6 +6,7 @@
 #include "../utility.d/bisectvalue.h"
 #include "../utility.d/makeindexsequence.h"
 #include "../utility.d/typelist.h"
+#include "../version.d/libintegralconstantcallable.h"
 
 namespace crap
 {
@@ -17,6 +18,9 @@ namespace crap
   constexpr const static std :: size_t npos = 0u;
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 
  template <template <class, class> class Operator, class Type>
@@ -26,6 +30,9 @@ namespace crap
   constexpr const static std :: size_t npos = 1u;
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 
  template <template <class, class> class Operator, class Type1, class Type2>
@@ -35,6 +42,9 @@ namespace crap
   constexpr const static std :: size_t npos = 2u;
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 
  template <template <class, class> class Operator, class ... Types>
@@ -52,6 +62,9 @@ namespace crap
   constexpr const static std :: size_t npos = sizeof...(Types);
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 
  template <template <class, class> class Operator, class ... Types>
@@ -125,6 +138,15 @@ template <template <class, class> class Operator>
 {
  return crap :: isHeapUntillType <Operator> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <template <class, class> class Operator>
+	inline constexpr typename crap :: isHeapUntillType <Operator> :: value_type
+	crap :: isHeapUntillType <Operator> :: operator () () const noexcept
+{
+ return crap :: isHeapUntillType <Operator> :: value;
+}
+#endif
 
 template <template <class, class> class Operator, class Type1>
         inline constexpr crap :: isHeapUntillType <Operator, Type1> :: operator
@@ -132,6 +154,15 @@ template <template <class, class> class Operator, class Type1>
 {
  return crap :: isHeapUntillType <Operator, Type1> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <template <class, class> class Operator, class Type1>
+	inline constexpr typename crap :: isHeapUntillType <Operator, Type1> :: value_type
+	crap :: isHeapUntillType <Operator, Type1> :: operator () () const noexcept
+{
+ return crap :: isHeapUntillType <Operator, Type1> :: value;
+}
+#endif
 
 template <template <class, class> class Operator, class Type1, class Type2>
         inline constexpr crap :: isHeapUntillType <Operator, Type1, Type2> :: operator
@@ -139,6 +170,15 @@ template <template <class, class> class Operator, class Type1, class Type2>
 {
  return crap :: isHeapUntillType <Operator, Type1, Type2> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <template <class, class> class Operator, class Type1, class Type2>
+	inline constexpr typename crap :: isHeapUntillType <Operator, Type1, Type2> :: value_type
+	crap :: isHeapUntillType <Operator, Type1, Type2> :: operator () () const noexcept
+{
+ return crap :: isHeapUntillType <Operator, Type1, Type2> :: value;
+}
+#endif
 
 template <template <class, class> class Operator, class ... Types>
         inline constexpr crap :: isHeapUntillType <Operator, Types...> :: operator
@@ -146,4 +186,13 @@ template <template <class, class> class Operator, class ... Types>
 {
  return crap :: isHeapUntillType <Operator, Types...> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <template <class, class> class Operator, class ... Types>
+	inline constexpr typename crap :: isHeapUntillType <Operator, Types...> :: value_type
+	crap :: isHeapUntillType <Operator, Types...> :: operator () () const noexcept
+{
+ return crap :: isHeapUntillType <Operator, Types...> :: value;
+}
+#endif
 #endif
