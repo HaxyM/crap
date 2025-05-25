@@ -6,6 +6,7 @@
 #include "../utility.d/bisectvalue.h"
 #include "../utility.d/makeindexsequence.h"
 #include "../utility.d/valuelist.h"
+#include "../version.d/libintegralconstantcallable.h"
 
 namespace crap
 {
@@ -17,6 +18,9 @@ namespace crap
   constexpr const static std :: size_t npos = 0u;
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 
  template <class Type, template <Type, Type> class Operator, Type Value>
@@ -26,6 +30,9 @@ namespace crap
   constexpr const static std :: size_t npos = 1u;
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 
  template <class Type, template <Type, Type> class Operator, Type Value1, Type Value2>
@@ -35,6 +42,9 @@ namespace crap
   constexpr const static std :: size_t npos = 2u;
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 
  template <class Type, template <Type, Type> class Operator, Type ... Values>
@@ -52,6 +62,9 @@ namespace crap
   constexpr const static std :: size_t npos = sizeof...(Values);
   using value_type = decltype(value);
   constexpr operator value_type () const noexcept;
+#if (crap_lib_integral_constant_callable >= 201304L)
+  constexpr value_type operator () () const noexcept;
+#endif
  };
 
  template <class Type, template <Type, Type> class Operator, Type ... Values>
@@ -125,6 +138,15 @@ template <class Type, template <Type, Type> class Operator>
 {
  return crap :: isHeapUntillValue <Type, Operator> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <class Type, template <Type, Type> class Operator>
+	inline constexpr typename crap :: isHeapUntillValue <Type, Operator> :: value_type
+	crap :: isHeapUntillValue <Type, Operator> :: operator () () const noexcept
+{
+ return crap :: isHeapUntillValue <Type, Operator> :: value;
+}
+#endif
 
 template <class Type, template <Type, Type> class Operator, Type Value1>
         inline constexpr crap :: isHeapUntillValue <Type, Operator, Value1> :: operator
@@ -132,6 +154,15 @@ template <class Type, template <Type, Type> class Operator, Type Value1>
 {
  return crap :: isHeapUntillValue <Type, Operator, Value1> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <class Type, template <Type, Type> class Operator, Type Value1>
+	inline constexpr typename crap :: isHeapUntillValue <Type, Operator, Value1> :: value_type
+	crap :: isHeapUntillValue <Type, Operator, Value1> :: operator () () const noexcept
+{
+ return crap :: isHeapUntillValue <Type, Operator, Value1> :: value;
+}
+#endif
 
 template <class Type, template <Type, Type> class Operator, Type Value1, Type Value2>
         inline constexpr crap :: isHeapUntillValue <Type, Operator, Value1, Value2> :: operator
@@ -139,6 +170,15 @@ template <class Type, template <Type, Type> class Operator, Type Value1, Type Va
 {
  return crap :: isHeapUntillValue <Type, Operator, Value1, Value2> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <class Type, template <Type, Type> class Operator, Type Value1, Type Value2>
+	inline constexpr typename crap :: isHeapUntillValue <Type, Operator, Value1, Value2> :: value_type
+	crap :: isHeapUntillValue <Type, Operator, Value1, Value2> :: operator () () const noexcept
+{
+ return crap :: isHeapUntillValue <Type, Operator, Value1, Value2> :: value;
+}
+#endif
 
 template <class Type, template <Type, Type> class Operator, Type ... Values>
         inline constexpr crap :: isHeapUntillValue <Type, Operator, Values...> :: operator
@@ -146,4 +186,13 @@ template <class Type, template <Type, Type> class Operator, Type ... Values>
 {
  return crap :: isHeapUntillValue <Type, Operator, Values...> :: value;
 }
+#if (crap_lib_integral_constant_callable >= 201304L)
+
+template <class Type, template <Type, Type> class Operator, Type ... Values>
+	inline constexpr typename crap :: isHeapUntillValue <Type, Operator, Values...> :: value_type
+	crap :: isHeapUntillValue <Type, Operator, Values...> :: operator () () const noexcept
+{
+ return crap :: isHeapUntillValue <Type, Operator, Values...> :: value;
+}
+#endif
 #endif
