@@ -1,6 +1,7 @@
 #ifndef CRAP_CRAP
 #define CRAP_CRAP
 
+#include "crap.d/picklargertype.h"
 #include "crap.d/secureabsvalue.h"
 
 #endif
