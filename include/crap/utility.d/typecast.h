@@ -5,6 +5,9 @@
 #include <ratio>
 #include <type_traits>
 
+#include "../crap.d/secureabsvalue.h"
+#include "../numbers.d/identity.h"
+#include "../numbers.d/zero.h"
 #include "../ratio.d/contracttype.h"
 #include "../ratio.d/valueratio.h"
 
@@ -37,7 +40,7 @@ namespace crap
   private:
   template <class> struct NeedScale;
   template <class OtherType, char Sign2, OtherType Num, OtherType Den>
-	  struct NeedScale<valueRatio<OtherType, Sign2, Num, Den> >;
+	  struct NeedScale<valueRatio<OtherType, Sign2, Num, Den>>;
 
   template <bool, class> struct Implementation;
   template <bool Any, std :: intmax_t Num, std :: intmax_t Den>
@@ -53,7 +56,12 @@ namespace crap
   template <class OtherType> using onto = Implementation<NeedScale <OtherType> :: value, OtherType>;
   template <class OtherType> using onto_t = typename onto <OtherType> :: type;
  };
+}
 
+#include "../crap.d/picklargertype.h"
+
+namespace crap
+{
  template <std :: intmax_t Numerator, std :: intmax_t Denominator>
 	 template <std :: intmax_t Num, std :: intmax_t Den>
  struct typeCast<std :: ratio<Numerator, Denominator> > :: template
@@ -85,49 +93,13 @@ namespace crap
 	 ontoImplementation<valueRatio<std :: uintmax_t, Sign, Num, Den> >
  {
   private:
-  using scaleType = const long double;
-  using valueType = typename std :: add_const<std :: uintmax_t> :: type;
-  using orig = typename contractType <std :: ratio<Numerator, Denominator> > :: type;
-  constexpr static const std :: intmax_t max = std :: numeric_limits <std :: intmax_t> :: max();
-  constexpr static scaleType infinity = std :: numeric_limits <scaleType> :: infinity();
-  constexpr static const bool numNegative = (orig :: num < zero <std :: intmax_t> :: value);
-  constexpr static const bool denNegative = (orig :: den < zero <std :: intmax_t> :: value);
-  constexpr static scaleType numSignChanger = numNegative ? -1.0l : 1.0l;
-  constexpr static scaleType denSignChanger = denNegative ? -1.0l : 1.0l;
+  constexpr static const bool numNegative = (Numerator < zero <std :: intmax_t> :: value);
+  constexpr static const bool denNegative = (Denominator < zero <std :: intmax_t> :: value);
   constexpr static const char sign = (numNegative == denNegative) ? '+' : '-';
-  constexpr static const bool numOverflow =
-	  numNegative ? (zero <std :: intmax_t> :: value > max + orig :: num) : false;
-  constexpr static const bool denOverflow =
-	  denNegative ? (zero <std :: intmax_t> :: value > max + orig :: den) : false;
-  constexpr static const bool needScale = numOverflow || denOverflow;
-  constexpr static scaleType numOverflowScale =
-	  numOverflow ? (static_cast<scaleType>(max) / (-static_cast<scaleType>(orig :: num))) : infinity;
-  constexpr static scaleType denOverflowScale =
-	  denOverflow ? (static_cast<scaleType>(max) / (-static_cast<scaleType>(orig :: den))) : infinity;
-  constexpr static scaleType scale = (numOverflowScale < denOverflowScale) ? numOverflowScale : denOverflowScale;
-  constexpr static scaleType scaledNum =
-	  needScale ?
-	  (scale * numSignChanger * static_cast<scaleType>(orig :: num)) :
-	  (numSignChanger * static_cast<scaleType>(orig :: num));
-  constexpr static scaleType scaledDen =
-	  needScale ?
-	  (scale * denSignChanger * static_cast<scaleType>(orig :: den)) :
-	  (denSignChanger * static_cast<scaleType>(orig :: den));
-  constexpr static valueType scaledNumInRange =
-	  (scaledNum < 0.0l) ? zero <std :: uintmax_t> :: value :
-	  ((scaledNum > static_cast<scaleType>(max)) ? max : static_cast<valueType>(scaledNum));
-  constexpr static valueType scaledDenInRange =
-	  (scaledDen < 1.0l) ?
-	  identity <std :: uintmax_t> :: value :
-	  ((scaledDen > static_cast<scaleType>(max)) ? max : static_cast<valueType>(scaledDen));
-  constexpr static valueType num =
-	  needScale ?
-	  scaledNumInRange :
-	  static_cast<valueType>(numNegative ? -(orig :: num) : orig :: num);
-  constexpr static valueType den =
-	  needScale ?
-	  scaledDenInRange :
-	  static_cast<valueType>(denNegative ? -(orig :: den) : orig :: den);
+  constexpr static const std :: uintmax_t num =
+	  secureAbsValue <std :: intmax_t, Numerator> :: value;
+  constexpr static const std :: uintmax_t den =
+	  secureAbsValue <std :: intmax_t, Denominator> :: value;
   public:
   using type = valueRatio<std :: uintmax_t, sign, num, den>;
  };
@@ -169,13 +141,14 @@ namespace crap
  template <class Type, char Sign, Type Numerator, Type Denominator>
 	 template <class OtherType, char OtherSign, OtherType OtherNumerator, OtherType OtherDenominator>
  struct typeCast<valueRatio<Type, Sign, Numerator, Denominator> > :: template
-	 NeedScale<valueRatio<OtherType, OtherSign, OtherNumerator, OtherDenominator> >
+	 NeedScale<valueRatio<OtherType, OtherSign, OtherNumerator, OtherDenominator>>
  {
   private:
-  constexpr static const std :: uintmax_t lhsMax =
-	  static_cast<std :: uintmax_t>(std :: numeric_limits <Type> :: max());
-  constexpr static const std :: uintmax_t rhsMax =
-	  static_cast<std :: uintmax_t>(std :: numeric_limits <OtherType> :: max());
+  using largerType = typename pickLargerType <Type, OtherType> :: type;
+  constexpr static const largerType lhsMax =
+	  static_cast<largerType>(std :: numeric_limits <Type> :: max());
+  constexpr static const largerType rhsMax =
+	  static_cast<largerType>(std :: numeric_limits <OtherType> :: max());
   public:
   constexpr static const bool value = lhsMax > rhsMax;
  };
@@ -192,10 +165,11 @@ namespace crap
   constexpr static const std :: intmax_t max = std :: numeric_limits <std :: intmax_t> :: max();
   constexpr static const std :: intmax_t min = std :: numeric_limits <std :: intmax_t> :: min();
   constexpr static scaleType infinity = std :: numeric_limits <scaleType> :: infinity();
+  using commonType = typename pickLargerType <std :: uintmax_t, Type> :: type;
   constexpr static const bool numOverflow1 =
-	  (static_cast<std :: uintmax_t>(orig :: num) > static_cast<std :: uintmax_t>(max));
+	  (static_cast<commonType>(orig :: num) > static_cast<commonType>(max));
   constexpr static const bool denOverflow1 =
-	  (static_cast<std :: uintmax_t>(orig :: den) > static_cast<std :: uintmax_t>(max));
+	  (static_cast<commonType>(orig :: den) > static_cast<commonType>(max));
   constexpr static const bool needScale1 = numOverflow1 || denOverflow1;
   constexpr static scaleType numOverflow1Scale =
 	  numOverflow1 ? (static_cast<scaleType>(max) / static_cast<scaleType>(orig :: num)) : infinity;
@@ -254,10 +228,11 @@ namespace crap
   using orig = typename contractType <valueRatio<Type, Sign, Numerator, Denominator> > :: type;
   constexpr static const std :: intmax_t max = std :: numeric_limits <valueType> :: max();
   constexpr static scaleType infinity = std :: numeric_limits <scaleType> :: infinity();
+  using commonType = typename pickLargerType <std :: uintmax_t, Type> :: type;
   constexpr static const bool numOverflow =
-	  (static_cast<std :: uintmax_t>(orig :: num) > static_cast<std :: uintmax_t>(max));
+	  (static_cast<commonType>(orig :: num) > static_cast<commonType>(max));
   constexpr static const bool denOverflow =
-	  (static_cast<std :: uintmax_t>(orig :: den) > static_cast<std :: uintmax_t>(max));
+	  (static_cast<commonType>(orig :: den) > static_cast<commonType>(max));
   constexpr static const bool needScale = numOverflow || denOverflow;
   constexpr static scaleType numOverflowScale =
 	  numOverflow ? (static_cast<scaleType>(max) / static_cast<scaleType>(orig :: num)) : infinity;
