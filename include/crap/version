@@ -14,6 +14,7 @@
 #include "version.d/libtextencoding.h"
 #include "version.d/libtypeidentity.h"
 #include "version.d/libvoidt.h"
+#include "version.d/nontypetemplateargs.h"
 #include "version.d/packindexing.h"
 #include "version.d/unicodecharacters.h"
 #include "version.d/variabletemplates.h"
