@@ -65,7 +65,7 @@ namespace crap
 	 struct typeCast<std :: integral_constant<Type, Value> >
  {
   private:
-#if crap_nontype_template_args >= 201911L
+#if (crap_nontype_template_args >= 201911L)  || (defined(__clang_major__) && (__clang_major__ >= 18) && (__cplusplus >= 201911L))
   template <bool IsUnsigned, bool IsFloatingPoint, class...>
 	  struct Implementation;
   template <class ... Empty>
@@ -83,7 +83,7 @@ namespace crap
 	  struct Implementation<true, Empty...>;
 #endif
   public:
-#if crap_nontype_template_args >= 201911L
+#if (crap_nontype_template_args >= 201911L)  || (defined(__clang_major__) && (__clang_major__ >= 18) && (__cplusplus >= 201911L))
   template <class OtherType>
 	  using onto = typename
 	  Implementation <std :: is_unsigned <Type> :: value, std :: is_floating_point <Type> :: value> :: template
@@ -332,7 +332,7 @@ namespace crap
 	  (static_cast<long double>(Numerator) / static_cast<long double>(Denominator));
  };
 
-#if crap_nontype_template_args >= 201911L
+#if (crap_nontype_template_args >= 201911L)  || (defined(__clang_major__) && (__clang_major__ >= 18) && (__cplusplus >= 201911L))
  template <class Type, Type Value>
 	 template <class ... Empty>
  struct typeCast <std :: integral_constant<Type, Value> > ::
