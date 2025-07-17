@@ -14,7 +14,11 @@
 #if _MSC_VER >= 1926
 #define crap_nontype_template_args _MSVC_LANG //P1907R1
 #elif _MSC_VER >= 1912
+#if _MSVC_LANG < 201411L
 #define crap_nontype_template_args _MSVC_LANG //N4268
+#else
+#define crap_nontype_template_args 201411L //N4268
+#endif
 #else
 #define crap_nontype_template_args 0L
 #endif
