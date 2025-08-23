@@ -393,6 +393,7 @@ namespace crap
 #include "IANA_encodings.d/ISO141JUSIB1002_textencodingtype.h"
 #include "IANA_encodings.d/ISO143IECP271_textencodingtype.h"
 #include "IANA_encodings.d/ISO146Serbian_textencodingtype.h"
+#include "IANA_encodings.d/ISO147Macedonian_textencodingtype.h"
 
 namespace crap
 {

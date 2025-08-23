@@ -19,7 +19,7 @@ namespace crap
       string<char, 'J', 'U', 'S', '_', 'I', '.', 'B', '1', '.', '0', '0', '3', '-', 's', 'e', 'r', 'b'>,
       string<char, 'i', 's', 'o', '-', 'i', 'r', '-', '1', '4', '6'>,
       string<char, 's', 'e', 'r', 'b', 'i', 'a', 'n'>,
-      string<char, 'c', 's', 'I', 'S', 'O', '1', '4', '6', 'S', 'e', 'r', 'b', 'i', 'a', '1n'> >;
+      string<char, 'c', 's', 'I', 'S', 'O', '1', '4', '6', 'S', 'e', 'r', 'b', 'i', 'a', 'n'> >;
  };
 
  template <>
@@ -29,7 +29,7 @@ namespace crap
  };
 
  template <>
- struct textEncodingType<string<char, 'i', 's', 'o', '-', 'i', 'r', '-', '1', '4', '3'> >
+ struct textEncodingType<string<char, 'i', 's', 'o', '-', 'i', 'r', '-', '1', '4', '6'> >
  : textEncodingType<text_encoding_id_ISO146Serbian_t>
  {
  };
