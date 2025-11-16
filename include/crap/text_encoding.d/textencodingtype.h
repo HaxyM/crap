@@ -396,6 +396,7 @@ namespace crap
 #include "IANA_encodings.d/ISO147Macedonian_textencodingtype.h"
 #include "IANA_encodings.d/ISO150_textencodingtype.h"
 #include "IANA_encodings.d/ISO151Cuba_textencodingtype.h"
+#include "IANA_encodings.d/ISO6937Add_textencodingtype.h"
 
 namespace crap
 {
