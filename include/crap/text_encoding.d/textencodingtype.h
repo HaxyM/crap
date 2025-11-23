@@ -742,6 +742,7 @@ namespace crap
   #include "aliases_declarations.d/NATSSEFIADD_textencodingtype_aliasesdeclaration.h"
   #include "aliases_declarations.d/ISO10Swedish_textencodingtype_aliasesdeclaration.h"
   #include "aliases_declarations.d/KSC56011987_textencodingtype_aliasesdeclaration.h"
+  #include "aliases_declarations.d/ISO2022KR_textencodingtype_aliasesdeclaration.h"
   //
   template <CharType ... SubLetters>
 	  using aliasMaker = alias<CharType, CharType, SubLetters...>; 
@@ -871,6 +872,7 @@ namespace crap
 #include "aliases.d/NATSSEFIADD_textencodingtype_alias.h"
 #include "aliases.d/ISO10Swedish_textencodingtype_alias.h"
 #include "aliases.d/KSC56011987_textencodingtype_alias.h"
+#include "aliases.d/ISO2022KR_textencodingtype_alias.h"
 
 namespace crap
 {
