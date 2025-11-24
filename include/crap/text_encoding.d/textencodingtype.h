@@ -746,7 +746,7 @@ namespace crap
   #include "aliases_declarations.d/EUCKR_textencodingtype_aliasesdeclaration.h"
   #include "aliases_declarations.d/ISO2022JP_textencodingtype_aliasesdeclaration.h"
   #include "aliases_declarations.d/ISO2022JP2_textencodingtype_aliasesdeclaration.h"
-
+  #include "aliases_declarations.d/ISO13JISC6220jp_textencodingtype_aliasesdeclaration.h"
   //
   template <CharType ... SubLetters>
 	  using aliasMaker = alias<CharType, CharType, SubLetters...>; 
@@ -880,6 +880,7 @@ namespace crap
 #include "aliases.d/EUCKR_textencodingtype_alias.h"
 #include "aliases.d/ISO2022JP_textencodingtype_alias.h"
 #include "aliases.d/ISO2022JP2_textencodingtype_alias.h"
+#include "aliases.d/ISO13JISC6220jp_textencodingtype_alias.h"
 
 namespace crap
 {
