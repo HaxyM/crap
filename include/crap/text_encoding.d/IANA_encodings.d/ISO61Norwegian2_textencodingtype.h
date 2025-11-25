@@ -30,7 +30,7 @@ namespace crap
  };
 
  template <>
- struct textEncodingType<string<char, 'I', 'S', '0', '6', '4', '6', '-', 'N', 'O', '2'> >
+ struct textEncodingType<string<char, 'I', 'S', 'O', '6', '4', '6', '-', 'N', 'O', '2'> >
  : textEncodingType<text_encoding_id_ISO61Norwegian2_t>
  {
  };
