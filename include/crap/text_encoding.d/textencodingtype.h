@@ -762,6 +762,7 @@ namespace crap
   #include "aliases_declarations.d/ISO54271981_textencodingtype_aliasesdeclaration.h"
   #include "aliases_declarations.d/ISO5428Greek_textencodingtype_aliasesdeclaration.h"
   #include "aliases_declarations.d/ISO57GB1988_textencodingtype_aliasesdeclaration.h"
+  #include "aliases_declarations.d/ISO58GB231280_textencodingtype_aliasesdeclaration.h"
   //
   template <CharType ... SubLetters>
 	  using aliasMaker = alias<CharType, CharType, SubLetters...>; 
@@ -911,6 +912,7 @@ namespace crap
 #include "aliases.d/ISO54271981_textencodingtype_alias.h"
 #include "aliases.d/ISO5428Greek_textencodingtype_alias.h"
 #include "aliases.d/ISO57GB1988_textencodingtype_alias.h"
+#include "aliases.d/ISO58GB231280_textencodingtype_alias.h"
 
 namespace crap
 {
