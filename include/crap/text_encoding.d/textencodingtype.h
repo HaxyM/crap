@@ -797,6 +797,7 @@ namespace crap
   #include "aliases_declarations.d/ISO146Serbian_textencodingtype_aliasesdeclaration.h"
   #include "aliases_declarations.d/ISO147Macedonian_textencodingtype_aliasesdeclaration.h"
   #include "aliases_declarations.d/ISO150_textencodingtype_aliasesdeclaration.h"
+  #include "aliases_declarations.d/ISO151Cuba_textencodingtype_aliasesdeclaration.h"
   //
   template <CharType ... SubLetters>
 	  using aliasMaker = alias<CharType, CharType, SubLetters...>; 
@@ -981,6 +982,7 @@ namespace crap
 #include "aliases.d/ISO146Serbian_textencodingtype_alias.h"
 #include "aliases.d/ISO147Macedonian_textencodingtype_alias.h"
 #include "aliases.d/ISO150_textencodingtype_alias.h"
+#include "aliases.d/ISO151Cuba_textencodingtype_alias.h"
 
 namespace crap
 {
