@@ -404,6 +404,7 @@ namespace crap
 #include "IANA_encodings.d/ISO159JISX02121990_textencodingtype.h"
 #include "IANA_encodings.d/ISO646Danish_textencodingtype.h"
 #include "IANA_encodings.d/USDK_textencodingtype.h"
+#include "IANA_encodings.d/DKUS_textencodingtype.h"
 
 namespace crap
 {
@@ -810,6 +811,7 @@ namespace crap
   #include "aliases_declarations.d/ISO159JISX02121990_textencodingtype_aliasesdeclaration.h"
   #include "aliases_declarations.d/ISO646Danish_textencodingtype_aliasesdeclaration.h"
   #include "aliases_declarations.d/USDK_textencodingtype_aliasesdeclaration.h"
+  #include "aliases_declarations.d/DKUS_textencodingtype_aliasesdeclaration.h"
   //
   template <CharType ... SubLetters>
 	  using aliasMaker = alias<CharType, CharType, SubLetters...>; 
@@ -1003,6 +1005,7 @@ namespace crap
 #include "aliases.d/ISO159JISX02121990_textencodingtype_alias.h"
 #include "aliases.d/ISO646Danish_textencodingtype_alias.h"
 #include "aliases.d/USDK_textencodingtype_alias.h"
+#include "aliases.d/DKUS_textencodingtype_alias.h"
 
 namespace crap
 {
