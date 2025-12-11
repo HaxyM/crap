@@ -801,6 +801,7 @@ namespace crap
   #include "aliases_declarations.d/ISO6937Add_textencodingtype_aliasesdeclaration.h"
   #include "aliases_declarations.d/ISO153GOST1976874_textencodingtype_aliasesdeclaration.h"
   #include "aliases_declarations.d/ISO8859Supp_textencodingtype_aliasesdeclaration.h"
+  #include "aliases_declarations.d/ISO10367Box_textencodingtype_aliasesdeclaration.h"
   //
   template <CharType ... SubLetters>
 	  using aliasMaker = alias<CharType, CharType, SubLetters...>; 
@@ -989,6 +990,7 @@ namespace crap
 #include "aliases.d/ISO6937Add_textencodingtype_alias.h"
 #include "aliases.d/ISO153GOST1976874_textencodingtype_alias.h"
 #include "aliases.d/ISO8859Supp_textencodingtype_alias.h"
+#include "aliases.d/ISO10367Box_textencodingtype_alias.h"
 
 namespace crap
 {
