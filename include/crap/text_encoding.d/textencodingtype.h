@@ -409,6 +409,7 @@ namespace crap
 #include "IANA_encodings.d/Unicode11UTF7_textencodingtype.h"
 #include "IANA_encodings.d/ISO2022CN_textencodingtype.h"
 #include "IANA_encodings.d/ISO2022CNEXT_textencodingtype.h"
+#include "IANA_encodings.d/UTF8_textencodingtype.h"
 
 namespace crap
 {
@@ -820,6 +821,7 @@ namespace crap
   #include "aliases_declarations.d/Unicode11UTF7_textencodingtype_aliasesdeclaration.h"
   #include "aliases_declarations.d/ISO2022CN_textencodingtype_aliasesdeclaration.h"
   #include "aliases_declarations.d/ISO2022CNEXT_textencodingtype_aliasesdeclaration.h"
+  #include "aliases_declarations.d/UTF8_textencodingtype_aliasesdeclaration.h"
   //
   template <CharType ... SubLetters>
 	  using aliasMaker = alias<CharType, CharType, SubLetters...>; 
@@ -1018,6 +1020,7 @@ namespace crap
 #include "aliases.d/Unicode11UTF7_textencodingtype_alias.h"
 #include "aliases.d/ISO2022CN_textencodingtype_alias.h"
 #include "aliases.d/ISO2022CNEXT_textencodingtype_alias.h"
+#include "aliases.d/UTF8_textencodingtype_alias.h"
 
 namespace crap
 {
