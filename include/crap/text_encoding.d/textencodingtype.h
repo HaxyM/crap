@@ -412,6 +412,7 @@ namespace crap
 #include "IANA_encodings.d/UTF8_textencodingtype.h"
 #include "IANA_encodings.d/ISO885913_textencodingtype.h"
 #include "IANA_encodings.d/ISO885914_textencodingtype.h"
+#include "IANA_encodings.d/ISO885915_textencodingtype.h"
 
 namespace crap
 {
@@ -826,6 +827,7 @@ namespace crap
   #include "aliases_declarations.d/UTF8_textencodingtype_aliasesdeclaration.h"
   #include "aliases_declarations.d/ISO885913_textencodingtype_aliasesdeclaration.h"
   #include "aliases_declarations.d/ISO885914_textencodingtype_aliasesdeclaration.h"
+  #include "aliases_declarations.d/ISO885915_textencodingtype_aliasesdeclaration.h"
   //
   template <CharType ... SubLetters>
 	  using aliasMaker = alias<CharType, CharType, SubLetters...>; 
@@ -1027,6 +1029,7 @@ namespace crap
 #include "aliases.d/UTF8_textencodingtype_alias.h"
 #include "aliases.d/ISO885913_textencodingtype_alias.h"
 #include "aliases.d/ISO885914_textencodingtype_alias.h"
+#include "aliases.d/ISO885915_textencodingtype_alias.h"
 
 namespace crap
 {
