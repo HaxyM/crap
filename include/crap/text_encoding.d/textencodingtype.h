@@ -429,6 +429,7 @@ namespace crap
 #include "IANA_encodings.d/UnicodeIBM1261_textencodingtype.h"
 #include "IANA_encodings.d/UnicodeIBM1268_textencodingtype.h"
 #include "IANA_encodings.d/UnicodeIBM1276_textencodingtype.h"
+#include "IANA_encodings.d/UnicodeIBM1264_textencodingtype.h"
 
 namespace crap
 {
@@ -860,6 +861,7 @@ namespace crap
   #include "aliases_declarations.d/UnicodeIBM1261_textencodingtype_aliasesdeclaration.h"
   #include "aliases_declarations.d/UnicodeIBM1268_textencodingtype_aliasesdeclaration.h"
   #include "aliases_declarations.d/UnicodeIBM1276_textencodingtype_aliasesdeclaration.h"
+  #include "aliases_declarations.d/UnicodeIBM1264_textencodingtype_aliasesdeclaration.h"
   //
   template <CharType ... SubLetters>
 	  using aliasMaker = alias<CharType, CharType, SubLetters...>; 
@@ -1078,6 +1080,7 @@ namespace crap
 #include "aliases.d/UnicodeIBM1261_textencodingtype_alias.h"
 #include "aliases.d/UnicodeIBM1268_textencodingtype_alias.h"
 #include "aliases.d/UnicodeIBM1276_textencodingtype_alias.h"
+#include "aliases.d/UnicodeIBM1264_textencodingtype_alias.h"
 
 namespace crap
 {
