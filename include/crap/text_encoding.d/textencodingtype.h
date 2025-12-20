@@ -417,6 +417,7 @@ namespace crap
 #include "IANA_encodings.d/GBK_textencodingtype.h"
 #include "IANA_encodings.d/GB18030_textencodingtype.h"
 #include "IANA_encodings.d/OSDEBCDICDF0415_textencodingtype.h"
+#include "IANA_encodings.d/OSDEBCDICDF03IRV_textencodingtype.h"
 
 namespace crap
 {
@@ -836,6 +837,7 @@ namespace crap
   #include "aliases_declarations.d/GBK_textencodingtype_aliasesdeclaration.h"
   #include "aliases_declarations.d/GB18030_textencodingtype_aliasesdeclaration.h"
   #include "aliases_declarations.d/OSDEBCDICDF0415_textencodingtype_aliasesdeclaration.h"
+  #include "aliases_declarations.d/OSDEBCDICDF03IRV_textencodingtype_aliasesdeclaration.h"
   //
   template <CharType ... SubLetters>
 	  using aliasMaker = alias<CharType, CharType, SubLetters...>; 
@@ -1042,6 +1044,7 @@ namespace crap
 #include "aliases.d/GBK_textencodingtype_alias.h"
 #include "aliases.d/GB18030_textencodingtype_alias.h"
 #include "aliases.d/OSDEBCDICDF0415_textencodingtype_alias.h"
+#include "aliases.d/OSDEBCDICDF03IRV_textencodingtype_alias.h"
 
 namespace crap
 {
