@@ -14,7 +14,7 @@ namespace crap
  struct textEncodingType<text_encoding_id_UTF7_t> : textEncodingType<void>
  {
   using mib = text_encoding_id_UTF7_t;
-  using name = string<char, 'S', 'C', 'S', 'U'>;
+  using name = string<char, 'U', 'T', 'F', '-', '7'>;
   using aliases = typeList<
       string<char, 'U', 'T', 'F', '-', '7'>,
       string<char, 'c', 's', 'U', 'T', 'F', '7'> >;
