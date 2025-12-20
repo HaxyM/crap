@@ -13,7 +13,7 @@ namespace crap
  template <>
  struct textEncodingType<text_encoding_id_ISO115481_t> : textEncodingType<void>
  {
-  using mib = text_encoding_id_ISO115481_t;ISO-11548-1
+  using mib = text_encoding_id_ISO115481_t;
   using name = string<char, 'I', 'S', 'O', '-', '1', '1', '5', '4', '8', '-', '1'>;
   using aliases = typeList<
       string<char, 'I', 'S', 'O', '-', '1', '1', '5', '4', '8', '-', '1'>,
