@@ -425,6 +425,7 @@ namespace crap
 #include "IANA_encodings.d/UCS4_textencodingtype.h"
 #include "IANA_encodings.d/UnicodeASCII_textencodingtype.h"
 #include "IANA_encodings.d/UnicodeLatin1_textencodingtype.h"
+#include "IANA_encodings.d/UnicodeJapanese_textencodingtype.h"
 
 namespace crap
 {
@@ -852,6 +853,7 @@ namespace crap
   #include "aliases_declarations.d/UCS4_textencodingtype_aliasesdeclaration.h"
   #include "aliases_declarations.d/UnicodeASCII_textencodingtype_aliasesdeclaration.h"
   #include "aliases_declarations.d/UnicodeLatin1_textencodingtype_aliasesdeclaration.h"
+  #include "aliases_declarations.d/UnicodeJapanese_textencodingtype_aliasesdeclaration.h"
   //
   template <CharType ... SubLetters>
 	  using aliasMaker = alias<CharType, CharType, SubLetters...>; 
@@ -1066,6 +1068,7 @@ namespace crap
 #include "aliases.d/UCS4_textencodingtype_alias.h"
 #include "aliases.d/UnicodeASCII_textencodingtype_alias.h"
 #include "aliases.d/UnicodeLatin1_textencodingtype_alias.h"
+#include "aliases.d/UnicodeJapanese_textencodingtype_alias.h"
 
 namespace crap
 {
