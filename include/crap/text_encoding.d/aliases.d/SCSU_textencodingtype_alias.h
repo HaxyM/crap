@@ -19,7 +19,7 @@ namespace crap
  template <class CharType, CharType ... Letters>
 	 template <class PlaceHolder>
  struct textEncodingType<string<CharType, Letters...> > ::
- alias<PlaceHolder, char, 's', 'c', 's', 'u', 'o', 'd', 'e', '1', '1'>
+ alias<PlaceHolder, char, 's', 'c', 's', 'u'>
  : textEncodingType<text_encoding_id_SCSU_t>
  {
  };
