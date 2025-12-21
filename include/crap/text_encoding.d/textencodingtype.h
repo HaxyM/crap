@@ -445,6 +445,7 @@ namespace crap
 #include "IANA_encodings.d/UTF7IMAP_textencodingtype.h"
 #include "IANA_encodings.d/Windows30Latin1_textencodingtype.h"
 #include "IANA_encodings.d/Windows31Latin1_textencodingtype.h"
+#include "IANA_encodings.d/Windows31Latin2_textencodingtype.h"
 
 namespace crap
 {
@@ -892,6 +893,7 @@ namespace crap
   #include "aliases_declarations.d/UTF7IMAP_textencodingtype_aliasesdeclaration.h"
   #include "aliases_declarations.d/Windows30Latin1_textencodingtype_aliasesdeclaration.h"
   #include "aliases_declarations.d/Windows31Latin1_textencodingtype_aliasesdeclaration.h"
+  #include "aliases_declarations.d/Windows31Latin2_textencodingtype_aliasesdeclaration.h"
   //
   template <CharType ... SubLetters>
 	  using aliasMaker = alias<CharType, CharType, SubLetters...>; 
@@ -1126,6 +1128,7 @@ namespace crap
 #include "aliases.d/UTF7IMAP_textencodingtype_alias.h"
 #include "aliases.d/Windows30Latin1_textencodingtype_alias.h"
 #include "aliases.d/Windows31Latin1_textencodingtype_alias.h"
+#include "aliases.d/Windows31Latin2_textencodingtype_alias.h"
 
 namespace crap
 {
