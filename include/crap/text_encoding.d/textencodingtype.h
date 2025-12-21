@@ -441,6 +441,7 @@ namespace crap
 #include "IANA_encodings.d/UTF32_textencodingtype.h"
 #include "IANA_encodings.d/UTF32BE_textencodingtype.h"
 #include "IANA_encodings.d/UTF32LE_textencodingtype.h"
+#include "IANA_encodings.d/BOCU1_textencodingtype.h"
 
 namespace crap
 {
@@ -884,6 +885,7 @@ namespace crap
   #include "aliases_declarations.d/UTF32_textencodingtype_aliasesdeclaration.h"
   #include "aliases_declarations.d/UTF32BE_textencodingtype_aliasesdeclaration.h"
   #include "aliases_declarations.d/UTF32LE_textencodingtype_aliasesdeclaration.h"
+  #include "aliases_declarations.d/BOCU1_textencodingtype_aliasesdeclaration.h"
   //
   template <CharType ... SubLetters>
 	  using aliasMaker = alias<CharType, CharType, SubLetters...>; 
@@ -1114,6 +1116,7 @@ namespace crap
 #include "aliases.d/UTF32_textencodingtype_alias.h"
 #include "aliases.d/UTF32BE_textencodingtype_alias.h"
 #include "aliases.d/UTF32LE_textencodingtype_alias.h"
+#include "aliases.d/BOCU1_textencodingtype_alias.h"
 
 namespace crap
 {
