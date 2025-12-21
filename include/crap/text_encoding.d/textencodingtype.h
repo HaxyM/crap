@@ -443,6 +443,7 @@ namespace crap
 #include "IANA_encodings.d/UTF32LE_textencodingtype.h"
 #include "IANA_encodings.d/BOCU1_textencodingtype.h"
 #include "IANA_encodings.d/UTF7IMAP_textencodingtype.h"
+#include "IANA_encodings.d/Windows30Latin1_textencodingtype.h"
 
 namespace crap
 {
@@ -888,6 +889,7 @@ namespace crap
   #include "aliases_declarations.d/UTF32LE_textencodingtype_aliasesdeclaration.h"
   #include "aliases_declarations.d/BOCU1_textencodingtype_aliasesdeclaration.h"
   #include "aliases_declarations.d/UTF7IMAP_textencodingtype_aliasesdeclaration.h"
+  #include "aliases_declarations.d/Windows30Latin1_textencodingtype_aliasesdeclaration.h"
   //
   template <CharType ... SubLetters>
 	  using aliasMaker = alias<CharType, CharType, SubLetters...>; 
@@ -1120,6 +1122,7 @@ namespace crap
 #include "aliases.d/UTF32LE_textencodingtype_alias.h"
 #include "aliases.d/BOCU1_textencodingtype_alias.h"
 #include "aliases.d/UTF7IMAP_textencodingtype_alias.h"
+#include "aliases.d/Windows30Latin1_textencodingtype_alias.h"
 
 namespace crap
 {
