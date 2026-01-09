@@ -450,6 +450,7 @@ namespace crap
 #include "IANA_encodings.d/HPRoman8_textencodingtype.h"
 #include "IANA_encodings.d/AdobeStandardEncoding_textencodingtype.h"
 #include "IANA_encodings.d/VenturaUS_textencodingtype.h"
+#include "IANA_encodings.d/VenturaInternational_textencodingtype.h"
 
 namespace crap
 {
@@ -902,6 +903,8 @@ namespace crap
   #include "aliases_declarations.d/HPRoman8_textencodingtype_aliasesdeclaration.h"
   #include "aliases_declarations.d/AdobeStandardEncoding_textencodingtype_aliasesdeclaration.h"
   #include "aliases_declarations.d/VenturaUS_textencodingtype_aliasesdeclaration.h"
+  #include "aliases_declarations.d/VenturaInternational_textencodingtype_aliasesdeclaration.h"
+
   //
   template <CharType ... SubLetters>
 	  using aliasMaker = alias<CharType, CharType, SubLetters...>; 
@@ -1141,6 +1144,7 @@ namespace crap
 #include "aliases.d/HPRoman8_textencodingtype_alias.h"
 #include "aliases.d/AdobeStandardEncoding_textencodingtype_alias.h"
 #include "aliases.d/VenturaUS_textencodingtype_alias.h"
+#include "aliases.d/VenturaInternational_textencodingtype_alias.h"
 
 namespace crap
 {
