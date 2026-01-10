@@ -453,6 +453,7 @@ namespace crap
 #include "IANA_encodings.d/VenturaInternational_textencodingtype.h"
 #include "IANA_encodings.d/DECMCS_textencodingtype.h"
 #include "IANA_encodings.d/PC850Multilingual_textencodingtype.h"
+#include "IANA_encodings.d/PC8DanishNorwegian_textencodingtype.h"
 
 namespace crap
 {
@@ -908,6 +909,7 @@ namespace crap
   #include "aliases_declarations.d/VenturaInternational_textencodingtype_aliasesdeclaration.h"
   #include "aliases_declarations.d/DECMCS_textencodingtype_aliasesdeclaration.h"
   #include "aliases_declarations.d/PC850Multilingual_textencodingtype_aliasesdeclaration.h"
+  #include "aliases_declarations.d/PC8DanishNorwegian_textencodingtype_aliasesdeclaration.h"
   //
   template <CharType ... SubLetters>
 	  using aliasMaker = alias<CharType, CharType, SubLetters...>; 
@@ -1150,6 +1152,7 @@ namespace crap
 #include "aliases.d/VenturaInternational_textencodingtype_alias.h"
 #include "aliases.d/DECMCS_textencodingtype_alias.h"
 #include "aliases.d/PC850Multilingual_textencodingtype_alias.h"
+#include "aliases.d/PC8DanishNorwegian_textencodingtype_alias.h"
 
 namespace crap
 {
