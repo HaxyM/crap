@@ -457,6 +457,7 @@ namespace crap
 #include "IANA_encodings.d/PC862LatinHebrew_textencodingtype.h"
 #include "IANA_encodings.d/PC8Turkish_textencodingtype.h"
 #include "IANA_encodings.d/IBMSymbols_textencodingtype.h"
+#include "IANA_encodings.d/IBMThai_textencodingtype.h"
 
 namespace crap
 {
@@ -916,6 +917,7 @@ namespace crap
   #include "aliases_declarations.d/PC862LatinHebrew_textencodingtype_aliasesdeclaration.h"
   #include "aliases_declarations.d/PC8Turkish_textencodingtype_aliasesdeclaration.h"
   #include "aliases_declarations.d/IBMSymbols_textencodingtype_aliasesdeclaration.h"
+  #include "aliases_declarations.d/IBMThai_textencodingtype_aliasesdeclaration.h"
   //
   template <CharType ... SubLetters>
 	  using aliasMaker = alias<CharType, CharType, SubLetters...>; 
@@ -1162,6 +1164,7 @@ namespace crap
 #include "aliases.d/PC862LatinHebrew_textencodingtype_alias.h"
 #include "aliases.d/PC8Turkish_textencodingtype_alias.h"
 #include "aliases.d/IBMSymbols_textencodingtype_alias.h"
+#include "aliases.d/IBMThai_textencodingtype_alias.h"
 
 namespace crap
 {
