@@ -461,6 +461,7 @@ namespace crap
 #include "IANA_encodings.d/HPLegal_textencodingtype.h"
 #include "IANA_encodings.d/HPPiFont_textencodingtype.h"
 #include "IANA_encodings.d/HPMath8_textencodingtype.h"
+#include "IANA_encodings.d/HPPSMath_textencodingtype.h"
 
 namespace crap
 {
@@ -924,6 +925,7 @@ namespace crap
   #include "aliases_declarations.d/HPLegal_textencodingtype_aliasesdeclaration.h"
   #include "aliases_declarations.d/HPPiFont_textencodingtype_aliasesdeclaration.h"
   #include "aliases_declarations.d/HPMath8_textencodingtype_aliasesdeclaration.h"
+  #include "aliases_declarations.d/HPPSMath_textencodingtype_aliasesdeclaration.h"
   //
   template <CharType ... SubLetters>
 	  using aliasMaker = alias<CharType, CharType, SubLetters...>; 
@@ -1174,6 +1176,7 @@ namespace crap
 #include "aliases.d/HPLegal_textencodingtype_alias.h"
 #include "aliases.d/HPPiFont_textencodingtype_alias.h"
 #include "aliases.d/HPMath8_textencodingtype_alias.h"
+#include "aliases.d/HPPSMath_textencodingtype_alias.h"
 
 namespace crap
 {
