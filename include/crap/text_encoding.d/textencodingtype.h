@@ -464,6 +464,7 @@ namespace crap
 #include "IANA_encodings.d/HPPSMath_textencodingtype.h"
 #include "IANA_encodings.d/HPDesktop_textencodingtype.h"
 #include "IANA_encodings.d/VenturaMath_textencodingtype.h"
+#include "IANA_encodings.d/MicrosoftPublishing_textencodingtype.h"
 
 namespace crap
 {
@@ -930,6 +931,7 @@ namespace crap
   #include "aliases_declarations.d/HPPSMath_textencodingtype_aliasesdeclaration.h"
   #include "aliases_declarations.d/HPDesktop_textencodingtype_aliasesdeclaration.h"
   #include "aliases_declarations.d/VenturaMath_textencodingtype_aliasesdeclaration.h"
+  #include "aliases_declarations.d/MicrosoftPublishing_textencodingtype_aliasesdeclaration.h"
   //
   template <CharType ... SubLetters>
 	  using aliasMaker = alias<CharType, CharType, SubLetters...>; 
@@ -1183,6 +1185,7 @@ namespace crap
 #include "aliases.d/HPPSMath_textencodingtype_alias.h"
 #include "aliases.d/HPDesktop_textencodingtype_alias.h"
 #include "aliases.d/VenturaMath_textencodingtype_alias.h"
+#include "aliases.d/MicrosoftPublishing_textencodingtype_alias.h"
 
 namespace crap
 {
