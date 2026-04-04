@@ -487,6 +487,7 @@ namespace crap
 #include "IANA_encodings.d/IBM424_textencodingtype.h"
 #include "IANA_encodings.d/PC8CodePage437_textencodingtype.h"
 #include "IANA_encodings.d/IBM500_textencodingtype.h"
+#include "IANA_encodings.d/IBM851_textencodingtype.h"
 
 namespace crap
 {
@@ -976,6 +977,7 @@ namespace crap
   #include "aliases_declarations.d/IBM424_textencodingtype_aliasesdeclaration.h"
   #include "aliases_declarations.d/PC8CodePage437_textencodingtype_aliasesdeclaration.h"
   #include "aliases_declarations.d/IBM500_textencodingtype_aliasesdeclaration.h"
+  #include "aliases_declarations.d/IBM851_textencodingtype_aliasesdeclaration.h"
   //
   template <CharType ... SubLetters>
 	  using aliasMaker = alias<CharType, CharType, SubLetters...>; 
@@ -1252,6 +1254,7 @@ namespace crap
 #include "aliases.d/IBM424_textencodingtype_alias.h"
 #include "aliases.d/PC8CodePage437_textencodingtype_alias.h"
 #include "aliases.d/IBM500_textencodingtype_alias.h"
+#include "aliases.d/IBM851_textencodingtype_alias.h"
 
 namespace crap
 {
