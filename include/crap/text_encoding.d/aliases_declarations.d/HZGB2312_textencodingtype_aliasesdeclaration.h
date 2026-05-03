@@ -1,0 +1,8 @@
+#include "../textencodingtype.h"
+
+#ifndef CRAP_TEXTENCODING_ALIASESDECLARATIONS_HZGB2312TEXTENCODINGTYPEALIASESDECLARATION
+#define CRAP_TEXTENCODING_ALIASESDECLARATIONS_HZGB2312TEXTENCODINGTYPEALIASESDECLARATION
+
+template <class PlaceHolder>
+struct alias<PlaceHolder, char, 'h', 'z', 'g', 'b', '2', '3', '1', '2'>;
+#endif

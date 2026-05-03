@@ -528,6 +528,7 @@ namespace crap
 #include "IANA_encodings.d/VISCII_textencodingtype.h"
 #include "IANA_encodings.d/VIQR_textencodingtype.h"
 #include "IANA_encodings.d/KOI8R_textencodingtype.h"
+#include "IANA_encodings.d/HZGB2312_textencodingtype.h"
 
 namespace crap
 {
@@ -1058,6 +1059,7 @@ namespace crap
   #include "aliases_declarations.d/VISCII_textencodingtype_aliasesdeclaration.h"
   #include "aliases_declarations.d/VIQR_textencodingtype_aliasesdeclaration.h"
   #include "aliases_declarations.d/KOI8R_textencodingtype_aliasesdeclaration.h"
+  #include "aliases_declarations.d/HZGB2312_textencodingtype_aliasesdeclaration.h"
   //
   template <CharType ... SubLetters>
 	  using aliasMaker = alias<CharType, CharType, SubLetters...>; 
@@ -1375,6 +1377,7 @@ namespace crap
 #include "aliases.d/VISCII_textencodingtype_alias.h"
 #include "aliases.d/VIQR_textencodingtype_alias.h"
 #include "aliases.d/KOI8R_textencodingtype_alias.h"
+#include "aliases.d/HZGB2312_textencodingtype_alias.h"
 
 namespace crap
 {
