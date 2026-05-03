@@ -517,6 +517,7 @@ namespace crap
 #include "IANA_encodings.d/EBCDICFR_textencodingtype.h"
 #include "IANA_encodings.d/EBCDICIT_textencodingtype.h"
 #include "IANA_encodings.d/EBCDICPT_textencodingtype.h"
+#include "IANA_encodings.d/EBCDICES_textencodingtype.h"
 
 namespace crap
 {
@@ -1036,6 +1037,7 @@ namespace crap
   #include "aliases_declarations.d/EBCDICFR_textencodingtype_aliasesdeclaration.h"
   #include "aliases_declarations.d/EBCDICIT_textencodingtype_aliasesdeclaration.h"
   #include "aliases_declarations.d/EBCDICPT_textencodingtype_aliasesdeclaration.h"
+  #include "aliases_declarations.d/EBCDICES_textencodingtype_aliasesdeclaration.h"
   //
   template <CharType ... SubLetters>
 	  using aliasMaker = alias<CharType, CharType, SubLetters...>; 
@@ -1342,6 +1344,7 @@ namespace crap
 #include "aliases.d/EBCDICFR_textencodingtype_alias.h"
 #include "aliases.d/EBCDICIT_textencodingtype_alias.h"
 #include "aliases.d/EBCDICPT_textencodingtype_alias.h"
+#include "aliases.d/EBCDICES_textencodingtype_alias.h"
 
 namespace crap
 {
