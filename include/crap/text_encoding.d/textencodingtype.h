@@ -534,6 +534,7 @@ namespace crap
 #include "IANA_encodings.d/KOI8U_textencodingtype.h"
 #include "IANA_encodings.d/IBM00858_textencodingtype.h"
 #include "IANA_encodings.d/IBM00924_textencodingtype.h"
+#include "IANA_encodings.d/IBM01140_textencodingtype.h"
 
 namespace crap
 {
@@ -1070,6 +1071,7 @@ namespace crap
   #include "aliases_declarations.d/KOI8U_textencodingtype_aliasesdeclaration.h"
   #include "aliases_declarations.d/IBM00858_textencodingtype_aliasesdeclaration.h"
   #include "aliases_declarations.d/IBM00924_textencodingtype_aliasesdeclaration.h"
+  #include "aliases_declarations.d/IBM01140_textencodingtype_aliasesdeclaration.h"
   //
   template <CharType ... SubLetters>
 	  using aliasMaker = alias<CharType, CharType, SubLetters...>; 
@@ -1393,6 +1395,7 @@ namespace crap
 #include "aliases.d/KOI8U_textencodingtype_alias.h"
 #include "aliases.d/IBM00858_textencodingtype_alias.h"
 #include "aliases.d/IBM00924_textencodingtype_alias.h"
+#include "aliases.d/IBM01140_textencodingtype_alias.h"
 
 namespace crap
 {
