@@ -1,0 +1,20 @@
+#include "../textencodingtype.h"
+
+#ifndef CRAP_TEXTENCODING_ALIASESDECLARATIONS_IBM01145TEXTENCODINGTYPEALIASESDECLARATION
+#define CRAP_TEXTENCODING_ALIASESDECLARATIONS_IBM01145TEXTENCODINGTYPEALIASESDECLARATION
+
+template <class PlaceHolder>
+struct alias<PlaceHolder, char, 'c', 'c', 's', 'i', 'd', '1', '1', '4', '5'>;
+
+template <class PlaceHolder>
+struct alias<PlaceHolder, char, 'c', 'p', '1', '1', '4', '5'>;
+
+template <class PlaceHolder>
+struct alias<PlaceHolder, char, 'c', 's', 'i', 'b', 'm', '1', '1', '4', '5'>;
+
+template <class PlaceHolder>
+struct alias<PlaceHolder, char, 'e', 'b', 'c', 'd', 'i', 'c', 'e', 's', '2', '8', '4', 'e', 'u', 'r', 'o'>;
+
+template <class PlaceHolder>
+struct alias<PlaceHolder, char, 'i', 'b', 'm', '1', '1', '4', '5'>;
+#endif
