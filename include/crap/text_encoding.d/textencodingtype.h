@@ -547,6 +547,7 @@ namespace crap
 #include "IANA_encodings.d/Big5HKSCS_textencodingtype.h"
 #include "IANA_encodings.d/IBM1047_textencodingtype.h"
 #include "IANA_encodings.d/PTCP154_textencodingtype.h"
+#include "IANA_encodings.d/Amiga1251_textencodingtype.h"
 
 namespace crap
 {
@@ -1096,6 +1097,7 @@ namespace crap
   #include "aliases_declarations.d/Big5HKSCS_textencodingtype_aliasesdeclaration.h"
   #include "aliases_declarations.d/IBM1047_textencodingtype_aliasesdeclaration.h"
   #include "aliases_declarations.d/PTCP154_textencodingtype_aliasesdeclaration.h"
+  #include "aliases_declarations.d/Amiga1251_textencodingtype_aliasesdeclaration.h"
   //
   template <CharType ... SubLetters>
 	  using aliasMaker = alias<CharType, CharType, SubLetters...>; 
@@ -1431,6 +1433,7 @@ namespace crap
 #include "aliases.d/Big5HKSCS_textencodingtype_alias.h"
 #include "aliases.d/IBM1047_textencodingtype_alias.h"
 #include "aliases.d/PTCP154_textencodingtype_alias.h"
+#include "aliases.d/Amiga1251_textencodingtype_alias.h"
 
 namespace crap
 {
