@@ -2,6 +2,7 @@
 #define CRAP_VERSION
 
 #include "version.d/char8t.h"
+#include "version.d/consteval.h"
 #include "version.d/foldexpressions.h"
 #include "version.d/implreflection.h"
 #include "version.d/libbitops.h"
