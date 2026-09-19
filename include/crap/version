@@ -3,6 +3,7 @@
 
 #include "version.d/char8t.h"
 #include "version.d/foldexpressions.h"
+#include "version.d/implreflection.h"
 #include "version.d/libbitops.h"
 #include "version.d/libbyteswap.h"
 #include "version.d/libconstexprcmath.h"
