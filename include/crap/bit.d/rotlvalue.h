@@ -44,7 +44,7 @@ namespace crap
   constexpr const static Type zeros = any ^ any;
   constexpr const static Type ones = ~zeros;
   constexpr const static Type leftMask = (ones << shift) & ones;
-  constexpr const static Type rightMask = ~leftMask;
+  constexpr const static Type rightMask = (~leftMask) & ones;
   constexpr const static Type left = (Value << shift) & leftMask;
   constexpr const static Type right = (Value >> (bits - shift)) & rightMask;
   public:
